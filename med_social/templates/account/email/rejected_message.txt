@@ -1,0 +1,8 @@
+{% load i18n %}
+{% blocktrans with user_name=user.get_short_name site_domain=current_site.domain site_name=current_site.name %}
+Sincere Apologies {{ user_name }}, your application to join the {{ site_name }} community has been rejected! We're extremely sorry for the inconvenience.
+
+I'm here if you need anything at all -- please drop us a note anytime at suzanne@proven.cc
+
+{% endblocktrans %}
+{% include 'account/email/footer_ceo.txt' %}

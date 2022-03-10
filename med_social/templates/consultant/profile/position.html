@@ -1,0 +1,37 @@
+{% load thumbnail %}
+{% if success == False %}
+<form id="positionForm" action="{% if form.instance.id %}{% url 'edit_position' form.instance.id %}{% else %}{% url 'positions' %}{% endif %}" method="POST" class="{{ css_class }}">
+  {% include 'consultant/profile/generic_form.html' with form=form %}
+</form>
+{% else %}
+  {% if deleted %}
+  <li id="position-{{ pk }}" data-deleted="True"></li>
+  {% else %}
+  <li id="position-{{ position.id }}" class="media period">
+    <span class="pull-left timestamp sideline hidden-xs hidden-sm">
+      <span title="{{ position.start_date|date:"M Y" }} - {% if position.is_current == True %} Present {% else %}{{ position.end_date|date:"M Y" }} {% endif %}">{{ position.start_date|date:"Y" }} - {% if position.is_current == True %} Present {% else %}{{ position.end_date|date:"Y" }} {% endif %}</span>
+    </span>
+    <div class="media-body">
+      <div class="timestamp visible-xs visible-sm">
+        <span title="{{ position.start_date|date:"M Y" }} - {% if position.is_current == True %} Present {% else %}{{ position.end_date|date:"M Y" }} {% endif %}">{{ position.start_date|date:"Y" }} - {% if position.is_current == True %} Present {% else %}{{ position.end_date|date:"Y" }} {% endif %}</span>
+      </div>
+      <h4 class="media-heading company-name">
+        {% thumbnail position.company.logo "x28" as im %}
+          <img src="{{ im.url }}" width="{{im.width}}" height="{{im.height}}"/>
+        {% empty %}
+          {{ position.company.name }}
+        {% endthumbnail %}
+      </h4>
+      <h5 class="text-muted position-title">{{ position.title }}</h5>
+      <p class="work-description">
+        {{ position.summary|linebreaks }}
+      </p>
+      <h5>
+        {% if position.user == user %}
+        <a href="{% url 'edit_position' position.id %}" target="_blank" class="link-gray edit-trigger" data-editable="ul#positions" data-hide="#positionsContainer" data-form-container="#positionFormContainer"><i class="fa fa-edit"></i> edit</a>
+        {% endif %}
+      </h5>
+    </div>
+  </li>
+  {% endif %}
+{% endif %}

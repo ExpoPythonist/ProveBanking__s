@@ -1,0 +1,62 @@
+{% pjaxr_extends "base_template.html" "Site" %}
+{% load review_tags %}
+{% load utils %}
+
+{% block title %}Reviews - {{ current_tenant }}{% endblock %}
+
+{% block page_title %}<span id="page-title">Reviews</span>{% endblock %}
+
+{% block notifications %}
+  {% include 'partials/notifications.html' %}
+{% endblock %}
+
+{% block page %}
+  <div id="page" class="reviews-container container">
+    {% block content %}
+
+      {% if content_type.name == 'vendor' %}
+        <ol class="breadcrumb">
+          <li><a href="{{ content_object.get_absolute_url }}">Supplier</a></li>
+          <li class="active">Reviews</li>
+        </ol>
+      {% endif %}
+
+      {% if reviews %}
+        
+        <h6 class="section-title text-uppercase">
+          <div class="row">
+            <div class="col-xs-8">
+              All reviews for <b>{{ content_object|truncatechars:10 }}</b> ({{ reviews.count }})
+            </div>
+            <div class="col-xs-4 text-right">
+              {% if not content_object == user %}
+                <a href="{% get_review_url 'add' content_object %}" class="btn-link">add review</a>
+              {% endif %}
+            </div>
+          </div>
+        </h6>
+     
+        <section>
+          <div class="row">
+            <div class="col-sm-4">
+              {% include 'vendors/card.html' with vendor=content_object selectable=True %}
+            </div>
+            <div class="col-sm-8">
+              {% for review in reviews %}
+                {% include 'reviews/as_field.html' with review=review %}
+              {% endfor %}
+            </div>
+          </div>
+        </section>
+
+      {% else %}
+        <div class="text-center">
+          <br><br>
+          <h4>No reviews have been posted yet</h4>
+        </div>
+      {% endif %}
+    {% endblock %}
+  </div>
+{% endblock %}
+{% block pjaxr_namespace %}Site.reviews.list{% endblock pjaxr_namespace %}
+

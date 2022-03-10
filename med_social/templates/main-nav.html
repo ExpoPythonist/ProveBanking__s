@@ -1,0 +1,3 @@
+{% if user.is_authenticated and user.kind %}
+{% include user.get_kind_display.lower|add:"/main-nav.html" %}
+{% endif %}

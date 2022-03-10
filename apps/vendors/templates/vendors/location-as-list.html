@@ -1,0 +1,10 @@
+<li class="list-group-item">
+  <span class="btn btn-secondary btn-o btn-xs disabled"><i class="fa fa-map-marker"></i>&nbsp;{{ location.location }}</span>&nbsp;
+    {% for role in location.roles.all %}
+      <span class="btn btn-secondary btn-o btn-xs disabled">{{ role }}</span>&nbsp;
+    {% endfor %}
+    <span class="btn btn-secondary btn-o btn-xs disabled">
+      <i class="fa fa-users"></i> {{ location.num_resources }}
+  </span>&nbsp;
+</li>
+    

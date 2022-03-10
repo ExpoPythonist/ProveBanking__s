@@ -1,0 +1,96 @@
+{% extends "vendors/profile_edit_sidebar.html" %}
+{% load utils %}
+{% load thumbnail %}
+{% load static %}
+
+{% block title %}Clients - {{ vendor.name }}{% endblock %}
+
+{% block left_nav_button %}
+  <span id="left-nav-btn" class="pull-left">
+    {% if previous_page %}
+      <a class="navbar-brand btn" href="{{ previous_page }}"><i class="fa fa-chevron-left"></i></a>
+    {% else %}
+      <a class="navbar-brand btn" href="{{ user.vendor.get_absolute_url }}" data-target="sidebar-left"><i class="fa fa-chevron-left"></i></a>
+    {% endif %}
+  </span>
+{% endblock %}
+
+{% block right_sidebar %}
+  <div id="sidebar-right" class="sidebar sidebar-right"></div>
+{% endblock %}
+
+{% block main_content %}
+  <div class="col-xs-12 col-sm-9">
+    <div class="white-card">
+      <div class="client-listing-header">
+        <h2>Your Clients</h2>
+        <span class="clients-total">{{ clients_count }} total</span>
+        <span class="clients-total highlight-bg">{{ verified_clients_count }} verified</span>
+        <button type="button" class="btn btn-default btn-green clients__btn-add" >+ Add Client</button>
+      </div>
+      {% for reference in client_list %}
+        <div id="client-reference-{{ reference.id }}" class="row client-listing-row clients__row">
+          <div class="col-xs-3 col-sm-2">
+            <div class="client-listing-logo">
+              {% thumbnail reference.client.logo "90x90" as thumb %}
+              <img src="{{ thumb.url }}" alt="{{ reference.display_name }}" class="clients__logo">
+              {% empty %}
+              <img src="" alt="{{ reference.display_name }}">
+              {% endthumbnail %}
+            </div>
+          </div>
+          <div class="col-xs-9 col-sm-6">
+            <div class="client-listing-info">
+              <h2 class="clients__name">{{ reference.client.name }}</h2>
+              {% if reference.is_fulfilled %}
+                <i class="icon icon-check highlight"></i>
+                <span class="small">Verified</span>
+              {% else %}
+                <i class="icon icon-question not-verified"></i>
+                {% if reference.pending_verification %}
+                  <span class="small">Pending Verification</span>
+                {% else %}
+                  <span class="small">Not Verified</span>
+                {% endif %}
+              {% endif %}
+            </div>
+            {% if reference.is_fulfilled %}
+              <p>Verified on {{ reference.created | date:"M. d Y" }} by
+                {% if reference.invoice_verification %}
+                  Invoice
+                {% elif reference.proof_url %}
+                  Proof Url
+                {% else %}
+                  Email
+                {% endif %}
+              </p>
+            {% else %}
+              <p>NOTE: Unverified clients can't count towards your Proven score</p>
+            {% endif %}
+            <p>Client for {{ reference.get_duration_display }}</p>
+          </div>
+          <div class="col-xs-12 col-sm-4 text-right">
+            {% if not reference.is_fulfilled %}
+              <button type="button" class="btn btn-default btn-green clients__btn-verify">Verify</button>
+            {% endif %}
+            <a href="{% url 'vendors:client_view' reference.vendor.slug reference.id %}">
+              <span class="grey-icon icon icon-edit clients__icon"></span>
+            </a>
+            <a href="{% url 'vendors:client_delete' reference.id %}" data-toggle="modal"
+               data-target="#genericModal">
+              <span class="grey-icon icon icon-trash clients__icon"></span>
+            </a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  {% include "vendors/partials/add_verify_modals.html" %}
+
+  <form class="data-for-frontend">
+    <input type="hidden" class="clients__vendor-id" value="{{ vendor.id }}">
+    <input type="hidden" class="clients__add-client-url" value="{% url 'vendors:client_add' vendor.id %}">
+  </form>
+
+{% endblock %}

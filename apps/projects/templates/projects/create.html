@@ -1,0 +1,66 @@
+{% pjaxr_extends "base_template.html" "Site" %}
+{% load crispy_forms_tags %}
+{% block title %}{{ project|yesno:'Edit,Create'}} Project - {{ current_tenant }}{% endblock %}
+
+{% block page_title %}<span id="page-title">{{ project|yesno:"Edit,Create"}} Project</span>{% endblock %}
+
+{% block left_nav_button %}
+  <span id="left-nav-btn" class="pull-left">
+    {% if previous_page %}
+      <a class="navbar-brand btn" href="{{ previous_page }}"><i class="fa fa-chevron-left"></i></a>
+    {% elif project %}
+      <a class="navbar-brand btn" href="{% url 'projects:detail' project.id %}"><i class="fa fa-chevron-left"></i></a>
+    {% else %}
+      <a class="navbar-brand btn" href="{% url 'staffing:list' %}"><i class="fa fa-chevron-left"></i></a>
+    {% endif %}
+  </span>
+{% endblock %}
+
+{% block right_nav_button %}
+  <span id="right-nav-btn" class="pull-right">
+    <a class="navbar-brand btn pull-right" href="#"></a>
+  </span>
+{% endblock %}
+
+{% block right_sidebar %}
+  <div id="sidebar-right" class="sidebar sidebar-right"></div>
+{% endblock %}
+
+{% block notifications %}
+  {% include 'partials/notifications.html' %}
+{% endblock %}
+
+{% block page %}
+  <div id="page" class="container page">
+    {% block content %}
+      <ol class="breadcrumb custom">
+        <li><a href="{% url 'projects:list' %}">Projects</a></li>
+        {% if project.id %}
+          <li><a href="{{ project.get_absolute_url }}">Project details</a></li>
+          <li class="active">Edit project</li>
+        {% else %}
+          <li class="active">Create project</li>
+        {% endif %}
+      </ol>
+      <form id="project-form" class="form-mobile form-horizontal" role="form" action="{% if project %}{% url 'projects:edit' project.id %}{% else %}{% url 'projects:create' %}{% endif %}" method="POST" force-validate data-parsley-validate>
+        {% csrf_token %}
+        {% include 'forms/mobile_form.html' with form=form %}
+        <div id="status-descriptions">
+          {% for k, v in STATUS_DESCRIPTIONS.items %}
+            <div id="status-{{ k }}" class="alert alert-info status hide">
+              <i class="fa fa-info-circle"></i> &nbsp; {{ v }}
+            </div>
+          {% endfor %}
+        </div>
+        <div class="text-center col-xs-12">
+          {% if project %}
+            <button type="submit" class="btn btn-primary">Save</button>&nbsp;
+          {% else %}
+            <button type="submit" name="next_action" value="staffing" class="btn btn-primary">Next <i class="fa fa-chevron-right"></i></button>
+          {% endif %}
+        </div>
+     </form>
+    {% endblock %}
+  </div>
+{% endblock %}
+{% block pjaxr_namespace %}Site.projects.create{% endblock pjaxr_namespace %}

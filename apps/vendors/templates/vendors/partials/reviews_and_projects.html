@@ -1,0 +1,25 @@
+{% load review_tags %}
+<div class="col-xs-6 ">
+  <div>
+      Ratings and reviews 
+        {% if False and perms.reviews.add_review  %}
+          (<a href="{% get_review_url 'add' object %}">add a review</a>)
+        {% endif %}
+  </div>
+  {% if vendor.reviews.exists %}
+    {% include 'reviews/partials/as_label.html' with score=vendor.avg_score count=meta_counts.reviews %}&nbsp;
+  {% else %}
+    <small class="text-muted">No reviews yet</small>&nbsp;
+  {% endif %}
+</div>
+<div class="col-xs-6">
+  <div></div>
+  <span class="btn btn-o btn-secondary btn-xs disabled">
+    {{ meta_counts.projects }} <small class="text-muted"> project{{ meta_counts.projects|pluralize }}</small>
+  </span>&nbsp;
+  {% if meta_counts.staffed %}
+    <span class="btn btn-o btn-secondary btn-xs disabled">
+      {{ meta_counts.staffed }} <small class="text-muted"> resource{{ meta_counts.staffed|pluralize }} staffed</small>
+    </span>&nbsp;
+  {% endif %}
+</div>

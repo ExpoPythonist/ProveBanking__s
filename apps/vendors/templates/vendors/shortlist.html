@@ -1,0 +1,26 @@
+{% extends 'base_template.html' %}
+{% load utils %}
+{% load carton_tags %}
+{% block title %}Shortlist{% endblock %}
+
+{% block page %}
+  <div id="page" class="container">
+    {% block content %}
+      {% get_cart as shortlist %}
+      <a class="btn btn-primary btn-sm pull-right" href="{% url "bid_list" request.user.username %}">Create RFP with these vendors</a>
+    	<ol class="breadcrumb custom">
+        <li class="active">Shortlist</li>
+      </ol>
+
+      <div class="vertical-spacer-lg"></div>
+
+      <section class="vendor-results relative row">
+        <div id="vendor-selectable-list" class="results-items vendor-cards-container">
+          {% for vendor in shortlist.products %}
+          {% include "vendors/card.html" %}
+          {% endfor %}
+        </div>
+      </section>
+    {% endblock %}
+  </div>
+{% endblock %}

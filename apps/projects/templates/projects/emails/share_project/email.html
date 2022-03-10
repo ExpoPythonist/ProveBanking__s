@@ -1,0 +1,15 @@
+{% extends 'base_email.html' %}
+
+{% block body %}
+<tr>
+  <td class="content-block">
+    <p>Hi there,</p>
+    <p>
+      {{message}}
+    </p>
+    <p>
+      <a href="{{ project_url }}" class="btn btn-warning">View project</a>
+     </p>
+  </td>
+</tr>
+{% endblock %}

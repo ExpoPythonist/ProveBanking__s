@@ -1,0 +1,22 @@
+<div role="tabpanel panel panel-default">
+  <div class="panel-body">
+    <ul class="nav nav-tabs" role="tablist">
+      <li role="presentation" class="active"><a href="#staffing-form" role="tab" data-toggle="tab">Staffing</a></li>
+      <li role="presentation"><a href="#deliverable-form" role="tab" data-toggle="tab">Deliverables</a></li>
+    </ul>
+
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane fade in active" id="staffing-form">
+        {% url 'staffing:requests:create' project.id 'staffing' as staffing_url %}
+        {% include 'requests/partials/inline-form-section.html' with form=staffing_form action=staffing_url %}
+      </div>
+
+      <div role="tabpanel" class="tab-pane fade" id="deliverable-form">
+        {% url 'staffing:requests:create' project.id 'fixed' as deliverable_url %}
+        {% include 'requests/partials/inline-form-section.html' with form=deliverable_form action=deliverable_url %}
+      </div>
+    </div>
+  </div>
+  <br/>
+  <br/>
+</div>

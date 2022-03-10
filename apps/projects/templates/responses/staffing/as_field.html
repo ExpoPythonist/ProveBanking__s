@@ -1,0 +1,36 @@
+{% load humanize %}
+<a href="{{ response.get_absolute_url }}" class="no-underline field-group response-as-field">
+  <div class="field-value">
+    <span class="col-xs-12 col-sm-6 nopadding text-left">
+      <strong>{{ response.vendor.name }}</strong>
+      {% if response.vendor.avg_score != None %}
+        &nbsp;{% include 'reviews/partials/as_label.html' with score=response.vendor.avg_score link=None %}
+      {% endif %}
+    </span>
+    <span class="col-xs-12 col-sm-6 nopadding">
+      {% if response.is_draft %}
+        <span class="btn btn-o btn-warning btn-xs disabled"> Draft </span>
+      {% endif %}
+
+      {% with pcount=response.proposed.count scount=response.staffed.count %}
+        <span class="btn btn-o btn-xs 
+        {% if scount > 0 %} btn-success {% else %} btn-secondary disabled {% endif %}"><i class="fa fa-user"></i> {{ scount }}<small>/{{ pcount }} staffed</small></span>
+      {% endwith %}
+
+      {% with comments_count=response.comments.count %}
+        {% if comments_count %}
+          <span class="btn btn-secondary btn-o btn-xs disabled"><i class="fa fa-comments"></i>&nbsp;{{ comments_count }}</span>
+        {% endif %}
+      {% endwith %}
+
+      {% if features.financials.is_enabled response.rate and perms.rates.view %}
+        &nbsp;
+        <button type="button" class="btn btn-o btn-xs btn-secondary" data-trigger="focus" data-container="body" data-toggle="popover" data-trigger="click" data-html="true" data-placement="left"  data-content="<small class='text-muted'><Only visible to those with <strong>'Can view financial information'</strong> permission. See <a href='{% url 'groups:list' %}'>Permissions and Groups</a>.</small>">
+          <i class="fa fa-dollar"></i> {{ response.rate|intcomma }} 
+          <small> approved</small>
+          {% include 'rates/lock.html' %}
+      </button>
+      {% endif %}
+    </span>
+  </div>
+</a>

@@ -1,0 +1,20 @@
+{% load avatar_tags %}
+<div class="media channel-comment">
+  <a href="{{ object.posted_by.get_profile_modal_url }}" class="pull-left" data-toggle="modal" data-target="#userModal">
+    {% include 'partials/avatar_initials.html' with object=object.posted_by size=35 %}
+  </a>
+  <div class="media-body">
+    <h5 class="media-heading"><strong>{{ object.posted_by.get_name_display }} </strong><small>{{ object.natural_created_date }}</small></h5>
+    {{ object.body_html|safe }}
+    {% for email in emails %}
+      <div class="email-mention text-muted" id="message-{{ object.id }}_{{ forloop.counter }}" data-email="{{ email }}">
+        <div class="col-xs-11 nopadding">
+          <i>
+            <small class="text">You mentioned <b>{{ email }}</b>, but they don't have an account. Would you like to <a href="{{ object.channel.get_invite_user_url }}?email={{ email }}" data-target="#genericModal" data-toggle="modal">invite them to join</a>? Or, <a href="#" data-remove="#message-{{ object.id }}_{{ forloop.counter }}">do nothing</a>.</small>
+          </i>
+        </div>
+        <div class="col-xs-1"></div>
+      </div>
+    {% endfor %}
+  </div>
+</div>

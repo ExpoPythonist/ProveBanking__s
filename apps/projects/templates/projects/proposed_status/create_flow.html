@@ -1,0 +1,54 @@
+{% pjaxr_extends "base_template.html" "Site" %}
+{% load crispy_forms_tags %}
+{% block title %}{{ flow_object|yesno:'Edit,Create'}} Status Flow - {{ current_tenant }}{% endblock %}
+
+{% block page_title %}<span id="page-title">{{ flow_object|yesno:"Edit,Create"}} Status Flow</span>{% endblock %}
+
+{% block left_nav_button %}
+  <span id="left-nav-btn" class="pull-left">
+    {% if previous_page %}
+      <a class="navbar-brand btn" href="{{ previous_page }}"><i class="fa fa-chevron-left"></i></a>
+    {% else %}
+      <a class="navbar-brand btn" href="{% url 'projects:status:list' %}"><i class="fa fa-chevron-left"></i></a>
+    {% endif %}
+  </span>
+{% endblock %}
+
+{% block right_nav_button %}
+  <span id="right-nav-btn" class="pull-right"></span>
+{% endblock %}
+
+{% block right_sidebar %}
+  <div id="sidebar-right" class="sidebar sidebar-right"></div>
+{% endblock %}
+
+{% block notifications %}
+  {% include 'partials/notifications.html' %}
+{% endblock %}
+
+{% block page %}
+  <div id="page" class="container page">
+    {% block content %}
+      <ol class="breadcrumb custom">
+        <li><a href="{% url 'client_settings:home' %}">Settings</a></li>
+        <li><a href="{% url 'projects:status:list' %}">Staffing status</a></li>
+        <li><a href="{% url 'projects:status:details' view.status_object.id %}">Status details</a></li>
+        <li class="active">{% if flow_object %}Edit{% else %}Create{% endif %} flow</li>
+      </ol>
+      <div class="page-top-band">
+        <div class="col-xs-6">
+          <h6>{{ flow_object|yesno:"Edit,Create"}} flow for "{{ view.status_object }}" status</h6>
+        </div>
+      </div>
+
+      <form id="status-form" class="form-mobile form-horizontal" role="form" action="{% if form.instance.id %}{% url 'projects:status:edit_flow' form.instance.id %}{% else %}{% url 'projects:status:create_flow' view.status_object.id  %}{% endif %}" method="POST">
+        {% csrf_token %}
+        {% include 'forms/mobile_form.html' with form=form submit_btn=False submit_btn_label='Save' %}
+        <div class="text-center form-actions">
+          <button type="submit" class="btn btn-block btn-primary">{% if form.instance.id %}Save{% else %}Create status{% endif %}</button>
+        </div>
+     </form>
+    {% endblock %}
+  </div>
+{% endblock %}
+{% block pjaxr_namespace %}Site.project_status.create{% endblock pjaxr_namespace %}

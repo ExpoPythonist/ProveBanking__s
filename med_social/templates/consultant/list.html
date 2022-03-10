@@ -1,0 +1,42 @@
+{% pjaxr_extends "sitebase.html" "Site" %}
+{% load bootstrap3 %}
+
+{% block navbar_brand %}
+  {% if request.mobile %}
+    <a href="#left-sidebar" id="left-sidebar-trigger" class="navbar-brand">
+      <i class="fa fa-search"></i>
+    </a>
+  {% else %}
+    {{ block.super }}
+  {% endif %}
+{% endblock %}
+
+{% if request.mobile %}
+  {% block left_sidebar %}
+    <div id="left-sidebar" class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-left">
+      <div class="cbp-header row">
+        <div class="col-xs-10"><h3>Search</h3></div>
+        <div class="col-xs-2"><a class="cbp-spmenu-close-btn pull-left text-right" href="#left-sidebar"><i class="fa fa-angle-double-left"></i></a></div>
+      </div>
+      <div class="content col-xs-12">
+        {% include 'consultant/list_filter.html' %}
+      </div>
+    </div>
+  {% endblock %}
+{% endif %}
+
+{% block page %}
+<div id="page" class="page container listview">
+  <div class="container listview">
+    {% if not request.mobile %}
+    {% include 'consultant/list_filter.html' %}
+    {% endif %}
+    <div id="consultant-list" class="consultant-list card-list waterfll col-xs-12 col-md-9" data-url="{% url 'consultant_list' %}">
+      {% for consultant in object_list %}
+        {% include 'consultant/consultant_panel.html' %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block pjaxr_namespace %}Site.consultants{% endblock pjaxr_namespace %}

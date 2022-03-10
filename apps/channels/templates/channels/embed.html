@@ -1,0 +1,29 @@
+<div class="panel panel-default channel-messages">
+  <div class="panel-body" id="channel-comments-list-{{ channel.id }}">
+    <div class="row">
+      <div class="col-xs-10">
+        <div class="alert alert-default alert-dismissible channel-help text-muted small" role="alert" {% if channel.messages.count > 3 %}style="display:none;"{% endif %}>
+          <p>
+          {% if not channel.vendors.exists %}
+            This discussion is private to <b>{{ request.tenant.name }} team members</b>
+          {% else %}
+            This discussion is visible to {% for V in channel.vendors.all %}{% if forloop.first %}{% elif forloop.last %} &{% else %}, {% endif %} <b>{{ V.name }}</b>{% endfor %} account representatives PLUS <b>{{ request.tenant.name }} team members</b>.
+          {% endif %}
+          </p>
+        </div>
+      </div>
+      <div class="col-xs-2 text-center">
+        <!-- <div class="alert alert-default" role="alert">
+          <a href="#" onclick="$('.channel-messages .alert.channel-help').toggle();" class="no-link-style">
+            <i class="fa fa-question-circle"></i>
+          </a>
+        </div> -->
+      </div>
+    </div>
+    {% for message in channel.messages.all %}
+      {% include 'channels/comments/as_field.html' with object=message %}
+    {% endfor %}
+  </div>
+</div>
+
+{% include 'channels/comments/create.html' with form=message_form %}

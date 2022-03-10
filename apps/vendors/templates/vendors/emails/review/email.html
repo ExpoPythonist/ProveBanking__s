@@ -1,0 +1,33 @@
+{% extends 'base_email.html' %}
+{% load review_tags %}
+
+{% block body %}
+  <tr>
+    <td class="content-block">
+      <p>
+        {{current_tenant.name}}’s procurement team is piloting a supplier platform to capture knowledge and collaborate with our suppliers at {{ tenant_url }}. This private website will allow {{current_tenant.name}} employees to search and find existing {{current_tenant.name}} suppliers, view work history with {{current_tenant.name}}, and initiate requests. 
+      </p>
+
+      <p>
+      {{ portfolio_item.vendor }} has indicated that they worked with you on “{{portfolio_item.title}}” project.
+      </p>
+
+      <p>
+        If this is true, could you add a review so that other {{current_tenant.name}} employees can benefit from your experience.
+      </p>
+
+      <p><a href="{{ review_url }}" class="btn btn-warning">Review {{ portfolio_item.vendor }}</a></p>
+
+      <p>
+        If you haven't worked with this supplier or if the project information is incorrect, please contact the supplier directly or {{ current_tenant.email }} and we can work with the supplier to make the necessary corrections.
+      </p>
+      <p>
+        This private website {{ tenant_url }} will be available to all {{current_tenant.name}} employees from the {{current_tenant.name}} Intranet and will be powered by the Proven platform. If you have any questions about the Proven platform, please contact Suzanne Jordan at suzanne@proven.cc.
+      </p>
+      <p>
+        Best,<br>
+        {{ portfolio_item.vendor }},<br>
+      </p>
+    </td>
+  </tr>
+{% endblock %}

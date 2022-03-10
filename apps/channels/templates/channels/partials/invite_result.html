@@ -1,0 +1,7 @@
+<div class="text-center result-item" data-pk="{{ object.pk }}" data-kind="user-mention" data-text="{{ object.email }}">
+  <h2>
+    <i class="fa fa-check-circle text-muted"></i> {{ invited|yesno:"Invitation sent!, Added!" }}
+  </h2>
+  <p>Successfully added a new user. We've sent an invitation to <strong>{{ object.email }}</strong> to join the Proven platform.</p>
+  <a href="#" class="btn btn-primary" data-dismiss="modal">Continue</a>
+</div>

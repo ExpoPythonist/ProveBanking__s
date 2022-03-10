@@ -1,0 +1,24 @@
+{% load utils %}
+{% if success == False %}
+  <form id="educationHighlightsForm" action="{% url 'edit_education_highlights' %}" method="POST" class="{{ css_class }}">
+    {% include 'consultant/profile/generic_form.html' with form=form %}
+  </form>
+{% else %}
+  {% load_featured_educations consultant as featured_educations %}
+  {% if featured_educations or consultant == user %}
+    <dl id="educationHighlights-{{ consultant.id }}" class="dl-horizontal dl-default">
+      <dt>education</dt>
+      {% for education in featured_educations %}
+        <dd title="{{ education.school.name }}">{{ education.school.name }}</dd>
+      {% endfor %}
+      {% if user == consultant and profile_page %}
+      <dd><a href="{% url 'edit_education_highlights' %}" id="editEducationHighlightsBtn" class="edit-trigger" data-editable=".consultant-details" data-form-container="#subProfileFormContainer" data-toggle="tooltip" title="edit education highlights" data-placement="right"><i class="fa fa-edit fa-1"></i> edit</a></dd>
+      {% endif %}
+      {% if is_last %}
+        <hr class="divider"/>
+      {% else %}
+        <dd class="divider"></dd>
+      {% endif %}
+    </dl>
+  {% endif %}
+{% endif %}

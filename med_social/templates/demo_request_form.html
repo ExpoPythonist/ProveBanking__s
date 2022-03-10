@@ -1,0 +1,11 @@
+
+{% load crispy_forms_tags %}
+<form data-parsley-validate action="{% url 'requestdemo' %}" method="POST" role="form" id="demo_request_form" class="form-mobile">
+{% csrf_token %}
+{% include 'forms/mobile_form.html' with form=form %}
+    <div class="text-center form-actions">
+      <button type="submit" class="btn btn-primary submit-btn">Submit</button>
+    </div>
+  </div>
+</form>
+

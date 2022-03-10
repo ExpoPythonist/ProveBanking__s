@@ -1,0 +1,215 @@
+{% load avatar_tags %}
+{% load crispy_forms_tags %}
+{% load humanize %}
+{% load review_tags %}
+{% load thumbnail %}
+{% load utils %}
+{% load generic_ct %}
+<script class="as-json vendor-{{ vendor.id }}" type="application/json" data-type="vendor" data-id="{{ vendor.id }}">{{vendor.as_json|safe}}</script>
+
+<div class="panel panel-default panel-card animate-on-shortlist">
+  <div class="panel-body">
+    {% if user.is_procurement %}
+    <div>
+      <div class="dropdown pull-right text-muted panel-action-btn">
+        <button class="text-muter dropdown-toggle btn btn-xs " type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+          <span class="fa fa-chevron-down"></span>
+        </button>
+  
+        <ul class="dropdown-menu dropdown-menu-right text-right" aria-labelledby="dropdownMenu1">
+          {% if user.is_procurement and not current_tenant.is_public_instance %}
+            <li><a href="{% url 'vendors:engage_edit' object.id %}" data-toggle="modal" data-target="#genericModal"  data-modal-is-remote="true" class="pull-right no-underline">Add procurement note</a></li>
+          {% endif %}
+          <li><a href="{% url 'vendors:archive_vendor' object.id %}" data-toggle="modal" data-target="#genericModal"  data-modal-is-remote="true" class="pull-right no-underline">Delete supplier</a></li>
+          <li><a href="{% url 'vendors:procurement_link' vendor.id %}" data-target="#genericModal" data-toggle="modal">Edit Procurement Link</a></li>
+        </ul>
+      </div>
+    </div>
+    {% endif %}
+      <!-- overview block  division-->
+      <div class="col-md-10 nopadding">
+
+        <div class="">
+          <div class="media">
+            <a  class="logo-thumbnail pull-left">
+              {% thumbnail vendor.logo "80x80" as thumb %}
+                <img src="{{ thumb.url }}" class="img-responsive">
+              {% empty %}
+                <img src="{{ STATIC_URL }}images/defaults/placeholder-co.png" class="img-responsive">
+              {% endthumbnail %}
+              {% if user.is_procurement %}
+                <span class="label label-primary text-uppercase" href="{% url 'vendors:update_status' vendor.id %}" data-toggle="modal" data-target="#genericModal"  data-modal-is-remote="true">
+                    {{vendor.kind_labels|get_item:vendor.kind|default:"edit status"}} &nbsp;<i class="fa  fa-chevron-right"></i>
+                </span>
+              {% else %}
+                {% if vendor.kind_labels_diplayable|get_item:vendor.kind %}
+                 <span class="label label-primary text-uppercase">
+                    {{vendor.kind_labels_diplayable|get_item:vendor.kind}}
+                {% endif %}
+                </span>
+              {% endif %}
+            </a>
+            <div class="media-body">
+              <h3 class="media-heading" title="{{ vendor.name }}">{{ vendor.name }}</h3>
+
+              <div class="overview-items">
+                {% comment %}
+                <!-- rating -->
+                {% with vendor.get_meta_counts as meta_counts %}
+                  {% assign_review_url 'list' vendor as score_url %}
+                  <p class="">
+                    {% if user.is_client %}
+                        {%if vendor.avg_score %}
+                          <span class="score-value rating-stars text-ellipsis star_{% rating_stars_color vendor.avg_score %}">
+                            <a href="{% url 'vendors:reviews' vendor.id %}" data-target="#genericModal" data-toggle="modal">{% rating_stars vendor.avg_score %}</a>
+                            &nbsp;
+                            <strong>
+                              {{ vendor.avg_score }}<small class="text-muted">/5</small>
+                            </strong>
+                          </span>
+                          <span class="text-muted">&nbsp;&middot;&nbsp;</span>
+                        {% endif %}
+                    {% endif %}
+                  </p>
+                {% endwith %}
+                {% endcomment %}
+
+                <!-- location-->
+                <div class="location">
+                  <i class=" fa fa-map-marker text-primary"></i>&nbsp;
+                  {% if vendor.locations.exists %}
+                    <span class="text-muted">
+                    {% for location in vendor.vendor_locations.all %}
+                      {% if forloop.counter < 4 %}
+                        {{ location.location }} {% if forloop.counter < 3 %}{% if forloop.last %} {% else %},{% endif %}{% endif %}
+                      {% elif forloop.counter == 4 %}
+                        & {{ forloop.revcounter }} more
+                      {% endif %}
+                    {% endfor%}
+                    </span>
+                  {% endif %}
+                </div>
+
+                {% if features.proven_score.is_enabled or request.user.is_superuser %}
+                  <div class="proven-score">
+                    <strong>Proven Score: {{ vendor.proven_score|floatformat:0 }}%</strong><br>
+                    {% if request.user.is_superuser %}
+                      <div class="well">
+                        Industry Score: {{ vendor.calculate_industry_score|floatformat:0 }}% <a href="{% url "client_settings:weights" %}">(weighted {{ current_tenant.weight_industry|floatformat:0 }}%)</a> Billings: {{ vendor.total_billings_display }} vs Industry: {{ vendor.industry_mean_display }}<br>
+                        Client Score: {{ vendor.calculate_client_score|floatformat:0 }}% <a href="{% url "client_settings:weights" %}">(weighted {{ current_tenant.weight_clients|floatformat:0 }}%)</a><br>
+                        Feedback Score: {{ vendor.calculate_feedback_score|floatformat:0 }}% <a href="{% url "client_settings:weights" %}">(weighted {{ current_tenant.weight_feedback|floatformat:0 }}%)</a><br>
+                        Market Score: {{ vendor.calculate_market_score|floatformat:0 }}% <a href="{% url "client_settings:weights" %}">(weighted {{ current_tenant.weight_market|floatformat:0 }}%)</a> Annual Revenue: {{ vendor.annual_revenue|intcomma }}, Market Cap: {{ vendor.market_cap|intcomma }}<br>
+                        Web Score: {{ vendor.calculate_web_score|floatformat:0 }}% <a href="{% url "client_settings:weights" %}">(weighted {{ current_tenant.weight_web|floatformat:0 }}%)</a> Google: {{ vendor.google_pagerank }}/10, Alexa: {{ vendor.alexa_rank|intcomma }}, Twitter: {{ vendor.twitter_followers|intcomma }}<br>
+                      </div>
+                    {% endif %}
+                  </div>
+                {% endif %}
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- contact -->
+      <div class="col-md-2 nopadding text-right">
+        {% if user in vendor.users.all %}
+          <a class="btn btn-primary btn-sm btn-block" href="{% url 'user_setup:setup_step_vendor_profile' vendor.id %}" >edit profile</a>
+        {% endif %}
+        {% if not vendor.users.exists %}
+          {% if vendor_claimed %}
+          <span class="btn btn-secondary btn-sm btn-block">pending claim</span>
+          {% else %}
+          <a href="{% url "vendors:claim_vendor" vendor.slug %}" class="btn btn-primary btn-sm btn-block" data-target="#genericModal" data-toggle="modal" data-modal-is-remote="true">claim profile</a>
+          {% endif %}
+        {% endif %}
+        {% comment %} {# user.is_client and perms.reviews.add_review %} #}
+          <div class="btn-group">
+            <a class="btn btn-primary btn-sm rounded" href="{% get_review_url 'add' object %}">
+              &nbsp;&nbsp;&nbsp;&nbsp;rate company&nbsp;&nbsp;&nbsp;&nbsp;
+            </a>
+            <a class="btn btn-primary btn-sm rounded dropdown-toggle" data-toggle="dropdown">
+              <i class="fa fa-angle-down"></i>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+              <li><a data-target="#genericModal" data-toggle="modal" data-modal-is-remote="true" href="{% url 'reviews:create_review_token' vendor.get_content_type_id vendor.id %}">Request review via email</a></li>
+            </ul>
+          </div>
+        {% endcomment %}
+        <div class="vertical-spacer-sm"></div>
+        <!-- {% content_type vendor as vendor_ct %} -->
+        {% if user.is_client and features.guides.is_enabled %}
+          {% if contracting_lifecycles or procurement_link %}
+            <a class="btn btn-default btn-block btn-sm" data-toggle="modal" data-target="#contractsModal">Work with this supplier</a>
+            <div class="generic-modal modal fade" id="contractsModal" tabindex="-1" role="dialog" aria-labelledby="contractsModel" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                   <div class="modal-body text-left">
+                      <div class="col-xs-12 text-right vertical-spacer-lg">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                      </div>
+
+                      {% if procurement_link and procurement_link.url %}
+                        <p>{{ procurement_link.description }}</p>
+                        <a href="{{ procurement_link.url }}">{{ procurement_link.url }}</a>
+                      {% endif %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endif %}
+        {% endif %}
+        
+        <div class="vertical-spacer-sm"></div>
+
+        {% if user.is_procurement %}
+          <div class="nopadding">
+            <div class="vertical-spacer-sm"></div>
+            <a class="btn btn-default btn-sm btn-block" href="{% url 'user_setup:setup_step_vendor_profile' vendor.id %}">edit profile</a><br>
+          </div>
+        {% endif%}
+      </div>
+
+    {% if vendor.summary %}
+      <p class="col-xs-12 description nopadding">
+        {{ vendor.summary }}
+      </p>
+    {% endif%}
+
+    {% if vendor.website or vendor.linkedin or vendor.github or vendor.facebook or vendor.twitter or user.is_client %}
+      <div class="col-xs-12 clearfix  nopadding"><hr></div>
+
+      <div class="text-muted overview-footer">
+
+        <div class="col-sm-4 col-xs-6 text-ellipsis nopadding web-links">
+          {% if vendor.website %}
+            <a href="{{ object.website }}" class="no-underline no-link-style" target="_blank" title="Website">{{ website }}</a>
+          {% endif %}
+          &nbsp;
+        </div>
+
+        <div class="col-sm-4 col-sm-push-4 text-right web-links nopadding">
+          &nbsp;
+          {% if vendor.facebook %}
+            <a href="{{ object.facebook }}" class="no-underline no-link-style" title="Facebook" target="_blank" ><i class="fa fa-facebook fa-lg text-muted"></i></a>
+          {% endif %}
+          {% if vendor.linkedin %}
+          <a href="{{ object.linkedin }}" class="no-underline no-link-style" title="Linkedin" target="_blank" ><i class="fa fa-linkedin fa-lg text-muted"></i></a>
+          {% endif %}
+          {% if vendor.github %}
+            <a href="{{ object.github }}" class="no-underline no-link-style" target="_blank" title="Github"><i class="fa fa-github-alt fa-lg text-muted"></i></a>
+          {% endif %}
+          {% if vendor.twitter %}
+            <a href="https://twitter.com/{{ object.twitter }}" class="no-underline no-link-style" title="Twitter" target="_blank" ><i class="fa fa-twitter fa-lg text-muted"></i></a>
+          {% endif %}
+        </div>
+
+        <div class="col-sm-4 col-sm-pull-4 text-center">
+          
+        </div>
+
+      </div>
+    {% endif %}
+
+  </div>
+</div>

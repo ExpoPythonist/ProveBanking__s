@@ -1,0 +1,12 @@
+{% if success == False %}
+<form id="profileForm" action="{% url 'edit_profile' %}" method="POST" class="{{ css_class }}">
+  <div class="panel panel-default">
+    <div class="panel-body">
+    {% include 'consultant/profile/generic_form.html' with form=form %}
+    </div>
+  </div>
+</form>
+{% else %}
+{% include 'consultant/consultant_panel.html' with consultant=profile profile_page=True show_setup_btn=True %}
+{% endif %}
+

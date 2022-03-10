@@ -1,0 +1,17 @@
+<div id="client-box ">
+    <div class="vertical-spacer-lg"></div>
+    <h4 class="text-center clearifx"> 
+      USED BY FOLLOWING CLIENTS
+    </h4>
+ </div>
+ <div class="vertical-spacer-lg"></div>
+ <div class="container">
+ {% with vendor.get_previously_hired_by|slice:":5" as clients %}
+  {% for client in clients%}
+	  <div class="col-sm-2 text-center divider-box {% if not forloop.last and forloop.counter != 5 %}divider-box {%endif%}">
+	  {% include 'partials/avatar_initials.html' with object=client size=75 %}
+	  <h5 class="text-muted">{{ client.get_name_display }}</h5>
+	  </div>
+  {%endfor%}
+ {%endwith%}
+ </div>

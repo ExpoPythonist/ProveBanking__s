@@ -1,0 +1,14 @@
+{% extends 'base_email.html' %}
+
+{% block body %}
+  <tr>
+    <td class="content-block">
+
+      <p>Hi {{ recipient.first_name }},</p>
+      <p>You were assigned as a procurement contact to {{vendor}}.</p>
+      <p>
+      <a href="{{ profile_url }}" class="btn btn-warning">View supplier</a>
+     </p>
+    </td>
+  </tr>
+{% endblock %}

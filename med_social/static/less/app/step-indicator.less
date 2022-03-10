@@ -1,0 +1,60 @@
+//step-indicator
+.step-indicator {
+  padding: 16px 0px;
+  position: relative;
+  //margin-bottom:  20px;
+  color: @gray-light;
+  overflow: hidden;
+  .liner {
+    height: 2px;
+    width: 100%;
+    background: @gray-light;
+    position: absolute;
+    top: 32px;
+    margin: auto;
+    border-radius: 2px;
+  }
+  .col-sm-4 {
+    text-align: center;
+    margin-bottom: 20px;
+    @media (max-width: @screen-xs-max) {
+      text-align: left;
+    }
+    &.check {
+      color: @brand-success;
+      .step {
+          color: @brand-success;
+      }
+    }
+  }
+  .circle {
+    text-align: center;
+    display: inline-block;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    border: 2px solid;
+    line-height: 28px;
+    vertical-align: middle;
+    font-size: 18px;
+  }
+  .check .circle {
+     border-color: @brand-success;
+  }
+  .current { 
+    .circle {
+      background: @gray-light;
+      color: #fff;
+      border-color: @gray-light;
+    }
+  }
+  .step {
+    color: @gray-light;
+    display: inline-block;
+    padding: 3px;
+    background: #F9F8F7;
+    &:hover, &:active {
+        text-decoration: none;
+    }
+  }
+}

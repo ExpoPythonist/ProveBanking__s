@@ -1,0 +1,40 @@
+{% extends "vendors/profile_edit_sidebar.html" %}
+  {% block main_content %}
+<section class="profile-edit-form diversity-form">
+  <h6 class="section-title text-uppercase">Employment & Diversity information</h6>
+  <div class="panel panel-default panel-card diversity">
+    <div class="panel-body">
+
+      <h6 class="block-meta-title text-uppercase">Specify company ownership diversity</h6>
+      <ul class="list-inline">
+        {% for obj in diversity_owned_options %}
+            <li><input class="diversity_owned" type="checkbox" {% if obj in diversity_owned%}checked{% endif%} ignore-enhance="true" data-url="{% url 'vendors:diversity:update' vendor.id obj.id %}"/> {{obj}}</li>
+        {% endfor %}
+        {% if diversity_owned %}<br>{% endif %}
+      </ul>
+      <br/>
+
+      <h6 class="block-meta-title text-uppercase">Specify ethnic groups employed</h6>
+      <ul class="list-inline">
+        {% for obj in diversity_employee_options %}
+            <li><input class="diversity_owned" type="checkbox" {% if obj in diversity_employee%}checked{% endif%} ignore-enhance="true" data-url="{% url 'vendors:diversity:update' vendor.id obj.id %}"/> {{obj}}</li>
+        {% endfor %}
+        {% if diversity_employee %}<br>{% endif %}
+      </ul>
+      <br/>
+      <div class="row">
+        <div class="col-xs-6">
+            <a href="{% url 'vendors:cert_add' vendor.id %}" class="btn btn-default btn-backward">Back</a>
+        </div>
+        <div class="col-xs-6 text-right">
+         <a href="{% url 'vendors:procurement:list' vendor.id %}" type="submit" class="btn btn-primary btn-forward">
+            Next
+        </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% endblock %}

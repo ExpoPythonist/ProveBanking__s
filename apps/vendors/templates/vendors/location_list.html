@@ -1,0 +1,63 @@
+{% extends "vendors/profile_edit_sidebar.html" %}
+{% block main_content %}
+<section class="profile-edit-form">
+  <h6 class="section-title text-uppercase">Location</h6>
+  <div class="panel panel-default panel-card">
+    <div class="panel-body">
+      <br>
+      <h6 class="block-meta-title text-uppercase">Current locations</h6>
+      <br>
+      <form id="location-allocations" action="{% url 'vendors:locations:list' vendor.id %}" method="POST">
+        {% csrf_token %}
+        <ul id="role-list" class="list-group panel-metrics container-md">
+          <li class="list-group-item header">
+            <h6 class="text-uppercase">
+              location <span class="pull-right">No. of employees</span>
+            </h6>
+          </li>
+
+          {% for location in locations %}
+          <li class="list-group-item">
+            <b>{{ location.location }}</b>
+            <span class="pull-right">
+              <span class="edit-mode-on ">
+                <a class="btn" href="{% url 'vendors:locations:delete' location.id %}" data-toggle="modal" data-target="#genericModal"><span><i class="fa fa-trash-o"></i></span></a>
+                <input id="id_{{ location.id }}" name="{{ location.id }}" class="allocation-input" value="{{ location.num_resources }}" tabindex="1" data-toggle="tooltip" data-placement="right" title="edit allocation here"/>
+              </span>
+
+              <span class="weight-value edit-mode-off text-right">
+                {{ location.num_resources }}
+              </span>
+            </span>
+          </li>
+          {% endfor %}
+
+          <li class="list-group-item">
+            <a href="{% url 'vendors:locations:create' vendor.id %}" class="btn btn-primary" data-toggle="modal" data-target="#genericModal" >Add Location </a>
+            
+            <span class="pull-right">
+              {% if locations %}
+              <a id="edit-allocation-btn" class="btn-link  edit-mode-off " href="#">Edit number</a>
+              <div class="btn-group">
+                <a id="cancel-edit-btn" class="btn btn-default btn-sm edit-mode-on" href="#"><i class="fa fa-times"></i></a>
+                <a id="save-allocation-btn" class="btn btn-default btn-sm edit-mode-on  btn-primary" href="#"><i class="fa fa-check"></i></a>
+              </div>
+              {% endif %}  
+            </span>
+          </li>
+
+        </ul>
+      </form>      
+      <br><br>
+      <div class="row">
+        <div class="col-xs-6">
+            <a href="{% url 'user_setup:setup_step_vendor_industries' vendor.id %}" class="btn btn-default btn-backward">Back</a>
+        </div>
+        <div class="col-xs-6 text-right">
+         <a href="{{ vendor.get_absolute_url }}" type="submit" class="btn btn-primary">view profile</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

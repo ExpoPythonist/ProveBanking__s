@@ -1,0 +1,9 @@
+{% extends "base.new.html" %}
+
+{% block body_class %}login-bg{% endblock %}
+{% block container %}
+<div class="login-block">
+  <a href="{% url "home" %}" class="logo"></a>
+  {% block content %}{% endblock %}
+</div>
+{% endblock %}

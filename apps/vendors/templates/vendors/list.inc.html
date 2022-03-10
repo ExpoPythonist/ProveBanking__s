@@ -1,0 +1,105 @@
+{% load thumbnail %}
+{% load utils %}
+{% load carton_tags %}
+{% get_cart as shortlist %}
+
+{% for vendor in vendors|slice:filter_slice %}
+<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 pin-column">
+  <div class="company-card">
+    <ul class="card-header">
+      <li>
+        {% if vendor.kind_labels_diplayable|get_item:vendor.kind %}
+        <span class="sticker sticker-{{ vendor.KIND_CSS_CLASSES|get_item:vendor.kind }} text-uppercase">{{ vendor.kind_labels_diplayable|get_item:vendor.kind }}</span>
+        {% endif %}
+
+        <a href="{{ vendor.get_absolute_url }}" class="company-thumbnail">
+          {% thumbnail vendor.logo "101x101" as thumb %}
+          <img src="{{ thumb.url }}" alt="{{ vendor.name }}">
+          {% empty %}
+          <img src="{{ STATIC_URL }}new/img/clients/rte.png" alt="{{ vendor.name }}">
+          {% endthumbnail %}
+        </a>
+      </li>
+      <li>
+        <a href="{{ vendor.get_absolute_url }}" class="company-name clearfix">{{ vendor.name }}</a>
+        {% include "vendors/_proven_score.html" %}
+      </li>
+    </ul>
+    <div class="card-description">
+      {% with custom=vendor.get_primary_service %}
+      {% if custom.rank %}
+      <div>
+        <span class="company-score" style="margin-bottom: 10px; vertical-align: middle;">#{{ custom.rank }}</span>
+        <span>in {{ custom.category }}</span>
+      </div>
+      {% endif %}
+      {% endwith %}
+      {% if vendor.vendor_locations.exists %}
+      <p class="company-location">
+        <i class="icon-pin"></i>
+        <span>
+          {% for location in vendor.vendor_locations.all|slice:":3" %}
+          {% if forloop.counter < 3 %}
+          {{ location.location.city }}, {{ location.location.parent.city }}{% if forloop.counter < 2 %}{% if forloop.last %}{% else %},{% endif %}{% endif %}
+          {% elif forloop.counter == 3 %}
+          & {{ forloop.revcounter }} more
+          {% endif %}
+          {% endfor %}
+        </span>
+      </p>
+      {% endif %}
+      <p style="height: 6em; overflow: hidden;">
+        <a href="{{ vendor.get_absolute_url }}" class="no-underline" style="text-decoration: none;">{{ vendor.summary }}</a>
+      </p>
+    </div>
+
+    <div class="card-clients">
+      <div class="clients-header">
+        <a href="{{ vendor.get_clients_url }}">
+          <span class="subheader">Clients</span>
+          <span class="clients-total">{{ vendor.client_references.count }} total</span>
+          <span class="clients-total highlight-bg">{{ vendor.client_references_verified.count }} verified</span>
+        </a>
+      </div>
+      <ul>
+        {% for reference in vendor.client_references.all|slice:":3"  %}
+        <li>
+          <a href="{{ vendor.get_clients_url }}" style="text-decoration: none;">
+            <i class="icon {% if reference.is_fulfilled %}icon-check highlight{% else %}icon-question not-verified{% endif %}"></i> {{ reference.display_name }}
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    {% if features.rfp.is_enabled and vendor.open_for_business and request.user.is_authenticated %}
+    <div class="card-select">
+        {% if features.rfp.is_enabled %}
+        <form
+            class="shortlist-form"
+            method="POST"
+            {% if vendor in shortlist %}
+            action="{% url "vendors:shortlist_remove" vendor.slug %}"
+            {% else %}
+            action="{% url "vendors:shortlist_add" vendor.slug %}"
+            {% endif %}
+            data-shortlisted="{% if vendor in shortlist %}yes{% else %}no{% endif %}"
+            data-action-remove="{% url "vendors:shortlist_remove" vendor.slug %}"
+            data-action-add="{% url "vendors:shortlist_add" vendor.slug %}">
+          {% csrf_token %}
+          <input type="checkbox" id="input{{ forloop.counter }}" {% if vendor in shortlist %}checked="checked"{% endif %} /><label for="input{{ forloop.counter }}">Select</label>
+        </form>
+        {% endif %} 
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endfor %}
+
+<div id="filter-scroll" {% if is_last_page %}data-last-page="true"{% endif %} class="col-sm-12 text-center text-muted" data-page="{{ request.GET.page|add:1 }}" data-preload-offset="600" style="position: absolute; bottom: 0;">
+  <div id="filter-loading-icon" class="hide">
+    <p><i class="fa fa-3x fa-spin fa-spinner"></i></p>
+    <p>Loading</p>
+  </div>
+  {% if request.GET.page and is_last_page %}No more suppliers match this criteria{% endif %}
+</div>

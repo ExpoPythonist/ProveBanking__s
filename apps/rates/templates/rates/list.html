@@ -1,0 +1,86 @@
+{% pjaxr_extends "base_template.html" "Site" %}
+{% block title %}Rate Cards - {{ current_tenant }}{% endblock %}
+
+{% block page_title %}<span id="page-title">Rate Cards</span>{% endblock %}
+
+{% block left_nav_button %}
+  <span id="left-nav-btn" class="pull-left">
+    {% if previous_page %}
+      <a class="navbar-brand btn" href="{{ previous_page }}"><i class="fa fa-chevron-left"></i></a>
+    {% else %}
+      {% if user.is_client %}
+        <a class="navbar-brand btn" href="{% url 'client_settings:home' %}" data-target="sidebar-left"><i class="fa fa-chevron-left"></i></a>
+      {% endif %}
+    {% endif %}
+  </span>
+{% endblock %}
+
+{% block right_nav_button %}
+{% endblock %}
+
+{% block right_sidebar %}
+  <div id="sidebar-right" class="sidebar sidebar-right">
+  </div>
+{% endblock %}
+
+{% block notifications %}
+  {% include 'partials/notifications.html' %}
+{% endblock %}
+
+{% block page %}
+  <div id="page" class="container page">
+    {% block content %}
+      <ol class="breadcrumb custom">
+        <li><a href="{% url 'client_settings:home' %}">Settings</a></li>
+        <li class="active">Rate cards</li>
+      </ol>
+
+      <div class="page-top-band">
+        <div class="col-xs-6 text-left">
+          <h6 class="list-count">
+            your rate cards&nbsp;({{ my_rate_cards.count }})
+        </h6>
+        </div>
+
+        <div class="col-xs-6 text-right">
+          {% if perms.rates.add %}
+            <a href="{% url 'rates:create' %}" class="btn btn-xs btn-primary" >new rate card</a>
+          {% endif %}
+        </div>
+      </div>
+
+      <div class="page-top-band clearfix">
+        <div class="col-xs-6">
+          <h6>
+          </h6>
+        </div>
+        <div class="col-xs-6 text-right">
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-body">
+          {% include 'rates/as_partial_list.html' with rates=my_rate_cards %}
+        </div>
+      </div>
+      {% if user.is_client %}
+        {% for vendor in vendors %}
+        <div class="page-top-band clearfix">
+          <div class="col-xs-12 text-center">
+            <h6 class="list-count">
+              {{ vendor }}'s rate cards&nbsp;
+              ({{ vendor.rates.count }})
+            </h6>
+          </div>
+        </div>
+        <div class="panel panel-default">
+          <div class="panel-body">
+            {% include 'rates/as_partial_list.html' with rates=vendor.rates.all%}
+          </div>
+        </div>
+        {% endfor %}
+      {% endif %}
+    {% endblock %}
+  </div>
+{% endblock %}
+{% block pjaxr_namespace %}Site.rates_list{% endblock pjaxr_namespace %}

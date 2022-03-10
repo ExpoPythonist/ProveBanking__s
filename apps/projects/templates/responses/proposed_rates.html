@@ -1,0 +1,27 @@
+{% load crispy_forms_tags %}
+
+{% if perms.rates.add %}
+  <div class="page-top-band">
+    <div class="col-xs-6">
+      <h6>Matching rates</h6>
+    </div>
+    <div class="col-xs-6 text-right">
+      <h6><span class="text-muted">select a card or <a href="{% url 'rates:create' %}" data-toggle="modal" data-target="#rateCreateModal">create a new one</a></span></h6>
+    </div>
+  </div>
+
+  <div class="panel panel-default relative">
+    {% include 'rates/suggestions.html' with suggestions=suggested_rates selected_rate=form.instance.rate_card %}
+  </div>
+
+  <div class="page-top-band">
+    <div class="col-xs-12 text-right">
+      <h6><span class="text-muted">... or specify a custom rate for this resource (rate card will not be used)</span></h6>
+    </div>
+  </div>
+  <div class="panel panel-default panel-form">
+    <div class="panel-body">
+      {{ form.hourly_rate|as_crispy_field:"bootstrap3" }}
+    </div>
+  </div>
+{% endif %}

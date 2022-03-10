@@ -1,0 +1,128 @@
+{% load review_tags %}
+{% load thumbnail %}
+{% load utils %}
+
+  <div class="panel panel-default panel-card ">
+    <div class="panel-body">
+      {% assign_review_url 'list' vendor as score_url %}
+      {% if review_objects %}
+        <div class="row">
+        {% for review in review_objects|slice:":3" %}
+          {% if review.content_object %}
+
+            <div class="col-sm-6 col-md-4">
+              <div class="media ">
+                {% if review.anonymous %}
+                  <img src="{{ STATIC_URL }}images/defaults/avatar.jpg" width="45" class="img-circle pull-left">
+                {% else %}
+                  <span class="pull-left">
+                    {% include 'partials/avatar_initials.html' with object=review.posted_by size=45 %}
+                  </span>
+                {% endif %}
+                <div class="media-body">
+                  <h5 class="media-heading">
+                  {% if review.anonymous %}
+                     {{ review.posted_by.get_company_display }}
+                  {% else %}
+                    {{ review.posted_by.get_name_display }}
+                  {% endif %}
+                  </h5>
+                  <div class="score-value rating-stars star_{% rating_stars_color review.score %}">
+                    {% rating_stars review.score %} <!-- {{ review.score }} -->
+                  </div>
+                </div>
+              </div>
+
+              <p class="remarks description">"{{ review.remarks }}"</p>
+              <div class="small created">{{ review.created|date:"M d, Y" }}</div>
+            </div>
+            
+          {% else %}
+            <div class="media col-md-4 col-sm-6 client-tile">
+          <span class="pull-left thumbnail thumb60">
+
+            {% if not review.use_alt_name %}
+              {% if review.client.website %}
+                {% if not review.review_anonymous %}
+                  <a href="{{ review.client.website }}" target="_blank">
+                {% endif %}
+              {% endif %}
+
+              {% thumbnail review.client.logo '120x90' as thumb %}
+                <img src="{{ thumb.url }}" alt="{{ review.display_name }}">
+              {% empty %}
+                <img src="{{ STATIC_URL }}images/defaults/placeholder-co.png" height="60">
+              {% endthumbnail %}
+
+              {% if review.client.website %}
+                {% if not review.review_anonymous %}</a>
+                {% endif %}
+              {% endif %}
+            {% else %}
+              <img src="{{ STATIC_URL }}images/defaults/placeholder-co.png" height="60">
+            {% endif %}
+          </span>
+          <div class="media-body">
+            {% if review.review_anonymous%}
+            <h5 class="media-heading">
+                <a {%if review.client.website %}{% if not review.review_anonymous %}href="{{ review.client.website }}"{%endif%}{% endif %} class="no-underline">{{ review.display_name }}</a>&nbsp;&nbsp;
+                {% if review.is_fulfilled %}<i class="fa fa-circle-check text-primary"></i> {% endif %}
+            </h5>
+            {% else %}
+              {% if review.full_name %}
+              <h5 class="media-heading">
+                  {{ review.full_name }}&nbsp;&nbsp;
+                  {% if review.is_fulfilled %}<i class="fa fa-circle-check text-primary"></i> {% endif %}
+              </h5>
+              <a  class="no-underline"><small class="text-muted " >{{ review.display_name }}</small></a>
+              {% else %}
+                <h5 class="media-heading">
+                <a {%if review.client.website %}{% if not review.review_anonymous %}href="{{ review.client.website }}"{% endif %}{%endif%} class="no-underline">{{ review.display_name }}</a>&nbsp;&nbsp;
+                {% if review.is_fulfilled %}<i class="fa fa-circle-check text-primary"></i> {% endif %}
+                </h5>
+              {% endif %}
+            {% endif %}
+            </div>
+            <div class="col-sm-12 nopadding">
+              <p class="remarks description  clearfix">{{ review.review }}</p>
+              <div class="small created">{{ review.created|date:"M d, Y" }}</div>
+            </div>
+          </div>
+          {%endif %}
+          {%endfor%}
+        </div>
+
+        <hr>
+        {%if user.is_client %}
+        <div class="text-right">
+          {% if False and perms.reviews.add_review  %}
+            <a href="{% url 'reviews:create_review_token' object.get_content_type_id object.id %}" data-toggle="modal" data-target="#genericModal"  data-modal-is-remote="true" class="btn btn-primary btn-o btn-xs">Request review</a>&nbsp;
+            <a class="btn btn-primary btn-o btn-xs" href="{% get_review_url 'add' object %}">write review</a>
+          {% endif %}
+
+          {% if review_objects|length > 3 %}
+            &nbsp;&nbsp;<a href="{{ score_url }}" class="btn btn-primary btn-o btn-xs">view all</a>
+          {% endif %}
+        </div>
+        {% endif%}
+
+      {%else%}
+        <div class="col-sm-12 nopadding">
+          <p>
+            <span class="text-muted">No reviews to show</span>
+            {%if user.is_client %}
+              {% if False and perms.reviews.add_review  %}
+                <a class="btn btn-primary btn-o btn-xs pull-right" href="{% get_review_url 'add' object %}">write review</a>
+              {% endif %}
+
+              {% if review_objects|length > 3 %}
+                &nbsp;&nbsp;<a href="{{ score_url }}" class="btn btn-primary btn-o btn-xs pull-right">view all</a>
+              {% endif %}
+            {% endif%}
+          </p>
+        </div>
+      {%endif%}
+
+    </div>
+  </div>
+  

@@ -1,0 +1,34 @@
+{% extends 'guest_base_extended.html' %}
+{% load thumbnail %}
+{% block title %}{{ object.vendor.name }}{% endblock %}
+{% block page %}
+  <div id="page" class="container page profile">
+    {% block content %}
+      <div class="text-center">
+        {% thumbnail object.vendor.logo "180x100" as thumb %}
+          <img src="{{ thumb.url }}">
+        {% empty %}
+          <strong class="h4">{{ object.vendor.name }}</strong>
+        {% endthumbnail %}
+        <div class="vertical-spacer-lg"></div>
+        <hr>
+        <p class="lead">
+          {{ object.created_by.get_name_display }} indicated that {{ object.vendor.name }} has <span class="label label-info">{{ object.insurance.name }}</span> <br>insurance expiring on {{ object.expiry_date|date:"d F Y" }}.
+        </p>
+        {% if object.policy_document %}
+        <p class="lead">Attached Policy Document: <a href="{{ object.policy_document.url }}">{{ object.policy_document.url }}</a></p>
+        {% endif %}
+        {% if object.url %}
+        <p class="lead">Linked Proof: <a href="{{ object.url }}">{{ object.url }}</a></p>
+        {% endif %}
+        <hr>
+        <form action="{% url 'vendors:insurance_confirm' object.vendor.id object.token %}" method="POST">
+          {% csrf_token %}
+          <input class="btn btn-primary" name="verify" type="submit" value="Yes, This is correct">
+          <input class="btn btn-default" type="submit" value="No, This is not correct">
+        </form>
+      </div>
+    {% endblock %}
+  </div>
+{% endblock %}
+{% block pjaxr_namespace %}Site.vendor.insurance_confirm{% endblock pjaxr_namespace %}

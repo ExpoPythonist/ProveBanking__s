@@ -1,0 +1,34 @@
+.popover.in {
+    z-index: 1050;
+}
+.popover-title {
+    font-size: 13px;
+    padding: 4px 6px;
+}
+.popover-content {
+    padding: 1px 5px;
+    .table-condensed {
+      th , td {
+        padding: 8px 15px 8px 0;
+      }
+    }
+}
+
+
+.popover {
+  .popover-action-list {
+    //margin-top: 5px;
+    .list-group-item{
+      border-left: none;
+      border-right: none;
+      &:last-child {
+        border-bottom: none;
+        border-radius: 0px;
+      }
+      &:first-child {
+        border-top: none;
+        border-radius: 0px;
+      }
+    }
+  }
+}

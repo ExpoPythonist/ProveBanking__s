@@ -1,0 +1,61 @@
+<li class="anchor dropdown user-dropdown text-left">
+  <a class="dropdown-toggle no-underline" data-toggle="dropdown">
+    {% include 'partials/avatar_initials.html' with object=request.user size=25 %}
+    &nbsp;<small class="">{{ request.user.username|truncatechars:10 }}&nbsp;<i class="fa fa-caret-down"></i></small>
+  </a>
+  <ul class="dropdown-menu text-left" role="menu">
+    <li><a href="{% url 'users:edit_profile' request.user.username %}">{% include 'partials/avatar_initials.html' with object=request.user size=20 %} Profile</a>
+    </li>
+    {% if request.user.is_vendor  %}
+
+      {% comment %}
+        {% if perms.rates.view %}
+          {% if request.user.is_client or not request.user.vendor.is_prospective %}
+            <li>
+            <a href="{% url 'rates:list' %}">&nbsp;<i class="fa fa-money fa-fw text-muted"></i>&nbsp;&nbsp;{{ 'Rates' }}</a>
+            </li>
+          {% endif %}
+        {% endif %}
+      {% endcomment %}
+
+      <li>
+        <a href="{{ request.user.vendor.get_absolute_url }}">&nbsp;<i class="fa fa-building fa-fw  text-muted"></i>&nbsp;&nbsp;{{ 'View company profile' }}</a>
+      </li>
+    {% endif %}
+
+    {% if request.user.is_client and perms.auth.admin %}
+    <li>
+      <a href="{% url 'client_settings:home' %}">&nbsp;<i class="fa fa-cog fa-fw  text-muted"></i>&nbsp;&nbsp;Settings</a>
+    </li>
+    {% endif %}
+
+    {% if request.user.is_client %}
+      {% if request.user.procurement_contacts.exists %}
+        <li><a href="{% url 'vendors:list' %}?my_suppliers=True">&nbsp;<i class="fa fa-star fa-fw text-muted"></i>&nbsp;&nbsp;My suppliers</a></li>
+      {% endif %}
+    {% endif %}
+
+    {% if request.user.is_superuser %}
+      {% if not current_tenant.direct_signup %}
+      <li><a href="{% url 'users:signups' %}">&nbsp;<i class="fa fa-users fa-fw text-muted"></i>&nbsp;&nbsp;Signups to Approve</a></li>
+      {% endif %}
+      <li><a href="{% url 'vendors:invoice_list' %}">&nbsp;<i class="fa fa-file-text-o fa-fw text-muted"></i>&nbsp;&nbsp;Invoices</a></li>
+      <li><a href="{% url 'vendors:vendor_claims' %}">&nbsp;<i class="fa fa-building-o fa-fw text-muted"></i>&nbsp;&nbsp;Vendor Claims</a></li>
+    {% endif %}
+
+    {% comment %}
+    {% if request.user.is_client %}
+      {% if perms.auth.admin %}
+        <li>
+        <a href="{% url 'groups:list' %}">&nbsp;<i class="fa fa-users fa-fw text-muted"></i>&nbsp;&nbsp;{{ 'Edit permissions' }}</a>
+        </li>
+      {% endif %}
+    {% endif %}
+    {% endcomment %}
+
+    <li role="presentation" class="divider"></li>
+    <li>
+      <a href="{% url 'account_logout' %}">&nbsp;<i class="fa fa-sign-out fa-fw text-muted"></i>&nbsp;&nbsp;Sign out</a>
+    </li>
+  </ul>
+</li>

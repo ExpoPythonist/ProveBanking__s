@@ -1,0 +1,16 @@
+{% extends 'guest_base_extended.html' %}
+{% block title %}Send a message{% endblock %}
+{% block page %}
+  <div id="page" class="container page profile">
+    {% block content %}
+      <form id="invite-form" class="form-mobile" role="form" action="#" method="POST">
+        {% csrf_token %}
+        {% include 'forms/mobile_form.html' with form=form %}
+        <div class="form-actions text-center">
+          <input type="submit" value="Send message" class="btn btn-primary"/>
+        </div>
+      </form>
+    {% endblock %}
+  </div>
+{% endblock %}
+{% block pjaxr_namespace %}Site.vendor_profile.client_reference{% endblock pjaxr_namespace %}

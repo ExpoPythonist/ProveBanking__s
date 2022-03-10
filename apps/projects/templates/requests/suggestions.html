@@ -1,0 +1,16 @@
+<div id="suggested-resources" class="panel-body">
+  {% for suggested in staffing_request.people.all %}
+    {% include 'requests/user_suggestion.html' with invited=True %}
+  {% endfor %}
+  {% for suggested in suggestions %}
+    {% include 'requests/user_suggestion.html' %}
+  {% empty %}
+    {% if not staffing_request.people.exists %}
+      <div class="field-group muted">
+        <div class="text-left text-muted">
+          No suggested resources
+        </div>
+      </div>
+    {% endif %}
+  {% endfor %}
+</div>

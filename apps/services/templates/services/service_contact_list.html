@@ -1,0 +1,27 @@
+<div class="page-top-band clearfix">
+  <div class="col-xs-6">
+    <h6>Key contacts</h6>
+  </div>
+  {% if user.vendor == vendor %}
+    <div class="col-xs-6 text-right">
+      <h6><a href="{% url 'services:add_contact' %}" class="no-underline">add a contact</a></h6>
+    </div>
+  {% endif %}
+</div>
+
+
+<div class="panel panel-default notes-panel">
+  <div class="panel-body">
+    {% for contact in service_contacts %}
+      {% include 'services/service_contact_as_field.html' %}
+    {% empty %}
+      <div class="field-group">
+        <div class="field-value muted text-left">
+          <div class="text-muted">
+            No key contact have been added.
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+</div>

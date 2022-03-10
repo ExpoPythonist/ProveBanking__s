@@ -1,0 +1,47 @@
+{% load avatar_tags %}
+{% load utils %}
+
+<div class="media col-sm-{%if procurement %}8{%else%}6{%endif%}">
+  <div class="img-circle text-center">
+    <a href="{% url 'users:profile_modal' contact.username %}" data-toggle="modal" data-target="#userModal"  data-modal-is-remote="true" class="img-circle pull-left anchor ">
+      {% include 'partials/avatar_initials.html' with object=contact size=35 title=contact.get_name_display %}
+    </a>
+  </div>
+  <div class="media-body text-left">
+    <h5 class="media-heading">
+      <a href="{% url 'users:profile_modal' contact.username %}" data-toggle="modal" data-target="#userModal"  data-modal-is-remote="true" class="img-circle pull-left anchor link-no-style">
+        {{ contact.get_name_display }}
+      </a>
+      &nbsp;&nbsp;
+      <a role="button"
+              class="btn-link text-muted no-underline" 
+              tabindex="0"
+              data-container="body"
+              data-trigger="focus"
+              data-toggle="popover" 
+              data-placement="right" 
+              data-html="true"
+              data-content=" <ul class='list-unstyled contact-popover-list'>
+                              <li class=''><i class='fa fa-envelope-o fa-fw text-muted'></i>&nbsp;<a href='mailto:{{ contact.email }}' class='no-underline'>{{ contact.email }}</a></li>
+                              {% if contact.phone %}
+                              <li class=''><i class='fa fa-phone fa-fw text-muted'></i>&nbsp;{{ contact.phone.as_international }}</li>
+                              {% endif %}
+                            </ul>
+              ">
+
+        <i class="fa fa-envelope-o text-muted"></i>&nbsp;&nbsp;
+        <i class="fa fa-phone text-muted"></i>
+      </a>
+    </h5>
+    <div class="media-description text-muted text-ellipsis">
+      {{ contact.roles.all|join:", "}}
+    </div>
+  </div>
+</div>
+{%if procurement %}
+<div class="col-sm-4">
+  {% if user.is_procurement %}
+   <a href="{% url 'vendors:procurement_delete' vendor.id proc_obj.id %}" data-toggle="modal" data-target="#genericModal"  data-modal-is-remote="true" class="pull-right text-muted no-underline small"><i class="fa fa-trash"></i></a>
+  {% endif %}
+</div>
+{% endif %} 

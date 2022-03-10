@@ -1,0 +1,13 @@
+{% load crispy_forms_tags %}
+<div>
+  {% if success %}
+  <div class="success-result text-center">
+    <h4><i class="fa fa-check-circle"></i> Message with link to the staffing request sent</h4>
+  </div>
+  {% endif %}
+  <div class="form-horizontal {% if success %}hide{% endif %}">
+    {% csrf_token %}
+    {{ user_invite_form|crispy }}
+  </div>
+  <div class="block-cover hide"></div>
+</div>

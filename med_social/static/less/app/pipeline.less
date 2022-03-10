@@ -1,0 +1,86 @@
+.pipeline-item-mixin(@color) {
+    border-bottom: 2px solid @color;
+}
+
+.panel-pipeline {
+    &.panel-default {
+        border: 0px;
+        box-shadow: none;
+        .panel-body {
+            margin-left: 0px;
+            background: @body-bg;
+            border: 0px;
+        }
+    }
+    .pipeline-item {
+        position: relative;
+        padding-bottom: 10px;
+        background-color: @color-white;
+        border: 1px solid @gray-lighter;
+        .fa-caret-right {
+            display: inline-block;
+            position: absolute;
+            right: -12px;
+            top: 35px;
+            line-height: 10px;
+            color: @color-white;
+            font-size: 20px;
+            z-index: 9;
+            &:after {
+                content: "\f0da";
+                display: inline-block;
+                color: @gray-lighter;
+                position: relative;
+                right: 4px;
+                z-index: -1;
+            }
+        }
+        &.active {
+            background: @gray-lighter;
+            .fa-caret-right {
+                color: @gray-lighter;
+            }
+        }
+        &:hover {
+            background: lighten(@gray-lighter, 3%);
+            .fa-caret-right {
+                color: lighten(@gray-lighter, 3%);
+            }
+        }
+        &.active, &:hover {
+            border-bottom: 1px solid @brand-primary;
+            margin-bottom: -1px;
+            &.drafts {
+                .pipeline-item-mixin(@color-draft);
+            }
+            &.unconfirmed {
+                .pipeline-item-mixin(@color-unconfirmed);
+            }
+            &.staffing {
+                .pipeline-item-mixin(@color-staffing);
+            }
+            &.staffed {
+                .pipeline-item-mixin(@color-staffed);
+            }
+
+            &.warning {
+                .pipeline-item-mixin(@brand-warning);
+            }
+            &.danger {
+                .pipeline-item-mixin(@brand-danger);
+            }
+            &.success {
+                .pipeline-item-mixin(@brand-success);
+            }
+            &.secondary {
+                .pipeline-item-mixin(@brand-secondary);
+            }
+        }
+        h4.value {
+            margin-bottom: 0px;
+            color: @text-color;
+            font-weight: 700;
+        }
+        
+    }
+}

@@ -1,0 +1,33 @@
+{% load utils %}
+<div class="vendor-confirmation-button btn-group status-dropdown">
+    {% if relation_obj.answer %}
+      <button type="button" class="btn btn-{{ answer_css|get_item:relation_obj.answer }} btn-xs dropdown-toggle" data-toggle="dropdown" title="yes">
+      {{ answer_labels|get_item:relation_obj.answer }}
+       <span class="caret"></span>
+     </button>
+    {%else%}
+    <button type="button" class="btn btn-xs dropdown-toggle" data-toggle="dropdown" title="yes">
+      Fulfill this request?
+      <span class="caret"></span>
+     </button>
+    {%endif%}
+  
+  <ul class="dropdown-menu dropdown-menu-right dropdown-menu-status text-left" role="menu">
+  {% for value, choice in answer_choices %}
+    <li>
+        <a href="#"
+           class="no-link-style no-underline small vendor-confirm-btn"
+           data-action-url="{% url 'projects:staffing_confirmation' sr_pk=staffing_request.id answer=value %}"
+           data-answer="{{ value }}"
+           data-target=".vendor-confirmation-button"
+           >
+          {% if relation_obj.answer == value %}
+            <i class="fa fa-check"></i>
+          {% else %}
+            <i class="fa"></i>
+          {% endif %}&nbsp;<span class="text">{{ answer_labels|get_item:value }}</span>
+        </a>
+    </li>
+  {%endfor%}
+  </ul>
+</div>

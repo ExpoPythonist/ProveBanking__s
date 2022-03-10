@@ -1,0 +1,48 @@
+{% load humanize %}
+{% load thumbnail %}
+
+<div class="media col-md-6 col-sm-6 client-tile" style="height: 100px;">
+    {% if invoice.invoice %}
+        <span class="pull-left thumbnail thumb60">
+            <a target="_blank" href="{{ invoice.invoice.url }}" target="_blank">
+                {% if invoice.is_image %}
+                {% thumbnail invoice.invoice '120x90' as thumb %}
+                    <img src="{{ thumb.url }}">
+                {% endthumbnail %}
+                {% else %}
+                    <img src="{{ STATIC_URL }}images/defaults/placeholder-co.png">
+                {% endif %}
+            </a>
+        </span>
+    {% endif %}
+    <div class="media-body">
+        <h5 class="media-heading">
+            <a {% if invoice.invoice %}target="_blank" href="{{ invoice.invoice.url }}"{% endif %} class="no-underline ">{{ invoice.reference.client }} for {{ invoice.reference.vendor }}</a>
+        </h5>
+        <div class="verification">
+            {% if invoice.date_verified %}
+            <small class="btn btn-xs btn-success disabled">verified</small>
+            &nbsp;
+            <span class="small text-muted">on {{ invoice.date_verified.date }}</span>
+            {% endif %}
+        </div>
+        <div class="duration">
+            <ul class="list-unstyled">
+                {% if invoice.invoice_amount >= 0 %}
+                <li><span class="text-muted">amount ${{ invoice.invoice_amount|intcomma }}</span></li>
+                {% endif %}
+                {% if invoice.invoice_duration %}
+                <li><span class="text-muted">started {{ invoice.get_invoice_duration_display }}</span></li>
+                {% endif %}
+            </ul>
+        </div>
+        <div class="client-actions">
+            {% if request.user.is_allowed_change %}
+                {% if not invoice.date_verified %}
+                    <a href="{% url "vendors:client_invoice_verify" invoice.reference.vendor.id invoice.reference.id invoice.id %}{% if next %}?next={{ next }}{% endif %}">verify</a>
+                {% endif %}
+                &nbsp;<a href="{% url "vendors:client_invoice_delete" invoice.reference.vendor.id invoice.reference.id invoice.id %}{% if next %}?next={{ next }}{% endif %}">delete</a>
+            {% endif %}
+        </div>
+    </div>
+</div>

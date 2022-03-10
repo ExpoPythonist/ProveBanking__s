@@ -1,0 +1,32 @@
+//Shame less
+.vendor-card {
+  .score-btn {
+        display: block;
+        float: right;
+        max-width: 80px;
+        max-height:35px;
+        height: 35px; 
+        border-left: 1px solid lighten(@gray-light, 20%);
+        line-height: 1em;
+        text-align: left;
+        padding: 2px 20px 2px 10px;
+        &, &.hover {
+            color: @gray-darker;
+        }
+        .score-value {}
+        &:after {
+            float: right;
+            display:block;
+            content: "";
+            //font-size: 18px;
+            font-family: FontAwesome;
+            color: @gray-light;
+            .translate(18px; -22px)
+        }
+    }
+}
+
+.spacer{
+    display: inline-block;
+    width: 2px;
+}

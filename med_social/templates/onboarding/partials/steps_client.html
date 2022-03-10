@@ -1,0 +1,15 @@
+<div class="container">
+  <div class="row onboarding-steps text-center">
+    <div class="col-xs-4 visible-xs"></div>
+    <div class="col-sm-2 col-xs-2 col-sm-offset-4 ob-step first">
+      <div class="line-hide">&nbsp;</div>
+      <span class="clearfix {% if user.SETUP_INFO not in user.pending_setup_steps or user.SETUP_INFO == user.next_setup_step %}dark{% endif %}">1</span><label class="hidden-xs">information</label>
+    </div>
+    <div class="col-sm-2 col-xs-2 ob-step last">
+      <div class="line-hide">&nbsp;</div>
+      <span class="clearfix"><i class="fa fa-check"></i></span><label class="hidden-xs">account complete</label>
+    </div>
+    <div class="col-xs-4 visible-xs"></div>
+  </div>
+  <div class="clearfix col-xs-12 current-step-label text-center visible-xs">{{ user.next_step_display }}</div>
+</div>

@@ -1,0 +1,1 @@
+Assignment as procurement contact to {{ vendor }}

@@ -1,0 +1,16 @@
+<div class="text-left btn-group block staffing-{{ staffing_request.id }}-acl" {#% if not staffing_request.is_public %}data-event-success="staffing:acl:vendors"{% endif %#}>
+  <button type="button" href="{% url 'staffing:change_acl_vendors' staffing_request.pk %}" data-toggle="modal" data-target="#genericModal" class="btn btn-xs btn-o btn-default">
+    {% with staffing_request.vendors.count as vendors_count %}
+      {{ vendors_count }} supplier(s)
+    {% endwith %}
+  </button>
+
+  <button type="button" class="btn btn-xs btn-o btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+    <span class="caret"></span>
+    <span class="sr-only">Toggle Dropdown</span>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-right text-left" role="menu">
+    <li class="small"><a href="{% url 'staffing:requests:add_vendor_request' staffing_request.id %}">invite supplier(s)</a></li>
+  </ul>
+</div>
+

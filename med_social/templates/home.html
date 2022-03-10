@@ -1,0 +1,40 @@
+{% extends "base.new.html" %}
+
+{% block title %}Welcome{% endblock %}
+{% block body_class %}login-bg{% endblock %}
+{% block container %}
+<div class="login-block">
+  <a href="{% url "home" %}" class="logo"></a>
+  <div class="request-invite-block">
+    <p><span>It’s hard to know if a company is great unless you know more about their clients.</span></p>
+    <p><span>We built proven to help companies prove that they do great work.  Proven helps companies to showcase their strengths by verifying who their clients are, and let other potential clients learn about the great work they’ve done in the past.</span></p>
+    <p><span>Proven is the best way to prove to potential new clients your depth of experience and your client base.</span></p>
+    <h2><span>Sign up to learn more, and get Proven.</span></h2>
+  </div>
+  <a data-toggle="modal" data-target="#requestDemoDialog" class="btn btn-default log-in">Get Proven</a>
+</div>
+
+<div class="modal fade request-modal" id="requestDemoDialog" tabindex="-1" role="dialog" aria-hidden="true" >
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <div class="row">
+          <div class="col-xs-3 modal-action-left">
+          </div>
+          <div class="col-xs-6">
+            <h4 class="modal-title">Get Proven</h4>
+          </div>
+          <div class="col-xs-3 text-right">
+            <a href="#" class="btn" data-dismiss="modal"><i class="fa fa-times"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="modal-body">
+        {% include 'demo_request_form.html' with form=form %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+

@@ -1,0 +1,11 @@
+{% extends 'responses/status/banner.html' %}
+{% block banner_class %}alert-danger{% endblock %}
+{% block banner_icon %}fa-eye-slash{% endblock %}
+<div class="row">
+  <div class="col-xs-10">
+{% block banner_message %}
+This proposal has not been sent yet.
+{% endblock %}
+{% block button %}
+  <a class="btn btn-xs btn-primary {% if not response.proposed.exists and not response.request.is_fixed_price %} disabled {% endif %}" data-toggle="modal" data-target="#sendProposalModal" href="{% url 'projects:send_proposal' response.id %}" class="btn btn-sm btn-primary"><span>send proposal</span></a>
+{% endblock %}

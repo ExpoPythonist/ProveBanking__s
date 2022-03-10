@@ -1,0 +1,24 @@
+<div class="container">
+  <div class="row onboarding-steps text-center">
+    <div class="col-xs-1 visible-xs"></div>
+    <div class="col-sm-2 col-xs-2 col-sm-offset-1 ob-step first">
+      <div class="line-hide">&nbsp;</div>
+      <span class="clearfix {% if user.SETUP_ACCOUNT_SUMMARY not in user.pending_setup_steps or user.SETUP_ACCOUNT_SUMMARY == user.next_setup_step %}dark{% endif %}">1</span><label class="hidden-xs">profile information</label>
+    </div>
+    <div class="col-sm-2 col-xs-2 ob-step">
+      <span class="clearfix {% if user.SETUP_EDUCATION not in user.pending_setup_steps or user.SETUP_EDUCATION == user.next_setup_step %}dark{% endif %}">2</span><label class="hidden-xs">education</label>
+    </div>
+    <div class="col-sm-2 col-xs-2 ob-step">
+      <span class="clearfix {% if user.SETUP_POSITIONS not in user.pending_setup_steps or user.SETUP_POSITIONS == user.next_setup_step %}dark{% endif %}">3</span><label class="hidden-xs">work experience</label>
+    </div>
+    <div class="col-sm-2 col-xs-2 ob-step">
+      <span class="clearfix {% if user.SETUP_HIGHLIGHTS not in user.pending_setup_steps or user.SETUP_HIGHLIGHTS == user.next_setup_step %}dark{% endif %}">4</span><label class="hidden-xs">highlights</label>
+    </div>
+    <div class="col-sm-2 col-xs-2 ob-step last">
+      <div class="line-hide">&nbsp;</div>
+      <span class="clearfix"><i class="fa fa-check"></i></span><label class="hidden-xs">account complete</label>
+    </div>
+    <div class="col-xs-1 visible-xs"></div>
+  </div>
+  <div class="clearfix col-xs-12 current-step-label text-center visible-xs">{{ user.next_step_display }}</div>
+</div>

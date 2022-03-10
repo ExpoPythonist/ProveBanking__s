@@ -1,0 +1,54 @@
+{% extends "account/base.html" %}
+{% load i18n %}
+{% load account %}
+{% load socialaccount %}
+{% load crispy_forms_tags %}
+{% load crispy_forms_field %}
+{% load extra_form_utils %}
+
+{% block title %}Thanks - {{ current_tenant }}{% endblock %}
+
+{% block main_navbar %}{% endblock %}
+
+
+{% block burger_menu %}
+  <span id="main-menu-btn" class="pull-left"></span>
+{% endblock %}
+
+{% block notifications %}
+  {% include 'partials/notifications.html' %}
+{% endblock %}
+
+
+{% block content %}
+  <section class="hero-container">
+    <div class="page container ">
+      <div class="modal show auth-modal">
+        <div class="modal-dialog modal-sm">
+          <div class="modal-content">
+            <div class="modal-body">
+              <div class="auth-form-panel">
+                <div class="text-center">
+                  <h1><img src="{{ STATIC_URL }}images/vpp-landing/logo/logo-black.png" ></h1>
+                </div>
+                <hr class="thin"/>
+                
+                <h4 class="text-center">Thanks for posting a review!</h4>
+                <br>
+                <p class="text-justify">
+                  If you would like to learn more about how <a href="http://proven.cc" class="no-underline"><b><span class="text-primary">Proven</span></b></a> enables enterprises to simplify working with professional services suppliers, please get in touch with Suzanne at <a class="no-underline" href="mailto:suzanne@proven.cc"><b>suzanne@proven.cc</b></a>.
+                </p>
+                <br>
+              </div>
+            </div>
+          </div>
+          <br>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+
+{% block js_foot %}
+  <script type="text/javascript" src="{{ STATIC_URL }}js/lib/add2home.js"></script>
+{% endblock %}

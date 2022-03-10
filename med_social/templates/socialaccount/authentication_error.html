@@ -1,0 +1,54 @@
+{% extends "account/base.html" %}
+{% load socialaccount %}
+{% load i18n %}
+
+{% block title %}{% trans "Sign in error" %}{% endblock %}
+
+{% block page_title %}<span id="page-title">Sign in error</span>{% endblock %}
+
+{% block burger_menu %}
+  <span id="main-menu-btn" class="pull-left"></span>
+{% endblock %}
+
+{% block left_nav_button %}
+  <span id="left-nav-btn" class="pull-left">
+    <a id="back-btn" class="navbar-brand btn" href="{% url 'home' %}"><i class="fa fa-chevron-left"></i></a>
+  </span>
+{% endblock %}
+
+{% block right_nav_button %}
+  <span id="right-nav-btn" class="pull-right">
+    <a class="navbar-brand btn main-menu-btn" id="linkedinSignupButton" href="{% provider_login_url 'linkedin' %}">sign in</a> 
+  </span>
+{% endblock %}
+
+{% block left_sidebar %}
+  <div id="left-right" class="sidebar sidebar-left"></div>
+{% endblock %}
+
+{% block right_sidebar %}
+  <div id="sidebar-right" class="sidebar sidebar-right"></div>
+{% endblock %}
+
+{% block notifications %}
+  {% include 'partials/notifications.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="page-top-band">
+  <div class="col-xs-12">
+    <h6 class="">Authentication error</h6>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-body">
+    <div class="col-xs-12">
+      <h4>{% trans "Sorry we could not log you in" %}</h4>
+      <p>
+        {% blocktrans with site_name=current_site.name %}We could not log you in via your social network account. Please try again and make sure you authorize {{ current_site }} to access your profile.{% endblocktrans %}
+      </p>
+    </div>
+  </div>
+</div>
+{% endblock %}

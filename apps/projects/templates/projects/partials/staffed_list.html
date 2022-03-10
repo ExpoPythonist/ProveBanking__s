@@ -1,0 +1,32 @@
+{% load projects %}
+{% load utils %}
+
+{% for proposed in project.sorted_proposals.all %}
+  {% if proposed.is_staffed %}
+    {% if user.is_client %}
+      {% include 'projects/partials/staffed_user.html'%}
+    {% elif proposed.resource.vendor == user.vendor %}
+      {% include 'projects/partials/staffed_user.html'%}
+    {% endif %}
+  {% endif %}
+{% empty %}
+  {% if not project|can_staff_resources:user %}
+  <li>
+    <p class="small text-muted">No accepted or staffed user</p>
+  </li>
+  {% endif %}
+{% endfor %}
+
+{% if project|can_staff_resources:user %}
+    <li class="media {% if proposed.end_date < proposed.project.end_date %}disabled-user{% endif %}">
+      <div class="img-circle pull-left anchor text-center">
+        <a href="{% url 'projects:add_user' project.id %}" data-toggle="modal" data-target="#genericModal"  data-modal-is-remote="true" class="new-user">
+          <i class="fa fa-plus"></i>
+        </a>
+      </div>
+      <div class="media-body">
+        <h5 class="media-heading">Add staff</h5>
+        <div class="media-description">&nbsp;</div>
+      </div>
+    </li>
+{% endif %}

@@ -1,0 +1,6 @@
+{% load i18n %}
+{% load i18n %}{% blocktrans %}
+Thank you! Someone from Proven will get in touch with you soon.
+{% endblocktrans %}
+
+{% include 'account/email/footer_ceo.txt' %}

@@ -1,0 +1,19 @@
+<div class="page-top-band">
+  <div class="col-xs-12">
+    <h6>Projects</h6>
+  </div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-body">
+  {% for staff in proposed %}
+    <div class="field-group multi-line">
+      {% include 'requests/as_summary.html' with staff=False role=staff.role staffing_request=staff.request start_date=staff.start_date end_date=staff.end_date skill_level=staff.skill_level %}
+    </div>
+  {% empty %}
+    <div class="field-group text-muted text-left">
+      No projects yet.
+    </div>
+  {% endfor %}
+  </div>
+</div>

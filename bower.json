@@ -1,0 +1,21 @@
+{
+  "name": "VPP",
+  "version": "0.0.0",
+  "homepage": "https://github.com/Vetted/VPP",
+  "directory" : "med_social/static/bower_components/",
+  "moduleType": [
+    "amd"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "react-selectize": "~0.0.5"
+  }
+}

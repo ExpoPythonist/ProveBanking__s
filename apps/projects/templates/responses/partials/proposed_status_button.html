@@ -1,0 +1,14 @@
+<a href="#"
+   class="no-link-style no-underline small {{ class }} proposed-status-btn"
+   data-action-url="{% url 'staffing:change_proposed_status' proposed_resource_object.id %}"
+   data-status-id="{{ status.id }}"
+   data-staff-id="{{ proposed_resource_object.id }}"
+   data-cost="{{ proposed_resource_object.total_cost }}"
+   data-target=".proposed-status-btn-{{ proposed_resource_object.id }}"
+   >
+  {% if status == proposed_resource_object.status %}
+    <i class="fa fa-check"></i>
+  {% else %}
+    <i class="fa"></i>
+  {% endif %}&nbsp;<span class="text">{{ status|lower }}</span>
+</a>

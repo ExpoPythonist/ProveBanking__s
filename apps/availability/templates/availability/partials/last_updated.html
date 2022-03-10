@@ -1,0 +1,12 @@
+<div class="avl-update-request small" id="request-update-btn-{{ for_user.id }}" >
+  <small>
+    <span class="text-muted">updated:</span> {{ for_user.natural_last_udpated_availability|default:"never" }}
+  </small>
+  {% if update_requested %}
+    &middot; <span class="no-underline text-muted disabled">requested</span>
+  {% else %}
+    {% if for_user != user %}
+    &middot; <a href="{% url 'availability:request_update' for_user.id %}" class="no-underline" data-method="POST" data-replace="#request-update-btn-{{ for_user.id }}">ask to update</a>
+    {% endif %}
+  {% endif %}
+</div>

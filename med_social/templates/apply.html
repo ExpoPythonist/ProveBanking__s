@@ -1,0 +1,50 @@
+{% extends "account/base.html" %}
+{% load avatar_tags %}
+{% load i18n %}
+{% load account %}
+{% block title %}Join {{ inviter.first_name }}'s network of independent professionals{% endblock %}
+
+{% block page_title %}<span id="page-title">Apply</span>{% endblock %}
+
+{% block left_nav_button %}
+<span id="left-nav-btn" class="pull-left">
+  <a href="/" class="navbar-brand btn "><i class="fa fa-chevron-left"></i><!--  <span>Cancel</span> --></a>
+</span>
+{% endblock %}
+
+{% block right_nav_button %}<span id="right-nav-btn" class="pull-right"></span>{% endblock %}
+
+{% block page %}
+  <div id="page" class="page">
+    <div class="hero-invite text-center">
+      <span class="avatar-container-big"><img src="{% avatar_url inviter 66 %}" class="img-circle avatar avatar-66"/></span>
+      <img src="" class="avatar img-circle" width="66">
+      <br/>
+      <h4>{{ inviter.get_full_name }}</h4>
+      <p class="lead">
+      Join <b>{{ inviter.first_name }}'s</b> network of independent professionals and the <b>people</b> looking to hire them.
+      </p>
+    </div>
+    <div class="container">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <p class="lead">
+            Join <b>{{ inviter.first_name }}'s</b> network of independent professionals and the <b>people</b> looking to hire them.
+          </p>
+        </div>
+      </div>
+      {% if socialaccount.providers  %}
+        <p class="lead">
+          {% blocktrans with site.name as site_name %}
+          {% endblocktrans %}
+        </p>
+
+        <div class="socialaccount_ballot">
+          <ul class="socialaccount_providers list-inline">
+              {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+          </ul>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

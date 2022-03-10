@@ -1,0 +1,3 @@
+{% load i18n %}{% blocktrans %}The request is for {{num_resources}} resources with {{skills}} expertise. 
+Click the link below to view and respond to the request:
+{{url}}{% endblocktrans %}

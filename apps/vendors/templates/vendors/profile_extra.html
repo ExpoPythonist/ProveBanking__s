@@ -1,0 +1,31 @@
+{% extends "vendors/profile_edit_sidebar.html" %}
+
+{% block main_content %}
+
+<section class="profile-edit-form">
+  <h6 class="section-title text-uppercase">Locations</h6>
+  <div class="panel panel-default panel-card">
+    <div class="panel-body">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <strong class="text-muted">
+            Locations <small> by employees</small> 
+            <a href="{% url 'vendors:locations:create' vendor.id %}" class="btn-link no-underline pull-right" data-toggle="modal" data-target="#genericModal" >+ add location</a>
+          </strong>
+        </div>
+        <div class="panel-body">
+          {% for location in locations %}
+            <button class="btn btn-default" type="button">
+              {{ location.location.city }} <span class="label label-default">{{ location.num_resources }}</span>
+            </button>&nbsp;
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+{% endblock %}

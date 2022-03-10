@@ -1,0 +1,36 @@
+{% extends 'onboarding/base.html' %}
+{% load bootstrap3 %}
+{% block onboarding_content %}
+<h3 class="header-thin text-center">{{ current_site.name }} is a Platform for top Independent professionals <br class="hidden-xs">and the people looking to hire them</h3>
+<form action="{{ user.setup_step_url }}" method="POST" id="user-setup-form" class="hide">
+  {% csrf_token %}
+  {% bootstrap_form form %}
+  <button type="submit" class="btn btn-primary">Next</button>
+</form>
+<div class="account-type-container">
+  <div class="text-center panel account-type block-left">
+    <div class="panel-body">
+      <div class="img-fader">
+        <img src="{{ STATIC_URL }}images/onboarding/clients_desat.png" class="account-type"/>
+      </div>
+      <h4>Client</h4>
+      <!--p class="description">
+      Finding high quality independent consultants can be hard. Let {{ current_site.name }} help you find the right talent for your project. We bring you transparency and cost efficiency, so you can get more for your marketing dollars
+      </p-->
+      <a href="#" class="user-type-chooser btn-outline btn btn-default " data-kind="2">Join as client &rarr;</a>
+    </div>
+  </div>
+  <div class="text-center panel account-type block-right">
+    <div class="panel-body ">
+      <div class="img-fader">
+        <img src="{{ STATIC_URL }}images/onboarding/professionals_desat.png" class="account-type"/>
+      </div>
+      <h4>Professional</h4>
+      <!--p class="description">
+        Sign up here to showcase your talent and skills to the best clients. Start working the way you want.
+      </p-->
+      <a href="#" class="user-type-chooser btn-outline btn btn-default" data-kind="1">Join as professional &rarr;</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

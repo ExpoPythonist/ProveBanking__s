@@ -1,0 +1,12 @@
+{% extends 'base_email.html' %}
+
+{% block body %}
+<tr>
+  <td class="content-block">
+    <p>{{sender}} has sent you a message: </p>
+    <hr class="thin">
+    <p class="thin text-dark">{{message}}</p>
+    <p>You can checkout the staffing request here: <a href="{{ resource_url }}">{{ resource_url }}</a></p>
+  </td>
+</tr>
+{% endblock %}

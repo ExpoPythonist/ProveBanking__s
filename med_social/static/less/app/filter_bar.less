@@ -1,0 +1,161 @@
+section.filter-bar{
+  div.panel-default.panel-card {
+    .panel-body {
+      padding: 12px 16px 2px 16px;
+      @media (max-width: @screen-xs-max) {
+          padding-bottom: 12px;
+          .btn-filter {
+            text-align: left;
+          }
+      }
+    }
+  }
+  form#filter-form {
+    margin-bottom: 3px;
+
+    strong {
+      font-size: 10px;
+      .form-left {
+        text-align: left;
+        .checkbox {
+          label {
+            display: inline-block;
+          }
+        }
+      }
+    }
+
+
+    .filter-option {
+      span {
+        margin-right: 15px;
+        margin-left:5px;
+
+        display: inline-block;
+        color: #acacac;
+        font-size: 13px;
+      }
+      input {
+        margin-left: 6px;
+      }
+    }
+  }
+
+  .filter-btn-group {
+    position: relative;
+    margin-bottom: 10px;
+    @media (max-width: @screen-xs-max) {
+      width: 100%;
+      //overflow: hidden;
+      &.filter-label-wrap {
+        width: 50px;
+      }
+      .filter-dropdown {
+        max-width: none;
+        width: 100%;
+      }
+    }
+  }
+
+  .vendor-filter-btn-group.filter-btn-group {
+    @media (max-width: @screen-xs-max) {
+      width: 80%;
+    }
+  }
+
+  .filter-label {
+    float: left;
+    padding: 0px 5px 0px 8px;
+    color: #6C6C6C;
+    font-weight: bold;
+    font-size: 10px;
+  }
+
+  .filter-btn {
+    cursor: text;
+    position: relative;
+    border: 1px solid #d8d8d8;
+    background: transparent;
+    padding: 4px 30px;
+    margin-right: 10px;
+    color: #6c6c6c;
+    font-size: 13px;
+    max-height: 28px;
+    border-radius: 4px;
+    display: inline-block;
+    text-align: left;
+    @media (max-width: @screen-xs-max) {
+      width: 100%;
+    }
+    &:after {
+      display: inline-block;
+      position: absolute;
+      top:3px;
+      font-size: 14px;
+      left: 10px;
+      color: #6c6c6c;
+      font-family: 'FontAwesome';
+    }
+    &.Services:after {
+      content:'\f07c';
+    }
+    &.location:after{
+      content:'\f041';
+    }
+    &.Skills:after{
+      content:'\f0ad';
+    }
+    &.Roles:after, &.Role:after {
+      content:'\f12e';
+    }
+    &.Availability:after {
+        content:'\f017';
+    }
+    &.Suppliers:after {
+        content:'\f0d1';
+    }
+    &.Groups:after, &.Group:after {
+        content:'\f0c0';
+    }
+    &.Contact:after {
+        content:'\f183';
+    }
+    &.Status:after {
+        content:'\f21e';
+    }
+    &.Kind:after {
+        content:'\f228';
+    }
+
+    &.find:after {
+        content:'\f002';
+    }
+
+    &:active, &:focus {
+      box-shadow: none;
+    }
+
+
+  }
+  .filter-dropdown {
+    transition: all 0.3s ease;
+    position: absolute;
+    top: -2px;
+    left: 0px;
+    border-radius: 4px 4px 0 0 !important;
+    box-shadow: none;
+    border-color: #d8d8d8;
+    max-width: 150px;
+  }
+  .block-left {
+    @media (max-width: @screen-xs-max ){
+      margin-bottom: 10px;
+      .filter-btn-group {
+        margin-bottom: 10px;
+      }
+    }
+  }
+  #filter-tags {
+    margin-top: 0px;
+  }
+}

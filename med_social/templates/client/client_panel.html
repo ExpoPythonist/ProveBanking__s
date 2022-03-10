@@ -1,0 +1,45 @@
+{% load utils %}
+{% load thumbnail %}
+{% load humanize %}
+{% load i18n %}
+<div id="client-panel-{{ client.pk }}" class="grid-item panel panel-consultant">
+  <div class="panel-body">
+    <div id="subProfileFormContainer"></div>
+    <div class="consultant-details">
+      {% include 'consultant/basic_profile.html' with consultant=client %}
+      <hr class="divider">
+      {% if client != user %}
+        {% common_connections client as connections %}
+        {% if connections %}
+        <dl class="dl-horizontal dl-default">
+          <dt class="">In Common</dt>
+          <dd>{{ connections.networks.0.name }}</dd>
+          <dd>{{ connections.people.0 }}</dd>
+        </dl>
+        <hr class="divider"/>
+        {% endif %}
+      {% endif %}
+      {% include 'consultant/profile_expertise.html' with is_last=True consultant=client %}
+
+      {% ifnotequal profile_page True %}
+        {% ifnotequal client user %}
+        <div class="text-center">
+          {% include 'follow_button.html' with target=client is_following=is_following class="btn-follow btn-block" %}
+        </div>
+        {% else %}
+        <a href="{{ client.profile_url }}" class="btn btn-sm link-gray"></a>
+        {% endifnotequal %}
+      {% else %}
+      <div class="text-center">
+        {% if profile == user %}
+          {% if show_setup_btn %}
+          <a href="{% url 'run_setup_wizard' %}" class="btn btn-default btn-block"><i class="fa fa-cogs"></i> run setup wizard</a>
+          {% endif %}
+        {% else %}
+          {% include 'follow_button.html' with target=client is_following=is_following class="btn-block btn-follow " %}
+        {% endif %}
+      </div>
+      {% endifnotequal %}
+    </div>
+  </div>
+</div>

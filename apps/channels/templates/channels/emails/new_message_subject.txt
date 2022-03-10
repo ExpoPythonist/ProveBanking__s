@@ -1,0 +1,5 @@
+{%if staffing_req%}
+New comments in discussion regarding “{{ staffing_req }}” 
+{%else%}
+{{ message.posted_by }}: {{ message.body|truncatechars:"30" }}
+{%endif%}

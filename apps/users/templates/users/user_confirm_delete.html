@@ -1,0 +1,26 @@
+<div class="modal-header text-center">
+  <div class="row">
+    <div class="col-xs-3 modal-action-left">
+      <a href="#" class="btn" data-dismiss="modal"><i class="fa fa-chevron-left"></i> Cancel</a>
+    </div>
+    <div class="col-xs-6">
+      <h4 class="modal-title" id="myModalLabel"> Confirm deletion</h4>
+    </div>
+  </div>
+</div>
+  <div class="modal-body">
+    <form id="userDeleteForm" action="{% url 'users:delete' object.id %}" method="POST">
+      {% csrf_token %}
+      <div class="field-group">
+          <label>Are you sure? </label>
+          <div class="field-value"></div>
+      </div>
+      <hr class="thin"/>
+      <div class="form-group multi-line">
+        <div class="controls">
+          <button type="submit" class="btn btn-link pull-right" data-dismiss="modal" onClick="$('#userDeleteForm').submit();">Yes <i class="fa {{ submit_btn_icon|default:'fa-chevron-right'}}"></i></button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,8 @@
+{% load i18n %}
+{% blocktrans with user_name=user.get_short_name %}
+Hi {{ user_name }},
+
+Welcome to {{ current_tenant.name }}
+
+
+If you have any questions, please feel free to shoot me a note at suzanne@proven.cc. {% endblocktrans %}

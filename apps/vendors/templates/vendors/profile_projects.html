@@ -1,0 +1,58 @@
+{% extends "vendors/profile_edit_sidebar.html" %}
+
+{% block main_content %}
+<section class="profile-edit-form projects-list">
+  <h6 class="section-title text-uppercase ">Past Projects</h6>
+  <div class="panel panel-default panel-card">
+    <div class="panel-body">
+
+      <div class="alert alert-info alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        {% if current_tenant.is_public_instance %}
+        <strong>Optional:</strong>&nbsp;Highlight past projects to market yourselves to the clients who might not know you very well.
+        {% else %}
+        <strong>Optional:</strong>&nbsp;Highlight past {{ current_tenant.name }} projects to market yourselves to the clients at {{ current_tenant.name }} who might not know you very well.
+        {% endif %}
+      </div>
+
+      <br>
+<!--       <h6 class="block-meta-title text-uppercase">Past Projects</h6> -->
+      <br>
+
+      <ul class="list-group container-md">
+        <li class="list-group-item header small text-uppercase">
+          <h6 class="text-upper-case"><span id="project-count" data-count='{{projects.count}}'>{{ projects.count }}</span> Projects</h6>
+        </li>
+        <span class="project-list-items">
+        {% for project in projects %}
+          <li class="list-group-item">
+            <b>{{ project.title }}</b> <span class="pull-right"><a href="{% url 'vendors:edit_portfolio' project.id %}" class="btn btn-xs  no-underline" data-toggle="modal" data-target="#genericModal" >edit</a>&nbsp;<span class="small text-muted">|</span>&nbsp;
+            <a class="btn btn-xs underline" href="{% url 'vendors:delete_portfolio' project.id %}" data-toggle="modal" data-target="#genericModal">delete</a></span>
+          </li>
+        {% endfor %}
+        </span>
+        <li class="list-group-item">
+         <a href="{% url 'vendors:add_portfolio' vendor.id %}" class="btn-link no-underline" data-toggle="modal" data-target="#genericModal" >+ add more</a>
+         </li>
+      </ul>
+
+      <div class="row">
+        <div class="col-xs-6">
+          <br><br>
+          <a href="{% if current_tenant.is_public_instance %}{% url 'vendors:client_add' vendor.id %}{% else %}{% url 'user_setup:setup_step_vendor_media' vendor.id %}{% endif %}" class="btn btn-default btn-backward">Back</a>
+        </div>
+        <div class="col-xs-6 text-right">
+          <br><br>
+          {% if features.insurance.is_enabled %}
+          <a href="{% url 'vendors:insurance_add' vendor.id %}" type="submit" class="btn btn-primary btn-forward">Next</a>
+          {% else %}
+          <a href="{% url 'vendors:cert_add' vendor.id %}" type="submit" class="btn btn-primary btn-forward">Next</a>
+          {% endif %}
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+{% endblock %}

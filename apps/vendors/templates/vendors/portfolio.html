@@ -1,0 +1,32 @@
+{% pjaxr_extends "base_template.html" "Site" %}
+{% load crispy_forms_tags %}
+{% block title %} Projects - {{ current_tenant }}{% endblock %}
+
+{% block page_title %}<span id="page-title"> Projects</span>{% endblock %}
+
+{% block page %}
+  <div id="page" class="container">
+    {% block content %}
+
+      <ol class="breadcrumb custom">
+        <li><a href="{{ vendor.get_absolute_url }}">Company</a></li>
+        <li class="active">Projects</li>
+      </ol>
+
+      <section class="col-md-8 col-md-offset-2 past-project">
+        <h6 class="section-title text-uppercase">Portfolio Projects</h6>
+        {% for project in projects %}
+          <div class="panel panel-default panel-card">
+            <div class="panel-body">
+              <div></div>
+              {% include 'projects/tile.html' with project=project tile=1 %}
+            </div>
+          </div>
+        {% empty %}
+          <h3>No Projects to show</h3>
+        {% endfor %}
+      </section>
+    {% endblock %}
+  </div>
+{% endblock %}
+{% block pjaxr_namespace %}Site.vendors{% endblock pjaxr_namespace %}

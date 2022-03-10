@@ -1,0 +1,8 @@
+<div class="alert {% block banner_class %}{% endblock %} row project-status-banner">
+  <div class="col-sm-10 col-xs-9">
+    <i class="fa {% block banner_icon %}{% endblock %}"></i> {% block banner_message %}{% endblock %}
+  </div>
+  <div class="col-sm-2 col-xs-3 nopadding text-right">
+    <a href="{% url 'projects:edit' project.id %}" class="btn btn-primary btn-xs">Change</a>
+  </div>
+</div>

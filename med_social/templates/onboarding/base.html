@@ -1,0 +1,30 @@
+{% pjaxr_extends "base_template.html" "Site" %}
+{% load pipeline %}
+{% load bootstrap3 %}
+{% load avatar_tags %}
+{% load i18n %}
+{% load static %}
+{% block title %} Welcome aboard! Help your potential clients find you by providing some info {% endblock %}
+
+{% block notifications %}
+  {% include 'partials/notifications.html' %}
+{% endblock %}
+
+{% block css_head %}
+  <link rel="stylesheet" type="text/css" href="{% static 'new/css/style.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/bem_style.css' %}">
+{% endblock %}
+
+{% block page %}
+  <div id="page" class="page container">
+    {% block content %}{% endblock %}
+  </div>
+{% endblock %}
+
+{% block js_foot %}
+  {% javascript 'onboarding' %}
+{% endblock %}
+
+{% block js_bundle %}
+  <script src="{% static 'build/bundle.js' %}"></script>
+{% endblock %}

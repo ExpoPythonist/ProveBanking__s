@@ -1,0 +1,39 @@
+//Score page
+div.panel-default.panel-score {
+  .field-group > * {
+    padding-top: 14px;
+    min-height: 56px;
+  }
+  .weight-value {
+    line-height: 1.2em;
+    //text-align: right;
+  }
+
+  div.field-value {
+    padding-bottom: 8px;
+    .field-value-left {
+     // font-size: 18px;
+      padding-left: 10px;
+      font-weight: 400;
+    }
+    .field-value-right {
+      line-height: 1em;
+      vertical-align: middle;
+      display: inline-block;
+      .score-value {
+        font-size: 18px;
+      }
+      .score-constant {
+        font-weight: 400;
+      }
+      .score-metrics {
+        font-weight: 400;
+        color: lighten(@gray-light, 10%);
+        text-transform: uppercase;
+      }
+    }
+    div > a {
+        font-weight: 400;
+      }
+  }
+}

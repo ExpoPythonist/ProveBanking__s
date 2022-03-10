@@ -1,0 +1,4 @@
+{% load i18n %}{% blocktrans %}{{sender}} sent you a message : 
+{{message}}
+{{resource_url}}
+{% endblocktrans %}

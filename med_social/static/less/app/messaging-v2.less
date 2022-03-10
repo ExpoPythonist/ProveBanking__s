@@ -1,0 +1,37 @@
+#messages-indicator {
+    position: relative;
+    cursor: default;
+    > i {
+        color: #fff;
+        cursor: pointer;
+    }
+    #messages-dropdown {
+        position: absolute;
+        top: 30px;
+        left: -23px;
+        z-index: 3500;
+        .arrow-container {
+            width: 82px;
+            .arrow-up {
+                position: relative;
+                width: 0;
+                height: 0;
+                margin: 0 auto;
+                border-left: 10px solid transparent;
+                border-right: 10px solid transparent;
+                border-bottom: 10px solid @panel-default-heading-bg;
+            }
+        }
+        .dropdown-content {
+            max-width: 300px;
+            min-height: 400px;
+            width: 300px;
+            .box-shadow(0 1px 5px rgba(0,0,0,.5));
+            .panel-heading {
+                padding: 2px 5px;
+                width: 100%;
+            }
+        }
+    }
+}
+

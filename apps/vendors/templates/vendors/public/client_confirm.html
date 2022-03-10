@@ -1,0 +1,46 @@
+{% extends 'guest_base_extended.html' %}
+{% load avatar_tags %}
+{% load thumbnail %}
+{% block title %}{{ object.vendor.name }}{% endblock %}
+{% block page %}
+  <div id="page" class="container page client-confirm">
+    {% block content %}
+      <br>
+      <br>
+      <section class="client-overview">
+        <h6 class=""></h6>
+        <div class="panel panel-default panel-card">
+          <div class="panel-body">
+            <div class="media ">
+              <span class="pull-left">
+                {% thumbnail object.vendor.logo "180x100" as thumb %}
+                  <img src="{{ thumb.url }}">
+                {% empty %}
+                  <strong class="h4">{{ object.vendor.name }}</strong>
+                {% endthumbnail %}
+              </span>
+              <div class="media-body">
+                <div class="media-heading">
+                  <b>{{ object.created_by.get_name_display }}</b> has indicated that you are a client of <b>{{ object.vendor }}</b>
+                </div>
+                <div class="text-muted">
+                 Listing verified clients like you on Proven.cc will greatly help {{ object.vendor }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      
+      <form id="invite-form" class="form-mobile" role="form" action="#" method="POST">
+        {% csrf_token %}
+        
+        {% include 'forms/client_confirm_form.html' with form=form panel_class='panel-card' %}
+        <div class="form-actions text-center">
+          <input type="submit" value="That's it! Prove {{ object.vendor.name }}" class="btn btn-primary"/>
+        </div>
+      </form>
+    {% endblock %}
+  </div>
+{% endblock %}
+{% block pjaxr_namespace %}Site.vendor.client_confirm{% endblock pjaxr_namespace %}

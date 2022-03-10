@@ -1,0 +1,24 @@
+<a href="
+  {% if is_staffed %}
+    {% url 'staffing:requests:reject_resource' project.id staffing_request.id proposed_resource_object.id %}
+  {% else %}
+    {% url 'staffing:requests:accept_resource' project.id staffing_request.id proposed_resource_object.id %}
+  {% endif %}" class="no-link-style no-underline small {{ class }} {% if is_staffed %} staffed {% endif %}" data-class="{{ class }}" data-replace data-method="POST"
+    data-staff-id="{{ proposed_resource_object.id }}"
+    data-cost="{{ proposed_resource_object.total_cost }}"
+    {% if is_staffed %}
+      data-hover
+      data-hover-text='remove'
+      data-text='staffed'
+      data-hover-icon='fa fa-times'
+      data-icon='fa fa-check'
+      data-event-success='staffing:add'
+    {% else %}
+      data-event-success='staffing:remove'
+    {% endif %}>
+  {% if is_staffed %}
+    <i class="fa fa-check"></i>&nbsp;<span class="text">staffed</span>
+  {% else %}
+    <i class="fa fa-plus"></i>&nbsp;<span class="text">staff</span>
+  {% endif %}
+</a>

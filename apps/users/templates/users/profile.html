@@ -1,0 +1,138 @@
+{% pjaxr_extends "base_template.html" "Site" %}
+{% load socialaccount %}
+{% load user_tags %}
+{% load rates_tags %}
+{% load date_tags %}
+
+{% block title %}{{ object.get_name_display }} - {{ current_tenant }}{% endblock %}
+
+{% block page_title %}<span id="page-title">User Profile</span>{% endblock %}
+
+{% block notifications %}
+  {% include 'partials/notifications.html' %}
+{% endblock %}
+
+{% block page %}
+  <div id="page" class="container page profile">
+    {% block content %}
+      <div class="row">
+        <div class="col-xs-6">
+
+        </div>
+        <div class="col-xs-6 text-right">
+        {% if request.user.vendor == object.vendor %}
+          <div class="dropdown">
+            <button class="btn btn-link dropdown-toggle no-link-style no-underline" type="button" id="dropdownMenu1" data-toggle="dropdown">
+              <span>edit&nbsp;<span class="caret"></span></span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-right text-left" role="menu" aria-labelledby="dropdownMenu1">
+              <li role="presentation"><a role="menuitem" tabindex="-1" href="{% url 'users:edit_profile' object.username %}">edit profile</a></li>
+              <li role="presentation"><a role="menuitem" tabindex="-1" href=" {% url 'users:password_reset' %} ">change password</a></li>
+
+              {% if not object.has_joined %}
+                <li role="presentation">
+                  <a role="menuitem" tabindex="-1" href="{% url 'users:resend_invite' object.id %}" data-toggle="modal" data-target="#userModal"  data-modal-is-remote="true" title="Invite to the platform">
+                  {% if object.invitations.all %}resend invitation{% else %} invite to Proven {% endif %}</a>
+                </li>
+              {% endif %}
+            </ul>
+          </div>
+        {% else %}
+          {% if not object.has_joined %}
+            <a href="{% url 'users:resend_invite' object.id %}" data-toggle="modal" data-target="#userModal"  data-modal-is-remote="true" title="Invite to the platform" class="btn btn-link no-link-style no-underline ">
+            {% if object.invitations.all %}resend invitation{% else %} invite to Proven {% endif %}
+            </a>
+          {% endif %}
+        {% endif %}
+        </div>
+      </div>
+
+      <div class="panel panel-default panel-card">
+        <div class="panel-body">
+
+          <div class="profile-block-top text-center profile-banner">
+            {% include 'users/banner.html' %}
+            {% if not object.has_joined  and object.invitations.exists %}
+            Invite URL: <input style="width: 60%;" value="{{ current_tenant.get_full_url }}{{ object.invitations.first.get_absolute_url }}">
+            {% endif %}
+          </div>
+
+          {% if object.bio %}
+          <div class="bio-section section">
+            <h6 class="sub-section-title text-uppercase">Bio</h6>
+            <p class="description">
+              {{ object.bio }}
+            </p>
+          </div>
+          {% endif %}
+
+
+          {% if object.skill %}
+          <div class="skills-section section">
+            <h6 class="sub-section-title text-uppercase">Skills</h6>
+            <div class="content">
+              {% for skill in object.categories.all %}
+              <span class="btn btn-secondary btn-o btn-xs disabled">{{skill}}</span>&nbsp;
+              {% endfor %}
+            </div>
+          </div>
+          {% endif %}
+
+          <div class="contact-section section">
+            <h6 class="sub-section-title text-uppercase">Contact information</h6>
+            <ul class="list-inline">
+              <li class="small text-left" title="email">
+                <i class="fa fa-envelope-o text-muted"></i>
+                <span class="text-muter">
+                 <a href="mailto:{{object.email}}" class="no-underline">
+                  {{ object.email }}
+                 </a>
+                </span>
+              </li>
+              {% if object.phone %}
+                <li class="small text-left" title="phone">
+                  <i class="fa fa-phone text-muted"></i>
+                  <span class="text-muter">
+                    <a href="tel:{{object.phone}}" class="no-underline">
+                      {{ object.phone }}
+                    </a>
+                  </span>
+                </li>
+              {% endif %}
+            </ul>
+          </div>
+
+          <div class="permissions-section section hide">
+            <h6 class="sub-section-title">
+              <span class="text-uppercase">Groups & permissions</span>
+              <a href="{% url 'users:edit_permission' object.id %}" class="no-underline pull-right">edit groups</a>
+            </h6>
+            <div class="description">
+              <div class="field-group">
+                <label>Assigned groups</label>
+                <div class="field-value">
+                  {% for group in object.groups.all %}
+                    <span class="btn btn-secondary btn-sm btn-xs disabled">{{ group.display_name }}</span>&nbsp;
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {% if perms.rates.view and object.get_rate %}
+            {% if user.is_client or object.vendor == user.vendor %}
+              <div class="rate-section section">
+                <h6 class="sub-section-title text-uppercase">Rate</h6>
+                <p class="description">
+                  {% include 'rates/as_field.html' with rate=object.get_rate %}
+                </p>
+              </div>
+            {% endif %}
+          {% endif %}
+
+        </div>
+      </div>
+    {% endblock %}
+  </div>
+{% endblock %}
+{% block pjaxr_namespace %}Site.user_profile{% endblock pjaxr_namespace %}

@@ -1,0 +1,38 @@
+{% load projects %}
+{% load utils %}
+
+<li class="media {% if proposed.end_date < proposed.project.end_date %}disabled-user{% endif %}">
+  <div class="img-circle pull-left anchor text-center" href="{% url 'users:profile_modal' proposed.resource.username %}" data-toggle="modal" data-target="#userModal" style="background: {{ proposed.role.color|default:'#EEEEEE' }};border-color: {{ proposed.role.color|default:'#EEEEEE' }};color: {{ role.color|reverse_color }}">
+    {% include 'partials/avatar_initials.html' with object=proposed.resource size=35 title=proposed.get_short_title %}
+  </div>
+
+  <div class="media-body">
+    <h5 class="media-heading">
+      {% if proposed.role.name %}
+        <span class="dropdown">
+          <span class="dropdown-toggle anchor" type="button" id="dropdownMenuProposed-{{proposed.id}}" data-toggle="dropdown" aria-expanded="true">
+            <span>{{ proposed.resource.get_name_display|truncatechars:15 }}&nbsp;&nbsp;<i class="text-muted fa fa-caret-down"></i>
+            </span>
+          </span>
+          <ul class="dropdown-menu dropdown-menu-right text-center anchor" role="menu" aria-labelledby="dropdownMenuProposed-{{proposed.id}}">
+            <li role="presentation">
+              <a role="menuitem" tabindex="-1" class="text-right " href="{% url 'staffing:edit_proposed' proposed.id %}" data-toggle="modal" data-target="#genericModal">edit</a>
+            </li>
+            <li>
+              <a type='submit' class="propose-delete-btn text-right " data-url="{% url 'staffing:delete_proposed_resource' proposed.id %}" data-pk="{{proposed.id}}">unstaff</a>
+            </li>
+          </ul>
+        </span>
+      {% else %}
+        {{ proposed.resource.get_name_display|truncatechars:15 }}
+      {% endif %}
+    </h5>
+    <div class="media-description">
+      {% if proposed.role.name %}
+        {{ proposed.role.name }}
+      {% else %}
+        <span class="role empty">&nbsp;</span>
+      {% endif %}
+    </div>
+  </div>
+</li>

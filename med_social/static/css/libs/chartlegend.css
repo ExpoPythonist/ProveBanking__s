@@ -1,0 +1,20 @@
+#fork {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: 0;
+}
+
+.legend {
+    width: 100%;
+    background: #eee;
+    padding:5px 10px;
+}
+
+.legend .title {
+    display: inline-block;
+    margin: 0.5em;
+    border-style: solid;
+    border-width: 0 0 0 1em;
+    padding: 0 0.3em;
+}

@@ -1,0 +1,23 @@
+{% load avatar_tags %}
+<a href="{{ note.get_absolute_url }}" class="field-group comment multi-line">
+  <label>
+    {% include 'partials/avatar_initials.html' with object=note.posted_by size=25 %}
+    <span> {{ note.posted_by }} <span class="text-muted company">({% if note.posted_by.is_vendor %}{{ note.posted_by.vendor}}{% else %}{{ current_tenant }}{% endif %})</span></span>
+      <span class="meta-right text-muted">
+        {{ note.natural_created_date }}
+      </span>
+  </label>
+  <div class="field-value">
+    <div class="row">
+      <div class="col-xs-10">
+        <p>{{ note.excerpt|safe }}&hellip;</p>
+      </div>
+      <div class="col-xs-2 text-right">
+        {% if note.comments.count %}
+          <span class="tag tag-danger"><i class="fa fa-comments"></i> {{ note.comments.count }}</span>
+        {% endif %}
+        <span class="icon-container"><i class="fa fa-chevron-right"></i></span>
+      </div>
+    </div>
+  </div>
+</a>

@@ -1,0 +1,37 @@
+{% load notifications_tags %}
+{% load extra_notification_utils %}
+
+{% notifications_unread as unread_notifications %}
+<li class="anchor dropdown" id="notification-dropdown">
+  <a type="button" class="dropdown-toggle notification-bubble {% if unread_notifications %} notif {% endif %} no-underline" data-toggle="dropdown" title="notifications" role="button" aria-haspopup="true" aria-expanded="false">
+    <i class="fa fa-globe hidden-xs"></i>
+    <span class="unread-count hidden-xs">
+      {% if unread_notifications < 99 %}
+        {{ unread_notifications|default:'0' }}
+      {% else %}
+        99+
+      {% endif %}
+    </span>
+    <span class="small notification-small visible-xs">
+      <span class="label label-danger">{{ unread_notifications|default:'0' }}</span>&nbsp;&nbsp;&nbsp;notifications
+    </span>
+  </a>
+
+  <ul class="dropdown-menu text-left dropdown-menu-center" role="menu" aria-labelledby="dLabel">
+    {% get_unread_notifications user 5 as unread_notification_list %}
+    {% for notice in unread_notification_list %}
+      <li>
+      <a class="notice field-group {% if notice.unread %}notice-unread{% endif %}" href="{% if notice.target %}{{ notice.target.get_absolute_url }}{% elif notice.action_object.get_absolute_url %}{{ notice.action_object.get_absolute_url}}{% else %}{{ notice.actor.get_absolute_url }}{% endif %}" data-notification-id="{{ notice.id }}">
+          <label>
+            {{ notice.actor }} {{ notice.verb }} {% if notice.target %}{{ notice.target }}{% endif %}
+          </label>
+          <div class="field-value">
+            <span class="icon-container"><small class="text-muted">{{ notice.timesince }} ago</small></span>
+          </div>
+        </a>
+      </li>
+    {% endfor %}
+    <li><a href="{% url 'users:all_notifications' %}?previous={{ request.path }}">Show all notifications</a></li>
+  </ul>
+</li>
+

@@ -1,0 +1,16 @@
+<div class="field-group">
+  <label>
+    <span class="btn btn-secondary btn-o btn-xs disabled">
+      {{ contact.service.name }}
+    </span>&nbsp;
+    <span class="btn btn-secondary btn-o btn-xs disabled">
+      {{ contact.contact_user }}
+      <small>({{ contact.contact_user.email }})</small>
+    </span>&nbsp;
+  </label>
+  <div class="field-value">
+    {% if user.vendor == vendor %}
+      <a href="{% url 'services:edit_contact' contact.id %}">edit</a>
+    {% endif %}
+  </div>
+</div>

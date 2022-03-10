@@ -1,0 +1,58 @@
+<form id="client-reference-form" class="form-mobile form-horizontal" role="form" action="{% url 'vendors:client_invoice_add' vendor.id reference.id  %}" method="POST" enctype="multipart/form-data" data-parsley-validate>
+  {% csrf_token %}
+  <div class="modal-header">
+    <div class="row">
+    <div class="col-xs-11 text-center">
+    <h5>Upload proof that you work with {{ reference.client }}</h5>
+    </div>
+      <div class="col-xs-1 text-right">
+        <a href="#" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times text-muted"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-body ">
+      {% if is_valid %}
+      <div class="text-center result-item" data-pk="{{ object.pk }}" data-kind="project" data-text="{{ object.title }}">
+      <h5>
+        <i class="fa fa-check-circle text-success"></i> <span class="text-muted">Success! we have sent an email to {{reference.email}} to ask them to verify your business relationship.</span>
+      </h5>
+    </div>
+    {% else %}
+
+      <p>Please add some kind of proof that you work with {{ reference.client }}.</p>
+      <p>
+      The best form is an invoice stating the contract amount and duration.
+      However, a letterhead or PDF containing proof is also acceptable.
+      </p>
+      <p>Maximum proven points are given to invoices, and lesser values are awarded to PDF of clients logos or screenshots of web pages.</p>
+      {% include 'forms/naked_form.html' with form=form form_heading=None %}
+      </div>
+      {{ formset.management_form }}
+      {% for form in formset %}
+      <div class="clearfix">
+        {% include 'forms/naked_form.html' with form=form form_heading=None %}
+        <span class="block-meta-title"></span>
+      </div>
+      {% endfor %}
+    {% endif %}
+
+    {% if invoices %}
+    <span class="block-meta-title">Uploaded Proof</span>
+    <div class="row">
+        {% for invoice in invoices %}
+        {% include 'vendors/partials/invoice.html' %}
+        {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+
+  <div class="modal-footer">
+        {% if is_valid %}
+      <a href="#" data-dismiss="modal" class="btn btn-primary">OK</a>
+    {% else %}
+      <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+      <button type="submit" class="btn btn-primary">Upload Proof</button>
+    {% endif %}
+  </div>
+</form>

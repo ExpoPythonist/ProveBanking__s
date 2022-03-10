@@ -1,0 +1,75 @@
+{% pjaxr_extends "base_template.html" "Site" %}
+{% load crispy_forms_tags %}
+{% block title %} Notes Details - {{ current_tenant }}{% endblock %}
+{% block page_title %}<span id="page-title">Note Details</span>{% endblock %}
+
+{% block left_nav_button %}
+  <span id="left-nav-btn" class="pull-left">
+    {% if previous_page %}
+      <a class="navbar-brand btn" href="{{ previous_page }}"><i class="fa fa-chevron-left"></i></a>
+    {% else %}
+
+      <a class="navbar-brand btn" href="{{ note.content_object.get_absolute_url}}" data-target="sidebar-left"><i class="fa fa-chevron-left"></i></a>
+    {% endif %}
+  </span>
+{% endblock %}
+
+{% block right_nav_button %}
+  <span id="right-nav-btn" class="pull-right"></span>
+{% endblock %}
+
+{% block right_sidebar %}
+  <div id="sidebar-right" class="sidebar sidebar-right"></div>
+{% endblock %}
+
+{% block notifications %}
+  {% include 'partials/notifications.html' %}
+{% endblock %}
+
+{% block page %}
+  <div id="page" class="container page">
+    {% block content %}
+      <div class="page-top-band">
+        <div class="col-xs-12">
+           <h6>Note on {{ related_content_type }}: {{ related_content_object }}</h6>
+        </div>
+      </div>
+      <div class="panel panel-default vendor-card">
+        <div class="panel-body">
+          {% include 'notes/card.html' with note=note show_details=True %}
+        </div>
+      </div>
+
+    {% if note.comments.exists %}
+      <div class="page-top-band">
+        <div class="col-xs-12">
+          <h6><i class="fa fa-comment"></i> Comments ({{ note.comments.count }})</h6>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <ul class="media-list">
+              {% for comment in note.comments.all %}
+              {% include 'notes/comment_card.html' %}
+              {% endfor %}
+          </ul>
+        </div>
+      </div>
+    {% endif %}
+    <form id="note-comment-form" class="form-mobile" role="form" action="{% url 'notes:post_comment' note.id %}" method="POST">
+      <div class="panel panel-default">
+        <div class="panel-body align-left">
+          {% csrf_token %}
+          <div class="form-group">
+            {{ comment_form.content|as_crispy_field:"bootstrap3" }}
+          </div>
+          <div class="text-right form-group col-xs-12">
+            <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-mail-forward"></i> Post</button>
+          </div>
+        </div>
+      </div>
+    </form>
+    {% endblock %}
+  </div>
+{% endblock %}
+{% block pjaxr_namespace %}Site.notes.details{% endblock pjaxr_namespace %}

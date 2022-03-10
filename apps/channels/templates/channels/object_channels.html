@@ -1,0 +1,52 @@
+<!-- Nav tabs -->
+{% load activity %}
+<ul class="nav nav-tabs" role="tablist">
+  {% for channel in channels %}
+    <li class="
+    {% if active_tab %}
+      {% if active_tab == channel.html_id %}
+        active
+      {% endif %}
+    {% elif forloop.first %}
+        active
+    {% endif %}
+    unread-event"
+    data-unread-event-url="{{ channel.get_event_url  }}">
+      <a href="#channel-{{ channel.id }}" role="tab" data-toggle="tab" class="no-link-style"><i class="fa fa-{% if channel.vendors.exists %}globe{% else %}lock{% endif %}"></i> {{ channel.name }} &nbsp;
+      {% if unread_events %}
+        {% has_unread_events channel unread_events as events %}
+        {% if events %}
+          <span title="new activity" class="no-underline text-primary fa fa-circle activity-counter"></span>
+        {% endif %} 
+      {% endif %}
+      </a>
+    </li>
+  {% endfor %}
+  {% if user.is_client %}
+    {% if not hide_create_tab %}
+    <li {% if not channels.exists %}class="active"{% endif %}><a href="#new-channel-form" role="tab" data-toggle="tab" class="no-link-style"><i class="fa fa-plus"></i> new discussion</a></li>
+    {% endif %}
+  {% endif %}
+</ul>
+
+<!-- Tab panes -->
+<div class="tab-content">
+  {% for channel in channels %}
+    <div class="tab-pane tab-pane-white 
+        {% if active_tab %}
+          {% if active_tab == channel.html_id %}
+            active
+          {% endif %}
+        {% elif forloop.first %}
+            active
+        {% endif %}
+    " id="channel-{{ channel.id }}">
+      {% include 'channels/embed.html' %}
+    </div>
+  {% endfor %}
+  {% if user.is_client %}
+    <div class="tab-pane  tab-pane-white {% if not channels.exists %}active{% endif %}" id="new-channel-form">
+      {% include 'channels/partials/create.html' with object=object form=new_channel_form %}
+    </div>
+  {% endif %}
+</div>

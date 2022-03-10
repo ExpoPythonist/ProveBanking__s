@@ -1,0 +1,12 @@
+{% load i18n %}
+{% blocktrans %}
+Hi,
+
+We have added a project: "{{portfolio_item.title}}", under our past works section
+
+{% endblocktrans %}
+
+{% blocktrans %}
+Best,
+{{ portfolio_item.vendor }}
+{% endblocktrans %}

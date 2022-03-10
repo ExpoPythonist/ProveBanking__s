@@ -1,0 +1,22 @@
+# Create celery_local.py with this file as the template. celery_local.py will not be version controlled
+# Copy this to celery_local.py and override any celery specific settings for you local machine
+
+try:
+    from local import *
+except ImportError:
+    pass
+
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',  # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': 'medsocial',              # Or path to database file if using sqlite3.
+        'USER': 'medsocial',                       # Not used with sqlite3.
+        'PASSWORD': 'medsocial',                   # Not used with sqlite3.
+        'HOST': '127.0.0.1',                       # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '6432',                       # Set to empty string for default. Not used with sqlite3.
+    }
+}
+
+#broker url for celery tasks in worker instance
+BROKER_URL = 'redis://127.0.0.1:6379/1'

@@ -1,0 +1,17 @@
+{% extends "partials/auth_modal.html" %}
+{% load i18n %}
+{% block title %}{% trans "Account Inactive" %}{% endblock %}
+
+{% block notifications %}
+  {% include 'partials/notifications.html' %}
+{% endblock %}
+
+{% block content %}
+  <div class="auth-form-panel">
+    <div class="text-center">
+      <h4 class="header-thin">{% trans "Account inactive" %}</h4>
+      <br>
+      <p>{% trans "This account is inactive. Try signing in with a different account or <a href="mailto:suzanne@proven.cc">contact us</a> for further assistance." %}</p>
+    </div>
+  </div>
+{% endblock %}

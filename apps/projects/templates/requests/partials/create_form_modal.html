@@ -1,0 +1,69 @@
+{% load crispy_forms_tags %}
+{% load projects %}
+  <form id="staffing-request-form" class="form-mobile staffing-form " role="form" action="{{ view.get_action_url }}" method="POST" enctype="multipart/form-data" data-action-deliverable="{% url 'staffing:requests:create_deliverable' %}?mode=modal" data-action-staffing="{{ view.get_action_url }}" data-ajax-form data-parsley-validate>
+    {% csrf_token %}
+
+    <div class="modal-header">
+      <div class="row">
+        <div class="col-xs-12">
+          <h4 class="modal-title">Create request for: &nbsp;&nbsp;<span id="radio-selection">                 
+          <span class="lighter">Staff&nbsp;
+          <input id="form-toggle" class="checkboxinput checkbox" type="checkbox" data-switchery="true"  
+          {% if form|get_class == "StaffingDeliverableForm" %}checked{% endif %}>&nbsp;Deliverable</span>
+      </span> </h4>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-body modal-body-primary {% if form|get_class == "StaffingDeliverableForm" %}hide{% endif %}">
+
+
+      {% if pre_selected_vendors %}
+        {{ form.vendors|as_crispy_field:"bootstrap3" }}
+      {% endif %}
+      
+      {% include 'forms/naked_form.html' with form=basic_form form_heading=None %}
+
+      {% if pre_selected_users or form.users.data %}
+        {{ form.users|as_crispy_field:"bootstrap3" }}
+        {{ form.status|as_crispy_field:"bootstrap3" }}
+      {% endif %}
+    </div>
+
+    <div class="modal-body modal-body-secondary {% if form|get_class == "StaffingBasicForm" %}hide{% endif %}">
+
+      {% if pre_selected_vendors %}
+        {{ form.vendors|as_crispy_field:"bootstrap3" }}
+      {% endif %}
+      {% include 'forms/naked_form.html' with form=deliverable_form form_heading=None %}
+
+      {% if pre_selected_users or form.users.data %}
+        {{ form.users|as_crispy_field:"bootstrap3" }}
+        {{ form.status|as_crispy_field:"bootstrap3" }}
+      {% endif %}
+    </div>
+
+    <div class="modal-footer">
+      <a href="#" class="btn btn-default" data-dismiss="modal">Cancel</a>
+      <button type="submit" class="btn btn-primary">Next</button>
+    </div>
+  </form>
+
+<script>
+    $('#form-toggle').change(function(){
+        if($(this).is(":checked")){
+            $('.modal-body-secondary').removeClass('hide');
+            $('.modal-body-primary').addClass('hide');
+            var action_url = $('#staffing-request-form').attr('data-action-deliverable')
+            $('#staffing-request-form').attr('action', action_url);
+        }
+        else{
+            $('.modal-body-primary').removeClass('hide');
+            $('.modal-body-secondary').addClass('hide');
+            var action_url = $('#staffing-request-form').attr('data-action-staffing')
+            $('#staffing-request-form').attr('action', action_url);
+        }
+    });
+
+</script>

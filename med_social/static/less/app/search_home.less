@@ -1,0 +1,65 @@
+//search home
+
+.landing-container {
+  margin-top: -20px;
+  margin-bottom: -80px;
+  //background: url('../../images/landing01/background1.jpg') no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: 100%;
+  min-height: 700px;
+  //height: 400px;
+  .search-home-container {
+    .greeting {
+      margin-top: 120px;
+      @media (max-width: @screen-xs-max) {
+        margin-top: 60px;
+      }
+
+        h4 {
+          font-size: 16px;
+          font-weight: bold;
+          color: #6c6c6c;
+          margin-left: 15px;
+        }
+    }
+    .panel-search-home {
+      margin-top: 60px;
+      form {
+        h5 {
+          font-size: 11px;
+          color: #6c6c6c;
+        }
+
+        :-moz-placeholder {
+            color:    #6c6c6c;
+        }
+        ::-moz-placeholder {
+            color:    #6c6c6c;
+        }
+        :-ms-input-placeholder {
+            color:    #6c6c6c;
+        }
+        .list-unstyled {
+          margin: 0px;
+        }
+      }
+      .previous-search-list {
+        .btn {
+          margin-bottom: 8px;
+          background: #f2f2f2;
+          white-space: normal;
+        }
+        text-align: left;
+      }
+    }
+    .panel-knowitall {
+      margin-top: 40px;
+      h4 {
+        font-size:11px;
+        font-weight: bold;
+        color: #6c6c6c;
+      }
+    }
+  }
+}

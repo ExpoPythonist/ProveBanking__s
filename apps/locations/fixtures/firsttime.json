@@ -1,0 +1,34 @@
+[
+{
+    "pk": 102, 
+    "model": "locations.location", 
+    "fields": {
+        "city": "Gurgaon", 
+        "slug": "gurgaon"
+    }
+},
+{
+    "pk": 103, 
+    "model": "locations.location", 
+    "fields": {
+        "city": "Mumbai", 
+        "slug": "mumbai"
+    }
+},
+{
+    "pk": 104, 
+    "model": "locations.location", 
+    "fields": {
+        "city": "London", 
+        "slug": "london"
+    }
+},
+{
+    "pk": 105, 
+    "model": "locations.location", 
+    "fields": {
+        "city": "Chicago", 
+        "slug": "chicago"
+    }
+}
+]

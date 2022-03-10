@@ -1,0 +1,8 @@
+{% load i18n %}
+{% if created %}{% blocktrans with request.project.title as proj_title and response.vendor.name as vendor %}
+{{vendor}} has submitted a response to staffing request for project '{{proj_title}}' {% endblocktrans %}
+{% elif response.accepted %}{% blocktrans with request.project.title as proj_title and response.accepted_by.get_name_display as accepted_by %}
+{{accepted_by}} has accepted your staffing response for project '{{proj_title}}'{% endblocktrans %}
+{% else %}
+{% blocktrans with request.project.title as proj_title and response.vendor.name as vendor %}{{vendor}} has updated a response to staffing request for project '{{proj_title}}'{% endblocktrans %}
+{% endif %}

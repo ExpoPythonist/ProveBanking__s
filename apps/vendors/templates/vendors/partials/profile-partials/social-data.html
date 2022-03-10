@@ -1,0 +1,20 @@
+{% load utils %}
+
+<div class="panel panel-default panel-card ">
+  <div class="panel-body">
+    <div class="col-md-6">
+    {% if object.twitter %}
+      <a class="twitter-timeline" href="https://twitter.com/{{object.twitter}}" data-widget-id="648383082668527616" data-screen-name="{{object.twitter}}">Tweets by @{{object.twitter}}</a>
+      <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+    {% endif %}
+    </div>
+   
+    {% if object.meta %}
+      <div class="col-md-6">
+        <h6 class="text-uppercase section-title">Metrics</h6>
+        <p class="small"><span class="text-muted">Twitter followers:</span> {{ object.meta|get_item:'twitter_followers' }}</p>
+        <p class="small"><span class="text-muted">Angellist followers:</span> {{ object.meta|get_item:'twitter_followers' }}</p>
+      </div>
+    {% endif%}
+  </div>
+</div>

@@ -1,0 +1,34 @@
+//functions
+
+.text-overflow(){
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.flat(){
+  border-radius:0px;
+}
+
+.padding-v(@padding){
+  padding-top: @padding;
+  padding-bottom: @padding;
+}
+
+.padding-h(@padding){
+  padding-left: @padding;
+  padding-right: @padding;
+}
+
+.transition(@time){
+  -webkit-transition: all @time ease-in-out;
+  -moz-transition: all @time ease-in-out;
+  -o-transition: all @time ease-in-out;
+  transition: all @time ease-in-out;
+}
+
+.box-shadow (@x: 0; @y: 0; @blur: 0; @color: #000) {
+  box-shadow: @arguments;
+  -moz-box-shadow: @arguments;
+  -webkit-box-shadow: @arguments;
+}

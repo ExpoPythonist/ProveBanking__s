@@ -1,0 +1,23 @@
+<form id="client-reference-form" class="form-mobile form-horizontal" role="form" action="{% url 'vendors:claim_vendor' vendor.slug  %}" method="POST" enctype="multipart/form-data" data-parsley-validate>
+  {% csrf_token %}
+  <div class="modal-header">
+    <div class="row">
+    <div class="col-xs-11 text-center">
+    <h5>Claim Profile</h5>
+    </div>
+      <div class="col-xs-1 text-right">
+        <a href="#" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times text-muted"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-body ">
+      <p>Please add details proving that you own {{ vendor }}.</p>
+      {% include 'forms/naked_form.html' with form=form form_heading=None %}
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+    <button type="submit" class="btn btn-primary">Claim Profile</button>
+  </div>
+</form>

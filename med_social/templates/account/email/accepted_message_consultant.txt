@@ -1,0 +1,9 @@
+Congratulations {{ user.get_short_name }}! your application to join the Proven has been accepted. 
+
+We currently approve <20% of applicants, mainly due to strong references from existing consultants, and are slowly building a high quality community.
+
+You have an impressive background. To help us communicate this effectively to our clients, please create a detailed profile at http://proven.cc/
+
+We ask for your patience as we find opportunities that meet your unique skill set. We are still early stage and are gradually building a quality client base.
+
+I usually do a 30 minute phone call to welcome and get to know every Proven professional. Feel free to email me a few time slot options at suzanne@proven.cc

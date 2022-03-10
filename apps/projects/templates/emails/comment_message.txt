@@ -1,0 +1,2 @@
+{% load i18n %}{% blocktrans %}Click the link below to view and respond to it:
+{{url}}{% endblocktrans %}

@@ -1,0 +1,12 @@
+{% load i18n %}
+{% if anonymous %}
+{% blocktrans %}
+Click the link below to view the review
+{% endblocktrans %}
+{% else %}
+{% blocktrans %}
+Click the link below to view {{user}}'s review
+{% endblocktrans %}
+{% endif %}
+{{url}}
+

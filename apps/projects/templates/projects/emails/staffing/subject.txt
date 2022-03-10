@@ -1,0 +1,2 @@
+{% load utils %}
+Looking for {{staffing_request|an}} {{ staffing_request }} for {{ staffing_request.project }}

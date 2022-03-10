@@ -1,0 +1,17 @@
+{% for proposed in week.proposed.all %}
+<div class="availability-week-popover">
+  <a {% if user == proposed.resource %}href="{% url 'users:edit_allocation' proposed.resource.username proposed.id %}"{% endif %} class="no-link-style no-underline">
+    <div class="text-ellipsis">{{ proposed.project|default:"Busy" }}</div>
+    <div>
+      {% include 'partials/date_range.html' with start_date=proposed.start_date end_date=proposed.end_date %}
+      <span class='btn btn-xs btn-secondary disabled'>{{ proposed.allocation }}% allocation</span>
+      {% if user == proposed.resource %}
+        <span class="fa fa-pencil text-muted pull-right"></span>
+      {% endif %}
+    </div>
+  </a>
+  <hr class="thin"/>
+</div>
+{% empty %}
+  <small class="text-muted">No allocations</small>
+{% endfor %}

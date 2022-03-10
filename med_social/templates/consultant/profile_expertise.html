@@ -1,0 +1,26 @@
+{% if success == False %}
+  <form id="expertiseForm" action="{% url 'edit_expertise' %}" method="POST" class="{{ css_class }}">
+    {% include 'consultant/profile/generic_form.html' with form=form %}
+  </form>
+{% else %}
+{% with consultant.categories.all as categories and consultant.industries.all as industries %}
+  {% if categories or industries or consultant == user %}
+<dl id="expertiseInfo-{{ consultant.id }}" class="dl-horizontal dl-default">
+  <dt>industries & expertise</dt>
+  <dd class="list-tags">
+    {% for industry in industries %}
+      <span class="tag" title="{{ industry }}">{{ industry }}</span>
+    {% endfor %}
+    {% for category in categories %}
+      <span class="tag" title="{{ category }}">{{ category }}</span>
+    {% endfor %}
+  </dd>
+  {% if user == consultant and profile_page %}
+  <dd><a href="{% url 'edit_expertise' %}" id="editExpertiseBtn" class="edit-trigger pull-left" data-editable=".consultant-details" data-form-container="#subProfileFormContainer" data-toggle="tooltip" title="edit industry and expertise" data-placement="right"><i class="fa fa-edit fa-1"></i> edit</a></dd>
+  {% endif %}
+  <hr class="divider"/>
+</dl>
+{% endif %}
+
+{% endwith %}
+{% endif %}

@@ -1,0 +1,58 @@
+{% load review_tags %} 
+
+<div class="{% if tile = 1 %}col-xs-12{% else %}col-md-6{% endif %}">
+    {% if project.name %}
+    <a href='{{project.get_absolute_url}}' class="no-underline"><h5 class="title text">{{ project.name }} &rarr;</h5></a>
+    {% else %}
+    <a href='{{project.get_absolute_url}}' class="no-underline"><h5 class="title">Contract - {{ project.item }} &rarr;</h5></a>
+    {% endif %}
+
+    <p class="small date">
+    {% if project.start_date and project.end_date %}
+       <!-- <b>From</b>&nbsp;&nbsp; -->{{ project.start_date }}&nbsp;&nbsp;<b><!-- Till -->&mdash;</b>&nbsp;&nbsp;{{ project.end_date }}
+    {% endif %}
+    <!-- {{ project.created|date:"M d, Y" }} -->
+    </p>
+    {% if project.amount %}
+        <p>
+            <span class="btn btn-default disabled btn-o btn-sm"><i class="fa fa-dollar"></i>&nbsp;{{ project.amount }}</span>&nbsp;&nbsp;
+        </p>
+    {% endif %}
+
+    {% if project.description %}
+      <div class="description">
+
+        {% if project.description|length > 120 and portfolio_projects %}
+        <div class="content hideContent">{{ project.description }}</div>
+        <div class="show-more text-left">
+          <span class="text-muted small">Show more...</span>
+        </div>
+        {% else %}
+          <div class="content showContent">{{ project.description }}</div>
+        {% endif %}
+
+      </div>
+    {% else %}
+      <p class="description">
+        <span class="text-muted">No description provided</span>
+      </p>
+    {% endif %}
+    <hr/>
+  
+
+  {% with project.collaborators.all|slice:":3" as clients %}
+    {% if clients %}
+    <div class="row">
+      <div class="col-xs-12">
+        <strong class="text-uppecase text-muted small">Worked with</strong>
+          {% for client in clients %}
+            <a href="{{ client.get_profile_modal_url }}" class="pull-right" data-toggle="modal" data-target="#userModal">  {% include 'partials/avatar_initials.html' with object=client size=35 %}
+            </a>&nbsp;&nbsp;
+          {% endfor %}        
+      </div>
+    </div>
+    <hr>
+    {% endif %}
+  {% endwith %}
+
+</div>

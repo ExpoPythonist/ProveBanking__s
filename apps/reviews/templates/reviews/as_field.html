@@ -1,0 +1,51 @@
+{% load avatar_tags %}
+{% load review_tags %}
+{% load utils %}
+{% url 'reviews:detail' review.id as review_url %}
+<div class="panel panel-rating-{% get_review_color_class review.score %} panel-hint panel-review panel-card">
+  <div class="panel-body" href="{% url 'reviews:detail' review.id %}" class="review-card review-field">
+    <div class="media">
+      {% if not review.anonymous %}
+      <a href="{{ review.posted_by.get_profile_modal_url }}" class="pull-left" data-toggle="modal" data-target="#userModal">
+        {% include 'partials/avatar_initials.html' with object=review.posted_by size=35 title=review.posted_by %}
+      </a>
+      {% endif %}
+
+      <div class="media-body">
+        <h5 class="media-heading">
+          <div class="row">
+            <div class="col-xs-8">
+            {% if review.anonymous %}
+              <b>Someone at {{ review.posted_by.get_company_display }}</b>
+            {% else %}
+              {% if review.token %}
+                <b>{{ review.token.email }}</b>
+              {% else %}
+              <a href="{{ review.posted_by.get_profile_modal_url }}" class="no-link-style" data-toggle="modal" data-target="#userModal">
+                <b>{{ review.posted_by }}</b>
+              </a>
+              {% endif %}
+            {% endif %}
+            </div>
+            <div class="col-xs-4 text-right">
+              <div class="score-value rating-stars small star_{% rating_stars_color review.score %}">{% rating_stars review.score %}</div>
+              <div class="text-right text-{% get_review_class review.score %} small">
+                <b>{{ review.score|default:"N/A"}}</b>{% if review.score %}<small>/5</small>{% endif %}
+              </div>
+            </div>
+          </div>
+        </h5>
+      </div>
+    </div>
+    <p class="remarks description">
+      {{ review.remarks }}<br>
+
+      {% if not review_details %}
+        <a href="{{ review_url }}" class="btn-link small no-underline">view more...</a>
+      {% endif %}
+      
+    </p>
+    <p class="small timestamp text-muted text-right">{{ review.natural_created_date }}</p>
+  </div>
+</div>
+

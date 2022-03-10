@@ -1,0 +1,43 @@
+<div class="panel panel-default panel-card">
+  <div class="panel-body">    
+    <p class="">
+      {% if views_recent_count %}
+        <span class="label label-primary">{{ views_recent_count}}</span>&nbsp;
+        <b>views in last 7 days</b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      {% endif %}
+      <span class="label label-primary">{{ views_count }}</span>&nbsp;
+      <b>{{ views_count|pluralize:"person,people" }}</b>
+    </p>
+    <br>
+    <h6 class="text-uppercase sub-section-title">Recent views</h6>
+    <ul class="list-unstyled">
+      {% for page_view in views_recent %}
+        <li class="media">
+          <a href="{% url 'users:profile_modal' page_view.by.username %}" data-toggle="modal" data-target="#userModal"  data-modal-is-remote="true" class="pull-left">
+            {% include 'partials/avatar_initials.html' with object=page_view.by size=45 title=page_view.by.get_name_display %}
+          </a>
+          <div class="media-body">
+            <h4 class="media-heading">
+              <a href="{% url 'users:profile_modal' page_view.by.username  %}" data-toggle="modal" data-target="#userModal"  data-modal-is-remote="true" class="link-no-style" >{{ page_view.by.get_name_display }}</a>
+              <span class="date pull-right">{{ page_view.views.0 }}</span>
+            </h4>
+            <p class="media-description">
+              {% if page_view.by.vendor %}
+                {{ page_view.by.vendor }}
+              {% endif %}
+            </p>
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+
+    {% if activity_log %}
+      <br>
+      <h6 class="text-uppercase sub-section-title">Recent edits</h6>
+      {% for action in activity_log %}
+        {% include 'activity/partials/action.html' %}
+      {% endfor %}
+    {% endif %}
+
+  </div>
+</div>

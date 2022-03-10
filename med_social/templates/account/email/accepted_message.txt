@@ -1,0 +1,7 @@
+{% load i18n %}
+{% if user.is_consultant %}{% include 'account/email/accepted_message_consultant.txt' %}{% elif user.is_client %}{% include 'account/email/accepted_message_client.txt'%}{% endif %}
+If you have any questions, criticism, or words of encouragement, please do not hesitate to reach me at suzanne@proven.cc or at (646) 207 3000.
+
+Again, welcome to Proven!
+
+{% include 'account/email/footer_ceo.txt' %}

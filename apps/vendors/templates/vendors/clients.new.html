@@ -1,0 +1,171 @@
+{% extends "base.new.html" %}
+{% load thumbnail %}
+{% load utils %}
+
+{% block title %}Clients - {{ vendor.name }}{% endblock %}
+
+{% block css %}
+<style>
+.company-detail {
+  font-size: 85%;
+  margin-bottom: 0.33em;
+}
+.company-detail span {
+  display: inline-block;
+}
+.company-detail i {
+  margin: 0 .35em 0 -.25em;
+  color: #848484;
+  font-size: 1.1em;
+  width: 20px;
+  text-align: center;
+}
+{% if vendor.background %}
+.header-bg:before {
+  background: url('{{ vendor.background.url }}') no-repeat 0;
+  background-size: 100%;
+}
+{% endif %}
+</style>
+{% endblock %}
+
+{% block container %}
+<div class="header-bg">
+  <div class="header-line">
+    <div class="container">
+      <div class="row">
+        {% include "navbar.new.html" %}
+        <div class="col-xs-12 col-sm-4 col-md-6 col-lg-6 pull-right header-logo">
+          <a href="http://proven.cc/" class="logo"></a>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-6 col-lg-6 pull-left header-name header-logo">
+          <h1><a style="color: inherit;" href="{% url "home" %}">{{ current_tenant.name }}</a></h1>
+        </div>
+      </div>
+     </div>
+   </div>
+ </div>
+</div>
+
+<!-- Content start-->
+<div class=content-wrapper>
+  <div class="container">
+    <div class="company-info">
+      <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-8 col-lg-8">
+          <a href="{{ vendor.get_absolute_url }}">
+            <div class="company-picture">
+              {% thumbnail vendor.logo "155x155" as thumb %}
+              <img src="{{ thumb.url }}" alt="{{ vendor.name }}" />
+              {% empty %}
+              <img src="{{ STATIC_URL }}new/img/clients/rte.png" alt="{{ vendor.name }}" />
+              {% endthumbnail %}
+            </div>
+          </a>
+
+          <div class="clearfix">
+            <h1 class="company-profile-name">
+              <a href="{{ vendor.get_absolute_url }}">
+                {{ vendor.name }}
+              </a>
+            </h1>
+            <span class="company-social-block">
+              {% if vendor.facebook %}<a href="https://facebook.com/{{ vendor.facebook }}"><i class="icon icon-facebook"></i></a>{% endif %}
+              {% if vendor.linkedin %}<a href="https://linkedin.com/{{ vendor.linkedin }}"><i class="icon icon-linkedin"></i></a>{% endif %}
+              {% if vendor.twitter %}<a href="https://twitter.com/{{ vendor.twitter }}"><i class="icon icon-twitter"></i></a>{% endif %}
+              {% if vendor.website %}<a href="{{ vendor.website }}">{{ vendor.domain }}</a>{% endif %}
+            </span>
+          </div>
+
+          {% if vendor.summary %}
+            <p class="company-description">
+            {{ vendor.summary|linebreaks }}
+            </p>
+          {% endif %}
+
+          {% if vendor.vendor_locations.exists %}
+          <div class="company-detail company-location">
+            <i class="fa fa-map-marker"></i>
+            <span>
+              {% for location in vendor.vendor_locations.all|slice:":3" %}
+              {% if forloop.counter < 3 %}
+              {{ location.location.city }}, {{ location.location.parent.city }}{% if forloop.counter < 2 %}{% if forloop.last %}{% else %},{% endif %}{% endif %}
+              {% elif forloop.counter == 3 %}
+              & {{ forloop.revcounter }} more
+              {% endif %}
+              {% endfor %}
+            </span>
+          </div>
+          {% endif %}
+
+          {% if vendor.email %}
+          <div class="company-detail company-email">
+            <i class="fa fa-envelope"></i>
+            <span>{{ vendor.email|urlize }}</span>
+          </div>
+          {% endif %}
+
+          {% if vendor.phone %}
+            <div class="company-detail company-phone">
+              <i class="fa fa-phone"></i>
+              <span><a href="tel:{{ vendor.phone }}">{{ vendor.phone }}</a></span>
+            </div>
+          {% endif %}
+
+          {% if vendor.open_for_business and current_tenant.schema_name == 'commercialdrones' %}
+            <div class="company-label">
+              <i class="icon icon-chevron highlight"></i> Accepting Commercial Drone Work
+            </div>
+          {% endif %}
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+          <div class="profile-buttons well">
+            <div class="btn-group">
+              {% if user.is_authenticated and user in vendor.users.all or user.is_allowed_change %}
+              <a href="{% url "user_setup:setup_step_vendor_profile" vendor.id %}" class="btn btn-success">Edit Profile</a>
+              {% else %}
+                {% if not vendor.users.exists %}
+                  {% if vendor_claimed %}
+                    <span class="btn btn-secondary btn-sm btn-block">Pending Claim</span>
+                  {% else %}
+                    <a href="{% url "vendors:claim_vendor" vendor.slug %}" class="btn btn-success" data-target="#genericModal" data-toggle="modal" data-modal-is-remote="true">Claim Profile</a>
+                  {% endif %}
+                {% endif %}
+              {% endif %}
+
+              {% if user.is_allowed_change %}
+              <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+              </button>
+              <ul class="dropdown-menu">
+                <li><a href="{% url "vendors:archive_vendor" vendor.id %}" data-toggle="modal" data-target="#genericModal" data-modal-is-remote="true">Admin: Delete Profile</a></li>
+              </ul>
+              {% endif %}
+            </div>
+            {% if user.is_authenticated and user in vendor.users.all or user.is_allowed_change %}
+            &nbsp;
+            <a href="{% url "vendors:client_add" vendor.id %}" class="btn btn-primary">Add Clients</a>
+            {% endif %}
+          </div>
+          <ul class="company-profile-score">
+          <li>{% include "vendors/_proven_score.html" %}</li>
+          {% for custom in vendor.vendor_custom.all|slice:":3"  %}
+          <li>
+            {% if custom.rank != None %}
+            <span class="company-score {% if custom.primary %}highlight-bg{% endif %}">#{{ custom.rank }}</span>
+            <span>in {{ custom.category }}</span>
+            {% endif %}
+          </li>
+          {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    {% include "vendors/clients.inc.html" with show_all=True %}
+  </div>
+</div>
+<!--Content End-->
+{% endblock %}
+

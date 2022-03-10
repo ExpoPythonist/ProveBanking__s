@@ -1,0 +1,51 @@
+{% extends "vendors/profile_edit_sidebar.html" %}
+{% load crispy_forms_tags %}
+{% load thumbnail %}
+
+{% block extra_sidebar_content %}
+  {% if total_clients %}
+    <div class="alert alert-info">
+      <small>Your ranking depends on the quality of your clients. Add more clients to help increase your visibility in search results.</small>
+    </div>
+  {% endif %}
+{% endblock %}
+
+{% block main_content %}
+  
+<div class="hide" id="vendor-slug">{{ vendor.slug }}</div>
+<section class="profile-edit-form clients">
+  <h6 class="section-title text-uppercase">Clients</h6>
+  <div class="panel panel-default panel-card">
+    <div class="panel-body">
+      <h6 class="block-meta-title">
+        <span class="text-uppercase">Add client</span>
+        <a href="{% url 'vendors:client_list' vendor.id %}" class="pull-right">view existing clients ({{ total_clients }})</a>
+      </h6>
+      <div class="text-center result-item" data-pk="{{ result.pk }}" data-kind="client" data-text="{{ result.name }}" data-url={% if result.logo%}"{{result.logo.url}}"{% else%}"logo.clearbit.com/"{{client_domain}}{% endif %}></div>
+      <div class="hide" id="client-domain">{{ client_domain }}</div>
+
+      <form id="client-form" class="form-mobile" role="form" action="#" method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          {% include 'forms/naked_form.html' with form=form2 %}
+          {% if result %}
+          <div id="result-exist" {% if result.logo %}data-logo-url="{{result.logo.url}}" {% endif %}>
+          </div>
+          {% endif %}
+          <div class='form-row'>
+          <br>
+          <div class="col-sm-12"><p id="hint_id_alt_name" class="help-block">Some clients may prefer that you not to show their real name publicly. Here, you can specify a short description which will be used instead of client name, logo or website.</p>
+          </div></div>
+
+          {% include 'forms/naked_form.html' with form=form %}
+          {{ form.errors}}
+          {{ form2.errors}}
+          <div class="form-actions text-center">
+<!--             <h6 class="text-muted">We highly recommend calling your client before sending this Proven request</h6>
+ -->            <input type="submit" value="Add client" class="btn btn-primary"/>
+          </div>
+      </form>
+    </div>
+  </div>
+  <br>
+  <!-- <div class="text-center small"><small class="text-muted">icon by Jeff Portaro</small></div> -->
+{% endblock %}

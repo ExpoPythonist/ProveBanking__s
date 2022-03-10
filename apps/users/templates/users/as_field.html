@@ -1,0 +1,86 @@
+{% load avatar_tags %}
+{% load projects %}
+{% load review_tags %}
+<div class="field-group user-card selectable" data-selected-list="#selected-list" data-list="#user-selectable-list" data-counter=".selected-count">
+  <div class="media col-xs-11 nopadding">
+    <a href="{{ object.get_absolute_url }}" class="pull-left">
+      {% include 'partials/avatar_initials.html' with object=object size=25 %}
+    </a>
+    <div class="media-body">
+      <div class="media-heading col-xs-12 nopadding">
+        <div class="col-sm-6 col-xs-10 nopadding">
+          <strong><a href="{{ object.get_absolute_url }}" class="user">{{ object.get_name_display }}</a></strong>&nbsp;
+
+          {% if object.get_linkedin_url %}
+            <a href="{{ object.get_linkedin_url }}" class="no-underline" title="Linkedin" target="_blank" ><i class="fa fa-linkedin-square text-muted"></i></a>&nbsp;
+          {% endif %}
+
+          {% if object.resume %}
+            <a target="_blank" href="{{ object.resume.url }}" onclick="window.open('{{ object.resume.url }}'); return false;" class="no-underline fa-cv" title="Resume / CV">
+              cv
+            </a>&nbsp;
+          {% endif %}
+
+          {% if user.is_client %}
+            {% if object.avg_score %}
+              {% assign_review_url 'list' object as reviews_url %}
+              {% include 'reviews/partials/as_label.html' with score=object.avg_score count=object.reviews_count link=reviews_url %}&nbsp;
+            {% endif %}
+          {% endif %}
+          <br>
+          <span title="location" class="small text-muted">{{ object.vendor|default:current_tenant }}</span>&nbsp;
+          {% if object.location %}
+            <span title="location" class="small text-muted">
+              <i class="fa fa-map-marker"></i>
+              {{ object.location }}
+            </span>&nbsp;
+          {% endif %}
+        </div>
+
+        <div class="col-sm-6 text-right nopadding">
+          {% include 'availability/as_field.html' with weeks=object.get_availability_as_weeks %}
+          <div class="col-xs-12 nopadding">{% include 'availability/partials/last_updated.html' with for_user=object %}
+          </div>
+        </div>
+      </div>
+
+
+      <a href="{{ object.get_absolute_url }}" class="user-tags no-link-style">
+        {% if object.get_rate %}
+        <span class="btn btn-secondary btn-sm btn-xs ">
+          <i class="fa fa-dollar"></i>
+          {{ object.get_rate.cost }} <small class="text-muted">per hour</small>
+        </span>&nbsp;
+      {% endif %}
+        {% for role in object.roles.all %}
+          <span class="btn btn-secondary btn-sm btn-xs disabled">
+            {{ role }}
+          </span>&nbsp;
+        {% endfor %}
+      </a>
+    </div>
+  </div>
+  <div class="col-xs-1 nopadding text-center card-action-wrapper">
+  {% comment %}
+    {% if user.is_client %}
+      <div class="dropdown col-sm-6  nopadding">
+        <button type="button" class="btn btn-link no-link-style no-underline dropdown-toggle" data-toggle="dropdown" title="actions">
+          <i class="fa fa-caret-down"></i>
+          <span class="sr-only">actions</span>
+        </button>
+        <ul class="dropdown-menu text-left dropdown-menu-right" role="menu" aria-labelledby="dLabel">
+          <li><a href="{% get_review_url 'add' object %}" class="no-link-style no-underline small"><i class="fa fa-star"></i>&nbsp;add review</a></li>
+        </ul>
+      </div>
+    {% endif %}
+  {% endcomment %}
+  {% if selectable %}
+    <span class="invite-checkbox ">
+    <button type="button" id="user-select-{{ object.id }}" class="btn btn-primary btn-xs select-input unchecked" data-toggle="button" aria-pressed="false" data-selected-text="remove" data-unselected-text="select" data-value="{{ object.id }}" autocomplete="off" >
+      select 
+    </button>
+    <input class="hide" name="users" value="{{ object.id}}"/>
+    </span>
+  {% endif %}
+  </div>
+</div>

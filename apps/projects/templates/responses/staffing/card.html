@@ -1,0 +1,54 @@
+{% load avatar_tags %}
+{% load humanize %}
+{% load projects %}
+
+<div class="page-top-band">
+  <div class="col-xs-6">
+    <h6 class="list-count">
+        Proposed resourses
+    </h6>
+  </div>
+  <div class="col-xs-6 text-right">
+      {% if not response.request.is_fixed_price and user.is_vendor  %}
+      <h6><a href="{% url 'staffing:propose' project.id response.request.id %}" class="no-underline">propose a resourse</a></h6>
+      {% endif %}
+  </div>
+</div>
+{% if proposed_resources.exists %}
+<div class="panel panel-default panel-users">
+  <div id="proposed-resource-list" class="panel-body">
+    <div class="col-xs-12">
+      {% for pr in proposed_resources %}
+        {% include 'responses/proposed_staff_member.html' with person=pr.resource proposed_resource_object=pr %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% if user.is_vendor and response.is_draft %}
+  <div class="page-top-band">
+    <div class="col-xs-12 text-right">
+      <h6>
+        <a class="btn btn-sm btn-primary {% if not proposed_resources.exists %} disabled {% endif %}" data-toggle="modal" data-target="#sendProposalModal" href="{% url 'projects:send_proposal' response.id %}" class="btn btn-sm btn-primary"><span>send proposal</span></a>
+      </h6>
+    </div>
+  </div>
+{% endif %}
+{% else %}
+  <div class="panel panel-default panel-users-empty">
+    <div class="panel-body">
+      <div class="field-group">
+        <label>
+          <span class="text-muted">
+            {% if user.is_vendor %}
+              Your company has
+            {% else %}
+              The organization has
+            {% endif %}
+              not proposed any people to work on this project.
+          </span>
+        </label>
+      </div>
+    </div>
+  </div>
+{% endif %}
+

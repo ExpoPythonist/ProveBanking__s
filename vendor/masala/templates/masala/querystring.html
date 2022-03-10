@@ -1,0 +1,11 @@
+<ul id="{{ ul_id }}" class="{{ ul_class }}">
+{% for item in query %}
+  <li class="{{ li_class }}">
+    <a href="#">
+      <span class="key">{{ item.key_display }}</span>
+      <span class="separator">{{ separator }}</span>
+      <span class="value">{{ item.value_display }}</span>
+    </a>
+  </li>
+{% endfor %}
+</ul>

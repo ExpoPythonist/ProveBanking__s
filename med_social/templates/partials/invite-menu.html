@@ -1,0 +1,11 @@
+{% if request.user.is_client %}
+<li class="anchor dropdown user-dropdown text-left">
+  <a class="dropdown-toggle no-underline" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+    <i class="fa fa-users"></i> Invite
+  </a>
+  <ul class="dropdown-menu text-left" role="menu">
+    <li><a href="{% url 'users:invite' %}">&nbsp;<i class="fa fa-user fa-fw text-muted"></i>&nbsp;&nbsp;Invite a colleague</a></li>
+    <li><a href="{% url 'vendors:invite' %}">&nbsp;<i class="fa fa-building-o fa-fw text-muted"></i>&nbsp;&nbsp;Invite a company</a></li>
+  </ul>
+</li>
+{% endif %}

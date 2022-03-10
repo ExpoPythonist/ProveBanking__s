@@ -1,0 +1,4 @@
+{% load i18n %}
+{% blocktrans %}
+  Please try importing data from a different LinkedIn account.
+{% endblocktrans %}

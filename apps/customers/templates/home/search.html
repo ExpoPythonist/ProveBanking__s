@@ -1,0 +1,77 @@
+{% pjaxr_extends "base_template.html" "Site" %}
+{% load pipeline %}
+{% load utils %}
+
+{% block title %}Search for suppliers - {{ current_tenant }}{% endblock %}
+{% block right_nav_button %}
+<a href="{% url 'get_vetted' %}" class="btn navbar-btn pull-right">Get Proven</a>
+{% endblock %}
+
+{% block page %}
+<div class="landing-container">
+  <section class="search-home-container">
+    <div class="container">
+    <div class="row greeting">
+      <div class="col-xs-12 text-center">
+        <div>{% include 'partials/avatar_initials.html' with object=user size=50 %}</div>
+        <h4 class="text-greeting">Welcome back, {{ user.first_name }}!</h4>
+      </div>
+    </div>
+      
+
+      <div class="panel panel-default panel-card panel-search-home">
+        <div class="panel-body">
+          <form class="form-mobile form-vertical" role="form" action="{% url 'vendors:list' %}?filter=yes" method="GET">
+            <div class="row">
+              <div class="col-md-2 col-sm-3">
+                <h5 class="text-uppercase text-muted"><b>I AM LOOKING FOR</b></h5>
+              </div>
+              {% for F in vendor_filter.form %}
+                {% if F.name in included_filters %}
+                  <div class="col-md-4 col-sm-3 search-field hide-render">
+                    <ul class="list-unstyled" role="menu" {% for key, val in F.field.widget.attrs %}{{ key }}={{val}}{% endfor %}>
+                      <li>{{ F }}</li>
+                    </ul>
+                  </div>
+                {% endif %}
+              {% endfor %}
+              <div class="col-md-4 col-sm-3 search-field hide-render">
+                {{ form.location }}
+              </div>
+              <div class="col-md-2 col-sm-3 search-btn">
+                <button type="submit" class="btn btn-primary btn-block btn-cta">search suppliers</button>
+              </div>
+            </div>
+            {% if past_searches.items %}
+              <hr>
+              <h6 class="section-title text-uppercase">Previous searches</h6>
+              <div class="previous-search-list">
+              {% for key,obj in past_searches.items reversed%}
+                <a href="{% url 'vendors:list' %}{%if past_query%}{{ past_query|index:forloop.revcounter0 }}{% endif %}" class="btn btn-default btn-sm">
+                {% for list in obj%}
+                  {% for i in list %}
+                    {% if i.id%}
+                      {{i}}{% if not forloop.last %},{%endif%}&nbsp;
+                    {% else %}
+                      {% if forloop.first %}
+                        <span class='text-muted'>{{i}}</span>
+                      {% else %}
+                        {{i}}{% if not forloop.last %},{%endif%}&nbsp;
+                      {% endif %}
+                    {% endif %}
+                  {% endfor %}
+                {% endfor %}
+                </a>&nbsp;
+              {% endfor %}
+              </div>
+            {% endif %}
+          </form>
+        </div>
+      </div>
+
+
+    </div>
+  </section>
+</div>
+{% endblock %}
+{% block pjaxr_namespace %}Site.customers.search{% endblock pjaxr_namespace %}

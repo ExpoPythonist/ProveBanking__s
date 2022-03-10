@@ -1,0 +1,50 @@
+{% pjaxr_extends "base_template.html" "Site" %}
+{% load pipeline %}
+{% block title %}Insight - {{ current_tenant }}{% endblock %}
+
+{% block page_title %}<span id="page-title">Insight</span>{% endblock %}
+
+{% block left_nav_button %}
+<span id="left-nav-btn" class="pull-left"></span>
+{% endblock %}
+
+{% block right_nav_button %}
+<span id="right-nav-btn" class="pull-right">
+    <span class="navbar-brand">
+    </span>
+</span>
+{% endblock %}
+
+{% block notifications %}
+{% include 'partials/notifications.html' %}
+{% endblock %}
+
+{% block page %}
+<div id="page" class="container page">
+    {% block content %}
+    <div class="panel panel-default chart-panel">
+        <div class="panel-body">
+            <div class="col-sm-5 col-sm-push-7">
+                <form id ="FilterChartForm", method="GET" class=" form-mobile charts-form">
+                    {{ form.as_p }}
+                </form>
+            </div> 
+            <div class="col-sm-6 col-sm-pull-5">
+                <h5 id="cycletimeTitle"><strong>Average Time to Staff (days)</strong></h5>
+                <canvas id="cycletimeCanvas" width="400" height="400" class="insight-chart" url={% url 'analytics:cycletime' %} ></canvas>
+                <div id="cycletimeCanvasLegend" class="chart-legend"></div>
+            </div>
+            <div class="col-sm-6">
+                <h5 id="peoplestaffedTitle"><strong>Number of People Staffed</strong></h5>
+                <canvas id="peoplestaffedCanvas" width="400" height="400" class="insight-chart" url= {% url 'analytics:peoplestaffed' %}></canvas>
+                <div id="peoplestaffedCanvasLegend" class="chart-legend"></div>
+            </div>          
+        </div>
+    </div>
+    {% endblock %}
+</div>
+{% endblock %}
+
+{% block js_foot %}
+{% javascript 'charts' %}
+{% endblock %}

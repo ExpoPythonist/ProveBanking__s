@@ -1,0 +1,89 @@
+{% pjaxr_extends "base_template.html" "Site" %}
+{% load crispy_forms_tags %}
+{% block title %} Add Proof - {{ current_tenant }}{% endblock %}
+
+{% block page_title %}<span id="page-title"> Add Proof</span>{% endblock %}
+
+{% block left_nav_button %}
+  <span id="left-nav-btn" class="pull-left">
+    {% if previous_page %}
+      <a class="navbar-brand btn" href="{{ previous_page }}"><i class="fa fa-chevron-left"></i></a>
+    {% else %}
+      <a class="navbar-brand btn" href="{{ vendor.get_absolute_url }}" data-target="sidebar-left"><i class="fa fa-chevron-left"></i></a>
+    {% endif %}
+  </span>
+{% endblock %}
+
+{% block right_nav_button %}
+  <span id="right-nav-btn" class="pull-right"></span>
+{% endblock %}
+
+{% block right_sidebar %}
+  <div id="sidebar-right" class="sidebar sidebar-right"></div>
+{% endblock %}
+
+{% block notifications %}
+  {% include 'partials/notifications.html' %}
+{% endblock %}
+
+{% block page %}
+  <div id="page" class="container page">
+    {% block content %}
+      <ol class="breadcrumb custom">
+        <li><a href="{{ vendor.get_absolute_url }}">Company</a></li>
+        <li class="active">Add Proof</li>
+      </ol>
+
+      <br/>
+
+      <h6 class="section-title text-uppercase">Add Proof</h6>
+      <div class="panel panel-default panel-card">
+        <div class="panel-body">
+          <p>Please add some kind of proof that you work with {{ reference.client }}.</p>
+          <p>
+          The best form is an invoice stating the contract amount and duration.
+          However, a letterhead or PDF containing proof is also acceptable.
+          </p>
+          <p>Maximum proven points are given to invoices, and lesser values are awarded to PDF of clients logos or screenshots of web pages.</p>
+          <form id="client-reference-form" class="form-mobile form-horizontal" role="form" action="{% url 'vendors:client_invoice_add' vendor.id reference.id %}" method="POST" enctype="multipart/form-data" data-parsley-validate>
+              {% csrf_token %}
+              {% if formset.errors %}
+                <span class="block-meta-title {% if formset.errors %}has-error{% endif %}">Errors</span>
+                <div class="form-group">
+                  <div class="controls text-left">
+                    <ul class="form-errors text-left">
+                      <li>We require at least one invoice to verify this client.</li>
+                      {% for error in formset.errors %}
+                        <li>{{ error }}</li>
+                      {% endfor %}
+                    </ul>
+                  </div>
+                </div>
+              {% endif %}
+              {% include 'forms/naked_form.html' with form=form submit_btn=False submit_btn_label='Upload Proof'%}
+              {{ formset.management_form }}
+              {% for form in formset %}
+              <div class="clearfix">
+                {% include 'forms/naked_form.html' with form=form form_heading=None %}
+                <span class="block-meta-title"></span>
+              {% endfor %}
+
+              <div class="text-center form-actions">
+                <button type="submit" class="btn btn-block btn-primary">Upload Proof</button>
+              </div>
+
+                {% if invoices %}
+                <span class="block-meta-title">Uploaded Proofs</span>
+                <div class="row">
+                    {% for invoice in invoices %}
+                    {% include 'vendors/partials/invoice.html' %}
+                    {% endfor %}
+                </div>
+                {% endif %}
+          </form>
+        </div>
+      </div>
+    {% endblock %}
+  </div>
+{% endblock %}
+{% block pjaxr_namespace %}Site.vendors{% endblock pjaxr_namespace %}

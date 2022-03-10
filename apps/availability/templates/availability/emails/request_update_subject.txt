@@ -1,0 +1,1 @@
+{{ requested_by.get_name_display }} has requested you to update your availability

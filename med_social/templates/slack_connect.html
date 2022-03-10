@@ -1,0 +1,39 @@
+{% extends 'base_template.html' %}
+{% load socialaccount %}
+{% load pipeline %}
+
+{% block page_title %}<span id="page-title"></span>{% endblock %}
+
+{% block right_nav_button %}
+  <span id="right-nav-btn" class="pull-right">
+    <a class="navbar-brand btn main-menu-btn" href="{% url 'account_logout' %}" >Sign out</a>
+  </span>
+{% endblock %}
+
+{% block page %}
+  <div id="page" class="page container">
+    {% block content %}
+      <div class="landing-block-third landing-request-main">
+        <div class="container">
+          <div class="row ">
+            <div class="col-sm-12">
+              <h3>Slack Integration</h3>
+              <hr className="thin"/>
+              <p>Proven can integrate authentication and notifications with your slack team. You can connect a slack team to let all your slack team members log in to Proven. After connecting a team, you can also select one of your slack channels to receive events from Proven.</p>
+              <br/>
+              {% if slack_tokens %}
+                <div id="slack-connections-app"></div>
+              {% endif %}
+
+              <p class="lead text-center">
+                <a href="{% provider_login_url "slack" process="connect" next="/slack/" %}" class="btn btn-o btn-primary btn-sm">
+                  <i class="fa fa-slack"></i> connect a slack team
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    {% endblock %}
+  </div>
+{% endblock %}

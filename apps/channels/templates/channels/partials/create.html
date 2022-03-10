@@ -1,0 +1,5 @@
+{% load utils %}
+<form id="new-channel-form" class="form-mobile form-horizontal" role="form" action="{% get_ctype_url 'channels:create' object %}" method="POST" force-validate data-parsley-validate>
+  {% csrf_token %}
+  {% include 'forms/mobile_form.html' with form=form submit_btn='Create' %}
+</form>

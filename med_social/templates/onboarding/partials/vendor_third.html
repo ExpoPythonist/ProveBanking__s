@@ -1,0 +1,14 @@
+<form id="vendor-third-form"  enctype="multipart/form-data" class="form-mobile form-horizontal" role="form" action="{% url 'user_setup:vendor_profile_web' %}"  data-parsley-validate method="POST">
+  {% csrf_token %}
+  {% include 'forms/mobile_form.html' with form=form %}
+  <div class="text-center form-actions">
+    <button href='#vendors-third-form' type="submit" class="btn btn-block btn-primary">
+      {% if not user.has_completed_onboarding %}
+        Next <i class="fa fa-chevron-right"></i>
+    </button>
+      {% else %}
+        Save
+      </button>
+      {% endif %}
+  </div>
+</form>

@@ -1,0 +1,185 @@
+@section-title-dark: #252527;
+@section-title-light: #707070;
+
+div.card-list {
+    div.panel {
+        width: 250px;
+    }
+    &.card-list-landscape {
+        div.panel {
+            width: 100%;
+        }
+    }
+}
+
+@media (max-width: @screen-xs-max) {
+  div.card-list {
+    padding: 0px ;
+    div.panel{
+    //  width: 300px;
+    }
+  }
+}
+
+div.panel-consultant.panel {
+    div.panel-body {
+        position: relative;
+        h3 {
+            color: @section-title-dark;
+            margin-top: 7px;
+            margin-bottom: 0px;
+            font-size: 18px;
+            a {
+                text-decoration: none;
+            }
+        }
+        .consultant-tagline {
+            text-align: center;
+            font-weight: 700;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+        .consultant-main {
+            margin-bottom: 10px;
+            hr {
+                margin: 5px 0px;
+            }
+        }
+        .avatar-container,
+        .avatar-container-big {
+            display: inline-block;
+            background: @color-white;
+            padding: 5px;
+            border-radius: 100%;
+            border-color: #f0f0f0;
+            background-color: #f0f0f0;
+        }
+        .avatar-container {
+            height: 55px;
+            width: 55px;
+        }
+        .avatar-container-big {
+            height: 90px;
+            width: 90px;
+        }
+        .username-big {
+            font-size: 20px;
+            font-weight: 700;
+        }
+        .username {
+            font-size: 16px;
+        }
+        .edit-trigger {
+            color: #909090;
+            font-size: 12px;
+            &:hover {
+                text-decoration: none;
+            }
+        }
+        .btn.btn-contact {
+            margin-bottom: 15px;
+            height: 25px;
+            padding: 0px;
+            background: #747476;
+            border-color: #747476;
+            color: #FFFFFF;
+            line-height: 23px;
+            font-size:12px;
+            &:hover{
+                background:#252429;
+                border-color:#252429;
+            }
+        }
+        .btn.btn-follow {
+            margin-bottom: 15px;
+            height: 25px;
+            padding: 0px;
+            border-color: #9d9d9d;
+            color: #747474;
+            line-height: 23px;
+            font-size:12px;
+            &.following {
+                background: #D4D4D4;
+                border-color: #D4D4D4;
+            }
+        }
+        .btn-details {
+            font-size:12px;
+            height: 25px;
+            padding-right: 0px;
+            line-height: 10px;
+            color: #252528;
+            white-space:nowrap;
+            margin-top:4px;
+        }
+        .footer {
+            font-size: 12px;
+            font-weight: 300;
+            color: @section-title-dark
+        }
+    }
+}
+
+.consultant-list-filter {
+    padding: 0px 72px 0px 0px;
+    .row {
+        padding: 0px;
+    }
+    .form-group.row {
+        margin-bottom: 25px;
+    }
+    .form-group.row > div {
+        padding: 0px;
+    }
+    .filter-group-btn {
+        border-left: 1px solid #494847;
+    }
+    .availability-dates {
+        .form-control {
+            margin-bottom: 5px;
+        }
+    }
+    .select-container {
+        position: relative;
+        width: auto;
+    }
+    .checkbox label {
+        font-size: 12px;
+    }
+    .btn.btn-gray {
+        background: @gray;
+        color: @color-white;
+    }
+    h5 {
+        color: #bbb;
+        font-size: 12px;
+        font-weight: 700;
+        text-shadow: 0 1px 0 #fff;
+        text-transform: uppercase;
+        margin-bottom: 5px;
+    }
+    hr {
+        height: 0px;
+        border-color: #e8e8e8;
+        -moz-box-shadow: 0px 1px 0px rgba(255, 255, 255, .79);
+        -webkit-box-shadow: 0px 1px 0px rgba(255, 255, 255, .79);
+        box-shadow: 0px 1px 0px rgba(255, 255, 255, .79);
+        margin: 0px;
+        margin-bottom: 10px;
+    }
+    @media (max-width: @screen-sm-max) {
+        padding: 0px 10px;
+    }
+}
+
+#left-sidebar {
+    .consultant-list-filter {
+        padding: 0px 15px;
+    }
+    #list-filter {
+        margin-left: 10px;
+        margin-right: 10px;
+        padding-bottom: 50px;
+    }
+}
+

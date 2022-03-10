@@ -1,0 +1,23 @@
+<div class="modal-header">
+  <div class="row">
+    <div class="col-xs-3 modal-action-left">
+      <a href="#" class="btn" data-dismiss="modal"><i class="fa fa-chevron-left"></i> <span>Cancel</span></a>
+    </div>
+    <div class="col-xs-6">
+      <h4 class="modal-title text-center" id="myModalLabel">Confirm Delete Portfolio Item</h4>
+    </div>
+    <div class="col-xs-3 modal-action-right">
+      <a href="#" class="btn" data-dismiss="modal" onClick="$('#confirmedDeletePortfolioForm').submit();"><i class="fa fa-check"></i> Delete</a>
+    </div>
+  </div>
+</div>
+<div class="modal-body">
+    <form id="confirmedDeletePortfolioForm" action="{% url 'vendors:delete_portfolio' object.id %}" method="post">
+        {% csrf_token %}
+    </form>
+    <p>
+    Are you sure you want to delete:
+    <strong>{{ object.title }}</strong>
+    </p>
+</div>
+

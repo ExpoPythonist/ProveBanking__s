@@ -1,0 +1,16 @@
+{% load review_tags %}
+{% if link %}
+  <a href="{{ link }}"
+{% else %}
+  <span
+{% endif %}
+class="btn btn-o btn-rating-{% get_review_color_class score %} btn-{{ button_size|default:"xs" }} {% if not link %}disabled{% endif %}" {{ extra_attrs }}>
+  <i class="fa fa-star-o"></i>&nbsp;{{ score|default:"N/A"}}{% if score %}<small>/5</small>{% endif %}
+    {% if count %}
+      &nbsp;<small>({{ count }})</small>
+    {% endif %}
+{% if link %}
+  </a>
+{% else %}
+  </span>
+{% endif %}

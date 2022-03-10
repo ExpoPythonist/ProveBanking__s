@@ -1,0 +1,56 @@
+{% pjaxr_extends "base_template.html" "Site" %}
+{% load crispy_forms_tags %}
+{% block title %} {{ action|capfirst }} {{ kind_label|capfirst }} - {{ current_tenant }}{% endblock %}
+{% block page_title %}<span id="page-title">{{ action|capfirst }} {{ kind_label|capfirst }}</span>{% endblock %}
+
+{% block left_nav_button %}
+  <span id="left-nav-btn" class="pull-left">
+    {% if previous_page %}
+      <a class="navbar-brand btn" href="{{ previous_page }}"><i class="fa fa-chevron-left"></i></a>
+    {% else %}
+      <a class="navbar-brand btn" href="{% url 'client_settings:manage_categories' kind_label %}"><i class="fa fa-chevron-left"></i></a>
+    {% endif %}
+  </span>
+{% endblock %}
+
+{% block right_nav_button %}
+  <span id="right-nav-btn" class="pull-right"></span>
+{% endblock %}
+
+{% block right_sidebar %}
+  <div id="sidebar-right" class="sidebar sidebar-right"></div>
+{% endblock %}
+
+{% block notifications %}
+  {% include 'partials/notifications.html' %}
+{% endblock %} 
+{% block page %}
+  <div id="page" class="container page">
+    {% block content %}
+    <ol class="breadcrumb custom">
+      <li><a href="{% url 'client_settings:home' %}">Settings</a></li>
+      <li><a href="{% url 'client_settings:manage_categories' kind_label %}">{{ kind_label|capfirst }}</a></li>
+      <li class="active">{{ action|capfirst }} {{ kind_label }}</li>
+    </ol>
+    <div id="content" class="">
+      <div class="page-top-band">
+        <div class="col-xs-12">
+            <h6>{{ kind_label|capfirst }}</h6>
+        </div>
+      </div>
+      <form class="form-mobile form-horizontal" action="." method="post">
+        <div class="panel panel-default">
+          <div class="panel-body">
+              {% csrf_token %}
+              {{ form.kind.as_hidden }}
+              {{ form.name|as_crispy_field:'bootstrap3' }}
+          </div>
+        </div>
+        <div class="form-actions text-center">
+          <button type="submit" class="btn btn-primary btn-block">{{ submit_btn_label|default:'Save' }}</button>
+        </div>
+      </form>
+    </div>
+    {% endblock %}
+  </div>
+{% endblock %}

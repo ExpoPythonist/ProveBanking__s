@@ -1,0 +1,33 @@
+div.list-group {
+    display: block;
+    clear: both;
+    @media (max-width: @screen-xs-max) {
+        border-radius: 0px;
+        a.list-group-item {
+            border-radius: 0px;
+        }
+    }
+    &.list-group-main {
+        .box-shadow(0 1px 1px rgba(0, 0, 0, 0.05));
+        a.list-group-item {
+            padding-left: 10px;
+            border-color: #eee;
+            &:hover {
+            background: @color-white;
+            }
+            .fa {
+            line-height: 20px;
+            }
+        }
+    }
+    a.list-group-item {
+        &.disabled {
+            color: @gray-light;
+            background: @gray-lighter;
+            &:hover {
+                cursor: default;
+            }
+        }
+    }
+}
+

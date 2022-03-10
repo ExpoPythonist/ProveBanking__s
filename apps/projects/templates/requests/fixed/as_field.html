@@ -1,0 +1,65 @@
+{% load projects %}
+{% load avatar_tags %}
+{% load activity %}
+{% with staffing_request.proposed_staff.count as proposed_staff %}
+  
+
+<div class="result-item panel panel-default panel-hint panel-{{ staffing_request.get_status_css_class }} {% if show_details %}unread-event{% endif %}" {% if show_details %}data-unread-event-url="{% url 'activity:event_update' content_id=staffing_content_id object_id=staffing_request.id %}" {% endif %} data-pk="{{ staffing_request.id }}" data-kind="staffing-request" data-title="{{ staffing.request.text_title }}">
+
+  <div class="panel-body row text-left request-{{staffing_request.id}} {{ extra_css_classes }}">
+
+    <div class="col-sm-10  col-xs-8 no-underline nopadding no-link-style">
+      <h4>
+        {% with staffing_request.title as title %}
+          {% if title %}
+            <a class="no-link-style no-underline" href="{{ staffing_request.get_absolute_url }}">{{ title }}</a>
+          {% endif %}
+        {% endwith %}
+      </h4>
+    </div>
+    <h5 class="col-sm-2 col-xs-4  text-right">
+    {% if unread_events %}
+      {% has_unread_events staffing_request unread_events as events %}
+        {% if not show_details and events %}
+          <a href="{{ staffing_request.get_absolute_url }}" title="new activity" class="no-underline text-primary fa fa-circle activity-counter"></a>&nbsp;
+        {% endif %}
+    {% endif %}
+      <span class="staffing-request-id" title="Job ID">SR{{staffing_request.id}}</span>
+      {% if user.is_client and show_details %}
+        <span class="disabled text-muted">&nbsp;|&nbsp;</span>
+        <a class="no-underline btn-card-action" href="{{ staffing_request.get_edit_url }}">edit</a>
+      {% endif %}
+    </h5>
+    {% if show_details and staffing_request.description %}
+      <div class="col-xs-12 tags-left">
+        <p  class="small">{{ staffing_request.description }}</p>
+      </div>
+    {% endif %}
+    <div class="col-xs-12 nopadding">
+      <div class="col-sm-6 tags-left">
+        <span class="btn btn-{{ staffing_request.get_status_css_class }} btn-o btn-xs btn disabled " title="Number of people staffed/required">
+        <strong>{{ staffing_request.staffed_count }}</strong> of <strong>{{ staffing_request.num_resources }}</strong> staffed</span>&nbsp;
+        {% if staffing_request.location %}
+          <span class="btn btn-secondary btn-o btn-xs disabled"><i class="fa fa-map-marker"></i> {{ staffing_request.location }}</span> &nbsp;
+        {% endif %}
+        {% for category in staffing_request.categories.all %}
+          <span class="btn btn-secondary btn-o btn-xs disabled">{{ category }}</span><span class="spacer"></span>&nbsp;
+        {% endfor %}
+        {% if staffing_request.max_rate %}
+          <span class="btn btn-secondary btn-o btn-xs disabled"><i class="fa fa-map-money"></i> ${{ staffing_request.max_rate }} max budget</span> &nbsp;
+        {% endif %}
+      </div>
+      <div class="vertical-spacer-sm visible-xs"></div>
+      <div class="col-sm-6 text-right">
+          {% if user.is_client %}
+            {% include 'requests/partials/acl_button.html' %}
+          {% elif show_details and show_confirm_box %}
+             {% include 'requests/partials/vendor_confirm_button.html' %}
+          {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endwith %}

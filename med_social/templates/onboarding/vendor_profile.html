@@ -1,0 +1,67 @@
+{% pjaxr_extends "onboarding/base.html" "Site.onboarding" %}
+{% block title %} Welcome aboard! Help your potential clients find you by providing some info about your company.{% endblock %}
+
+{% block page_title %}<span id="page-title">Edit company profile</span>{% endblock %}
+
+{% block left_nav_button %}
+  <span id="left-nav-btn" class="pull-left">
+    {% if previous_page %}
+      <a class="navbar-brand btn" href="{{ previous_page }}"><i class="fa fa-chevron-left"></i></a>
+    {% elif not user.has_completed_onboarding %}
+      <a href="/" class="navbar-brand btn"><img src="{{ STATIC_URL }}images/vpp-landing/logo/logo.png" class="logo" /></a>
+    {% else %}
+      <a class="navbar-brand btn" href="{{ user.vendor.get_absolute_url }}"><i class="fa fa-chevron-left"></i></a>
+    {% endif %}
+  </span>
+{% endblock %}
+
+{% block content %}
+    {% if user.has_completed_onboarding %}
+      <ol class="breadcrumb custom">
+        <li><a href="{{ user.vendor.get_absolute_url }}">Company profile</a></li>
+        <li class="active">Edit company profile</li>
+      </ol>
+    {% endif %}
+
+    <div class="panel-group" id="vendor-form-accordion" role="tablist" aria-multiselectable="true" id="accordion">
+        <div class="panel panel-default vendor-form-panel">
+          <div class="panel-heading" role="tab" id="headingBasic">
+            <h4 class="panel-title">
+              <a class="collapse-title" data-toggle="collapse" data-parent="#vendor-form-accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                <span class="name">Basic</span>
+                <span class="values hide"></span>
+              </a>
+            </h4>
+          </div>
+          <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" data-parent="#vendor-form-accordion">
+              {% include 'onboarding/partials/vendor_first.html' with form=form %}
+          </div>
+        </div>
+        <div class="panel panel-default vendor-form-panel panel-second">
+          <div class="panel-heading" role="tab">
+            <h4 class="panel-title">
+              <a class="collapse-title" data-toggle="collapse" data-parent="#vendor-form-accordion" href="#collapseSecond" aria-expanded="false" aria-controls="collapseSecond">
+                <span class="name">Locations (# of employees)</span>
+                <span class="values hide"></span>
+              </a>
+            </h4>
+          </div>
+          <div id="collapseSecond" class="panel-collapse collapse" role="tabpanel" data-parent="#vendor-form-accordion">
+            {% include 'onboarding/partials/vendor_second.html' %}
+          </div>
+        </div>
+        <div class="panel panel-default vendor-form-panel panel-third">
+          <div class="panel-heading" role="tab" >
+            <h4 class="panel-title">
+              <a class="collapse-title" data-toggle="collapse" data-parent="#vendor-form-accordion" href="#collapseThird" aria-expanded="false" aria-controls="collapseThird">
+                <span class="name">Logo and links (optional)</span>
+                <span class="values hide"></span>
+              </a>
+            </h4>
+          </div>
+          <div id="collapseThird" class="panel-collapse collapse " role="tabpanel"  data-parent="#vendor-form-accordion">
+              {% include 'onboarding/partials/vendor_third.html' with form=web_form %}
+          </div>
+        </div>
+      </div>
+{% endblock %}

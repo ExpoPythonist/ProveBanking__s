@@ -1,0 +1,16 @@
+{% load crispy_forms_filters %}
+<form id="channel-comment-form" class="form-horizontal form-mobile" role="form" action="{% url 'channels:comment' channel.id %}" method="POST" list-append="#channel-comments-list-{{ channel.id }}" data-suggestions-url="{% url 'channels:suggestions' channel.id %}">
+  <div class="panel panel-default">
+    <div class="panel-body align-left">
+      {% csrf_token %}
+      <div class="clearfix row">
+        <div class="form-group col-xs-12">
+          {{ form.body|as_crispy_field }}
+          <div class="col-xs-12 text-right">
+            <small class="text-muted"><i><code>enter</code> to send, <code>shift+enter</code> for new line, type <code>@</code> to mention and notify, <code>email address</code> to invite</i></small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

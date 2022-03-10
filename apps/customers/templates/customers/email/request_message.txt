@@ -1,0 +1,13 @@
+{% load i18n %}
+{% blocktrans with user_name=user.get_short_name %}
+
+A customer with the credentials:
+
+Name: {{ name }}
+Email: {{ email }}
+Company: {{ company }}
+Phone: {{ phone_number }}
+Website: {{ website }}
+
+has requested a demo.
+{% endblocktrans %}

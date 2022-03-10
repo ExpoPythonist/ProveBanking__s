@@ -1,0 +1,79 @@
+{% pjaxr_extends "base_template.html" "Site" %}
+{% load projects %}
+{% block title %}{{view.get_page_title }} - {{ current_tenant.name }}{% endblock %}
+
+{% block page_title %}<span id="page-title">{{ view.get_page_title }}</span>{% endblock %}
+
+{% block left_nav_button %}
+  <span id="left-nav-btn" class="pull-left">
+    <a class="navbar-brand btn" href="{% url 'projects:detail' staffing_request.project_id %}"><i class="fa fa-chevron-left"></i></a>
+  </span>
+{% endblock %}
+
+{% block right_nav_button %}
+  <span id="right-nav-btn" class="pull-right"></span>
+{% endblock %}
+
+{% block right_sidebar %}
+  <div id="sidebar-right" class="sidebar sidebar-right"></div>
+{% endblock %}
+
+{% block notifications %}
+  {% include 'partials/notifications.html' %}
+{% endblock %}
+
+{% block page %}
+  <div id="page" class="container page">
+    {% block content %}
+      <ol class="breadcrumb custom">
+        <li><a href="{% url 'projects:list' %}">Projects</a></li>
+        <li><a href="{{ staffing_request.project.get_absolute_url }}">Project details</a></li>
+        <li class="active">{{ view.get_page_title }}</li>
+      </ol>
+      {% include 'requests/as_field.html' with show_details=True %}
+      {% if detail_confirmed  %}
+        {% if staffing_request.kind == staffing_request.KIND_FIXED %}
+            <div class="page-top-band">
+              <div class="col-xs-12">
+                <h6>Deliverable Proposals</h6>
+              </div>
+            </div>
+            {% for object in staffing_request.deliverable.all %}
+                  {% include 'responses/fixed/card.html' with response=object %}
+            {% endfor %}
+            {% if  user.is_vendor %}
+              <div class="col-xs-12 nopadding">
+                  <a href="{% url 'staffing:requests:response' staffing_request.id %}" class="btn btn-block btn-dash btn-o btn-primary">+ propose deliverable</a>
+              </div>
+            {% endif %}
+            <br/>
+            <br/>
+        {%else%}
+          {% get_proposed_staff_for_request staffing_request user as proposed_resources %}
+            <div class="page-top-band">
+              <div class="col-xs-12">
+                <h6>People</h6>
+              </div>
+            </div>
+            {% for proposed_resource_object in proposed_resources %}
+              <div class="panel panel-default panel-hint panel-{{ proposed_resource_object.status.get_css_class }}">
+                <div class="panel-body">
+                  {% include 'responses/proposed_staff_member.html' with vendor=proposed_resource_object.response.vendor person=proposed_resource_object.resource %}
+                </div>
+              </div>
+            {% endfor %}
+            {% if perms.projects.add_proposedresource %}
+              <div class="col-xs-12 nopadding">
+                  <a href="{% url 'staffing:propose' staffing_request.id %}" class="btn btn-block {% if staffing_request.proposed.all or staffing_request.vendors.all %}btn-dash btn-o{%else%}btn-primary{%endif%} btn-primary">+ {% if user.is_client %}{% if staffing_request.proposed.all or staffing_request.vendors.all %}invite people{%else%}invite people and/or suppliers{%endif%}{% else %}propose person{% endif %}</a>
+              </div>
+            {% endif %}
+             
+            <br/>
+            <br/>
+        {% endif %}
+          {% include 'channels/object_channels.html' %}
+        {% endif %}
+    {% endblock %}
+  </div>
+{% endblock %}
+{% block pjaxr_namespace %}Site.projects.staffing_details{% endblock pjaxr_namespace %}

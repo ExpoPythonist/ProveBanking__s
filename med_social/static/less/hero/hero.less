@@ -1,0 +1,123 @@
+@color-white : #fff;
+.nopadding {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+html{
+  height: 100%;
+}
+
+body {
+  position: relative;
+  min-height: 100%;
+  //min-width: 100%;
+  background-color: transparent;
+  //background-image: url('../images/landing01/background1.jpg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  overflow: auto;
+}
+.auth-modal {
+  overflow: auto;
+  .modal-dialog {
+    top: 15%;
+    margin-bottom: 150px;
+  }
+}
+.auth-form-panel {
+  h1 {
+    margin-top: 5px;
+    margin-bottom: 30px;
+    img {
+      width: 124px;
+    }
+  }
+  background-color: @color-white;
+  border-radius: 5px;
+  h4 {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+}
+
+
+form.authforms {
+  li{
+    padding: 0px;
+    position: relative;
+    &.has-icon {
+      input {
+        text-indent: 30px;
+      }
+      i {
+        position: absolute;
+        font-size: 16px;
+        top: 10px;
+        left: 15px;
+        z-index: 3
+      }
+    }
+    .form-control {
+      height: auto;
+    }
+    input{
+      padding: 10px;
+      margin-top: -1px;
+      border-radius: 5px;
+      padding:10px;
+      background: #fff;
+      z-index: 0;
+      position: relative;
+      &:active, &:focus {
+        box-shadow: none;
+        z-index: 2;
+      }
+    }
+  }
+  .control-label {
+    font-weight: normal;
+  }
+  &.login-form {
+    li:first-child {
+      input {
+        border-radius: 5px 5px 0 0;
+      }
+    }
+    li:last-child {
+      input {
+        border-radius: 0 0 5px 5px;
+      }
+    }
+    li:only-child {
+      input {
+        border-radius: 5px 5px;
+      }
+    }
+  }
+  .help-block {
+    strong {
+      font-weight: 300;
+    }
+  }
+}
+
+
+.btn-o {
+    font-weight: 400;
+    &.btn-primary {
+        .button-variant(@btn-o-primary-color; transparent; @btn-o-primary-border);
+        &.disabled {
+            border-color: @btn-o-primary-bg;
+        }
+    }
+}
+
+.alert-warning.registration-alert {
+  font-size: 13px;
+  background: #fff5d4;
+  border: 1px solid #e1d19c;
+  border-radius: 3px;
+  padding: 5px 10px;
+  color: #5B4C1C;
+}

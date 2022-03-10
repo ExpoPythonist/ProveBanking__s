@@ -1,0 +1,37 @@
+<form id="vendors-search-form" class="form-mobile form-horizontal" method="GET" action="{% if form.instance.id %}{% url 'staffing:requests:edit_vendors' form.instance.id %}{% else %}#{% endif %}" data-ajax-form>
+  {% csrf_token %}
+  <h5>Matching /selected suppliers and people</h5>
+  <div class="col-xs-12" id="vendor-selection">
+    <div id="vendor-selected">
+      {% if form.instance.id %}
+        {% for vendor in form.instance.vendors.all %}
+          {% include 'requests/partials/selected_vendor.html' %}
+        {% endfor %}
+        {% for proposed in form.instance.proposed.all %}
+          {% include 'requests/partials/selected_resource.html' with resource=proposed.resource %}
+        {% endfor %}
+      {% endif %}
+      {% for vendor in pre_selected_vendors %}
+        {% include 'requests/partials/selected_vendor.html' %}
+      {% endfor %}
+      {% for resource in pre_selected_users %}
+        {% include 'requests/partials/selected_resource.html' %}
+      {% endfor %}
+    </div>
+    <div class="search">
+      <div class="input-group form-group">
+        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+        <input id="input-vendors-search" type="text" class="form-control" placeholder="Search vendors and people" name="q" autocomplete="off">
+      </div>
+    </div>
+    <div class="row">
+      <div id="vendor-recommendations" class="col-xs-12"></div>
+      <div id="search-results" class="col-xs-12"></div>
+    </div>
+    <br/>
+  </div>
+  <div class="text-center">
+    <a href="#vendors-search-form" class="btn btn-primary btn-form-submit" data-name="submit" data-value="save">Save and send</a>
+    <a href="#vendors-search-form" class="btn btn-form-submit btn-link" data-name="submit" data-value="advanced">advanced options</a>
+  </div>
+</form>

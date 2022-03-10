@@ -1,0 +1,41 @@
+<form id="primary-form" class="form-mobile form-horizontal" role="form" action="{% url 'vendors:procurement:vendor_custom_primary' object.id  %}" method="POST" enctype="multipart/form-data" data-ajax-form data-parsley-validate>
+  {% csrf_token %}
+  <div class="modal-header">
+    <div class="row">
+      <div class="col-sm-11 text-center">
+      <h5>Choose a primary service</h5>
+      </div>
+      <div class="col-xs-1 text-right">
+        <a href="#" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times text-muted"></i></a>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-body ">
+    {% if is_valid %}
+    	<div class="text-center result-item" data-pk="{{ object.pk }}" data-kind="project" data-text="{{ object.title }}">
+		  <h2>
+		    <i class="fa fa-check-circle text-muted"></i> Success!
+		  </h2>
+		</div>
+
+    	<div id="location-object" class="hide">
+    		{% include 'vendors/location-as-list.html' with location=object %}
+    	</div>
+    {% else %}
+      <p>Mark <b>{{ object.category }}</b> as the primary service you offer?</p>
+      {% include 'forms/naked_form.html' with form=form form_heading=None %}
+      <div class="vertical-spacer-lg"></div>
+      <p class="text-muted">Note: Your company will be ranked within your primary service offering</p>
+    {% endif %}
+  </div>
+
+  <div class="modal-footer">
+  	{% if is_valid %}
+  		<a href="#" data-dismiss="modal" class="btn btn-primary">OK</a>
+  	{% else %}
+      <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+	    <button type="submit" class="btn btn-primary">Save</button>
+  	{% endif %}
+  </div>
+</form>

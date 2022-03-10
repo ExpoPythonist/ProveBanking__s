@@ -1,0 +1,26 @@
+{% load utils %}
+<!-- 
+<div class="sticky-footer-nav dotstyle dotstyle-dotmove navbar-fixed">
+  <div class="container">
+    <div class="rangestepper" id="demo-rangestepper">
+        {% for kind, label in Vendor.KIND_LABELS.items %}
+          {% if not forloop.first %}&nbsp;{% endif %}
+
+          <a data-toggle="tooltip" title="{{ Vendor.KIND_DESC|get_item:kind }}" href="{% url 'vendors:list' %}?kind={% if kind == Vendor.KIND_APPROVED %}-1{% else %}{{ kind }}{% endif %}" class="fake-filter-btn step no-underline {% if default_kind == kind %} active heavier{% endif%}" data-name="kind" data-value="{% if kind == Vendor.KIND_APPROVED %}-1{% else %}{{ kind }}{% endif %}">
+            <span class="filter-item">
+              {% if kind == Vendor.KIND_APPROVED %}
+                All Existing
+              {% else %}
+                {{ label }}
+              {% endif %}
+            </span>
+            <span class="count filter-results-count">{{ vendors.count }}</span>
+          </a>
+        {% endfor %}
+      <span class="stretch"></span>
+      <div class="rangeline"></div>
+      &nbsp;
+    </div>
+  </div>
+</div>
+ -->

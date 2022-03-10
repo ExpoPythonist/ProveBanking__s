@@ -1,0 +1,121 @@
+{% extends "account/base.html" %}
+{% load i18n %}
+{% load account %}
+{% load socialaccount %}
+{% load crispy_forms_tags %}
+{% load crispy_forms_field %}
+{% load extra_form_utils %}
+{% load utils %}
+
+{% block title %}Sign in - {{ current_tenant }}{% endblock %}
+
+{% block main_navbar %}{% endblock %}
+
+
+{% block burger_menu %}
+  <span id="main-menu-btn" class="pull-left"></span>
+{% endblock %}
+
+{% block notifications %}
+  {% include 'partials/notifications.html' %}
+{% endblock %}
+
+
+{% block content %}
+  <section class="hero-container">
+    <div class="page container ">
+      <div class="modal show auth-modal">
+        <div class="modal-dialog modal-sm">
+          <div class="modal-content">
+            <div class="modal-body">
+              <div class="auth-form-panel">
+                <div class="text-center">
+                  <h1><img src="{{ STATIC_URL }}images/vpp-landing/logo/logo-black.png" ></h1>
+                  <h5 class="header-thin">Welcome.</h5>
+                </div>
+                  {% if form.non_field_errors %}
+                    <div class="alert alert-danger" role="alert">
+                      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                      <span class="sr-only">Error:</span>
+                      <ul class="list-unstyled">
+                        {% for error in form.non_field_errors %}
+                          <li>{{ error }}</li>
+                        {% endfor %}
+                      </ul>
+                    </div>
+                  {% endif %}
+                  <br>
+
+                {% with request.GET|args:'next'|call:'get' as next %}
+                  <form  id="signin-form" action="{% url 'account_login' %}{% if next %}?next={{ next }}{% endif %}" method="POST" class="form-mobile authforms login-form" autocomplete="off">
+                {% endwith %}
+                  {% csrf_token %}
+                  <ul class="list-unstyled">
+                    <li class="clearfix has-icon">
+                      <i class="fa fa-envelope-o text-primary"></i>
+                      <input autofocus="autofocus" class="textinput textInput form-control text-field" id="id_login" name="login" placeholder="Your username or e-mail" type="text" required>
+                    </li>
+                    <li class="clearfix has-icon">
+                      <i class="fa fa-lock text-primary"></i>
+                      <input class="textinput textInput form-control text-field" id="id_password" name="password" placeholder="Your password" type="password" required>
+                    </li>
+                  </ul>
+                  <br>
+                  <div class="clearfix text-center text-muted">
+                    <label for="id_remember" class="control-label small">
+                      <big>Remember Me &nbsp;&nbsp;&nbsp;</big>
+                      <input data-switchery="true" style="display: none;" class="checkboxinput checkbox small" id="id_remember" name="remember" type="checkbox" checked>
+                    </label>
+                  </div>
+                  <div class="text-center form-actions">
+                    <button type="submit" class="btn btn-block btn-primary">Sign In</button>
+                  </div>
+                  <br/>
+                  <div class="text-center small">
+                    <a class="no-underline" href="{% url 'account_reset_password' %}?previous={{ request.get_full_path }}">I forgot my password</a><br>
+                    <div class="text-center text-muted">(if you have previously recieved an invitation to join)</div>
+                  </div>
+                </form>
+
+                <hr class="thin"/>
+                
+                {% comment %}
+                  {% if socialaccount.providers  %}
+                    <!-- <span class="block-meta-title">Social login (we will never post anything without your permission)</span>
+                    <div class="list-group list-group-main socialaccount_providers ">
+                    {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+                    </div> -->
+                  {% endif %}
+                {% endcomment%}
+              </div>
+            </div>
+          </div>
+          <br>
+          <div class="modal-content">
+            <div class="modal-body">
+              <div class="text-center">
+
+                  {% if current_tenant.is_public_instance %}
+                    <p class="text-muted">If you are new here, welcome friend!</p>
+                    <a class="btn btn-o btn-primary btn-block" href="{% url 'users:register' %}?previous={{ request.get_full_path }}">request an invitation</a>
+
+                  {% else %}
+                    <p class="text-muted"> If you are new here and want access to Proven platform, Please email: <span class="text-primary">{{ current_tenant.email }}</span></p>
+ 
+                  {% endif %}
+                  <br/>
+                  <div class="text-info">
+                  <span class="small text-muted">We look forward to seeing you around</span>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+
+{% block js_foot %}
+  <script type="text/javascript" src="{{ STATIC_URL }}js/lib/add2home.js"></script>
+{% endblock %}

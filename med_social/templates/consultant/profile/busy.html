@@ -1,0 +1,13 @@
+<div id="busy-{{ profile.id }}" class="panel-footer panel-availability {{ profile.is_available|yesno:"available, unavailable"}} {% if profile == user %}editable{% endif %}">
+  {% if profile.is_available %}
+    <span>Available for work</span>
+  {% else %}
+    Available after <strong>{{ profile.busy_till }}</strong>
+  {% endif %}
+  {% if profile == user %}<a href="#" class="btn-edit pull-right">Edit</a>{% endif %}
+  {{ form.errors }}
+  <form action="{% url 'edit_availability' %}" method="POST">
+    {% csrf_token %}
+    <input type="text" id="availability-input" name="busy_till" class="hide {% if profile == user %}editable{% endif %}" value="{{ profile.busy_till|date:"Y-m-d" }}">
+  </form>
+</div>

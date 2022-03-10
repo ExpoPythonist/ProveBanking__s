@@ -1,0 +1,7 @@
+{% if confirm %}
+{{vendor}} accepted to fulfill your request: {{ staffing_request }}
+{% else %}
+{{vendor}} will not be able to fulfill your request: {{ staffing_request }}
+{% endif %}
+
+To reply, go to: {{ resource_url }}

@@ -1,0 +1,2 @@
+{% load i18n %}
+{% blocktrans %}Invitation to {{ company }}'s supplier partnership platform{% endblocktrans %}

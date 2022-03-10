@@ -1,0 +1,15 @@
+{% load utils %}
+
+{% for vendor in vendors|slice:filter_slice %}
+  {% include 'vendors/card.html' with vendor=vendor selectable=True %}
+{% endfor %}
+
+{% with request.GET|get_item:"page" as page %}
+    <div id="filter-scroll" {% if is_last_page %}data-last-page="true"{% endif %} class="col-sm-12 text-center text-muted" data-page="{{ page|add:1 }}" data-preload-offset="600">
+      <div id="filter-loading-icon" class="hide">
+        <p><i class="fa fa-3x fa-spin fa-spinner"></i></p>
+        <p>Loading</p>
+      </div>
+      {% if page and is_last_page %}No more suppliers match this criteria{% endif %}
+    </div>
+{% endwith %}

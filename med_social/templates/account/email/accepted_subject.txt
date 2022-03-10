@@ -1,0 +1,2 @@
+{% load i18n %}{% if user.is_consultant %}{% blocktrans %}You're in! {% endblocktrans %}{% endif %}{% blocktrans %}Welcome to the Proven community.
+{% endblocktrans %}

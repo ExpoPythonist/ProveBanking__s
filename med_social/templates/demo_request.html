@@ -1,0 +1,16 @@
+{% extends 'guest_base.html' %}
+
+{% block 'main-content' %}
+<div class="row ">
+  <div class="col-sm-6 col-sm-offset-3 ">
+    <!-- <div class="text-center text-muted"><h2>Request a demo</h2></div> -->
+    <div class="panel panel-defualt request-panel">
+      <div class="panel-body">
+        <h3 class="form-title text-center" >Request demo</h3>
+      </div>
+      <div class="panel-body">
+        {% include 'demo_request_form.html' %}
+      </div>
+    </div>
+  </div>
+{% endblock %}

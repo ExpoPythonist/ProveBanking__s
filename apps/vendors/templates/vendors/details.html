@@ -1,0 +1,147 @@
+{% pjaxr_extends "base_template.html" "Site" %}
+{% load avatar_tags %}
+{% load review_tags %}
+{% load thumbnail %}
+
+{% load utils %}
+
+{% block title %}Supplier - {{ current_tenant }}{% endblock %}
+
+{% block page_title %}<span id="page-title">{% if user.is_client%}Supplier details{% else %}Company profile{% endif %}</span>{% endblock %}
+
+{% block notifications %}
+  {% include 'partials/notifications.html' %}
+{% endblock %}
+
+{% block page %}
+  {% block content %}
+  <div id="page" class="container container-vendor-profile">
+  <div class="sections-wrapper">
+
+    <section class="vendor-overview">
+      <!-- <h6 class="section-title text-uppercase">Overview
+      {% if user.is_procurement %}<a href="{% url 'vendors:archive_vendor' object.id %}" data-toggle="modal" data-target="#genericModal"  data-modal-is-remote="true" class="pull-right no-underline">Delete supplier</a>{% endif %}</h6>  -->
+      {% include 'vendors/partials/profile-partials/vendor_overview.html' with vendor=vendor show_details=True show_lifecycle_link=True %}
+    </section>
+    {% if request.user.is_authenticated %}
+    <section class="contact-details">
+      <h6 class="section-title text-uppercase">Contact details</h6>
+      {% include 'vendors/partials/profile-partials/contact_details.html' %}
+    </section>
+    {% endif %}
+
+    {% if current_tenant.is_public_instance and vendor.client_references.all %}
+    <section class="clients">
+      <h6 class="section-title text-uppercase">Clients</h6>
+      {% include 'vendors/partials/profile-partials/clients.html' %}
+    </section>
+    {% endif %}
+
+    {% if not current_tenant.is_public_instance %}
+      {% if user.is_client and vendor.engage_process %}
+        <section class="notes">
+          <h6 class="section-title text-uppercase">Note from <b>{{ current_tenant|upper }}'S</b> PROCUREMENT GROUP</h6>
+          {% include 'vendors/partials/profile-partials/notes.html'%}
+        </section>
+      {% endif %}
+    {% endif %}
+
+    {% if review_objects %}
+    <section class="reviews">
+      <h6 class="section-title text-uppercase">What clients are saying</h6>
+      {% include 'vendors/partials/profile-partials/vendor_reviews.html'%}
+    </section>
+    {% endif %}
+
+    {% comment %}
+    {% if features.guides.is_enabled %}
+      {% if user.is_client or user.vendor == vendor %}
+        <section class="guides">
+          <h6 class="section-title text-uppercase">Guides</h6>
+          {% include 'vendors/partials/profile-partials/guides.html'%}
+        </section>
+      {% endif %}
+    {% endif %}
+    {% endcomment %}
+
+
+    {% if vendor.vendor_locations.exists or vendor.vendor_skills.exists or vendor.vendor_industries.exists or vendor.custom_categories.exists %}
+    <section class="services">
+      <h6 class="section-title text-uppercase">Services</h6>
+      {% include 'vendors/partials/profile-partials/services.html'%}
+    </section>
+    {% endif %}
+
+    {% if diversity_owned or diversity_employee %}
+      <section class="diversity">
+        <h6 class="section-title text-uppercase">Employment & diversity information</h6>
+        {% include 'vendors/partials/profile-partials/diversity.html'%}
+      </section>
+    {% endif %}
+
+    {% if user.is_client %}
+      {% if portfolio_projects %}
+        <section class="past-project">
+        {% if current_tenant.schema_name == 'jandj' %}
+          <h6 class="section-title text-uppercase">Local Companies</h6>
+        {% else %}
+          <h6 class="section-title text-uppercase">Past Projects</h6>
+        {% endif %}
+          {% include 'vendors/partials/profile-partials/past_projects.html' %}
+        </section>
+      {% endif %}
+    {% else %}
+      <section class="past-project">
+      {% if current_tenant.schema_name == 'jandj' %}
+        <h6 class="section-title text-uppercase">Local Companies</h6>
+      {% else %}
+        <h6 class="section-title text-uppercase">Past Projects</h6>
+      {% endif %}
+        {% include 'vendors/partials/profile-partials/past_projects.html' %}
+      </section>
+    {% endif %}
+
+    {% if vendor.cert_verifications.all %}
+    <section class="certification">
+      <h6 class="section-title text-uppercase">CURRENT CERTIFICATIONS</h6>
+      {% include 'vendors/partials/profile-partials/certifications.html' %}
+    </section>
+    {% endif %}
+
+    {%if vendor.video or vendor.story or vendor.brochure %}
+    <section class="details">
+      <h6 class="section-title text-uppercase">Why should clients choose us</h6>
+      {% include 'vendors/partials/profile-partials/details.html'%}
+    </section>
+    {% endif %}
+
+    <section class="news">
+      {% include 'vendors/partials/profile-partials/news.html'%}
+    </section>
+
+    <section class="details">
+      <h6 class="section-title text-uppercase">Social feed and metrics</h6>
+      {% include 'vendors/partials/profile-partials/social-data.html'%}
+    </section>
+    
+    <!-- <hr/> -->
+
+    <section id="views-and-activity" class="profile-views">
+      <h6 class="section-title text-uppercase">
+        <a data-toggle="collapse" data-parent="#views-and-activity" href="#activityCollapse" aria-expanded="true" aria-controls="activityCollapse" class="btn-link btn-view-toggle no-underline collapsed">
+          <!-- Show views and edits -->
+          &nbsp;
+        </a>
+      </h6>
+      <div id="activityCollapse" class="collapse">
+        <section class="analytics">
+          <!-- <h6 class="section-title text-uppercase">Views</h6> -->
+          {% include 'analytics/partials/views.html'%}
+        </section>
+      </div>
+    </section>
+  </div>
+  </div>
+  {% endblock %}
+{% endblock %}
+{% block pjaxr_namespace %}Site.vendors{% endblock pjaxr_namespace %}

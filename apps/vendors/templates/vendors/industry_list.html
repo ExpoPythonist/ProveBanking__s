@@ -1,0 +1,73 @@
+{% extends "vendors/profile_edit_sidebar.html" %}
+  {% block main_content %}
+  <section class="profile-edit-form service-industries-list">
+  <h6 class="section-title text-uppercase">Industries</h6>
+  <div class="panel panel-default panel-card">
+    <div class="panel-body">
+      <br>
+      <h6 class="block-meta-title text-uppercase">List the industries that you serve, and specify approximately the % revenue distribution across them last year</h6>
+      <br>
+      <form id="role-allocations" action="{% url 'vendors:industries:list' vendor.id %}" method="POST">
+      {% csrf_token %}
+        <ul id="role-list" class="list-group panel-metrics container-md">
+
+          <li class="list-group-item header">
+            <h6 class="text-uppercase">
+              industry <span class="pull-right">% allocated</span>
+            </h6>
+          </li>
+        {% for industry in industries %}
+          <li class="list-group-item">
+              <b>{{ industry.industry }}</b>
+              <span class="pull-right">
+                  <span class="edit-mode-on ">
+                    <a class="btn" href="{% url 'vendors:industries:delete' industry.id %}" data-toggle="modal" data-target="#genericModal"><span><i class="fa fa-trash-o"></i></span></a>
+                    <input id="id_{{ industry.id }}" name="{{ industry.id }}" class="allocation-input" value="{{ industry.allocation }}" tabindex="1" data-toggle="tooltip" data-placement="right" title="edit allocation here"/>
+                  </span>
+                  <span class="weight-value edit-mode-off">{{ industry.allocation }}%</span>
+              </span>
+            </li>
+        {% endfor %}
+
+          <li class="list-group-item">
+              <a href="{% url 'vendors:industries:create' vendor.id %}" class="btn btn-primary" data-toggle="modal" data-target="#genericModal" >Add Industry</a>
+            <span class="pull-right">
+              {% if industries %}
+              <a id="edit-allocation-btn" class="btn-link edit-mode-off " href="#">Edit allocation</a>
+
+              <div class="btn-group">
+                <a id="cancel-edit-btn" class="btn btn-default btn-sm edit-mode-on" href="#"><i class="fa fa-times"></i></a>
+                <a id="save-allocation-btn" class="btn btn-default btn-sm edit-mode-on  btn-primary" href="#"><i class="fa fa-check"></i></a>
+              </div>
+              {% endif %}
+            </span>
+          </li>
+
+          <li class="list-group-item text-right footer">
+            <div class="total-allocation-container {{ total_allocation_incorrect|yesno:"has-error,"}}" data-toggle="tooltip" data-placement="right" title="Must be 100%">
+              <strong class="text-uppercase meta small">total:
+                <span id="total-allocation">{{ total_role_allocation }}</span>%
+              </strong>
+            </div>
+          </li>
+        </ul>
+      </form>
+      <br/><br/>
+      <div class="container-md text-right">
+        
+      </div>
+      <div class="row">
+        <div class="col-xs-6">
+            <a href="{% url 'user_setup:setup_step_vendor_skill' vendor.id %}" class="btn btn-default btn-backward">Back</a>
+        </div>
+        <div class="col-xs-6 text-right">
+         <a href="{% url 'user_setup:setup_step_vendor_location' vendor.id %}" type="submit" class="btn btn-primary btn-forward">
+            Next
+        </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  </section>
+  {% endblock %}
+{% block pjaxr_namespace %}Site.settings.score{% endblock pjaxr_namespace %}

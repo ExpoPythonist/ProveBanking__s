@@ -1,0 +1,124 @@
+{% load avatar_tags %}
+{% load thumbnail %}
+{% load crispy_forms_tags %}
+{% load review_tags %}
+{% load utils %}
+
+<div
+    id="vendor-{{ vendor.id }}"
+    class="panel panel-default panel-card field-group selectable vendor-card real-public"
+    data-selected-list="#selected-list"
+    data-list="#vendor-selectable-list"
+    data-counter=".selected-count">
+  <script class="as-json" type="application/json" data-type="vendor">{{vendor.as_json|safe}}</script>
+
+  <div class="panel-body ">
+    <div class="card-section-1">
+
+      {% if user.is_client and vendor.kind_labels_diplayable|get_item:vendor.kind %}
+        <span class="sticker sticker-{{vendor.KIND_CSS_CLASSES|get_item:vendor.kind}} text-uppercase">{{vendor.kind_labels_diplayable|get_item:vendor.kind}}</span>
+      {% endif %}
+
+
+      <span class="logo-wrapper">
+        <a href="{{ vendor.get_absolute_url }}" class="">
+          {% thumbnail vendor.logo "150x40" as thumb %}
+            <img src="{{ thumb.url }}">
+          {% empty %}
+            <img src="{{ STATIC_URL }}images/defaults/placeholder-co.png">
+          {% endthumbnail %}
+        </a>
+      </span>
+
+
+      <div>
+        <a href="{{ vendor.get_absolute_url }}" class="no-link-style" title="{{ vendor.name }}">
+          <h5 class="heading">{{ vendor.name }}</h5>
+        </a>
+        {% if vendor.vendor_locations.exists %}
+          <span class="text-muted vendor-location">
+            &nbsp;<i class="fa fa-map-marker"></i>&nbsp;
+            {% for location in vendor.vendor_locations.all %}
+              {% if forloop.counter < 3 %}
+                {{ location.location }} {% if forloop.counter < 2 %}{% if forloop.last %}{% else %},{% endif %}{% endif %}
+              {% elif forloop.counter == 3 %}
+                & {{ forloop.revcounter }} more
+              {% endif %}
+            {% endfor%}
+          </span>
+        {% endif %}
+      </div>
+    </div>
+
+    <div class="card-section">
+        <span class="pull-right"><i class="fa fa-question-circle text-primary" data-toggle="tooltip" data-placement="left" title="The Proven Score is a proprietary algorithm that computes specific variables about a company, such as client verifications, profile completeness and other factors."></i></span>
+        <strong>Proven Score: {{ vendor.proven_score|floatformat:0 }}%</strong><br>
+      </div>
+
+      {% if vendor.get_primary_service and vendor.get_primary_service.rank %}
+    <div class="card-section section-ranking">
+      <span class="pull-right"><i class="fa fa-question-circle text-primary" data-toggle="tooltip" data-placement="left" title="Rankings are based on:<br/>{% if current_tenant.is_public_instance %}&middot;&nbsp;number of clients<br/>&middot;&nbsp;client verifications<br/>&middot;&nbsp;number of reviews<br/>&middot;&nbsp;company profile completeness and other factors{% else %}&middot;&nbsp;number of projects & clients worked with<br/>&middot;&nbsp;reviews<br/>&middot;&nbsp;company profile completeness and other factors{% endif%}"></i></span>
+      <span class="left">
+        <span class="rank">#{{vendor.get_primary_service.rank}}</span>
+        of {{vendor.get_total_primary }} in
+        {{vendor.get_primary_service.category}}
+      </span>
+    </div>
+    {% endif%}
+
+    {% with vendor.get_meta_counts as meta_counts %}
+      {% assign_review_url 'list' vendor as score_url %}
+
+      {% if user.is_client %}
+      <div class="card-section score-bar">
+        <a data-target="#genericModal" data-toggle="modal">
+        {% if vendor.reviews.exists %}
+        <div class="col-xs-8 nopadding">
+            {% if vendor.avg_score %}
+              <span class="score-value rating-stars  star_{% rating_stars_color vendor.avg_score %}" >
+                {% rating_stars vendor.avg_score %} <a class="no-underline"><span class="text-muted">({{ meta_counts.reviews }} review{{ meta_counts.reviews|pluralize }})</span></a>
+              </span>
+            {% endif %}
+        </div>
+        {% endif %}
+        </a>
+
+        <div class="{% if vendor.reviews.exists %}col-xs-4 text-right{% else %}col-xs-12 text-center{% endif %} nopadding">
+          {% if False and perms.reviews.add_review  %}
+            <a class="" >rate</a>
+          {% endif %}
+        </div>
+      </div>
+      {% endif %}
+
+      <div class="card-section card-description {% if not vendor.summary %}hide-xxs{% endif%}">
+        <div class="card-section-title text-uppercase">DESCRIPTION</div>
+        <p>
+          {% if vendor.summary %}
+            <a >{{ vendor.summary }}</a>
+          {% else %}
+            <span class="section-empty">The supplier has not provided any description</span>
+          {% endif %}
+        </p>
+      </div>
+
+      {% if current_tenant.is_public_instance %}
+        {% include 'vendors/public/partials/card_clients.html' with vendor=vendor %}
+      {% endif %}
+
+      {% if user.is_client and selectable %}
+        <div class="card-bottom text-center">
+          <button type="button" class="btn btn-sm btn-o btn-primary select-input unchecked" data-selected-text="remove" data-unselected-text="select" data-toggle="button" aria-pressed="false" data-value="{{ vendor.id }}" data-email="{{ vendor.email }}" autocomplete="off" >
+            &nbsp;&nbsp;shortlist&nbsp;&nbsp;
+          </button>
+        </div>
+      {% endif %}
+  {% endwith %}
+
+
+    <div class="selected-overlay select-input">
+      <i class="fa fa-check-circle text-primary"></i>
+    </div>
+
+  </div>
+</div>

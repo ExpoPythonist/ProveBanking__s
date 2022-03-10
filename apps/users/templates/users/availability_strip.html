@@ -1,0 +1,8 @@
+<div class="col-xs-12 text-right profile-availability">
+  {% include 'availability/as_field.html' with weeks=object.get_availability_as_weeks %}
+</div>
+{% if object != user %}
+<div class="col-xs-12 text-right ">
+  <a href="{% url 'availability:request_update' object.id %}" class="no-underline btn-link btn btn-sm" data-method="POST" data-replace="#request-update-btn-{{ object.id }}">ask to update</a>
+</div>
+{% endif%}

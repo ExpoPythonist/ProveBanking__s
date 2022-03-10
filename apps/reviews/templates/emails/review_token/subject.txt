@@ -1,0 +1,5 @@
+{% if token.created_by%}
+    {{ token.created_by }} requested you to review {{ token.content_object}}
+{% else %}
+    {{ token.content_object}} has expressed interest in working with {{ current_tenant}}
+{% endif %}

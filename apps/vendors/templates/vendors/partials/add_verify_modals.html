@@ -1,0 +1,65 @@
+<div class="black-overlay">&nbsp;</div>
+
+<div class="clients__popup popup add-client clients__add-modal container">
+    <form class="row form clients__add-form" method="POST" action="{% url 'vendors:client_add' vendor.id %}">
+        <h2 class="modal-header col-xs-12 text-center">Add Client</h2>
+        <div class="clients__errors"></div>
+        {% csrf_token %}
+        <div class="col-xs-12 col-sm-8 col-sm-offset-2 text-center form-block">
+            <select type="text" class="select clients__name-input required" placeholder="NAME"
+                   data-selectize="yes" data-kind="client" selectize-url="/clients/search/"
+                   name="client_form-client">
+            </select>
+            <span class="grey">Can't find your client? </span><a class="grey underline" href=#>Add them here</a>
+        </div>
+        <div class="col-xs-12 col-sm-8 col-sm-offset-2 form-block separated-block">
+            <input id="anonymize" type="checkbox" class="checkbox-toggler" name="anonymize" />
+            <label for="anonymize" class="separated toggler-right">Anonymize Client</label>
+        </div>
+        <div class="col-xs-12 text-center">
+            <p>Some clients may prefer that you not to show their real name publicily.
+                <br> Here, you can specify a short description which will be used instead of
+                <br> client name, logo, website.
+            </p>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-sm-offset-4 text-center">
+            <input class="btn btn-default btn-green clients__client-submit"
+                    type="submit" value="Add client"/>
+            <span class="cancel-button">Cancel</span>
+        </div>
+    </form>
+</div>
+
+<div class="popup verify-client clients__verify-modal container">
+  <form class="row form">
+      {% csrf_token %}
+      <div class="col-xs-12 text-center form-block">
+        <img src="" alt="" class="clients__modal-logo"/>
+        <h2 class="modal-header">Why should I verify?</h2>
+        <i class="icon big-icon icon-question not-verified"></i><i class="icon medium-icon icon-arrow-right2"></i><i class="icon big-icon icon-check highlight"></i>
+      </div>
+      <div class="col-xs-12 text-center">
+          <p>
+              Vendors with verified proof are 3X more likely to be contacted by a potential buyer.
+              <br>
+          </p>
+      </div>
+      <div class="col-xs-12 col-sm-8 col-sm-offset-2 text-center">
+          <p class="bold-p">
+              NOTE: Unverified clients can't
+              <br> count towards your Proven score.
+          </p>
+      </div>
+      <div class="col-xs-12 col-sm-5 col-sm-offset-1 text-center">
+          <a class="btn btn-default btn-green clients__verify-email" data-toggle="modal" href=""
+             data-target="#genericModal">Verify by email</a>
+      </div>
+      <div class="col-xs-12 col-sm-5 text-center">
+          <a class="btn btn-default btn-green clients__verify-proof" data-toggle="modal" href=""
+             data-target="#genericModal">Upload proof</a>
+      </div>
+      <div class="col-xs-12 text-center">
+          <a href="#"><span class="cancel-button">skip</span></a>
+      </div>
+  </form>
+</div>

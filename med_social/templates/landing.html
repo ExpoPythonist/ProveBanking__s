@@ -1,0 +1,122 @@
+{% extends 'guest_base.html' %}
+{% load socialaccount %}
+
+{% block 'main-content' %}
+  <div class="row hero-wrapper">
+    <div class="col-xs-12 col-sm-5 text-left col-left">
+      <h1 class="pitch-text">
+        Get More From Your Suppliers
+      </h1>
+      <p class="pitch-blurb font-thin">
+        Software that empowers you to choose the best suppliers and  contractors  quickly based on their past projects and verified ratings.
+      </p>
+
+      <div class="cta-btn-wrapper">
+        <a class="btn btn-lg btn-landing-cta" href="{% url 'get_vetted' %}"> GET PROVEN <i class="fa fa-angle-right"></i></a>
+        <i class="ui-techstars"></i>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-6 col-sm-offset-1 col-right">
+      <img class="res-product-shot" alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAABEQAAAV0AQMAAADkRlp5AAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAANJJREFUeNrtwQENAAAAwqD3T20ON6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADgzwDwpgABMwj08AAAAABJRU5ErkJggg==">
+    </div>
+  </div>
+{% endblock %}
+
+{% block 'second' %}
+  <section class="block-second landing-main">
+    <div class="container">
+      <div class="row text-center">
+        <div class="col-sm-4 col-left feature-block">
+          <div class="text-center"><i class="ui-streamline"></i></div>
+          <h4 class="text-primary">STREAMLINE</h4>
+          <p class="font-thin">
+            Streamline the "request-evaluate-staff" workflow for staffing your next project
+          </p>
+        </div>
+        <div class="col-sm-4 col-left feature-block">
+          <div class="text-center"><i class="ui-collaborate"></i></div>
+          <h4 class="text-primary">COLLABORATE</h4>
+          <p class="font-thin">
+            Collaborate with all staffing stakeholders on one platform, from any device
+          </p>
+        </div>
+        <div class="col-sm-4 col-left feature-block">
+          <div class="text-center"><i class="ui-learn_icon"></i></div>
+          <h4 class="text-primary">LEARN</h4>
+          <p class="font-thin">
+            Learn their strengths/weaknesses through tight feedback loops
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>  
+{% endblock %}
+
+{% block 'third' %}
+<section class="block-third">
+  <div class="container">
+    <div class="row ">
+      <div class="col-xs-10 col-sm-6 col-xs-offset-1 col-sm-offset-3">
+        <h3 class="block-title text-center">
+          <span class="b">Powerful</span> and <span class="b">modern</span> tools
+        </h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-4 col-sm-offset-1 feature-block">
+        <img class="res-pipeline" alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA5gAAAIHAQMAAADAQWHcAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAFFJREFUeNrtwTEBAAAAwqD1T20KP6AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAeBnrLAAB5b1dEQAAAABJRU5ErkJggg==">
+        <h5 class="text-primary">STREAMLINE YOUR PROJECT STAFFING</h5>
+        <p class="font-thin">Easily request staff from all your managed service providers with one click. View a summary of your staffing requests and review staffing on the project level.</p>
+      </div>
+      <div class="col-sm-4 col-sm-offset-2 feature-block">
+        <img class="res-response" alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA5cAAAIIAQMAAADAHIiEAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAFFJREFUeNrtwQENAAAAwqD3T20PBxQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAATwbroAABwgf3SAAAAABJRU5ErkJggg==">
+        <h5 class="text-primary">OBJECTIVELY COMPARE CANDIDATES</h5>
+        <p class="font-thin">See a consolidated view of all your candidates. Make comparison based on skill, bill rate, logistic and more.</p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-4 col-sm-offset-1 feature-block">
+        <img class="res-profile" alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA5gAAAIIAQMAAAAxF9MJAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAFFJREFUeNrtwQENAAAAwqD3T20PBxQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAATwbroAABwgf3SAAAAABJRU5ErkJggg==">
+        <h5 class="text-primary">REVIEW INDIVIDUAL CANDIDATES</h5>
+        <p class="font-thin">Make staffing decisions based on performance not resumes. Review candidates overall performance rating and see  what projects they've worked on.</p>
+      </div>
+      <div class="col-sm-4 col-sm-offset-2 feature-block">
+        <img class="res-peoples" alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA5gAAAIIAQMAAAAxF9MJAAAAA1BMVEX///+nxBvIAAAAAXRSTlMAQObYZgAAAFFJREFUeNrtwQENAAAAwqD3T20PBxQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAATwbroAABwgf3SAAAAABJRU5ErkJggg==">
+        <h5 class="text-primary">SEARCH WORKFORCE KNOWLEDGE  BASE</h5>
+        <p class="font-thin">Gain insights from your organization's experiences. Organically develop a searchable knowledge base of your contingent workforce.</p>
+      </div>
+    </div>
+    <div class="text-center cta-secondary-wrapper">
+      <a class="btn btn-lg btn-primary btn-landing-cta" href="{% url 'get_vetted' %}"> GET PROVEN <i class="fa fa-angle-right"></i></a>
+    </div>
+
+  </div>
+</section>
+{% endblock %}
+
+{% block 'fourth' %}
+<section class="block-fourth">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-10 col-sm-6 col-sm-offset-2 ">
+        <div class="testmonial">
+          <span class="bubble-arrow left"></span>
+          <div class="quote">&ldquo;I don't know how we survived without a tool like this for so long&rdquo;</div>
+          <span class="text-muted">&mdash; Practice head: Top 3 global consulting firm </span>
+          <i class="ui-carret carret"></i>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-10 col-sm-6 col-xs-offset-2 col-sm-offset-4 ">
+        <div class="testmonial">
+          <span class="bubble-arrow right"></span>
+          <div class="quote">&ldquo;This could be a game changer for us&rdquo;</div>
+          <span class="text-muted">&mdash; Supplier Manager: Top global strategy consulting firm </span>
+          <i class="ui-carret carret"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

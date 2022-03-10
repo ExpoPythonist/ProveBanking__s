@@ -1,0 +1,74 @@
+{% extends "account/base.html" %}
+{% load i18n %}
+{% load account %}
+{% load socialaccount %}
+{% load crispy_forms_tags %}
+{% load crispy_forms_field %}
+{% load extra_form_utils %}
+
+{% block title %}Thanks - {{ current_tenant }}{% endblock %}
+
+{% block main_navbar %}{% endblock %}
+
+
+{% block burger_menu %}
+  <span id="main-menu-btn" class="pull-left"></span>
+{% endblock %}
+
+{% block notifications %}
+  {% include 'partials/notifications.html' %}
+{% endblock %}
+
+
+{% block content %}
+  <section class="hero-container">
+    <div class="page container ">
+      <div class="modal show auth-modal">
+        <div class="modal-dialog modal-md">
+          <div class="modal-content">
+            <div class="modal-body">
+              <div class="auth-form-panel">
+                <div class="text-center">
+                  <h1><img src="{{ STATIC_URL }}images/vpp-landing/logo/logo-black.png" ></h1>
+                </div>
+                <hr class="thin"/>
+                
+                <h4 class="text-center">Thank you for verifying {{ vendor }}!</h4>
+                <p>Proven is a great way for vendors to verify their relationships with customers. Proven is used by many companies to manage their pool of vendors, both prospective and current.</p>
+                <p>Proven is free for companies to manage vendors.</p>
+
+                <ul>
+                    <li>Do you get a lot of calls from prospective vendors?</li>
+                    <li>Do you always know who the best vendors are for certain professional services?</li>
+                    <li>Do you require vendors to submit RFPs?</li>
+                </ul>
+
+                <p>Proven makes it easy to manage new prospective vendors and all your existing ones too, and we'll help you find the very best vendors, based on the number of verified clients they have.</p>
+                <p><strong>If you'd like to sign up and try Proven out, you can do so here, and we can set you up with your own Proven Platform.</strong></p>
+                <form class="form-mobile form-horizontal" action="." method="post">
+                  <div class="panel panel-default">
+                    <div class="panel-body">
+                        {% csrf_token %}
+                        {{ form.email|as_crispy_field:'bootstrap3' }}
+                        {{ form.notes|as_crispy_field:'bootstrap3' }}
+                    </div>
+                  </div>
+                  <div class="form-actions text-center">
+                    <button type="submit" class="btn btn-primary btn-block">{{ submit_btn_label|default:'Submit' }}</button>
+                    <a href="http://www.proven.cc/" class="btn btn-secondary btn-block">No thanks - take me home!</a>
+                  </div>
+                </form>
+                <br>
+              </div>
+            </div>
+          </div>
+          <br>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+
+{% block js_foot %}
+  <script type="text/javascript" src="{{ STATIC_URL }}js/lib/add2home.js"></script>
+{% endblock %}

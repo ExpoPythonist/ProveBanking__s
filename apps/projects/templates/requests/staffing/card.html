@@ -1,0 +1,76 @@
+{% load projects %}
+<div class="panel panel-default response-card">
+  <div class="panel-body">
+    <div class="field-group">
+      <div class="field-value text-left">
+        <strong>{{ staffing_request.role }}</strong>
+      </div>
+    </div>
+    <div class="field-group">
+      <label>
+        <span class="category-tags">
+        {% for category in staffing_request.categories.all %}
+          <span class="btn btn-secondary btn-o btn-xs disabled">{{ category }}</span> &nbsp;
+        {% endfor %}
+        </span>
+      </label>
+      <div class="field-value">
+        <span class="btn btn-secondary btn-o btn-xs disabled"><i class="fa fa-user"></i> {{ staffing_request.num_resources }}</span> &nbsp;
+        {% if staffing_request.location %}
+          <span class="btn btn-secondary btn-o btn-xs disabled"><i class="fa fa-map-marker"></i> {{ staffing_request.location }}</span> &nbsp;
+        {% endif %}
+        {% if staffing_request.allocation != 100 %}
+          <span class="btn btn-secondary btn-o btn-xs disabled">
+            {{ staffing_request.allocation }}%
+            <small> allocation</small>
+          </span> &nbsp;
+        {% endif %}
+      </div>
+    </div>
+
+    {% if staffing_request.skill_level %}
+    <div class="field-group">
+      <label>Skill level</label>
+      <div class="field-value">
+        {{ staffing_request.skill_level }}
+      </div>
+    </div>
+    {% endif %}
+
+    <div class="clearfix">
+      <div class="col-xs-12 col-sm-6 field-group field-group-inline">
+        <label>Start</label>
+        <div class="field-value">
+          {{ staffing_request.natural_start_date }}
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6 field-group field-group-inline">
+        <label>End</label>
+        <div class="field-value">
+          {{ staffing_request.natural_end_date }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% if user.is_client %}
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <div class="field-group">
+        <label>Available to</label>
+        <div class="field-value">
+          {% if staffing_request.is_public %}
+            All organizations
+          {% else %}
+            {% for vendor in staffing_request.vendors.all %}
+              <a class="no-underline" href="{{ vendor.get_absolute_url }}">
+                {{ vendor }}
+              </a>
+            {% endfor %}
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+{% endif %}

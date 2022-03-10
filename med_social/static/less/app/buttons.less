@@ -1,0 +1,361 @@
+/* buttons */
+.btn-square {
+    border-radius: 0px;
+    &.btn-xs {
+        width: 18px;
+        height: 18px;
+        margin-left: 4px;
+        line-height: 15px;
+        padding: 0px;
+    }
+}
+
+span[title="delete certificate"] .fa {
+  color: #d9534f;
+}
+
+.btn-attached-right {
+    position: absolute;
+    right: -45px;
+    top: 15px;
+    &:before {
+        content: " ";
+        position: absolute;
+        width: 14px;
+        height: 1px;
+        left: -14px;
+        top: 8px;
+        background: lighten(@brand-primary, 15%);
+        z-index: -1;
+    }
+}
+
+.btn.btn-link {
+    color: @brand-primary;
+    border: none;
+    background: none;
+}
+
+&.btn-primary {
+    &:hover ,
+    &:focus,
+    &:active{
+        background: @brand-primary-hovered;
+    }
+}
+&.btn-form-primary[type="submit"] {
+    margin-left: 20px;
+}
+
+&.btn-secondary {
+    background-color: @btn-secondary-bg;
+    color: @btn-secondary-color;
+    border: 1px solid @btn-secondary-border;
+    &.disabled {
+        border-color: @btn-secondary-bg;
+    }
+}
+
+&.btn-underline {
+    border-bottom: dotted 1px #000;
+    text-decoration: none;
+    padding: 0px;
+}
+&.btn-underline:active,
+&.btn-underline.active {
+    box-shadow: none;
+}
+
+.btn.no-click {
+    &:hover,
+    &:active,
+    &:focus,
+    &.active {
+        cursor: default;
+    }
+}
+
+.btn-default {
+    &.no-click {
+        .button-variant(@btn-default-color; #fff; @btn-default-border);
+    }
+    &:hover {
+        .button-variant(@btn-default-color; #fff; @btn-default-border);
+    }
+}
+
+.btn-slack {
+    .button-variant(#fff; @slack-bg; @slack-bg);
+
+    &:hover,
+    &:focus,
+    &:active{
+        background: lighten(@slack-bg, 12%);
+    }
+}
+
+.btn-default:hover:hover,
+.btn-default:hover:focus,
+.btn-default:hover:active,
+.btn-default.active:hover,
+.btn-default:hover {
+    &.no-click {
+        background: @color-white;
+        border-color: @btn-default-border;
+    }
+}
+
+.btn-primary:hover:hover,
+.btn-primary:hover:focus,
+.btn-primary:hover:active,
+.btn-primary.active:hover,
+.btn-primary:hover {
+    &.no-click {
+        color: @brand-primary;
+        border-color: @btn-primary-border;
+    }
+}
+
+.btn-default {
+  &.btn-nakd {
+    background: @color-white;
+    background: rgba(0, 0, 0, 0);
+
+    &:active,
+    &:hover,
+    &:focus,
+    &.active {
+      background: @color-white;
+      box-shadow: none;
+    }
+  }
+}
+
+.btn-danger {
+    .text-muted {
+        color: @btn-danger-color;
+    }
+}
+
+.btn-warning {
+    .text-muted {
+        color: @btn-warning-color;
+    }
+}
+
+.btn-success {
+    .text-muted {
+        color: @btn-success-color;
+    }
+}
+
+.btn-group {
+    .btn-naked:first-child {
+        border-right: 0px;
+    }
+}
+
+.group-span-filestyle.input-group-btn:last-child > .btn {
+    margin-left: 0px;
+}
+
+// .btn {
+//   margin-left: 1px;
+//   margin-right: 1px;
+// }
+
+.btn.btn-muted {
+    &.btn-xs {
+        font-size: 14px;
+    }
+    &:hover, &:active, &:focus {
+        cursor: default;
+    }
+}
+
+.btn-o {
+    font-weight: 400;
+    &.btn-primary {
+        .button-variant(@btn-o-primary-color; transparent; @btn-o-primary-border);
+        &.disabled {
+            border-color: @btn-o-primary-bg;
+        }
+    }
+
+    &.btn-secondary {
+        .button-variant(@btn-o-secondary-color; transparent; @btn-o-secondary-border);
+        &.disabled {
+            border-color: @btn-o-secondary-bg;
+        }
+    }
+
+    &.btn-secondary-dark {
+        .button-variant(@btn-o-secondary-bg; transparent; @btn-o-secondary-border);
+        background: transparent;
+        &:hover, &:active {
+            background: transparent;
+            color: @btn-o-secondary-bg;
+        }
+        &.disabled {
+            border-color: @btn-o-secondary-bg;
+        }
+    }
+
+    &.btn-warning {
+        .button-variant(@btn-o-warning-color; transparent; @btn-o-warning-border);
+        &.disabled {
+            border-color: @btn-o-warning-bg;
+        }
+    }
+
+    &.btn-info {
+        .button-variant(@btn-o-info-color; transparent; @btn-o-info-border);
+        &.disabled {
+            border-color: @btn-o-info-bg;
+        }
+    }
+
+    &.btn-success {
+        .button-variant(@btn-o-success-color; transparent; @btn-o-success-border);
+        &.disabled {
+            border-color: @btn-o-success-bg;
+        }
+    }
+    &.btn-danger {
+        .button-variant(@btn-o-danger-color; transparent; @btn-o-danger-bg);
+        &.disabled {
+            border-color: @btn-o-danger-bg;
+        }
+    }
+
+    &.btn-rating-one {
+        .button-variant(#D39021; transparent; #D39021);
+        &.disabled {
+            border-color: @btn-o-danger-bg;
+        }
+    }
+
+    &.btn-rating-two {
+        .button-variant(#DFB529; transparent; #DFB529);
+        &.disabled {
+            border-color: @btn-o-danger-bg;
+        }
+    }
+    &.btn-rating-three {
+        .button-variant(#F09D21; transparent; #F09D21);
+        &.disabled {
+            border-color: @btn-o-danger-bg;
+        }
+    }
+    &.btn-rating-four {
+        .button-variant(#F37135; transparent; #F37135);
+        &.disabled {
+            border-color: @btn-o-danger-bg;
+        }
+    }
+    &.btn-rating-five {
+        .button-variant(#E2050B; transparent; #E2050B);
+        &.disabled {
+            border-color: @btn-o-danger-bg;
+        }
+    }
+
+}
+
+.btn.btn-dash {
+    background: transparent;
+    border-style: dashed;
+    border-radius: 0px;
+    transition: all 0.3s ease;
+    &:focus, &:active{
+        outline: none;
+        box-shadow: none;
+        opacity: 0.6;
+        background: transparent;
+    }
+}
+
+span.v-divider {
+    background-image: -moz-linear-gradient(top, rgba(221,221,221,0) 0%, rgba(221,221,221,1) 30%, rgba(221,221,221,1) 50%, rgba(221,221,221,1) 70%, rgba(221,221,221,0) 100%); /* FF3.6+ */
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(221,221,221,0)), color-stop(30%,rgba(221,221,221,1)), color-stop(50%,rgba(221,221,221,1)), color-stop(70%,rgba(221,221,221,1)), color-stop(100%,rgba(221,221,221,0))); /* Chrome,Safari4+ */
+    background-image: -webkit-linear-gradient(top, rgba(221,221,221,0) 0%,rgba(221,221,221,1) 30%,rgba(221,221,221,1) 50%,rgba(221,221,221,1) 70%,rgba(221,221,221,0) 100%); /* Chrome10+,Safari5.1+ */
+    background-image: -o-linear-gradient(top, rgba(221,221,221,0) 0%,rgba(221,221,221,1) 30%,rgba(221,221,221,1) 50%,rgba(221,221,221,1) 70%,rgba(221,221,221,0) 100%); /* Opera 11.10+ */
+    background-image: -ms-linear-gradient(top, rgba(221,221,221,0) 0%,rgba(221,221,221,1) 30%,rgba(221,221,221,1) 50%,rgba(221,221,221,1) 70%,rgba(221,221,221,0) 100%); /* IE10+ */
+    background-image: linear-gradient(to bottom, rgba(221,221,221,0) 0%,rgba(221,221,221,1) 30%,rgba(221,221,221,1) 50%,rgba(221,221,221,1) 70%,rgba(221,221,221,0) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00dddddd', endColorstr='#00dddddd',GradientType=0 ); /* IE6-9 */
+    display: inline-block;
+    width: 1px;
+    min-height: 35px;
+    height: 100%;
+    margin:0 5px;
+    vertical-align: middle;
+}
+
+.btn.disabled {
+    opacity: 0.9;
+}
+
+.btn-card-action {
+    font-weight: normal;
+    display: inline-block;
+}
+
+.btn-forward {
+  margin-top: 20px;
+  margin-right: 12px;
+  position: relative;
+  padding-left: 25px;
+  padding-right: 25px;
+  &:after {
+    display: inline-block;
+    content:"";
+    position: absolute;
+    right: -12px;
+    width: 0px;
+    height: 0px;
+    border-top: 17px solid transparent;
+    border-bottom: 17px solid transparent;
+    border-left: 12px solid @brand-primary;
+    top: -1px;
+  }
+  &:hover, &:active {
+    border-color: @brand-primary-hovered;
+    box-shadow: none;
+    &:after{
+      border-left-color: @brand-primary-hovered;
+    }
+  }
+
+}
+.btn-backward {
+  margin-top: 20px;
+  margin-left: 12px;
+  position: relative;
+  padding-left: 25px;
+  padding-right: 25px;
+  //background: #ececec;
+  border-left: none;
+  &:after {
+    display: inline-block;
+    content:"";
+    position: absolute;
+    left: -11px;
+    width: 24px;
+    height: 24px;
+    // border-top: 17px solid transparent;
+    // border-bottom: 17px solid transparent;
+    // border-right: 12px solid #ececec;
+    top: 4px;
+    transform: rotate(45deg);
+    border-bottom: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    border-radius: 2px;
+  }
+  &:hover, &:active {
+    box-shadow: none;
+    &:after {
+        background: #EBEBEB;
+        border-color: #ADADAD;
+    }
+  }
+}

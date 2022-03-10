@@ -1,0 +1,5 @@
+{% if confirm %}
+{{vendor.name}} is on it
+{% else %}
+{{vendor.name}} will not be able to fulfill your request
+{% endif %}

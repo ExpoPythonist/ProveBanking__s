@@ -1,0 +1,15 @@
+{% load utils %}
+{% for user in users|slice:filter_slice %}
+  {% include 'users/card.html' with object=user selectable=True %}
+{% endfor %}
+
+{% with request.GET|get_item:"page" as page %}
+    <div id="filter-scroll" {% if is_last_page %}data-last-page="true"{% endif %} class="col-sm-12 text-center text-muted" data-page="{{ page|add:1 }}" data-preload-offset="600">
+    	<div class="vertical-spacer-lg"></div>
+        <div id="filter-loading-icon" class="hide">
+            <p><i class="fa fa-3x fa-spin fa-spinner"></i></p>
+            <p>Loading</p>
+        </div>
+        {% if page and is_last_page %}No more resources match this criteria{% endif %}
+    </div>
+{% endwith %}

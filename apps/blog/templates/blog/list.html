@@ -1,0 +1,54 @@
+{% pjaxr_extends "guest_base_extended.html" "Blog" %}
+{% load pipeline %}
+{% block title %} Proven blog {% endblock %}
+{% block CSS_INCLUDES %}
+  {% stylesheet 'libs' %}
+  {% stylesheet 'blog' %}
+{% endblock %}
+
+{% block JS_INCLUDES %}
+  {% javascript 'libs' %}
+{% endblock %}
+
+{% block page_title %}<span id="page-title">Proven Blog</span>{% endblock %}
+
+{% block left_nav_button %}
+  <span id="left-nav-btn" class="pull-left"></span>
+{% endblock %}
+
+{% block right_nav_button %}
+  <span id="right-nav-btn" class="pull-right"></span>
+{% endblock %}
+
+{% block right_sidebar %}{% endblock %}
+
+{% block notifications %}
+  {% include 'partials/notifications.html' %}
+{% endblock %}
+
+{% block page %}
+  <div id="page" class="page container page-blog">
+  {% block content %}
+    <div class="page-top-band">
+      <div class="col-xs-12">
+        <h6>Blog posts</h6>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-body ">
+        {% for post in object_list %}
+        <a href="{{ post.url }}" class="field-group blog-table" target="_blank">
+          <label class="cell">
+            <div class="article-title">{{ post.heading }}</div>
+            <div class="date-stamp">{{ post.created }}</div>
+          </label>
+          <div class="field-value cell">
+            <i class="fa fa-chevron-right text-muted"></i>
+          </div>
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+  {% endblock %}
+  </div>  
+{% endblock %}

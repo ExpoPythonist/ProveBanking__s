@@ -1,0 +1,72 @@
+#vendor-selected {
+    > .btn-group {
+        margin: 0px 5px 0px 0px;
+    }
+}
+
+.proposed-resource-field {
+    margin-bottom: 10px;
+}
+
+.staffing-tabs {
+    list-style: none;
+    padding-left: 0px;
+    background: @color-white;
+    position: absolute;
+    left: -35px;
+    li {
+        background: @body-bg;
+        border-right: 1px solid @gray-light;
+        border-radius: 2px 0px 0px 2px;
+        &.active {
+            border: 1px solid @gray-light;
+            border-right: 1px solid @body-bg;
+        }
+        padding: 10px;
+        a {
+            color: @gray;
+        }
+    }
+}
+
+.staffing-tab-content {
+    border-left: 1px solid @gray-light;
+    padding-left: 10px;
+}
+
+.staffing-request-id {
+    color: @gray-light;
+    font-weight: 300;
+}
+
+.blocks.list-inline {
+    white-space: nowrap;
+}
+
+.request-panel-group {
+    .text-right-sm-plus {
+        margin-top: 6px;
+        @media ( max-width: @screen-xs-max) {
+            padding-left: 0px;
+        }
+    }
+    .acl-xs {
+        margin-top: 34px;
+    }
+}
+
+.staffing-visibility-dropdown {
+    padding: 0px;
+    .divider {
+        margin: 0px 0px;
+    }
+}
+
+form.staffing-acl-vendor-form {
+    .modal-body {
+        .vendor-list {
+            max-height: 300px;
+            overflow-y: scroll;
+        }
+    }
+}

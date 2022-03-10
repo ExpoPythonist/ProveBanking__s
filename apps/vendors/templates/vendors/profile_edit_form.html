@@ -1,0 +1,59 @@
+{% extends "vendors/profile_edit_sidebar.html" %}
+
+{% block main_content %}
+<section class="profile-edit-form">
+  <h6 class="section-title text-uppercase">Company Profile</h6>
+  <div class="panel panel-default panel-card">
+    <div class="panel-body">
+      {% if form.errors %}<span class="text-danger small">
+        <b >&nbsp;&nbsp;&nbsp;Please fix the form validation errors below.</b></span>
+      {% endif %}
+      <form id=""  enctype="multipart/form-data" class="form-mobile form-horizontal phonefield-form" role="form" action="{% url 'user_setup:setup_step_vendor_profile' vendor.id %}"  data-parsley-validate method="POST">
+        
+        {% csrf_token %}
+        {% include 'forms/naked_form.html' with form=form %}
+
+
+
+        {% if not skip_to_lifecycle %}
+        <span class="block-meta-title">
+          {{ current_tenant }} Contact(s)
+
+          {% if user.procurement_contacts %}
+            <a href="{% url 'vendors:procurement_add' vendor.id %}" data-toggle="modal" data-target="#genericModal"  data-modal-is-remote="true" class="control-label pull-right no-underline small">add contact</a>
+          {% endif %}
+        </span>
+        <div class="clearfix form-row">
+          <div class="form-group  col-xs-12 clearfix ">
+            <div class="controls control-selectize">
+              <div class="row">
+
+                {% if vendor.procurement_contacts.all %}
+                <div class="contact-details">
+                  {% for contact in vendor.procurement_contacts.all %}
+                    {% include 'vendors/partials/contact.html' with contact=contact.user procurement=True proc_obj=contact %}
+                  {% endfor %}
+                </div>
+              {% else %}
+                <div class="col-sm-12">
+                 <p class="small text-muted">No contacts to show</p>
+                </div>
+              {% endif %}
+              </div>
+              
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        <div class="row">
+          <div class="text-right col-xs-12">
+            <button type="submit" class="btn btn-primary btn-forward">
+                next
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}

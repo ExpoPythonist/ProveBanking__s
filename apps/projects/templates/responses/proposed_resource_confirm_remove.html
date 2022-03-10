@@ -1,0 +1,23 @@
+{% load projects %}
+{% load avatar_tags %}
+{% load humanize %}
+<div class="modal-header text-center">
+  <div class="row">
+    <div class="col-xs-3 modal-action-left">
+      <a href="#" class="btn" data-dismiss="modal"><i class="fa fa-chevron-left"></i> <span>Cancel</span></a>
+    </div>
+    <div class="col-xs-6">
+      <h4 class="modal-title" id="myModalLabel">Removing resource</h4>
+    </div>
+    <div class="col-xs-3 modal-action-right">
+      <a href="#" class="btn" data-dismiss="modal" onClick="$('#removeResourceForm').submit();"><i class="fa fa-times"></i> Remove</a>
+    </div>
+  </div>
+</div>
+  <div class="modal-body">
+    <form id="removeResourceForm" action="{% url 'staffing:remove_proposed_resource' object.id %}" method="POST">
+      {% csrf_token %}
+    </form>
+    You are about to remove {{ object.resource }} from your proposal.
+  </div>
+</div>

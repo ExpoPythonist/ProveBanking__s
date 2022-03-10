@@ -1,0 +1,96 @@
+{% pjaxr_extends "base_template.html" "Site" %}
+{% load crispy_forms_tags %}
+{% load projects %}
+{% load utils %}
+{% block title %}All users - {{ current_tenant }}{% endblock %}
+
+{% block page_title %}<span id='page-title'>People</span>{% endblock %}
+
+{% block notifications %}
+  {% include 'partials/notifications.html' %}
+{% endblock %}
+
+{% block page %}
+  <div id="page" class="container">
+    {% block content %}
+
+
+    <section class="user-filter filter-bar">
+      {% if user.is_client %}
+      <h6 class="section-title text-muted text-uppercase">Search <b>{{current_tenant}}</b> Users</h6>
+      <div class="panel panel-default panel-card">
+        <div class="panel-body">
+          <form id="filter-form" class="form-inline nopadding block-left" role="form" action="{% url 'users:list' %}">
+            <div class="btn-group filter-btn-group">
+              <button type="button" class="filter-btn btn dropdown-toggle Suppliers" data-toggle="dropdown">
+                Organizations
+              </button>
+              <ul class="dropdown-menu filter-dropdown" role="menu">
+                <li>{{ users.form.organization }}</li>
+              </ul>
+            </div>
+            <div class="btn-group filter-btn-group">
+              <button type="button" class="filter-btn btn dropdown-toggle fa fa-suitcase" data-toggle="dropdown">
+                Roles
+              </button>
+              <ul class="dropdown-menu filter-dropdown" role="menu">
+                <li>{{ users.form.roles }}</li>
+              </ul>
+            </div>
+
+          </form>
+        </div>
+      </div>
+      {% endif %}
+
+      <div class="container">
+        <div id="filter-tags" class="filter-container"></div>
+      </div>
+    </section>
+
+
+    <section class="user-results relative">
+      <h6 class="section-title">
+
+        {% if features.projects.is_enabled %}
+          <div class="btn-group btn-group-tabs" role="group">
+          <a  class="filter-url  {% if active == 'staff' %}active{% endif %} btn btn-default btn-sm"
+              default-href="{% url 'users:list' %}?kind=1"
+              role="tab"
+              data-toggle="tooltip"
+              title="{{ current_tenant }} folks">
+              Dedicated pool ({{ staff_count }})
+          </a>
+          <a  class="filter-url {% if active == 'virtual' %}active{% endif %} btn btn-default btn-sm"
+              default-href="{% url 'users:list' %}?kind=2" role="tab"
+              data-toggle="tooltip"
+              title="People from our vendor partners">
+              Virtual pool ({{ virtual_count }})
+          </a>
+          <a  class="filter-url {% if active == 'vendors' %}active{% endif %} btn btn-default btn-sm last"
+              default-href="{% url 'vendors:list' %}"
+              role="tab"
+              data-toggle="tooltip"
+              title="Our vendor partners can provide people or implement deliverables">
+              Suppliers ({{ vendors_count }})
+          </a>
+          </div>
+        {% else %}
+          Users
+        {% endif %}
+      </h6>
+
+      {% csrf_token %}
+      <div id="results-list">
+        {% include 'users/partials/filter_results.html' %}
+      </div>
+    </section>
+
+
+
+
+
+    {% endblock %}
+   </div>
+{% endblock %}
+{% block pjaxr_namespace %}Site.users{% endblock pjaxr_namespace %}

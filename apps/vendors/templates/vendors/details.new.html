@@ -1,0 +1,430 @@
+{% extends "base.new.html" %}
+{% load thumbnail %}
+{% load utils %}
+{% load static %}
+
+{% block title %}{{ vendor.name }}{% endblock %}
+
+{% block css %}
+<style>
+.company-detail {
+  font-size: 85%;
+  margin-bottom: 0.33em;
+}
+.company-detail span {
+  display: inline-block;
+}
+.company-detail i {
+  margin: 0 .35em 0 -.25em;
+  color: #848484;
+  font-size: 1.1em;
+  width: 20px;
+  text-align: center;
+}
+{% if vendor.background %}
+.header-bg:before {
+  background: url('{{ vendor.background.url }}') no-repeat 0;
+  background-size: 100%;
+}
+{% endif %}
+</style>
+{% endblock %}
+
+{% block container %}
+<div class="header-bg">
+  <div class="header-line">
+    <div class="container">
+      <div class="row">
+        {% include "navbar.new.html" %}
+        <div class="col-xs-12 col-sm-4 col-md-6 col-lg-6 pull-right header-logo">
+          <a href="http://proven.cc/" class="logo"></a>
+        </div>
+        <div class="col-xs-12 col-sm-4 col-md-6 col-lg-6 pull-left header-name header-logo">
+          <h1><a style="color: inherit;" href="{% url "home" %}">{{ current_tenant.name }}</a></h1>
+        </div>
+      </div>
+     </div>
+   </div>
+ </div>
+</div>
+
+<!-- Content start-->
+<div class=content-wrapper>
+  <div class="container">
+    <div class="company-info">
+      <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-8 col-lg-8">
+          <a href="{{ vendor.get_absolute_url }}">
+            <div class="company-picture">
+              {% thumbnail vendor.logo "155x155" as thumb %}
+              <img src="{{ thumb.url }}" alt="{{ vendor.name }}" />
+              {% empty %}
+              <img src="{{ STATIC_URL }}new/img/clients/rte.png" alt="{{ vendor.name }}" />
+              {% endthumbnail %}
+            </div>
+          </a>
+
+          <div class="clearfix">
+            <h1 class="company-profile-name">
+              <a href="{{ vendor.get_absolute_url }}">
+                {{ vendor.name }}
+              </a>
+            </h1>
+            <span class="company-social-block">
+              {% if vendor.facebook %}
+                <a href="https://facebook.com/{{ vendor.facebook }}"><i class="icon icon-facebook"></i></a>
+              {% endif %}
+              {% if vendor.linkedin %}
+                <a href="https://linkedin.com/{{ vendor.linkedin }}"><i class="icon icon-linkedin"></i></a>
+              {% endif %}
+              {% if vendor.twitter %}
+                <a href="https://twitter.com/{{ vendor.twitter }}"><i class="icon icon-twitter"></i></a>
+              {% endif %}
+              {% if vendor.website %}<a href="{{ vendor.website }}">{{ vendor.domain }}</a>{% endif %}
+            </span>
+          </div>
+
+          {% if vendor.summary %}
+          <p class="company-description">
+          {{ vendor.summary|linebreaks }}
+          </p>
+          {% endif %}
+
+          {% if vendor.vendor_locations.exists %}
+          <div class="company-detail company-location">
+            <i class="fa fa-map-marker"></i>
+            <span>
+              {% for location in vendor.vendor_locations.all|slice:":3" %}
+              {% if forloop.counter < 3 %}
+              {{ location.location.city }}, {{ location.location.parent.city }}{% if forloop.counter < 2 %}{% if forloop.last %}{% else %},{% endif %}{% endif %}
+              {% elif forloop.counter == 3 %}
+              & {{ forloop.revcounter }} more
+              {% endif %}
+              {% endfor %}
+            </span>
+          </div>
+          {% endif %}
+
+          {% if vendor.email %}
+          <div class="company-detail company-email">
+            <i class="fa fa-envelope"></i>
+            <span>{{ vendor.email|urlize }}</span>
+          </div>
+          {% endif %}
+
+          {% if vendor.phone %}
+          <div class="company-detail company-phone">
+            <i class="fa fa-phone"></i>
+            <span><a href="tel:{{ vendor.phone }}">{{ vendor.phone }}</a></span>
+          </div>
+          {% endif %}
+
+          {% if vendor.open_for_business and current_tenant.schema_name == 'commercialdrones' %}
+          <div class="company-label">
+            <i class="icon icon-chevron highlight"></i> Accepting Commercial Drone Work
+          </div>
+          {% endif %}
+        </div>
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+          <div class="profile-buttons well">
+            <div class="btn-group">
+              {% if user.is_authenticated and user in vendor.users.all or user.is_allowed_change %}
+              <a href="{% url "user_setup:setup_step_vendor_profile" vendor.id %}" class="btn btn-success">Edit Profile</a>
+              {% else %}
+              {% if not vendor.users.exists %}
+              {% if vendor_claimed %}
+              <span class="btn btn-secondary btn-sm btn-block">Pending Claim</span>
+              {% else %}
+              <a href="{% url "vendors:claim_vendor" vendor.slug %}" class="btn btn-success" data-target="#genericModal" data-toggle="modal" data-modal-is-remote="true">Claim Profile</a>
+              {% endif %}
+              {% endif %}
+              {% endif %}
+
+              {% if user.is_allowed_change %}
+              <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+              </button>
+              <ul class="dropdown-menu">
+                <li><a href="{% url "vendors:archive_vendor" vendor.id %}" data-toggle="modal" data-target="#genericModal" data-modal-is-remote="true">Admin: Delete Profile</a></li>
+              </ul>
+              {% endif %}
+            </div>
+            {% if user.is_authenticated and user in vendor.users.all or user.is_allowed_change %}
+            &nbsp;
+            <a href="#" class="btn btn-primary clients__btn-add">Add Clients</a>
+            {% endif %}
+          </div>
+          <ul class="company-profile-score">
+          <li>{% include "vendors/_proven_score.html" %}</li>
+          {% for custom in vendor.vendor_custom.all|slice:":3"  %}
+          <li>
+            {% if custom.rank != None %}
+            <span class="company-score {% if custom.primary %}highlight-bg{% endif %}">#{{ custom.rank }}</span>
+            <span>in {{ custom.category }}</span>
+            {% endif %}
+          </li>
+          {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    {% if vendor.client_references.exists %}
+    {% include "vendors/clients.inc.html" with show_all=False %}
+    {% endif %}
+
+    {% if review_objects %}
+    <div class="company-profile-services">
+      <div class="company-profile-services-header">
+        <span>Client Testimonials</span>
+      </div>
+      <div class="company-profile-services-content">
+        <div class="row">
+          {% for review in review_objects|slice:":3"  %}
+          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <div class="company-client">
+              <span class="company-client-image">
+                {% if not review.use_alt_name %}
+                {% thumbnail review.client.logo "90x90" as thumb %}
+                <img src="{{ thumb.url }}" alt="{{ review.display_name }}">
+                {% empty %}
+                <img src="{{ STATIC_URL }}new/img/clients/rte.png" alt="{{ review.display_name }}">
+                {% endthumbnail %}
+                {% else %}
+                <img src="{{ STATIC_URL }}new/img/clients/rte.png" alt="{{ review.display_name }}">
+                {% endif %}
+              </span>
+              <div class="company-client-name">
+                {% if review.is_fulfilled %}
+                <i class="icon icon-check highlight"></i>
+                {% else %}
+                <i class="icon icon-question not-verified"></i>
+                {% endif %}
+
+                <span>
+                  {% if not review.use_alt_name and not review.review_anonymous and review.client.website %}<a href="{{ review.client.website }}" target="_blank">{% endif %}
+                  {{ review.display_name }}
+                  {% if not review.use_alt_name and not review.review_anonymous and review.client.website %}</a>{% endif %}
+                </span>
+              </div>
+            </div>
+
+            {% if review.created %}
+            <span class="project-date">{{ review.created|date:"M d, Y" }}</span>
+            {% endif %}
+
+            <p class="project-description">{{ review.review }}</p>
+
+            {% if not review.review_anonymous and review.full_name %}
+            <div class="project-client">
+              <span>Contact</span>
+              <span>{{ review.full_name }}</span>
+            </div>
+            {% endif %}
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+    <div class="company-profile-services">
+      <div class="company-profile-services-header">
+        <span>Services</span>
+      </div>
+      <div class="company-profile-services-content">
+        <div class="row bottom-divider">
+          {% if vendor.custom_categories.exists %}
+          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <span class="company-profile-services-subheader">Categories</span>
+            <div class="company-profile-categories">
+              {% for category in vendor.custom_categories.all %}
+              <span class="selected-keyword">{{ category }}</span>
+              {% endfor %}
+            </div>
+          </div>
+          {% endif %}
+          {% if vendor.vendor_skills.exists %}
+          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <span class="company-profile-services-subheader">Keywords</span>
+            <div class="company-profile-keywords">
+              {% for v_skill in vendor.vendor_skills.all %}
+              <span class="selected-keyword">{{ v_skill.skill }}</span>
+              {% endfor %}
+            </div>
+          </div>
+          {% endif %}
+          {% if vendor.vendor_locations.exists %}
+          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <span class="company-profile-services-subheader">Locations</span>
+            <ul class="company-location">
+              {% for v_location in vendor.vendor_locations.all %}
+              <li>
+                <i class="icon-pin"></i><span>{{ v_location.location }}</span>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+          {% endif %}
+        </div>
+
+        {% if vendor.vendor_industries.exists %}
+        <span class="company-profile-services-subheader">Industries</span>
+        <div class="industries-graph">
+          {% for v_industry in vendor.vendor_industries.all|slice:":5" %}
+          <div
+            class="industry {% if forloop.counter == 5 %}other{% else %}industry{{ forloop.counter }}{% endif %}"
+            style="width: {% if forloop.counter == 5 %}{% get_remaining_allocation vendor.vendor_industries.all 4 %}{% else %}{{ v_industry.allocation }}{% endif %}%;"></div>
+          {% endfor %}
+        </div>
+        {% for v_industry in vendor.vendor_industries.all|slice:":5" %}
+        <span class="industry-name">
+          <i class="industry-mark {% if forloop.counter == 5 %}industry other{% else %}industry{{ forloop.counter }}{% endif %}"></i>
+          {% if forloop.counter == 5 %}Other{% else %}{{ v_industry.industry }}{% endif %}
+        </span>
+        {% endfor %}
+        {% endif %}
+      </div>
+    </div>
+
+    {% if portfolio_projects %}
+    <div class="company-profile-services">
+      <div class="company-profile-services-header">
+        <span>Past Projects</span>
+      </div>
+      <div class="company-profile-services-content">
+        <div class="row">
+          {% for project in portfolio_projects|slice:":2" %}
+          <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <span class="project-name">{{ project.title }}</span>
+
+            {% if project.start_date and project.end_date %}
+            <span class="project-date">{{ project.start_date|date:"M d, Y" }} &emdash; {{ project.end_date|date:"M d, Y" }}</span>
+            {% endif %}
+
+            {% if project.skills.exists %}
+            <div class="project-keywords">
+              {% for skill in project.skills.all %}
+              <span class="selected-keyword">{{ skill }}</span>
+              {% endfor %}
+            </div>
+            {% endif %}
+
+            <p class="project-description">{{ project.description }}</p>
+
+            {% for client in project.owners.all|slice:":3" %}
+            <div class="project-client">
+              <span>Client</span>
+              <span>{{ client }}</span>
+            </div>
+            {% endfor %}
+
+            {% for client in project.locations.all %}
+            <div class="project-client">
+              <span>Location</span>
+              <span>{{ location }}</span>
+            </div>
+            {% endfor %}
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+    {% if vendor.video or vendor.story or vendor.brochure %}
+    <div class="company-profile-services">
+      <div class="company-profile-services-header">
+        <span>Why Choose Us?</span>
+      </div>
+      <div class="company-profile-services-content">
+        <div class="row">
+          {% if vendor.brochure %}
+          <div class="col-md-6">
+            {% if vendor.brochure_extension == ".pdf" %}
+            <iframe src="https://docs.google.com/gview?url={{ vendor.brochure.url }}&embedded=true" style="width:100%; height:300px;" frameborder="0"></iframe>
+            {% else %}
+            <iframe src="https://view.officeapps.live.com/op/embed.aspx?src={{ vendor.brochure.url }}" width="100%" height="300px" frameborder="0"></iframe>
+            {% endif %}
+          </div>
+          {% endif %}
+
+          {% if vendor.video %}
+          <div class="col-md-6">
+            <div class="video-box">
+              <div class="embed-responsive embed-responsive-4by3">
+                <iframe frameborder="0" width="100%" height="300px;" class="embed-responsive-item" src="{{ vendor.get_video_embed_url }}"></iframe>
+              </div>
+            </div>
+          </div>
+          {% endif %}
+
+          {% if vendor.story %}
+          <div class="col-sm-12">
+            <p class="story description">
+              {{ vendor.story|linebreaks }}
+            </p>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% endif %}
+
+
+    {% if vendor.facebook or vendor.twitter %}
+    <div class="company-profile-services">
+      <div class="company-profile-services-header">
+        <span>Social Media</span>
+      </div>
+      <div class="company-profile-services-content">
+        <div class="row">
+          {% if vendor.facebook %}
+          <div class="col-md-6">
+            <span class="company-profile-services-subheader">Facebook</span>
+            <div id="fb-root"></div>
+            <script>(function(d, s, id) {
+              var js, fjs = d.getElementsByTagName(s)[0];
+              if (d.getElementById(id)) return;
+              js = d.createElement(s); js.id = id;
+              js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6";
+              fjs.parentNode.insertBefore(js, fjs);
+            }(document, 'script', 'facebook-jssdk'));</script>
+            <div class="fb-page" data-href="https://facebook.com/{{ vendor.facebook }}" data-tabs="timeline" data-width="650" data-height="600" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
+              <div class="fb-xfbml-parse-ignore">
+                <blockquote cite="https://facebook.com/{{ vendor.facebook }}">
+                  <a href="https://facebook.com/{{ vendor.facebook }}"></a>
+                </blockquote>
+              </div>
+            </div>
+          </div>
+          {% endif %}
+          {% if vendor.twitter %}
+          <div class="col-md-6">
+            <span class="company-profile-services-subheader">Twitter</span>
+            <div>
+              <a class="twitter-timeline" href="https://twitter.com/{{ vendor.twitter }}" data-widget-id="738071033622581248" data-screen-name="{{ vendor.twitter }}"></a>
+              <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+            </div>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+
+  {% include "vendors/partials/add_verify_modals.html" %}
+
+  <form class="data-for-frontend">
+    <input type="hidden" class="clients__vendor-id" value="{{ vendor.id }}">
+    <input type="hidden" class="clients__add-client-url" value="{% url 'vendors:client_add' vendor.id %}">
+  </form>
+</div>
+<!--Content End-->
+{% endblock %}
+
+{% block js_bundle %}
+  <script src="{% static 'build/bundle.js' %}"></script>
+{% endblock %}

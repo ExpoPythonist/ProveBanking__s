@@ -1,0 +1,42 @@
+{% comment %}
+Include this template as follows.
+{% include 'notes/block_header.html' with related_object_label='<small-case-label-of-model>' related_object=<model-instance> %}
+{% endcomment %}
+
+<div class="page-top-band clearfix">
+    <div class="col-xs-6">
+        <h6>Notes {% if related_object.notes.count == '0' %} ({{ related_object.notes.count }}) {% endif %} 
+        <span class="tool-tip">
+            <a href="#" class="tooltip-trigger no-underline" data-trigger="click" data-toggle="tooltip" data-placement="right" data-trigger="hover focus" title="(visible only to people in your organization)" class="no-underline">
+            <i class="fa fa-lock text-muted"></i>
+            </a>
+        </span>
+        <small class="hidden-xs">(visible only to people in your organization)</small>
+        </h6>
+    </div>
+    <div class="col-xs-6 text-right">
+      <h6>
+        <a href="{% url 'notes:create' related_object_label related_object.pk %}" class="no-underline">create a note</a>
+      </h6>
+    </div>
+</div>
+
+<div class="panel panel-default notes-panel">
+    <div class="panel-body">
+      {% for note in related_object.notes.all %}
+        {% include 'notes/as_field.html' with note=note %}
+      {% endfor %}
+
+      {% comment %}
+      {% if related_object.notes.count > 5 %}
+        <div class="field-group">
+          <label></label>
+          <div class="field-value">
+              <a href="{% url 'notes:list' related_object_label related_object.pk %}" class="btn">
+              view all notes <i class="fa fa-chevron-right"></i>
+            </a>
+          </div>
+      {% endif %}
+      {% endcomment %}
+  </div>
+</div>

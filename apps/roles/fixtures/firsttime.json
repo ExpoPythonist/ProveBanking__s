@@ -1,0 +1,42 @@
+[
+{
+    "pk": 1, 
+    "model": "roles.role", 
+    "fields": {
+        "name": "Software Development", 
+        "slug": "software-development"
+    }
+},
+{
+    "pk": 2, 
+    "model": "roles.role", 
+    "fields": {
+        "name": "Business Analysis", 
+        "slug": "business-analysis"
+    }
+},
+{
+    "pk": 3, 
+    "model": "roles.role", 
+    "fields": {
+        "name": "Accout Management", 
+        "slug": "accout-management"
+    }
+},
+{
+    "pk": 4, 
+    "model": "roles.role", 
+    "fields": {
+        "name": "Vendor Management", 
+        "slug": "vendor-management"
+    }
+},
+{
+    "pk": 5, 
+    "model": "roles.role", 
+    "fields": {
+        "name": "Project Management", 
+        "slug": "project-management"
+    }
+}
+]

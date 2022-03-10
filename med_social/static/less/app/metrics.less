@@ -1,0 +1,181 @@
+// FIXME: Got to reduce nested declerations
+
+.edit-mode-on {
+    display: none;
+}
+
+body.edit-mode {
+    .edit-mode-on {
+        display: block;
+    }
+    .edit-mode-off {
+        display: none;
+    }
+
+    div.panel-default.panel-metrics {
+        .field-group {
+            > .field-value {
+                > a {
+                    color: @gray-light;
+                    &:hover {
+                        cursor: default;
+                    }
+                }
+            }
+        }
+    }
+}
+
+div.panel-default.panel-metrics {
+    border: 1px solid @gray-lighter;
+    border-bottom: none;
+    padding-left: 0px;
+    .panel-heading.actions {
+        font-size: 12px;
+        margin: 0px;
+        padding: 0px;
+        .actions-left {
+            border-right: 1px solid @gray-lighter;
+            min-width: 120px;
+            max-width: 120px;
+            width: 120px;
+            padding: 5px;
+            float: left;
+            .edit-mode-off{
+                padding: 5px;
+            }
+        }
+        .actions-right {
+            overflow: hidden;
+            padding: 11px 40px 11px 10px;
+        }
+    }
+    .panel-body {
+        margin-left: 0px;
+    }
+    .field-group {
+        padding: 0px;
+        border-bottom: 0px;
+        border-bottom: 1px solid @gray-lighter;
+        &:last-child {
+            border-bottom: none;
+        }
+        > * {
+            margin: 0px;
+            padding-top: 8px;
+            padding-bottom: 14px;
+        }
+        > label {
+            border-right: 1px solid @gray-lighter;
+            transition: background 2.5s ease-out;
+            min-width: 120px;
+            max-width: 120px;
+            width: 120px;
+            color: @gray;
+            font-weight: 700;
+            text-align: center;
+            padding-right:0px;
+            display: table-cell;
+            float: none;
+            &.highlight-hint {
+                transition: background 0.1s ease;
+                background: lighten(@brand-primary, 20%);
+            }
+            .btn {
+                padding: 0px 5px;
+                color: @brand-danger;
+            }
+            input {
+                width: 60px;
+                height: 40px;
+                text-align: center;
+                padding: 0px;
+            }
+            .total-weight-container.has-error {
+                color: @brand-danger;
+            }
+            .meta {
+                font-weight: 400;
+                color: @gray-light;
+                font-size: 10px;
+                line-height: 10px;
+                text-transform: uppercase;
+            }
+        }
+        > .field-value {
+            padding-right: 15px;
+            font-weight: 700;
+            display: table-cell;
+            float: none;
+            width: 100%;
+            > a {
+                color: @gray;
+            }
+            .help-text {
+                font-weight: 700;
+                font-size: 10px;
+                color: @gray-light;
+                line-height: 10px;
+                padding-right: 14px;
+            }
+            .user {
+                > span {
+                }
+            }
+        }
+    }
+}
+
+
+.form-metric {
+    .control-label {
+        .star-label:before, .star-label:after {
+            display: inline-block;
+            font-family: FontAwesome;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 1;
+            color: @brand-primary;
+        }
+        .star-label:after {
+            color: lighten(@brand-primary, 30%);
+        }
+        &[for=id_metric_data__labels__1] {
+            .star-label:before {
+                content: "";
+            }
+            .star-label:after {
+                content: "";
+            }
+        }
+        &[for=id_metric_data__labels__2] {
+            .star-label:before {
+                content: "";
+            }
+            .star-label:after {
+                content: "";
+            }
+        }
+        &[for=id_metric_data__labels__3] {
+            .star-label:before {
+                content: "";
+            }
+            .star-label:after {
+                content: "";
+            }
+        }
+        &[for=id_metric_data__labels__4] {
+            .star-label:before {
+                content: "";
+            }
+            .star-label:after {
+                content: "";
+            }
+        }
+        &[for=id_metric_data__labels__5] {
+            .star-label:before {
+                content: "";
+            }
+        }
+    }
+}

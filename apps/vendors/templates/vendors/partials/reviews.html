@@ -1,0 +1,49 @@
+{% load review_tags %}
+{% load utils %}
+
+<div class="modal-header">
+	<div class="row">
+		<div class="col-xs-12 text-right vertical-spacer-sm">
+			<div class="vertical-spacer-lg"></div>
+			<strong class="pull-left text-semi-dark">Ranking details</strong>
+			<a href="#" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times text-muted"></i></a>
+		</div>
+	</div>
+</div>
+
+<div class="modal-body ">
+	<div class="accordion" id="qpr-accordion">
+		{% for item in items reversed %}
+			<div class="accordion-group qpr-group">
+				<div class="accordion-heading clearfix">
+					<a class="accordion-toggle" data-toggle="collapse" data-parent="#qpr-accordion" href="#collapse{{ forloop.counter }}">
+						{% if item.qpr.name %}{{ item.qpr.name }}{% else %}{{ item.qpr.item.name }}{% endif %} <span class="rating pull-right {% if item.score < 3 %}rating-3{% else %}{% if item.score < 4 %}rating-4{% else %}{% if item.score >= 4 %}rating-5{% endif %}{% endif %}{% endif %}">{{ item.score|floatformat:1 }}<small>/5</small></span>
+					</a>
+				</div>
+				<div id="collapse{{ forloop.counter }}" class="accordion-body {% if forloop.counter == 1 %}in{% else %}collapse{% endif %}">
+					<div class="accordion-inner">
+						{% assign_review_url 'list' vendor as reviews_url %}
+						<div class="accordion-inner-item">
+							<strong><a href="{{ reviews_url }}">Rating summary</a></strong>&nbsp;
+							<small class="text-muted">upto {{ item.qpr.created|date:"d M 'y" }}</small>
+							<span class="pull-right">{% if item.review_score %}{{ item.review_score|floatformat:1 }}<small>/5</small>{% else %}-{% endif %}</span><hr/>
+						</div>
+						{% with item.qpr.get_scorable_steps as steps%}
+							<h6 class="text-muted">Partnership scorecard (<a href="{{ item.qpr.get_absolute_url }}">view details</a>)</h6>
+							{% if not steps %}<div class="vertical-spacer-lg"></div>{% endif %}
+							{% for step in steps %}
+								<div class="accordion-inner-item">
+									<strong><a href="{{ item.qpr.get_absolute_url }}">{{ step.name }}</a></strong>
+									{% with item.qpr|args:step|call:"get_step_score" as score %}
+										<span class="pull-right">{% if score %}{{ score|floatformat:1 }}<small>/5</small>{% else %}-{% endif %}</span>
+									{% endwith %}
+									<hr/>
+								</div>
+							{% endfor %}
+						{% endwith %}
+					</div>
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+</div>

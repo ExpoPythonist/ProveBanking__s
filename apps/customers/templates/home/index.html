@@ -1,0 +1,7 @@
+{% extends 'react-index.html' %}
+{% load pipeline %}
+
+{% block JS_INCLUES %}
+  {{ block.super }}
+  {% javascript 'thewall' %}
+{% endblock %}

@@ -1,0 +1,26 @@
+{% load crispy_forms_tags %}
+
+<div class="panel panel-default panel-card">
+  <div class="panel-body">
+    {% with vendor.cert_verifications.all|slice:":4" as certs %}
+      {% if certs %}
+        {% for cert in certs %}
+        <div class="col-md-3 col-sm-6 cert-wrapper">
+          <h4 class="cert-title">{{ cert.cert.name }}</h4>
+          <div class="date">
+            since {{ cert.since }}&nbsp;&middot;&nbsp;
+            {% if cert.is_fulfilled %}
+              <strong class="text-success">verified <i class="fa fa-check"></i></strong>
+            {% else %}
+              <strong class="text-danger">not yet verified</strong>
+            {% endif %}    
+          </div>
+          {% if cert.url %}
+            <a class="cert-link" target="_blank" href="{{ cert.url }}">view certification</a>
+          {% endif %}
+        </div>    
+        {%endfor%}       
+      {% endif %}
+    {% endwith %}
+  </div>
+</div>

@@ -1,0 +1,56 @@
+{% load avatar_tags %}
+{% load humanize %}
+{% load projects %}
+{% load thumbnail %}
+{% load review_tags %}
+<div class="panel panel-default vendor-card">
+  <div class="panel-body vendor-card-body">
+  {% with object.vendor as vendor %}
+    <div class="clearfix vertical-spacer-sm"></div>
+  <div class="col-sm-12">
+  <span class="pull-right h4">
+    {% with vendor.get_meta_counts as meta_counts %}
+      {% assign_review_url 'list' vendor as score_url %}
+      {% if user.is_client %}
+        {% if vendor.reviews.exists %}
+          {% if vendor.avg_score %}
+            <span class="score-value text-{% get_review_class vendor.avg_score %}" >
+              <i class='fa fa-star'></i>&nbsp;{{ vendor.avg_score }}
+            </span>
+          {% endif %}
+        {% endif %}
+      {% endif %}
+    {% endwith %}
+  </span>
+  {% thumbnail object.vendor.logo "45x45" crop="center" format="PNG" as im %}
+    <a href="{{ object.vendor.get_absolute_url }}">
+      <img class="logo img-circle" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}"  />
+    </a>
+  {% endthumbnail %}
+  &nbsp;&nbsp;
+  <a href="{{ object.vendor.get_absolute_url }}" class="h4 no-underline">{{ object.vendor.name }}</a>
+    <hr>
+  </div>
+  <div class="col-sm-9">
+        <p class="text-muted">Summary:</p>
+    {{ response.description }}
+    </div>
+    <div class="col-sm-3 text-right">
+        <p><span class="text-muted">Estimated cost:</span> <i class='fa fa-dollar'></i><b>{{ response.rate|intcomma }}</b> </p>
+    </div>
+    <hr>
+    <div class="clearfix vertical-spacer-lg"></div>
+
+    <div class="col-sm-12">
+      <p class="text-muted ">Support staff</p>
+      <div>
+        {% for user in response.handlers.all %}
+          <a href="{{ user.get_profile_modal_url }}" class="pull-left" data-toggle="modal" data-target="#userModal">  {% include 'partials/avatar_initials.html' with object=user size=35 %}
+          </a>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="clearfix vertical-spacer-sm"></div>
+    {% endwith %}
+  </div>
+</div>

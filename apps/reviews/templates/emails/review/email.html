@@ -1,0 +1,18 @@
+{% extends 'base_email.html' %}
+
+{% block body %}
+<tr>
+  <td class="content-block">
+    <div>
+      Hi there,<br>
+      {% if anonymous %}
+      Someone at {{ current_tenant }} has reviewed a {{ review.content_type }}: {{ review.content_object }}
+      {% else %}
+      I have reviewed a {{ review.content_type }}: {{ review.content_object }}
+      {% endif %}
+    </div>
+    <p class="bg-secondary">{{ review.remarks }}</p>
+    <p>To check out the review, go to: <a href="{{ resource_url }}" class="no-underline text-info">{{ resource_url }} »</a></p>
+  </td>
+</tr>
+{% endblock %}

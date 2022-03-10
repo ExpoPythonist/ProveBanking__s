@@ -1,0 +1,42 @@
+{% load avatar_tags %}
+{% load thumbnail %}
+{% load crispy_forms_tags %}
+{% load review_tags %}
+<div class="field-group">
+  <div class="media col-xs-6 nopadding">
+    {% with rank=vendor.rank %}
+      {% if rank %}
+        <span class="pull-left">
+          <strong class='text-muted btn btn-default btn-o disabled btn-xs'>#{{ rank }}</strong>
+        </span>
+      {% endif %}
+    {% endwith %}
+
+    <div class="media-body">
+    </div>
+  </div>
+
+  <div class="col-xs-6 text-right col-right">
+    {% with vendor.get_meta_counts as meta_counts %}
+      {% assign_review_url 'list' vendor as score_url %}
+      {% if user.is_client %}
+        {% if vendor.reviews.exists %}
+          {% if vendor.avg_score %}
+            <span class="score-value text-{% get_review_class score %}" >
+              <i class='fa fa-star'></i>&nbsp;{{ vendor.avg_score }}
+            </span>
+          {% endif %}
+        {% endif %}
+      {% endif %}
+    
+    <span class="v-divider"></span>
+    {% if listview %}
+      <input class="btn-vendor-select" data-id="{{ vendor.pk }}" data-name="{{ vendor.name }}"type="checkbox" ignore-enhance/>
+    {% endif %}
+    <br>
+    <a href="{{ score_url }}" class="no-underline">
+      <span class="text-muted small">{{ meta_counts.reviews }} review(s)</span>
+    </a>
+    {% endwith %}
+  </div>
+</div>

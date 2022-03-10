@@ -1,0 +1,38 @@
+.well-tab {
+  &.well {
+        border-radius: 10px;
+        box-shadow: none;
+        background: #FAFAFA;
+        vertical-align: middle;
+        &.well-xs {
+            padding: 2px 12px;
+            min-height: 12px;
+            max-height: 18px;
+        }
+        a {
+            margin-top: -1px;
+            display: inline-block;
+            font-size: 10px;
+            font-weight: bold;
+            padding: 2px 20px
+        }
+        a, a:hover {
+            text-decoration: none;
+            //font-size: 10px;
+            color: #acacac;
+        }
+        a.active {
+            color: @brand-primary;
+            box-shadow: none;
+        }
+    }
+    @media (max-width: @screen-sm-max ){
+      display: block;
+      a {
+        width: 32%;
+        display: inline-block;
+        text-align: center;
+        vertical-align: top;
+      }
+    }
+}

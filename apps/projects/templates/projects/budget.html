@@ -1,0 +1,11 @@
+{% load projects humanize %}
+{% if features.financials.is_enabled %}
+  <span class="project-cost" data-cost="{{ cost }}" data-project-id="{{ project.id }}">
+    {% if user.is_client %}
+      {% include 'projects/partials/budget.html' with cost=project.total_expected_cost budget=project.budget %}
+    {% else %}
+      {% get_total_earned_by_vendor_on_project project user.vendor as total_earned %}
+      {% include 'projects/partials/budget.html' with cost=total_earned budget=project.budget %}
+    {% endif %}
+  </span>&nbsp;
+{% endif %}

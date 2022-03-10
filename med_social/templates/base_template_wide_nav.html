@@ -1,0 +1,27 @@
+{% extends "base_template.html" %}
+
+{% block main_navbar %}
+  <nav class="main-navbar navbar-wide navbar navbar-fixed-top" role="navigation">
+    <div class="container text-center">
+      <div class="col-xs-3 navbar-left">
+      {% block burger_menu %}
+        <span id="main-menu-btn" class="pull-left">
+          <a class="navbar-brand btn offcanvas-btn main-menu-btn" href="#" data-target="sidebar-left"><i class="fa fa-bars"></i></a>
+        </span>
+      {% endblock %}
+      {#% block left_nav_button %}{% endblock %#}
+      </div>
+      <div class="col-xs-6 navbar-center">
+        
+        <span class="navbar-brand navbar-brand-center">
+          {% block page_title %}{% endblock %}
+        </span>
+      </div>
+      <div class="col-xs-3 navbar-right">
+        {% include 'partials/notifications_dropdown.html' %}
+        {% block right_nav_button %}{% endblock %}
+      </div>
+      {% block extra_nav_content %}{% endblock %}
+    </div>
+  </nav>
+{% endblock main_navbar %}

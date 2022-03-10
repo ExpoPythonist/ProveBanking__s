@@ -1,0 +1,135 @@
+{% load thumbnail %}
+{% load utils %}
+{% load projects %}
+
+ <nav class="main-navbar navbar-white navbar navbar-default navbar-fixed-top {% block navbar_classes %}{% endblock %}" role="navigation" >
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed " data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <span id="main-menu-btn" class="pull-left logo-warp">
+        {% thumbnail current_tenant.logo '130x28' as logo %}
+          <span class="navbar-brand btn main-menu-btn logo">
+            <a href="{% url 'home' %}">
+              <span class="block">
+                <img src="{{logo.url}}" class="logo-img" />
+              </span>
+            </a>
+            <a href="http://proven.cc/">
+              <span class="poweredByLogo">
+                <span class="text hidden-xs">Powered by</span>
+                <img src="{{STATIC_URL}}images/landing01/proven-logo.png"/>
+              </span>
+            </a>
+          </a>
+        {% empty %}
+          <span class="navbar-brand btn main-menu-btn logo">
+            {% if not tenant.is_public_instance %}
+              <span class="poweredByLogo-only">
+                <a href="{% url 'home' %}">{{ current_tenant.name }}</a>
+                <a href="http://proven.cc/">
+                <span class="text hidden-xs">Powered by</span>
+                <img src="{{STATIC_URL}}images/landing01/proven-logo.png"/>
+                </a>
+              </span>
+            {% else %}
+              <img src="{{ STATIC_URL }}images/vpp-landing/logo/logo-black.png" >
+            {% endif %}
+            </span>
+        {% endthumbnail %}
+
+      </span>
+      {% if request.user.is_client %}
+        <!--span id="global-search"></span-->
+      {% endif %}
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse text-left" id="bs-example-navbar-collapse-1">
+    {% block burger_menu %}
+
+      <ul class="nav navbar-nav navbar-right">
+      {% if request.user.is_authenticated %}
+
+          {% if features.contractors.is_enabled %}
+            {% get_user_count request.user as count %}
+              <li class="{% if active_nav_tab == 'contractors' %}active{%endif%}">
+                <a href="/users/" class="nav-btn">
+                  <i class="fa fa-user"></i>&nbsp;&nbsp;&nbsp;{{count}} {{ count|pluralize:'contractor,contractors' }}
+                </a>
+              </li>
+          {% endif %}
+
+          {% if request.user.is_client %}
+            {% get_total_vendors as count %}
+            <li class="{% if active_nav_tab == 'vendors' %}active{%endif%}">
+              <a href="{% url 'vendors:list' %}" class="nav-btn">
+                <i class="fa fa-building-o"></i>&nbsp;&nbsp;&nbsp;{{count}}{% if current_tenant.schema_name == 'voxpro' %} potential{% endif %} {{ count|pluralize:'supplier,suppliers' }}
+              </a>
+            </li>
+          {% endif %}
+
+          {% if features.projects.is_enabled %}
+            {% get_ongoing_projects request.user as count %}
+            <li class="{% if active_nav_tab == 'projects' %}active{%endif%}">
+              <a href="{% url 'projects:my_list' %}" class="nav-btn">
+                <i class="fa fa-briefcase"></i>&nbsp;&nbsp;&nbsp;{{count}} {{ count|pluralize:'project,projects' }}
+              </a>
+            </li>
+          {% endif %}
+
+          {% if features.rfp.is_enabled %}
+            {% get_total_rfps as count %}
+            <li class="{% if active_nav_tab == 'rfp' %}active{%endif%}">
+              <a href="{% url 'bid_list' request.user.username %}" class="nav-btn">
+                <i class="fa fa-envelope-o"></i>&nbsp;&nbsp;&nbsp;{{count}} {{ count|pluralize:'request,requests' }}
+              </a>
+            </li>
+          {% endif %}
+
+        <li class="nav-divider hidden-xs"></li>
+        {% if features.projects.is_enabled %}
+        <li class="hidden-xs">
+          <a  href="#"
+              id="help-tool-tip"
+              type="button"
+              data-toggle="tooltip"
+              data-trigger="click"
+              data-html=" true"
+              data-placement="bottom"
+              title="<h5>Get help on Proven</h5>
+                <table class='table text-left'>
+                <tbody>
+                  <tr>
+                    <td>Email:</td>
+                    <td><a href='mailto:suzanne@proven.cc'>suzanne@proven.cc</a></td>
+                  </tr>
+                </tbody>
+              </table>"
+              class="help-btn pull-right nav-btn">
+            <i class="fa fa-question-circle"></i>
+          </a>
+        </li>
+        {% endif %}
+
+        {% include 'partials/notifications_dropdown.html' %}
+
+        {% include 'partials/invite-menu.html' %}
+        {% include 'partials/user-menu.html' %}
+      </ul>
+      {% else %}
+        <div class="navbar-form navbar-right">
+          <a href="{% url 'account_login' %}?next=/" class="btn btn-primary">Sign in</a>
+        </div>
+      {% endif %}
+    {% endblock %}
+
+    {% block extra_nav_content %}{% endblock %}
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>

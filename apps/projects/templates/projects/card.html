@@ -1,0 +1,149 @@
+{% load projects %}
+{% load humanize %}
+{% load avatar_tags %}
+{% load review_tags %}
+{% load features %}
+{% load activity %}
+{% load utils %}
+{% load date_tags %}
+
+{% load avatar_tags utils %}
+<div  class="panel panel-default project-card project-item"
+      id="project-card-{{project.id}}"
+      {% if show_details %}
+        data-unread-event-url="{% url 'activity:event_update' content_id=project_content_id object_id=project.id %}"
+      {%endif%}
+      data-project-id="#project-card-{{project.id}}"
+      data-pk="{{ project.id }}"
+      data-kind="project"
+      data-title="{{ project.title }}">
+
+  <div class="clearfix section-upper">
+    <div class="col-sm-5">
+      <div class="project-title project-status-{% if project.get_status_css_class %}{% if not project.is_archived %}{{ project.get_status_css_class }}{%else%}default{% endif %}{% else %}default{% endif %}">
+        <h4>
+          {% if show_details %}
+            {{ project.title }}&nbsp;&nbsp;
+          {% else %}
+            <a href="{{ project.get_absolute_url }}" class="">{{ project.title|truncatechars:"45" }}</a>&nbsp;&nbsp;
+          {% endif %}
+
+          {% if user.is_client %}
+            <span class="dropdown project-setting-btn">
+              <span class="dropdown-toggle anchor" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                <i class="text-muted fa fa-angle-down small"></i>
+              </span>
+              <ul class="dropdown-menu text-left anchor" role="menu" aria-labelledby="dropdownMenu1">
+                <li role="presentation">
+                  <a role="menuitem" tabindex="-1" href="{{ project.get_edit_url }}">edit</a>
+                </li>
+                {% if not show_details %}
+                  <li>
+                    {% if project.is_archived %}
+                      <a href="#project-{{ project.id }}" class="btn-unarchive-project">unarchive</a>
+                    {% else %}
+                      <a href="#project-{{ project.id }}" class="btn-archive-project">archive</a>
+                    {% endif %}
+                  </li>
+                {% endif %}
+              </ul>
+            </span>
+          {% endif %}
+        </h4>
+        <div class="subtitle">
+          <span class="text-capitalize">{{ project.user}}</span>&nbsp;
+          <span class="text-muted">on {{ project.created|date:"M d, Y"}}</span>&nbsp;
+        </div>
+      </div>
+    </div>
+
+    <div class="{% if not show_detials or user.is_client%}col-sm-2 col-xs-4{% else %}col-sm-3 col-xs-6{% endif%}  text-center">
+      <span class="meta">
+        {% if project.division and user.is_client %}
+          <i class="fa fa-map-marker text-primary text-capitalize"></i>&nbsp;{{ project.division }}</span>
+        {% else %}
+          no division
+        {% endif %}
+    </div>
+
+    <div class="{% if not show_detials or user.is_client%}col-sm-3 col-xs-4{% else %}col-sm-3 col-xs-6{% endif %}  text-center">
+      <span class="meta"><i class="fa fa-calendar text-primary"></i>&nbsp;
+        {% with project.get_meta_counts as meta_counts %}
+          <!-- {% include 'partials/date_range.html' with start_date=project.start_date end_date=project.end_date urgency=project.urgency %} -->
+          {% if project.start_date or project.end_date %}
+            <span class='{{ css_class }}'>
+              {% if project.start_date and project.end_date %}
+                {{ project.start_date|date:"M d, y"|default:'' }}&nbsp;-&nbsp;<span class="text-{{ urgency }}">{{ project.end_date|date:"M d, y" }}</span>
+              {% elif start_date %}
+                <i class='fa fa-angle-right'></i>&nbsp;<span class="text-{{ urgency }}">{{ project.start_date|date:"M d, y" }}</span>
+              {% elif project.end_date %}
+                &nbsp;<i class='fa fa-angle-left'></i>&nbsp;{{ project.end_date|date:"M d, y" }}
+              {% endif %}
+            </span>&nbsp;
+          {% endif %}
+        {% endwith %}
+      </span>
+    </div>
+
+    <div class="{% if not show_detials or user.is_client%}col-sm-2 col-xs-4{% else %}hidden{% endif%} text-center">
+      <span class="meta last">
+        {% if not show_details %}
+          <a href="{{ project.get_absolute_url }}" class="no-underline">
+            {% get_open_staffing_requests project user as request_count %}
+            {% if request_count != 0 %}
+              <span class="label label-primary ">{{ request_count }}</span>&nbsp;
+              open {{ request_count|pluralize:'request,requests' }}
+            {% else %}
+              <span class="text-success">
+                <span class="label label-success "><i class="fa fa-check"></i></span>&nbsp;Project staffed
+              </span>
+            {% endif %}
+          </a>
+        {% else %}
+          <a class="btn btn-primary btn-xs" href="{% url 'projects:share_project' project.id %}" class="staffed-user-card placeholder text-center" data-toggle="modal" data-target="#genericModal"  data-modal-is-remote="true"><i class="fa fa-share"></i>&nbsp;share project</a>
+        {% endif %}
+      </span>
+    </div>
+  </div>
+
+  {% if show_details and user.is_client %}
+  <div class="col-xs-12">
+    {% if project.description %}
+      <h5 class="small text-muted text-uppercase">Description</h5>
+      <p class="small">{{ project.description }}</p>
+    {% endif %}
+    {% with project.get_meta_counts as meta_counts %}
+      {% if meta_counts.comments  or cost %}
+      <br>
+      <p>
+        &nbsp;{% include 'projects/budget.html' %}
+        &nbsp;
+        <span class="btn btn-secondary btn-xs btn-o disabled">
+          <i class="fa fa-comments"></i>&nbsp;
+          <span>{{ meta_counts.comments }}</span>
+        </span>
+      </p>
+      {% endif %}
+    {% endwith %}
+    {% if project.description or meta_counts.comments or cost %}
+    <hr class="thin clearfix"/>
+    {% endif %}
+  </div>
+  {% endif %}
+
+  <div class=" section-lower">
+    <p class="small">
+      <strong class="text-muted small text-uppercase">Accepted&nbsp;/&nbsp;Staffed</strong>&nbsp;
+      {% if project.last_activity %}
+        <span class="text-muted">(Last activity by</span>&nbsp;{{ project.last_activity}}&nbsp;
+        <span class="text-muted">on&nbsp;{{ project.modified|date:"M d, Y" }})</span>
+      {% endif %}
+    </p>
+
+    <div class="clearfix">
+      <ul class="list-inline staffed-list">
+        {% include 'projects/partials/staffed_list.html'%}
+      </ul>
+    </div>
+  </div>
+</div>

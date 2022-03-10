@@ -1,0 +1,26 @@
+{% pjaxr_extends "onboarding/base.html" "Site" %}
+{% load socialaccount %}
+{% load avatar_tags %}
+{% block title %} Welcome aboard! Help your potential clients find you by providing some info {% endblock %}
+
+{% block page_title %}<span id="page-title"></span>{% endblock %}
+
+{% block notifications %}
+  {% include 'partials/notifications.html' %}
+{% endblock %}
+
+{% block content %}
+  <div class="welcome-container">
+    <br><br>
+    <div class="panel panel-default panel-card text-center">
+      <br>
+      <h2 class="text-center text-muted">Welcome aboard!</h2>
+      <br>
+      <h4 class=""><small>Help us set up your profile by importing your data from LinkedIn</small></h4>
+      <br>
+      <a href='{% provider_login_url "linkedin" process="connect" %}' class="btn btn-primary"><i class="fa fa-organization"></i> Import data from Linkedin </a>
+      <br><br><br>
+    </div>
+  </div>
+{% endblock %}
+{% block pjaxr_namespace %}Site.onboarding.profile{% endblock pjaxr_namespace %}

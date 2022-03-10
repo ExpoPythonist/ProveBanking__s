@@ -1,0 +1,74 @@
+{% pjaxr_extends "guest_base_extended.html" "Site" %}
+{% load crispy_forms_tags %}
+{% load review_tags %}
+{% block title %}Review organization - {{ current_tenant.name }}{% endblock %}
+
+{% block left_nav_button %}
+  <span id="left-nav-btn" class="pull-left">
+    {% if previous_page %}
+      <a class="navbar-brand btn" href="{{ previous_page }}"><i class="fa fa-chevron-left"></i><!--  <span>Cancel</span> --></a>
+    {% else %}
+      <a class="navbar-brand btn" href="{% url 'home' %}"><i class="fa fa-chevron-left"></i><!--  <span>Cancel</span> --></a>
+    {% endif %}
+  </span>
+{% endblock %}
+
+{% block right_sidebar %}
+  <div id="sidebar-right" class="sidebar sidebar-right"></div>
+{% endblock %}
+
+{% block notifications %}
+  {% include 'partials/notifications.html' %}
+{% endblock %}
+
+{% block page %}
+  <div id="page" class="container page">
+    {% block content %}
+      <section>
+        <h6 class="section-title text-uppercase">Post a review</h6>
+        <div class="panel panel-default panel-card">
+          <div class="panel-body">
+
+
+            <div class="col-md-8 col-md-offset-2">
+              <h4 class="section-title text-center">You are reviewing <a href="{{ content_object.get_absolute_url }} " class="no-underline no-link-style"><b>{{ content_object }}</b></a></h4>
+              <br>
+              {% if weight_sum_ok %}
+                <form class="form-mobile clearfix" action="{% url 'reviews:public_review' uuid %}" method="POST">
+                  {% csrf_token %}
+                  {% include 'forms/naked_form.html' with form=form field_template_name="bootstrap3" %}
+                  <div class="text-center form-actions col-xs-12">
+                    <button type="submit" class="btn btn-primary">Post your review</button>
+                  </div>
+                  <br><br>
+                </form>
+              {% else %}
+                <br><br><!-- We should not need to do this just to get margins right. [MN]-->
+                <div class="alert alert-danger text-center">
+                  <h4>Oops! Review cannot be created, as the metric weights do not add up.</h4>
+                  <h5>
+                    {% if perms.reviews.add_metric %}
+                    <a href="{% url 'client_settings:metrics_list' content_type.id %}?previous_page={{ request.get_full_path }}" class="btn btn-primary">edit metrics now</a>
+                    {% else %}
+                        Contact the admin of this account at your organization to get this sorted out.
+                    {% endif %}
+                  </h5>
+                </div>
+              {% endif %}
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+
+<!-- 
+      <div class="page-top-band">
+        <div class="col-xs-12">
+          <h6>Post a review for {{ content_object }} ({{ content_type }})</h6>
+        </div>
+      </div> -->
+    {% endblock %}
+  </div>
+{% endblock %}
+{% block pjaxr_namespace %}Site.projects_review{% endblock pjaxr_namespace %}

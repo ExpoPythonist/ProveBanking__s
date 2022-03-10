@@ -1,0 +1,67 @@
+{% load socialaccount %}
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Hire marketing and creative consultants</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <link rel="shortcut icon" href="{{ STATIC_URL }}images/favicon.png">
+    {% load pipeline %}
+    {% stylesheet 'landing' %}
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+      {% stylesheet 'legacy' %}
+    <![endif]-->
+  </head>
+
+  <body class="landing-body">
+    <!--[if lt IE 7]>
+    <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+    <![endif]-->
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+          <span class="nav-placeholder hidden-xs hidden-sm pull-left">&nbsp;</span>
+          <a class="logo" href="/" ><img src="{{ STATIC_URL }}images/vetted-logo.png"></a>
+
+          <span class="nav-placeholder pull-right">
+            {% if user.is_authenticated %}
+              <a href="{% url 'account_logout' %}" class="btn btn-outline btn-flat pull-right nav-login-btn">Sign out</a>
+            {% else %}
+              {% block main_login_button %}
+              <a href="{% provider_login_url "linkedin" %}?account_kind={{ USER_KIND.Consultant }}" class="btn nav-login-btn btn-outline btn-flat  pull-right">Sign in</a>
+              {% endblock   %}
+            {% endif %}
+          </span>
+      </div>
+    </div>
+
+    <div class="container landing-container">
+
+      {% block main_content %}
+        {% block body %}
+          {% block content %}
+          <h2> Click <a href="mailto:suzanne@proven.cc">HERE</a> to send us your feedback and comments.</h2>
+          {% endblock %}
+        {% endblock %}
+        {% block extra_body %}{% endblock %}
+      {% endblock %}
+
+      {% block 'second' %}{% endblock %}
+      {% block 'third' %}{% endblock %}
+
+    </div>
+
+    <footer >
+      <div class="container footer-container text-center">
+        <a href="#">Home</a>
+        <a href="#">Contact Us</a>
+      </div>
+    </footer>
+    {% javascript 'landing' %}
+  </body>
+</html>

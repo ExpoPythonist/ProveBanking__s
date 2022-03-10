@@ -1,0 +1,27 @@
+{% load avatar_tags %}
+{% load thumbnail %}
+{% load crispy_forms_tags %}
+
+<div class="panel panel-default vendor-card">
+  <div class="panel-body">
+    <div class="field-group vendor-title">
+      <label>
+        {% if vendor.logo %}
+          {% thumbnail vendor.logo "x45" crop="center" format="PNG" as im %}
+            <img class="logo" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}"/>
+          {% endthumbnail %}
+        {% else %}
+          <span class="vendor-name">{{ vendor.name }}</span>
+        {% endif %}
+      </label>
+      <div class="field-value">
+        {% if vendor.avg_score %}
+        <span class="no-underline" title="Vendor average score">
+          <span class="score-value btn btn-disabled btn-{{ vendor.get_score_level }}" >{{ vendor.avg_score }}<span class="score-outof">/5</span>
+          </span>
+        </span>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>

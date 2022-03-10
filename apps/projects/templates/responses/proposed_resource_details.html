@@ -1,0 +1,310 @@
+{% pjaxr_extends "base_template.html" "Site" %}
+{% load projects %}
+{% load crispy_forms_tags %}
+{% load date_tags %}
+
+{% block title %}{{ object.resource.get_name_display }} - {{ current_tenant.name }}{% endblock %}
+
+{% block page_title %}<span id="page-title">Proposed resource </span>{% endblock %}
+
+{% block left_nav_button %}
+  <span id="left-nav-btn" class="pull-left">
+    {% if previous_page %}{% endif %}
+  </span>
+{% endblock %}
+
+{% block right_nav_button %}
+  <span id="right-nav-btn" class="pull-right"></span>
+{% endblock %}
+
+{% block right_sidebar %}
+  <div id="sidebar-right" class="sidebar sidebar-right"></div>
+{% endblock %}
+
+{% block notifications %}
+  {% include 'partials/notifications.html' %}
+{% endblock %}
+
+{% block page %}
+{% get_possible_forward_statuses object user as possible_statuses %}
+  {% if user.username == 'jagmeet' %}
+    <div class="container lifecycle">
+      <ul class="nav nav-wizard">
+        <li class="active">
+          <a id='step-1' href="#"
+              data-toggle="popover"
+              data-trigger="click"
+              data-html="true"
+              data-placement="bottom"
+              data-container="body"
+              data-content="
+              <div class='small popover-action-list'>
+                <span class='list-group-item break-word'>
+                  Responsible: <b>Matt <span class='text-muted'>matt@thismoment.com</span></b>
+                </span>
+
+                <span class='list-group-item break-word'>
+                  <b>Resume: <a href='#'>download <i class='fa fa-file-pdf-o'></i></a></b>
+                </span>
+
+                <span class='list-group-item break-word'>
+                  <small>Notify:</small> Owais Lone (Hiring Manager) <i class='fa fa-pencil'></i>
+                </span>
+
+                <span class='list-group-item break-word text-right'>
+                  <a href='#step-2' class='next-action btn btn-primary btn-sm'>Done</a>
+                </span>
+              </div>
+              "
+            >
+            <i class="fa fa-check-square-o"></i> Proposed <i class="fa fa-caret-down"></i>
+          </a>
+        </li>
+        <li>
+          <a id='step-2' href="#"
+              data-toggle="popover"
+              data-trigger="click"
+              data-html="true"
+              data-placement="bottom"
+              data-container="body"
+              data-content="
+              <div class='small popover-action-list'>
+                <span class='list-group-item break-word'>
+                  Responsible: <b>Owais Lone (Hiring Manager)</b>
+                </span>
+
+                <span class='list-group-item break-word'>
+                  <small>Notify:</small> Owais Lone (Hiring Manager)<i class='fa fa-pencil'></i>
+                </span>
+
+                <span class='list-group-item break-word text-right'>
+                  <a href='#step-3' class='next-action btn btn-primary btn-sm'>Done</a>
+                </span>
+              </div>
+              "
+            >
+            Shortlisted <i class="fa fa-caret-down hide"></i></a>
+        </li>
+        <li>
+          <a id='step-3' href="#"
+              data-toggle="popover"
+              data-trigger="click"
+              data-html="true"
+              data-placement="bottom"
+              data-container="body"
+              data-content="
+              <div class='small popover-action-list'>
+                <span class='list-group-item break-word'>
+                  Responsible: <b>Owais Lone (Hiring Manager)</b>
+                </span>
+
+                <span class='list-group-item break-word'>
+                  <small>Notify:</small> Philip McNamara (Vendor Contact) <i class='fa fa-pencil'></i>
+                </span>
+
+                <span class='list-group-item break-word text-right'>
+                  <a href='#step-4' class='next-action btn btn-primary btn-sm'>Done</a>
+                </span>
+              </div>
+              "
+              >
+            Interview <i class="fa fa-caret-down hide"></i></a>
+        </li>
+        <li><a id='step-4' href="#"
+              tab-index="0"
+              data-toggle="popover"
+              data-trigger="click"
+              data-html="true"
+              data-placement="bottom"
+              data-container="body"
+              data-content="
+              <div class='small popover-action-list'>
+                <span class='list-group-item break-word'>
+                  Responsible: <b>Philip McNamara (Vendor Contact) & Owais Lone (Hiring Manager)</b>
+                </span>
+
+                <span class='list-group-item break-word'>
+                  <form class='form-horizontal'>
+                    <div class='form-group'>
+                      <input class='form-control' placeholder='Start date'/>
+                      <input class='form-control' placeholder='End date'/>
+                      <input class='form-control' placeholder='Rate'/>
+                      <input class='form-control' placeholder='Location'/>
+                      <input class='form-control' placeholder='Allocation'/>
+                    </div>
+                  </form>
+                </span>
+
+                <span class='list-group-item break-word'>
+                  <small>Notify:</small> Suzanne Jordan (Procurement) <i class='fa fa-pencil'></i>
+                </span>
+
+                <span class='list-group-item break-word text-right'>
+                  <a href='#step-5' class='next-action btn btn-primary btn-sm'>Done</a>
+                </span>
+              </div>
+              "
+              >
+              Business terms <i class="fa fa-caret-down hide"></i></a>
+          </a>
+        <li><a id='step-5' href="#"
+              tab-index="0"
+              data-toggle="popover"
+              data-trigger="click"
+              data-html="true"
+              data-placement="bottom"
+              data-container="body"
+              data-content="
+              <div class='small popover-action-list'>
+                <span class='list-group-item break-word'>
+                  Responsible: <b>Suzanne Jordan (Admin)</b>
+                </span>
+
+
+                <span class='list-group-item break-word'>
+                  <b>SOW Template: <a href='#'>download <i class='fa fa-file-word-o'></i></a></b>
+                </span>
+
+                <span class='list-group-item break-word'>
+                  <small>Notify:</small> Suzanne Jordan (Procurement) <i class='fa fa-pencil'></i>
+                </span>
+
+                <span class='list-group-item break-word text-right'>
+                  <a href='#step-6' class='next-action btn btn-primary btn-sm'>Done</a>
+                </span>
+              </div>
+              "
+              >
+              SOW <i class="fa fa-caret-down hide"></i></a>
+        </li>
+        <li><a id='step-6' href="#"
+              tab-index="0"
+              data-toggle="popover"
+              data-trigger="click"
+              data-html="true"
+              data-placement="bottom"
+              data-container="body"
+              data-content="
+              <div class='small popover-action-list'>
+                <span class='list-group-item break-word'>
+                  Responsible: <b>Suzanne Jordan (Admin)</b>
+                </span>
+
+
+                <span class='list-group-item break-word'>
+                  <b>NDA Template: <a href='#'>download <i class='fa fa-file-word-o'></i></a></b>
+                </span>
+
+                <span class='list-group-item break-word'>
+                  <small>Notify:</small> Suzanne Jordan (Procurement) <i class='fa fa-pencil'></i>
+                </span>
+
+                <span class='list-group-item break-word text-right'>
+                  <a href='#step-7' class='next-action btn btn-primary btn-sm'>Done</a>
+                </span>
+              </div>
+              "
+              >
+              NDA <i class="fa fa-caret-down hide"></i></a>
+        </li>
+        <li><a id='step-7' href="#"
+              tab-index="0"
+              data-toggle="popover"
+              data-trigger="click"
+              data-html="true"
+              data-placement="bottom"
+              data-container="body"
+              data-content="
+              <div class='small popover-action-list'>
+                <span class='list-group-item break-word'>
+                  Responsible: <b>Suzanne Jordan (Admin)</b>
+                </span>
+
+
+                <span class='list-group-item break-word'>
+                  <b>Taining video: <a href='#'>download <i class='fa fa-file-video'></i></a></b>
+                </span>
+
+                <span class='list-group-item break-word'>
+                  <small>Notify:</small> Suzanne Jordan (Procurement) <i class='fa fa-pencil'></i>
+                </span>
+
+                <span class='list-group-item break-word text-right'>
+                  <a href='#step-8' class='anchor next-action btn btn-primary btn-sm'>Done</a>
+                </span>
+              </div>
+              "
+              >
+              Training <i class="fa fa-caret-down hide"></i></a>
+        </li>
+
+        <li><a id='step-8' href="#">
+          Complete</a>
+        </li>
+      </ul>
+      <hr/>
+    </div>
+  {% endif %}
+
+  <div id="page" class="container page">
+    {% block content %}
+      <ol class="breadcrumb custom">
+        <li><a href="{% url 'projects:list' %}">Projects</a></li>
+        <li><a href="{{ proposedresource.project.get_absolute_url }}">Project details</a></li>
+        <li><a href="{{ proposedresource.request.get_absolute_url }}">Staffing details</a></li>
+        <li class="active">Proposed resource</li>
+      </ol>
+      {% if q_status and perms.projects.add_proposedresource %}
+        <div class="status-change-confirmation">
+          {% for status in possible_statuses  %}
+            {% ifequal q_status status.id|slugify %}
+              <div class="alert alert-warning row">
+                <div class="col-sm-8">
+                  <i class="fa fa-exclamation-circle no-padding"></i>
+                  Are you sure you want to change the status to {{ status }}
+                </div>
+                <div class="col-sm-4 text-right">
+                  <a href="#"
+                     class="{{ class }} proposed-status-btn"
+                     data-action-url="{% url 'staffing:change_proposed_status' object.id %}"
+                     data-status-id="{{ status.id }}"
+                     data-staff-id="{{ object.id }}"
+                     data-cost="{{ object.total_cost }}"
+                     data-target=".proposed-status-btn-{{ object.id }}"
+                     >
+                  <button type="submit" class="btn btn-danger btn-xs">Yes</button>
+                  </a>
+                  <button type="submit" class="btn btn-default btn-xs cancel-btn" >No</button>
+                </div>               
+              </div>
+            {% endifequal %}
+          {% endfor %}
+        </div>
+        <br>
+      {% endif %}
+      <div class="panel panel-default relative">
+        <div class="panel-body">
+          {% include 'responses/proposed_staff_member.html' with show_details=True as_card=True project=object.project proposed_resource_object=object vendor=object.response.vendor person=object.resource %}
+        </div>
+      </div>
+    {% endblock %}
+  </div>
+{% endblock %}
+
+{% block js_foot %}
+  <script>
+    $('body').on('click', '.next-action', function(){
+      $(this).parents().find('li.active').removeClass('active');
+      var href = $(this).attr('href');
+      var $step = $(href);
+      if ($step.length > 0) {
+        $(this).parents().find('[data-toggle="popover"]').popover('hide');
+        $step.popover('show');
+        $step.parent().addClass('active');
+        $('.nav-wizard').find('.fa-caret-down').addClass('hide');
+        $step.find('.fa-caret-down').removeClass('hide');
+      }
+    });
+  </script>
+{% endblock %}
+{% block pjaxr_namespace %}Site.projects.proposed_resource_details{% endblock pjaxr_namespace %}

@@ -1,0 +1,57 @@
+{% pjaxr_extends "base_template.html" "Site" %}
+{% block title %}Review - {{ current_tenant.name }}{% endblock %}
+
+{% block page_title %}<span id="page-title">Review</span>{% endblock %}
+
+{% block left_nav_button %}
+  <span id="left-nav-btn" class="pull-left">
+    {% if previous_page %}
+      <a class="navbar-brand btn" href="{{ previous_page }}"><i class="fa fa-chevron-left"></i></a>
+    {% else %}
+      <a class="navbar-brand btn" href="{{ review.content_object.get_absolute_url }}"><i class="fa fa-chevron-left"></i></a>
+    {% endif %}
+  </span>
+{% endblock %}
+
+{% block right_nav_button %}
+  <span id="right-nav-btn" class="pull-right"></span>
+{% endblock %}
+
+{% block right_sidebar %}
+  <div id="sidebar-right" class="sidebar sidebar-right"></div>
+{% endblock %}
+
+{% block notifications %}
+  {% include 'partials/notifications.html' %}
+{% endblock %}
+
+{% block page %}
+  <div id="page" class="container page">
+    {% block content %}
+      {% if review.content_type.name == 'vendor' or 'portfolio item' %}
+        <ol class="breadcrumb">
+          <li>
+            {% if review.content_type.name == 'vendor' %}
+              <a href="{{ review.content_object.get_absolute_url }}"> Supplier
+            {% endif %}
+            {% if review.content_type.name == 'user' %}
+              <a href="{% url 'users:profile' review.content_object.username %}"> User
+            {% endif %}</a></li>
+          <li class="active">Reviews</li>
+        </ol>
+      {% endif %}
+
+      <section>
+        <h6 class="section-title text-uppercase">review for <b>{{ review.content_object }}</b></h6>
+
+        {% include 'reviews/as_field.html' with content_object=review.content_object content_type=review.content_type review_details='true' %}
+
+      </section>
+
+      <section>
+        {% include 'reviews/breakdown.html' %}
+      </section>
+    {% endblock %}
+  </div>
+{% endblock %}
+{% block pjaxr_namespace %}Site.projects.review_details{% endblock pjaxr_namespace %}

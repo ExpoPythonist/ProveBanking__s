@@ -1,0 +1,94 @@
+{% load thumbnail %}
+{% load utils %}
+
+<div class="panel panel-default panel-card">
+  <div class="panel-body">
+    <div class="row">
+
+      {% for reference in vendor.client_references.all|slice:":3"  %}
+        <div class="media col-md-4 col-sm-6 client-tile">
+          <span class="pull-left thumbnail thumb60">
+
+            {% if not reference.use_alt_name %}
+              {% if reference.client.website %}
+                {%if not reference.review_anonymous%}
+                <a href="{{ reference.client.website }}" target="_blank">
+                {% endif %}
+              {% endif %}
+
+              {% thumbnail reference.client.logo '120x90' as thumb %}
+                <img src="{{ thumb.url }}" alt="{{ reference.display_name }}">
+              {% empty %}
+                <img src="{{ STATIC_URL }}images/defaults/placeholder-co.png" height="60">
+              {% endthumbnail %}
+
+              {% if reference.client.website %}
+                {%if not reference.review_anonymous%}</a>{% endif %}
+              {% endif %}
+            {% else %}
+              <img src="{{ STATIC_URL }}images/defaults/placeholder-co.png" height="60">
+            {% endif %}
+          </span>
+          <div class="media-body">
+            <h5 class="media-heading">
+              {% if reference.client.website and not reference.use_alt_name %}
+                <a href="{{ reference.client.website }}" class="no-underline " title="{{ reference.display_name|truncatechars:10 }}">{{ reference.display_name }}</a>&nbsp;
+              {% else %}
+                {{ reference.display_name }}&nbsp;
+              {% endif %}
+            </h5>
+
+            {% if reference.is_fulfilled %}
+            <div class="verification">
+              <small class="btn btn-xs btn-success disabled">verified</small>&nbsp;
+              {% if request.user.is_procurement %}
+              {% if reference.invoice_verification %}
+              <span class="small text-muted" title="proof uploaded by vendor">by <b>proof uploaded by vendor</b></span>
+              {% else %}
+              {% if reference.email %}
+                {% if not reference.use_alt_name %}
+                  <span class="small text-muted" title="{{ reference.email|email_anonymize }}">by <b>{{ reference.email|email_anonymize }}</b></span>
+                {% else%}
+                  <span class="small text-muted" title="by an employee at this company">by <b>an employee at this company</b></span>
+                {% endif %}
+              {% endif %}
+              {% endif %}
+              {% endif %}
+            </div>
+            {%endif%}
+
+            {% if reference.duration and not reference.duration_private and reference.is_fulfilled %}
+            <div class="duration">
+              <span class = "text-muted">client for </span>
+              <span class="text-muted">{{ reference.get_duration_display }}</span>
+            </div>
+            {% endif %}
+
+            <div class="client-actions">
+            {% if reference.client|args:user|call:"is_editable" %}
+              <a href="{% url 'vendors:client_edit' reference.vendor.id reference.client.id %}" data-toggle="modal" data-target="#genericModal">edit</a> &middot;
+            {% endif %}
+
+            {% if not reference.is_fulfilled %}
+              {% if request.user.is_superuser or user.vendor == reference.vendor %}
+                <a  href="{% url 'vendors:client_ref_update' reference.id %}" data-toggle="modal" data-target="#genericModal"  data-modal-is-remote="true">verify by email</a> &middot;
+                <a  href="{% url 'vendors:client_invoice_add' vendor.id reference.id %}" data-toggle="modal" data-target="#genericModal"  data-modal-is-remote="true">upload proof</a>
+              {% endif %}
+            {% endif %}
+            </div>
+          </div>
+        </div>
+
+      {% endfor %}
+    </div>
+    {% if vendor.client_references.all|length > 3 %}
+    <div class="text-right">
+        {% if not request.user.is_vendor or request.user.vendor == vendor or request.user.vendor.get_primary_service.category != vendor.get_primary_service.category %}
+        <a href="{% url 'vendors:client_list' vendor.id %}" class="btn btn-o btn-xs btn-primary">view all ({{ vendor.client_references.count }})</a>
+        {% else %}
+        <span class="btn-o btn-xs btn-secondary">{{ vendor.client_references.count }} clients ({{ vendor.client_references_verified.count }} verified)</span>
+        {% endif %}
+    </div>
+    {% endif %}
+  </div>
+</div>

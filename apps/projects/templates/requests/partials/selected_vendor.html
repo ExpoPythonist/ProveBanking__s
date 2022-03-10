@@ -1,0 +1,7 @@
+<div {% if as_template %}data-{% endif %}id="vendor-{{ vendor.id }}" class="btn-group">
+  <input class="hide" {% if as_template %}data-{% endif %}name="vendors" value="{{ vendor.id }}">
+  <a href="{% url 'vendors:modal' vendor.id %}" data-toggle="modal" data-target="#genericModal"  class="btn btn-xs btn-default" >
+    <i class="fa fa-building"></i>&nbsp;{{ vendor.name }}
+  </a>
+  <button type="button" class="btn btn-xs btn-default btn-item-remove" data-target="#vendor-{{ vendor.id }}"><i class="fa fa-times"></i></button>
+</div>

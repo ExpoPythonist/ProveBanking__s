@@ -1,0 +1,72 @@
+{% load avatar_tags %}
+{% load humanize %}
+<div class="field-group user-card staff-member-{{ staff.id }}" data-request-id="{{ staff.response.request.id }}">
+  <div class="col-xs-4">
+    <div class="media">
+      <a href="{{ staff.resource.get_absolute_url }}" class="pull-left">
+        {% include 'partials/avatar_initials.html' with object=staff.resource size=25 %}
+      </a>
+      <div class="media-body text-left">
+        <h4 class="media-heading text-ellipsis">
+          <a href="{{ staff.resource.get_absolute_url }}" >
+            {{ staff.resource.get_name_display }}
+          </a>
+        </h4>
+        <span class="company-name text-muted">{{ staff.resource.vendor|default:current_tenant }}</span>
+      </div>
+    </div>
+  </div>
+  <div class="col-xs-8 text-right">
+    {% if staff.comments.exists %}
+      <span class="btn btn-secondary btn-o btn-xs disabled">
+        <i class="fa fa-comments"></i>&nbsp;{{ staff.comments.count }}
+      </span>&nbsp;
+    {% endif %}
+
+    {% if staff.location %}
+      <span class="btn btn-secondary btn-xs disabled">
+        <i class="fa fa-map-marker"></i> {{ staff.location }}</span>
+      </span>&nbsp;
+    {% endif %}
+
+    {% include 'partials/date_range.html' with start_date=staff.start_date end_date=staff.end_date %}
+
+    {% if staff.allocation != 100 %}
+      <span class="btn btn-secondary btn-o btn-xs disabled">
+        {{ staff.allocation }}%
+        <small> allocation</small>
+      </span>&nbsp;
+    {% endif %}
+
+  {% if features.financials.is_enabled and perms.rates.view %}
+    {% if user.is_client or staff.resource.vendor == user.vendor %}
+      {% if staff.total_cost_display %}
+        <button type="button" class="btn btn-o btn-xs btn-secondary" data-trigger="focus" data-container="body" data-toggle="popover" data-trigger="click" data-html="true" data-placement="left"  data-content="{{ staff.get_cost_calculation_display|safe|default:'N/A' }}">
+            <i class="fa fa-dollar"></i> {{ staff.total_cost_display|intcomma }}
+            {% include 'rates/lock.html' %}
+        </button>&nbsp;
+      {% endif %}
+    {% endif %}
+  {% endif %}
+
+
+  <!-- Split button -->
+  &nbsp;<span class="btn-group text-left">
+    <a href="{{ staff.get_absolute_url }}" class="btn btn-xs btn-default" >
+      view</a>
+    <button type="button" class="btn btn-xs btn-default dropdown-toggle" data-toggle="dropdown">
+      <span class="caret"></span>
+      <span class="sr-only">Toggle Dropdown</span>
+    </button>
+    <ul class="dropdown-menu" role="menu">
+        {% if False and perms.reviews.add_review %}
+          <li>
+            <a href="{% url 'reviews:create_user_review' staff.project_id staff.resource.id %}" class="no-link-style no-underline">
+            <small>add review</small></a>
+        </li>
+        {% endif %}
+    </ul>
+  </span>
+
+  </div>
+</div>

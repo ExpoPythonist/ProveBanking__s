@@ -1,0 +1,78 @@
+{% extends 'guest_base_extended.html' %}
+{% load socialaccount %}
+
+{% block page %}
+<div class="container page container-get-vetted">
+
+  <section class="one">
+    <h1 class="title"> Get Proven</h1>
+    <h2 class="sub-title lighter">The most efficient way to be found by top companies</h2>
+  </section>
+
+  <section class="two">
+    <div class="container-section text-center">
+      <div class="h2 title">Service Providers</div>
+      <div class="clearfix">
+        <div class="col-sm-4 list-item">
+          <i class="fa fa-star fa-4x text-muted"></i><br>
+          <h4 class="list-title">Proven</h4>
+          <p class="list-description">We only list top firms based on verified client referrals</p>
+        </div>
+        <div class="col-sm-4 list-item">
+          <i class="fa fa-line-chart fa-4x text-muted"></i><br>
+          <h4 class="list-title">Algorithmically Ranked</h4>
+          <p class="list-description">Your ranking is determined by the quality and number of clients you have</p>
+        </div>
+        <div class="col-sm-4 list-item">
+          <i class="fa fa-eye-slash fa-4x text-muted"></i><br>
+          <h4 class="list-title">Private</h4>
+          <p class="list-description">Your clients can choose to remain anonymous</p>
+        </div>
+      </div>
+      <div class="clearfix container-btn">
+        <div class="col-sm-6 col-sm-offset-3">
+          <a href="{% provider_login_url 'linkedin' %}" class="btn btn-lg btn-block btn-primary">
+            <i class="fa fa-linkedin-square"></i>&nbsp;&nbsp;Sign up with LinkedIn&nbsp;
+          </a>
+          <br/>
+          <p class="text-muted small text-left"><strong>Note:</strong>&nbsp;Nothing gets posted to LinkedIn and your LinkedIn information will not be shared. We ask for this to verify that you are a part of a verified company.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="three">
+    <div class="container-section text-center">
+      <div class="h2 title">Enterprises</div>
+      <p class="description">Ask for a demo of our software to streamline collaboration with existing suppliers, achieve up to 10% cost savings, and find new suppliers Proven by your peers.</p>
+      <div class="clearfix container-btn">
+        <a href="#" class="btn btn-lg btn-o btn-primary btn-dash" data-toggle="modal" data-target="#requestDemoDialog">
+          Request a demo
+        </a>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="modal fade request-modal" id="requestDemoDialog" tabindex="-1" role="dialog" aria-hidden="true" >
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <div class="row">
+          <div class="col-xs-3 modal-action-left">
+          </div>
+          <div class="col-xs-6">
+            <h4 class="modal-title">Request a Demo</h4>
+          </div>
+          <div class="col-xs-3 text-right">
+            <a href="#" class="btn" data-dismiss="modal"><i class="fa fa-times"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="modal-body">
+        {% include 'demo_request_form.html' with form=form %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

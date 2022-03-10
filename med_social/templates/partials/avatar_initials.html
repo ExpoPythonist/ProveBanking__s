@@ -1,0 +1,14 @@
+{% load avatar_tags %}
+<div class="avatar-wrapper" title="{% if title %}{{ title }}{% else %}{{ object.get_name_display }}{% endif %}">
+  {% if object|has_avatar %}
+    <img src="{% avatar_url object size %}" class="avatar avatar-{{ size }} img-circle">
+  {% else %}
+    <span class="initials avatar-{{ size }}">
+    {% if object.first_name and object.last_name %}
+      {{ object.first_name|capfirst|stringformat:".1s" }}{% if size > 25 %}{% endif %}{{ object.last_name|capfirst|stringformat:".1s" }}
+    {% else %}
+      {{ object.username|capfirst|stringformat:".1s" }}
+    {% endif %}
+    </span>
+  {% endif %}
+</div>

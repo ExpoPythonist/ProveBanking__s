@@ -1,0 +1,3 @@
+# Warning!
+
+All CSS files will be ignored by git. Name your files with .less extension even if they contain plain CSS code.

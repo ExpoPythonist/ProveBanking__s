@@ -1,0 +1,138 @@
+{% pjaxr_extends "base_template.html" "Site" %}
+{% load features %}
+{% block title %}Settings - {{ current_tenant }}{% endblock %}
+
+{% block page_title %}<span id="page-title">Settings</span>{% endblock %}
+
+{% block left_nav_button %}
+  <span id="left-nav-btn" class="pull-left">
+  </span>
+{% endblock %}
+
+{% block right_nav_button %}
+  <span id="right-nav-btn" class="pull-right"></span>
+{% endblock %}
+
+{% block right_sidebar %}
+  <div id="sidebar-right" class="sidebar sidebar-right"></div>
+{% endblock %}
+
+{% block notifications %}
+  {% include 'partials/notifications.html' %}
+{% endblock %}
+
+{% block page %}
+  <div id="page" class="container page">
+    {% block content %}
+      <div class="panel panel-default panel-settings">
+        <div class="panel-body">
+          {% if perms.users.manage_features %}
+            <a href="{% url 'client_settings:features' %}" class="field-group">
+              <label>Features</label>
+              <div class="field-value">
+                <i class="fa fa-chevron-right text-muted"></i>
+              </div>
+            </a>
+          {% endif %}
+
+          {% if features.proven_score.is_enabled %}
+            <a href="{% url 'client_settings:weights' %}" class="field-group">
+              <label>Proven Score Weights</label>
+              <div class="field-value">
+                <i class="fa fa-chevron-right text-muted"></i>
+              </div>
+            </a>
+          {% endif %}
+
+          {% if features.premium.is_enabled %}
+          <a href="{% url 'client_settings:premium' %}" class="field-group">
+            <label>Proven Premium Settings</label>
+            <div class="field-value">
+              <i class="fa fa-chevron-right text-muted"></i>
+            </div>
+          </a>
+          {% endif %}
+
+          {% if perms.reviews.add_metric %}
+            <a href="{% url 'client_settings:metrics_type_list' %}" class="field-group">
+              <label>Metrics</label>
+              <div class="field-value">
+                <i class="fa fa-chevron-right text-muted"></i>
+              </div>
+            </a>
+          {% endif %}
+
+          {% if perms.rates.add and features.financials|is_feature_enabled %}
+          <a href="{% url 'rates:list' %}" class="field-group" >
+            <label>Rates</label>
+            <div class="field-value">
+              <i class="fa fa-chevron-right text-muted"></i>
+            </div>
+          </a>
+          {% endif %}
+
+          {% if perms.projects.manage_status %}
+            <a href="{% url 'projects:status:list' %}" class="field-group" >
+              <label>Staffing Status</label>
+              <div class="field-value">
+                <i class="fa fa-chevron-right text-muted"></i>
+              </div>
+            </a>
+          {% endif %}
+
+          {% if perms.auth.admin %}
+          <a href="{% url 'groups:list' %}" class="field-group" >
+            <label>Permissions and Groups</label>
+            <div class="field-value">
+              <i class="fa fa-chevron-right text-muted"></i>
+            </div>
+          </a>
+          {% endif %}
+
+          <a href="{% url 'client_settings:roles:list' %}" class="field-group" >
+            <label>Roles</label>
+            <div class="field-value">
+              <i class="fa fa-chevron-right text-muted"></i>
+            </div>
+          </a>
+
+          <a href="{% url 'client_settings:manage_categories' 'skill' %}" class="field-group">
+            <label>Skills</label>
+            <div class="field-value">
+              <i class="fa fa-chevron-right text-muted"></i>
+            </div>
+          </a>
+
+          <a href="{% url 'client_settings:skill_levels:list' %}" class="field-group">
+            <label>Skill Levels</label>
+            <div class="field-value">
+              <i class="fa fa-chevron-right text-muted"></i>
+            </div>
+          </a>
+
+          <a href="{% url 'client_settings:manage_categories' 'industry' %}" class="field-group">
+            <label>Industries</label>
+            <div class="field-value">
+              <i class="fa fa-chevron-right text-muted"></i>
+            </div>
+          </a>
+          <a href="{% url 'client_settings:services:list' %}" class="field-group">
+            <label>Service types</label>
+            <div class="field-value">
+              <i class="fa fa-chevron-right text-muted"></i>
+            </div>
+          </a>
+
+          <a href="{% url 'client_settings:location_list' %}" class="field-group">
+            <label>Locations</label>
+            <div class="field-value">
+              <i class="fa fa-chevron-right text-muted"></i>
+            </div>
+          </a>
+
+        </div>
+      </div>
+    {% endblock %}
+  </div>
+{% endblock %}
+{% block pjaxr_namespace %}Site.settings{% endblock pjaxr_namespace %}

@@ -1,0 +1,25 @@
+
+{% load projects %}
+<div class="modal-header text-center">
+  <div class="row">
+    <div class="col-xs-3 modal-action-left">
+      <a href="#" class="btn" data-dismiss="modal"><i class="fa fa-chevron-left"></i> cancel</a>
+    </div>
+    <div class="col-xs-6">
+      <h4 class="modal-title" id="myModalLabel">end project</h4>
+    </div>
+    <div class="col-xs-3 modal-action-right">
+      <a href="#" class="btn" data-dismiss="modal" onClick="$('#endProjectForm').submit();">end</a>
+    </div>
+  </div>
+</div>
+  <div class="modal-body">
+    <form id="endProjectForm" action="{% url 'projects:end' project.id %}" method="POST">
+      {% csrf_token %}
+    </form>
+    <div class="field-group">
+      <p>Are you sure you want to end this project?</p>
+    </div>
+    <hr class="thin"/>
+  </div>
+</div>

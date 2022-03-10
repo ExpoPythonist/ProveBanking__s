@@ -1,0 +1,7 @@
+{%if staffing_req%}
+New comments in discussion regarding “{{ staffing_req }}”
+You can view entire discussion and respond here: {{ staffing_req_url }}
+{%else%}
+{{ message.posted_by }}: {{ message.body|truncatechars:"30" }}
+To reply, go to: {{ discussion_url }}
+{%endif%}

@@ -1,0 +1,45 @@
+{% load avatar_tags %}
+{% if success == False %}
+  <form id="basicProfileForm" action="{% url 'edit_basic_profile' %}" method="POST" class="{{ css_class }}">
+    {% include 'consultant/profile/generic_form.html' with form=form %}
+  </form>
+{% else %}
+  <div id="basic-profile" class="consultant-main">
+    <div class="row">
+      {% if profile_page %}
+      <div class="col-xs-12 text-center">
+        <span class="avatar-container-big">
+          <img src="{% avatar_url consultant 80 %}" class="img-circle avatar avatar-80"/>
+        </span>
+        <h3 class="username-big">{{ consultant.get_full_name }}</h3>
+        <span class="user-handle">@{{ consultant.username }}</span>
+      </div>
+      {% else %}
+      <div class="col-xs-3">
+        <a href="{{ consultant.profile_url }}" class="avatar-container">
+          <img src="{% avatar_url consultant 45 %}" class="img-circle avatar avatar-45"/>
+        </a>
+      </div>
+      <div class="col-xs-9">
+        <h3>
+          <a href="{{ consultant.profile_url }}" class="username" title="{{consultant.get_full_name}}">
+            {{consultant.get_full_name}}
+            <span class="block clearfix user-handle">@{{ consultant.username }}</span>
+          </a>
+        </h3>
+      </div>
+      {% endif %}
+    </div>
+    {% if consultant.headline %}
+    <div class="consultant-tagline">{{consultant.headline|default:"&nbsp;"}}</div>
+    {% endif %}
+
+    {% if user == consultant and profile_page %}
+    <div class="text-center">
+      <a href="{% url 'edit_basic_profile' %}" id="editBasicProfileBtn" class="edit-trigger" data-editable=".consultant-details" data-form-container="#subProfileFormContainer" data-toggle="tooltip" title="edit profile" data-placement="bottom"><i class="fa fa-edit fa-small"></i> edit</a>
+    </div>
+    {% endif %}
+  </div>
+{% endif %}
+
+

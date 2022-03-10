@@ -1,0 +1,7 @@
+<form enctype="multipart/form-data" id="project-create-form" class="form-mobile form-horizontal" role="form" action="{% url 'projects:create' %}{% if iframed %}?iframed=yes{% endif %}" method="POST" {% if request.is_ajax %}data-ajax-form="true"{% endif %} {% if iframed %}target="ajaxUploadiFrame"{% endif %}>
+    {% csrf_token %}
+    {% include 'forms/mobile_form.html' with form=form form_title=iframed|yesno:',Create project' %}
+    <div class="form-actions text-center">
+      <input type="submit" value="Create" class="btn btn-primary btn-block"/>
+    </div>
+</form>

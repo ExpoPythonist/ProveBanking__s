@@ -1,0 +1,107 @@
+body.Desktop .container-get-vetted {
+  min-width: 100%;
+  margin: -20px auto 0;
+}
+
+.container-get-vetted {
+  position: relative;
+  z-index: 0;
+  .one {
+    position: fixed;
+    height:300px;
+    top: 40px;
+    left: 0px;
+    right: 0px;
+    z-index: -1;
+    margin: 0px -15px 0;
+    background-image: url(../../images/home_bg_sm.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    color: #fff;
+    text-align: center;
+    box-shadow: inset 0 10px 10px rgba(0, 0, 0, 0.5);
+    padding-left:15px;
+    padding-right: 15px;
+    .title {
+      padding-top:80px;
+      margin-top: 0px;
+      font-size: 60px;
+      font-weight: 700;
+      @media(max-width: @screen-xs-max){
+        font-size: 45px;
+        padding-top: 20px;
+      }
+    }
+    .sub-title {
+      
+    }
+  }
+  .two {
+    padding: 0 15px 60px;
+    min-height: 300px;
+    margin: 300px -15px 0;
+    background: #F9F8F7;
+    box-shadow: 0 -10px 10px rgba(0,0,0, 0.5);
+    .title {
+      padding-top: 60px;
+      font-size: 45px;
+      font-weight: 700;
+      margin-bottom: 60px;
+    }
+    .list-item {
+      @media(max-width: @screen-xs-max) {
+        margin-bottom: 60px;
+      }
+    }
+    .fa-4x {
+      color: #bbb;
+    }
+    .list-title {
+      margin-top: 24px;
+      font-size: 24px;
+      font-weight: normal;
+      font-style: italic;
+      color: @gray;
+    }
+    .list-description {
+      font-size: 16px;
+      font-weight: 300;
+    }
+    .container-btn {
+      margin-top: 60px;
+    }
+  }
+  .container-section {
+    @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max) {
+      max-width: 80%;
+      margin: 0 auto;
+    }
+    @media (min-width: @screen-md-min) {
+      max-width: 80%;
+      margin: 0 auto;
+    }
+  }
+  .three {
+    margin: -20px -15px 0;
+    padding: 0 15px;
+    min-height: 400px;
+    background: #fff;
+    // position: relative;
+    // top: 210px;
+    .title {
+      padding-top: 60px;
+      font-size: 45px;
+      font-weight: 700;
+      margin-bottom: 60px;
+    }
+    .description {
+      font-size: 22px;
+      font-weight: 300;
+      margin-bottom: 60px;
+    }
+    .container-btn {
+      padding-bottom: 60px;
+    }
+  }
+}

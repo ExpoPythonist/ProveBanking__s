@@ -1,0 +1,317 @@
+[
+{
+    "model": "post_office.emailtemplate",
+    "pk": 1,
+    "fields": {
+        "name": "New Community Request",
+        "description": "",
+        "created": "2016-03-26T01:09:36.792Z",
+        "last_updated": "2016-03-26T01:53:54.092Z",
+        "subject": "New Community Request",
+        "content": "",
+        "html_content": "{% extends 'base_email.html' %}\r\n\r\n{% block body %}\r\n  <tr>\r\n    <td class=\"content-block\">\r\n      <p>There's a new community request submitted:</p>\r\n      <ul>\r\n        <li>Email: {{ client_queue.email }}</li>\r\n        <li>Notes: {{ client_queue.notes|linebreaksbr }}</li>\r\n      </ul>\r\n    </td>\r\n  </tr>\r\n{% endblock %}",
+        "language": "",
+        "default_template": null
+    }
+},
+{
+    "model": "post_office.emailtemplate",
+    "pk": 2,
+    "fields": {
+        "name": "New Community Request Autoresponder",
+        "description": "",
+        "created": "2016-03-26T02:01:24.760Z",
+        "last_updated": "2016-03-29T23:20:22.636Z",
+        "subject": "Setup Proven in your company",
+        "content": "Hi, \r\nThanks for your interest in Proven. Proven can help you to manage new vendors who are trying to do business with you, and also manage your existing vendors. \r\n\r\nWhile in Beta, we will set up your new community manually. Please bear with us and we'll get back to you shortly.\r\n\r\nThanks, the Proven Team",
+        "html_content": "{% extends 'base_email.html' %}\r\n\r\n{% block body %}\r\n  <tr>\r\n    <td class=\"content-block\">\r\n      <p>\r\n        Thanks for your interest in Proven. Proven can help you to manage new vendors who are trying to do business with you, and also manage your existing vendors.\r\n      </p>\r\n      <p>\r\n        While in Beta, we will set up your new community manually. Please bear with us and we'll get back to you shortly.\r\n      </p>\r\n      <p>\r\n        Thanks, the Proven Team\r\n      </p>\r\n    </td>\r\n  </tr>\r\n{% endblock %}",
+        "language": "",
+        "default_template": null
+    }
+},
+{
+    "model": "post_office.emailtemplate",
+    "pk": 3,
+    "fields": {
+        "name": "New Community Manager",
+        "description": "Welcome New Users (Community Managers)\r\nFrequency (Once a New Community Manger requests a new community)",
+        "created": "2016-03-26T02:14:17.587Z",
+        "last_updated": "2016-04-01T22:38:38.357Z",
+        "subject": "Welcome to the Proven Platform",
+        "content": "Hi {{ receiver.first_name }},\r\n\r\nThank you so much for being part of the {{ community }} Proven Platform.\r\n\r\nProven is all about making your life easier, and making it simpler for vendors to show their skills. It's a great way to manage all of those calls and emails that you get from new vendors from time to time, and can help you find the right vendor, if you do need one in the future.\r\n\r\nYou can also manage all of your existing vendors too, and in no time you'll be a vendor management guru!\r\n\r\nTo get started, just click here: {{ direct_url }}\r\n\r\nIf you need any help, we are here to make it simple for you! Just send us an email to support@proven.cc and we'll get back to you as soon as possible.\r\n\r\nThe Proven Team",
+        "html_content": "{% extends 'base_email.html' %}\r\n\r\n{% block body %}\r\n  <tr>\r\n    <td class=\"content-block\">\r\n        <p>Hi {{ receiver.first_name }},</p>\r\n        \r\n        <p>Thank you so much for being part of the Proven Platform.</p>\r\n        <p>Proven is all about making your life easier, and making it simpler for vendors to show their skills. It's a great way to manage all of those calls and emails that you get from new vendors from time to time, and can help you find the right vendor, if you do need one in the future.</p>\r\n        <p>You can also manage all of your existing vendors too, and in no time you'll be a vendor management guru!</p>\r\n        <p>To get started, just click here: <a href=\"{{ direct_url }}\">{{ direct_url }}</a></p>\r\n        <p>If you need any help, we are here to make it simple for you! Just send us an email to <a href=\"mailto:support@proven.cc\">support@proven.cc</a> and we'll get back to you as soon as possible.</p>\r\n\r\n        <p>The Proven Team</p>\r\n    </td>\r\n  </tr>\r\n{% endblock %}",
+        "language": "",
+        "default_template": null
+    }
+},
+{
+    "model": "post_office.emailtemplate",
+    "pk": 4,
+    "fields": {
+        "name": "Vendor Reminder",
+        "description": "Remind users (vendors) when not logged in for some time: Frequency (two days after invite, before link expires)",
+        "created": "2016-03-27T18:46:12.054Z",
+        "last_updated": "2016-04-01T22:38:02.834Z",
+        "subject": "{{ community }} hasn't heard back from you...",
+        "content": "Dear {{ receiver.first_name }},\r\n\r\n{{ community }} asked you to upload your company details, and it looks like you haven't put anything in there yet! Tut, Tut!\r\n\r\nRemember, {{ community }} is using Proven to help find the best new vendors. As you know, it's hard to stand out, that's why Proven was created. In an instant, potential new clients can see your work history, your skills and past clients you've worked with, and then hopefully hire you!\r\n\r\nThe more information you give to {{ community }}, the higher your ranking. Therefore, the next time they are looking for a great partner, they'll find you.\r\n\r\nBut you have to fill out your profile!\r\n\r\nNow get to work and show how amazing you are!\r\n\r\nGET PROVEN: {{ direct_url }}\r\n\r\nLove, the Proven Team.",
+        "html_content": "",
+        "language": "",
+        "default_template": null
+    }
+},
+{
+    "model": "post_office.emailtemplate",
+    "pk": 5,
+    "fields": {
+        "name": "No. 1 Periodic / Instant",
+        "description": "Inform Users what their ranking is (Vendors No1 in Category)\r\nFrequency - when they first get No1, and once per customized period, 9am",
+        "created": "2016-03-27T18:50:21.601Z",
+        "last_updated": "2016-04-12T13:32:28.053Z",
+        "subject": "You're ranked No. 1 on the {{ community }} Proven Platform!",
+        "content": "Dear {{ receiver.first_name }},\r\n\r\nCongratulations, you're now ranked No. 1 in the {{ category }} Category in the {{ community }} Proven Platform! {{ community_url }}\r\n\r\nHere's how you rank in the category:\r\n\r\n{% for vendor in category_vendors %}\r\n{{ forloop.counter }}. {{ vendor }} {{ community_url }}{{ vendor.get_absolute_url }}{% endfor %}\r\n\r\nKeep up the good work! If you'd like to keep your top spot, make sure to upload new clients, add as much detail as possible to your profile and keep {{ community }} informed about new deals you've won recently.\r\n\r\nYou're making it easy to be next in line for a new contract!\r\n\r\nLove, The Proven Team.",
+        "html_content": "",
+        "language": "",
+        "default_template": null
+    }
+},
+{
+    "model": "post_office.emailtemplate",
+    "pk": 6,
+    "fields": {
+        "name": "No. 2+ Periodic",
+        "description": "Inform Users what their ranking is (Vendors No2 and Below in Category)\r\nFrequency - should be customized (now - monthly, 9am)",
+        "created": "2016-03-27T18:56:29.442Z",
+        "last_updated": "2016-04-01T22:36:10.640Z",
+        "subject": "You're ranked No. {{ rank }} in the {{ community }} Proven Platform!",
+        "content": "Dear {{ receiver.first_name }},\r\n\r\nWe wanted to let you know that you're ranked No {{ rank }} in the {{ category }} Category in the {{ community }} Proven Platform! {{ community_url }}\r\n\r\n{% for vendor in category_vendors %}\r\n{{ forloop.counter }}. {{ vendor }} {{ community_url }}{{ vendor.get_absolute_url }}{% endfor %}\r\n\r\nIf you'd like to move up in the rankings, make sure to upload new verified clients, add as much detail as possible to your profile and keep {{ community }} informed about new deals you've won recently.\r\n\r\nThat way, when they are looking for their next vendor, they'll find you!\r\n\r\nMake it easy for {{ community }} to award you their next contract!\r\n\r\nLove, The Proven Team.",
+        "html_content": "",
+        "language": "",
+        "default_template": null
+    }
+},
+{
+    "model": "post_office.emailtemplate",
+    "pk": 7,
+    "fields": {
+        "name": "Out of No. 1",
+        "description": "Inform Vendors when No1 spot has been taken by a competitor.",
+        "created": "2016-03-27T18:58:53.457Z",
+        "last_updated": "2016-04-01T22:35:36.662Z",
+        "subject": "Look out! {{ competitor }} has just taken your top spot!",
+        "content": "Dear {{ receiver.first_name }},\r\n\r\nUh oh, it looks like {{ competitor }} has taken the top spot in the {{ category }} category! {{ community_url }}\r\n\r\nDon't worry, you can always add some more verified customers, keep your profile up to date and refresh your Proven Profile. Adding new verified customers is the best way to improve your ranking. \r\n\r\nThe best way to improve your profile is to add verified customers to your profile. Verified customers are by far the fastest way to increase your Proven Profile.\r\n\r\nMake sure your potential customers know how great you are. Get Proven. \r\n\r\nLove, the Proven Team.",
+        "html_content": "",
+        "language": "",
+        "default_template": null
+    }
+},
+{
+    "model": "post_office.emailtemplate",
+    "pk": 8,
+    "fields": {
+        "name": "Weekly Community Manager",
+        "description": "Monthly Community Manager Email\r\nFrequency (Once per month on the 1st, 9am)",
+        "created": "2016-03-27T19:01:52.687Z",
+        "last_updated": "2016-05-02T08:15:19.625Z",
+        "subject": "Monthly roundup of vendors who'd like to work with {{ community }} Proven Platform",
+        "content": "Dear {{ receiver.first_name }},\r\n\r\nHere's a quick breakdown of the top ranking vendors in your Proven Community of vendors:\r\n\r\n{% for category in categories %}\r\n{% with vendor=category.get_top_vendor %}- {{ category}}: {{ vendor }} {{ community_url }}{{ vendor.get_absolute_url }}{% endwith %}{% endfor %}\r\n\r\nRemember, if you're looking for a new vendor, or want to message several vendors at once, you can do it on Proven. Use proven to keep your vendors in check. \r\n\r\n{{ community_url }}\r\n\r\nLove, the Proven Team",
+        "html_content": "",
+        "language": "",
+        "default_template": null
+    }
+},
+{
+    "model": "post_office.emailtemplate",
+    "pk": 9,
+    "fields": {
+        "name": "New Invoice to Verify",
+        "description": "Sent to admins whenever a vendor uploads an invoice for a client.",
+        "created": "2016-03-30T12:40:54.366Z",
+        "last_updated": "2016-06-24T00:19:51.001Z",
+        "subject": "New Proof to Verify",
+        "content": "Dear Team,\r\n\r\nThe vendor {{ invoice.reference.vendor }} uploaded a new proof for the client {{ invoice.reference.client }}:\r\n\r\n{{ community_url }}{% url \"vendors:invoice_list\" invoice.reference.vendor.slug invoice.reference.pk %}\r\n\r\nPlease review the proof, check for missing information (dates, amounts) and verify.\r\n\r\nLove, the Proven Team",
+        "html_content": "",
+        "language": "",
+        "default_template": null
+    }
+},
+{
+    "model": "post_office.emailtemplate",
+    "pk": 10,
+    "fields": {
+        "name": "Invoice Verified",
+        "description": "Sent to vendor when an admin verifies the invoice",
+        "created": "2016-03-30T14:19:30.367Z",
+        "last_updated": "2016-04-21T04:48:22.015Z",
+        "subject": "Your proof that you work with {{ invoice.reference.client }} has been verified!",
+        "content": "Dear {{ invoice.reference.vendor }},\r\n\r\nYour proof that you work with the client {{ invoice.reference.client }} has been verified:\r\n\r\n{{ community_url }}{{ invoice.get_absolute_url }}\r\n\r\n{% if proven_score_enabled %}Your proven score has increased to {{ invoice.reference.vendor.proven_score|floatformat:0 }}%!{% endif %}\r\n\r\nTo continue to increase your score, please upload more proof that you work with other clients. \r\n\r\nThanks, the Proven Team",
+        "html_content": "",
+        "language": "",
+        "default_template": null
+    }
+},
+{
+    "model": "post_office.emailtemplate",
+    "pk": 11,
+    "fields": {
+        "name": "Insurance Expiration Reminder",
+        "description": "Reminder to drone companies that insurance is expiring",
+        "created": "2016-04-21T17:07:58.212Z",
+        "last_updated": "2016-04-21T18:05:33.088Z",
+        "subject": "Your Drone Coverage is Expiring",
+        "content": "Dear {{ receiver.first_name }}, \r\n\r\nWe're writing to let you know that your coverage will expire on {{ insurance.expiry_date|date:\"d F Y\" }}. \r\n\r\nIf you'd like to continue to be insured and be in good standing in the community, then we'd recommend that you make sure that your insurance is up to date. \r\n\r\nIf you're not sure about which provider to use, or you'd like to get a new quote, here are three companies that we recommend that many drone companies in {{ community }} are using:\r\n\r\n1. \"Drone insurance provider 1\" \r\n2. \"Drone insurance provider 2\" \r\n3. \"Drone insurance provider 3\" \r\n\r\n{% if rfp_enabled %}If you'd like to send an inquiry to all three, then you can do so here: {{ community.get_full_url }}{{ rfp_template_link }}{% endif %}\r\n\r\nThanks\r\n\r\nThe Proven Team",
+        "html_content": "",
+        "language": "",
+        "default_template": null
+    }
+},
+{
+    "model": "post_office.emailtemplate",
+    "pk": 12,
+    "fields": {
+        "name": "New RFP Notification",
+        "description": "",
+        "created": "2016-05-02T12:27:46.311Z",
+        "last_updated": "2016-05-02T13:14:25.719Z",
+        "subject": "You have a new RFP notification on Proven",
+        "content": "You have a new RFP notification on Proven:\r\n\r\n{{ notification.actor }} {{ notification.verb }} {% if notification.target %}{{ notification.target }}{% endif %}\r\n\r\n{% if notification.description %}{{ notification.description|linebreaksbr }}{% endif %}\r\n\r\n{{ community.get_full_url }}{% if notification.target %}{{ notification.target.get_absolute_url }}{% elif notification.action_object.get_absolute_url %}{{ notification.action_object.get_absolute_url}}{% else %}{{ notification.actor.get_absolute_url }}{% endif %}",
+        "html_content": "",
+        "language": "",
+        "default_template": null
+    }
+},
+{
+    "model": "post_office.emailtemplate",
+    "pk": 13,
+    "fields": {
+        "name": "New Vendor Claim",
+        "description": "Sent to admins when a user claims a vendor.",
+        "created": "2016-05-24T18:53:30.517Z",
+        "last_updated": "2016-05-30T18:08:57.777Z",
+        "subject": "New Vendor Claim",
+        "content": "",
+        "html_content": "{% extends 'base_email.html' %}\r\n\r\n{% block body %}\r\n  <tr>\r\n    <td class=\"content-block\">\r\n      <p>Hello admins, someone made a claim on a vendor :</p>\r\n      <ul>\r\n        <li>Claimant: {{ vendor_claim.first_name }} {{ vendor_claim.last_name }} &lt;{{ vendor_claim.email }}&gt; {% if vendor_claim.user %}(Already Registered: <a href=\"{{ community.get_full_url }}{{ vendor_claim.user.get_absolute_url }}\">{{ vendor_claim.user.get_full_name }}</a>){% else %}(Not Registered){% endif %}</li>\r\n        <li>Vendor: <a href=\"{{ community.get_full_url }}{{ vendor_claim.vendor.get_absolute_url }}\">{{ vendor_claim.vendor }}</a></li>\r\n        {% if vendor_claim.notes %}\r\n        <li>Notes: {{ vendor_claim.notes|linebreaksbr }}</li>\r\n        {% endif %}\r\n      </ul>\r\n      <p>Please evaluate it <a href=\"{{ community.get_full_url }}{% url \"vendors:vendor_claims\" %}\">here</a>.\r\n    </td>\r\n  </tr>\r\n{% endblock %}",
+        "language": "",
+        "default_template": null
+    }
+},
+{
+    "model": "post_office.emailtemplate",
+    "pk": 14,
+    "fields": {
+        "name": "Vendor Claim Approved",
+        "description": "Sent to claimant when an admin approves a claim.",
+        "created": "2016-05-31T02:08:39.591Z",
+        "last_updated": "2016-05-31T02:14:57.066Z",
+        "subject": "Your claim has been approved!",
+        "content": "",
+        "html_content": "{% extends 'base_email.html' %}\r\n\r\n{% block body %}\r\n  <tr>\r\n    <td class=\"content-block\">\r\n      <p>Hi {{ claim.first_name }},</p>\r\n      <p>We've approved your claim for the <a href=\"{{ community.get_full_url }}{{ claim.vendor.get_absolute_url }}\">{{ claim.vendor }}</a> profile.</p>\r\n      {% if invite %}\r\n      <p>Since you're not registered yet, we're sending you an invite link, which expires after 7 days.</p>\r\n      <p><a href=\"{{ community.get_full_url }}{{ invite.get_absolute_url }}\">{{ community.get_full_url }}{{ invite.get_absolute_url }}</a></p>\r\n      {% endif %}\r\n      <p>Take time to set up your vendor profile, and enjoy your new opportunities!</p>\r\n      <p>The Proven Team</p>\r\n    </td>\r\n  </tr>\r\n{% endblock %}",
+        "language": "",
+        "default_template": null
+    }
+},
+{
+    "model": "post_office.emailtemplate",
+    "pk": 15,
+    "fields": {
+        "name": "Vendor Claim Rejected",
+        "description": "",
+        "created": "2016-05-31T02:09:52.423Z",
+        "last_updated": "2016-05-31T02:10:11.993Z",
+        "subject": "Your claim has been rejected",
+        "content": "Sent to claimant when an admin rejects a claim.",
+        "html_content": "{% extends 'base_email.html' %}\r\n\r\n{% block body %}\r\n  <tr>\r\n    <td class=\"content-block\">\r\n      <p>Hi {{ claim.first_name }},</p>\r\n      <p>We've rejected your claim for the <a href=\"{{ community.get_full_url }}{{ claim.vendor.get_absolute_url }}\">{{ claim.vendor }}</a> profile.</p>\r\n      <p>Please reach out to us if you feel this was in error.</p>\r\n      <p>The Proven Team</p>\r\n    </td>\r\n  </tr>\r\n{% endblock %}",
+        "language": "",
+        "default_template": null
+    }
+},
+{
+    "model": "post_office.emailtemplate",
+    "pk": 16,
+    "fields": {
+        "name": "User Signup",
+        "description": "Sent when a user signs up for a community",
+        "created": "2016-06-11T04:01:21.264Z",
+        "last_updated": "2016-06-24T19:17:26.968Z",
+        "subject": "Invitation to {{ current_tenant }}'s supplier collaboration platform",
+        "content": "",
+        "html_content": "{% extends 'base_email.html' %}\r\n\r\n{% block body %}\r\n  <tr>\r\n    <td class=\"content-block\">\r\n      <p class=\"lead panel\">Hi,</p>\r\n      <p>Welcome to {{ current_tenant.name }}'s supplier partnership platform.<br>\r\n        Please create an account by using the following personalized link<br>\r\n      </p>\r\n      <a href=\"{{direct_url}}\">{{ direct_url }}</a><br><br>\r\n      <p>(for security, this link will expire within 48 hours)</p>\r\n\r\n      <p>After you have created a username and password using the above link, you can access the website from  {{ current_tenant.get_full_url }}. Your email address is your user name and if you forget your password, you can create a new one using your email address. </p>\r\n      \r\n      <p>\r\n      If you have any questions about this platform, please contact {{ current_tenant.email }}. If you have any questions about the Proven platform, please contact Suzanne Jordan at john@proven.cc.\r\n      </p>\r\n\r\n      <p>This website is available from {{ current_tenant.name }}'s intranet or directly at {{ current_tenant.get_full_url }}. </p>\r\n      <p>\r\n        Best,<br>\r\n        Proven Team\r\n      </p>\r\n    </td>\r\n  </tr>\r\n{% endblock %}",
+        "language": "",
+        "default_template": null
+    }
+},
+{
+    "model": "post_office.emailtemplate",
+    "pk": 17,
+    "fields": {
+        "name": "Vendor Invite",
+        "description": "Sent to vendor when invited",
+        "created": "2016-06-11T04:14:14.337Z",
+        "last_updated": "2016-06-13T11:35:26.335Z",
+        "subject": "{%if current_tenant.is_public_instance %} Invite to Proven - {{current_tenant}} Service Provider Database {% else %} Invitation to collaborate on Proven {% endif %}",
+        "content": "",
+        "html_content": "{% extends 'base_email.html' %}\r\n\r\n{% block body %}\r\n  <tr>\r\n    <td class=\"content-block\">\r\n      {% if current_tenant.is_public_instance %}\r\n        \r\n        <p class=\"lead panel\">Hi {{receiver.get_name_display}},</p>\r\n          {% if current_tenant.schema_name == 'ida' %}\r\n          <p>Welcome to the Proven platform where you can find Irish service providers that help international companies launch operations in Ireland. These service providers are all known to {{ current_tenant.name }} and work with or have worked with {{ current_tenant.name }} clients in the past.</p>\r\n          {% else %}\r\n            {% if current_tenant.schema_name == 'commercialdrones' or current_tenant.schema_name == 'dronesireland' %}\r\n            <p>Welcome to the Proven platform where leading UAV providers can be found by purchasers online. These service providers are all known to {{ current_tenant.name }} and work with or have worked with {{ current_tenant.name }} clients in the past.</p>\r\n              <p>This database will allow companies to search and find existing UAV service providers, view their work history with clients and initiate requests for services.</p>\r\n\r\n              <p>This database will be available to all new potential clients and will be powered by the Proven platform.</p>\r\n            {% else %}\r\n              <p>Welcome to the Proven Service Provider platform. {{ current_tenant.name }} is using this platform to search for and find high quality service providers and initiate requests for services.</p>\r\n            {%endif%}\r\n          {% endif %}\r\n\r\n          <p>This will offer you and your company the opportunity to showcase your capabilities and past successes with other companies, and provide an easy way to match new incoming companies needs with supplier capability.</p>\r\n          \r\n          <p>Please create an account for yourself and your company by using the following personalized link:</p>\r\n          <a href=\"{{direct_url}}\">{{ direct_url }}</a>\r\n          <p>(For security, this link will expire in 48 hours)</p>\r\n          \r\n          <p>After you have created a username and password using the above link, you can access the website from <a href=\"{{ current_tenant.get_full_url }}\">{{ current_tenant.get_full_url }}</a>. Your email address is your user name and if you forget your password, you can create a new one using your email address.</p>\r\n\r\n          <p>If you require technical support, please contact Suzanne Jordan at suzanne@proven.cc.</p>\r\n\r\n          <p>\r\n            Best,<br>\r\n            {{ sender.get_name_display }},<br>\r\n            {% if sender.is_vendor %}\r\n            {{ sender.vendor.name }}\r\n            {% else %}\r\n            {{ sender.email }}\r\n            {% endif%}\r\n          </p>\r\n      {% else %}\r\n        <p>Welcome to the beta collaboration platform for {{ current_tenant.name }} suppliers. This private website will allow {{ current_tenant.name }} employees to search and find existing {{ current_tenant.name }} suppliers, view work history with {{ current_tenant.name }}, and initiate requests. This website will be available to all {{ current_tenant.name }} employees from the {{ current_tenant.name }} Intranet and will be powered by the Proven platform. </p>\r\n      \r\n        <p>This will offer you and your company the opportunity to showcase your capabilities and past successes at {{ current_tenant.name }}, and provide an easy way to match {{ current_tenant.name }} employee\u2019s project needs with supplier capability.</p>\r\n\r\n        <p>Please create an account for yourself and your company by using the following personalized link:</p>\r\n        <a href=\"{{direct_url}}\">{{ direct_url }}</a>\r\n        <p>(For security, this link will expire in 48 hours)</p>\r\n\r\n        <p>After you have created a username and password using the above link, you can access the website from  {{ current_tenant.get_full_url }}. Your email address is your user name and if you forget your password, you can create a new one using your email address.</p>\r\n\r\n        <p>If you have any questions about the pilot, please contact {{current_tenant.email}}. If you have any questions about the Proven platform, please contact Suzanne Jordan at suzanne@proven.cc.</p>\r\n    \r\n      <p>\r\n        Best regards,<br>\r\n        {{ sender.get_name_display }},<br>\r\n        {{ current_tenant.name }}\r\n      </p>\r\n      {% endif %}\r\n    </td>\r\n  </tr>\r\n{% endblock %}",
+        "language": "",
+        "default_template": null
+    }
+},
+{
+    "model": "post_office.emailtemplate",
+    "pk": 18,
+    "fields": {
+        "name": "User Signup Review",
+        "description": "Sent to admins of a closed community",
+        "created": "2016-06-22T19:58:57.752Z",
+        "last_updated": "2016-06-22T19:58:57.752Z",
+        "subject": "New User Signup to Review",
+        "content": "",
+        "html_content": "{% extends 'base_email.html' %}\r\n\r\n{% block body %}\r\n  <tr>\r\n    <td class=\"content-block\">\r\n      <p class=\"lead panel\">Hi admins,</p>\r\n      <p>Somebody signed up for {{ current_tenant }} and needs to be approved:</p>\r\n      <ul>\r\n        <li>Email: {{ token.email }}</li>\r\n        <li>First Name (optional): {{ token.first_name }}</li>\r\n        <li>Last Name (optional): {{ token.last_name }}</li>\r\n      </ul>\r\n      <p>Please review this and approve/reject on this page:</p>\r\n      <p><a href=\"{{ current_tenant.get_full_url }}{% url \"users:signups\" %}\">{{ current_tenant.get_full_url }}{% url \"users:signups\" %}</a></p>\r\n      <p>\r\n        Best,<br>\r\n        Proven Team\r\n      </p>\r\n    </td>\r\n  </tr>\r\n{% endblock %}",
+        "language": "",
+        "default_template": null
+    }
+},
+{
+    "model": "post_office.emailtemplate",
+    "pk": 19,
+    "fields": {
+        "name": "Client Verified",
+        "description": "Send to users after client verification",
+        "created": "2016-08-24T23:03:27.157Z",
+        "last_updated": "2016-08-24T23:03:27.157Z",
+        "subject": "Your proof that you work with {{ reference.client }} has been verified!",
+        "content": "Dear {{ reference.vendor }},\r\n\r\nYour proof that you work with the client {{ reference.client }} has been verified:\r\n\r\n{{ community_url }}{{ reference.get_absolute_url }}\r\n\r\n{% if proven_score_enabled %}Your proven score has increased to {{ reference.vendor.proven_score|floatformat:0 }}%!\r\n{% endif %}\r\n\r\nTo continue to increase your score, please upload more proof that you work with other clients. Please go here {{ community_url }}{% url 'vendors:client_add' reference.vendor.id %} to continue to improve your profile.\r\n\r\nThanks, the Proven Team",
+        "html_content": "",
+        "language": "",
+        "default_template": null
+    }
+},
+{
+    "model": "post_office.emailtemplate",
+    "pk": 20,
+    "fields": {
+        "name": "New Proof to Verify",
+        "description": "Sent to admins whenever a vendor uploads an proof for a client.",
+        "created": "2016-08-24T23:46:25.132Z",
+        "last_updated": "2016-08-24T23:46:25.133Z",
+        "subject": "New Proof to Verify",
+        "content": "Dear Team,\r\n\r\nThe vendor {{ reference.vendor }} uploaded a new proof for the client {{ reference.client }}:\r\n\r\n{{ community_url }}{% url \"vendors:invoice_list\" reference.vendor.slug reference.pk %}\r\n\r\nPlease review the proof, check for missing information (dates, amounts) and verify.\r\n\r\nLove, the Proven Team",
+        "html_content": "",
+        "language": "",
+        "default_template": null
+    }
+},
+{
+    "model": "post_office.emailtemplate",
+    "pk": 21,
+    "fields": {
+        "name": "URL Rejected",
+        "description": "Sent to vendor when URL proof is not relevant to client",
+        "created": "2016-08-25T23:13:15.817Z",
+        "last_updated": "2016-08-25T23:13:15.817Z",
+        "subject": "Your URL proof has not been accepted",
+        "content": "Dear {{ reference.vendor }},\r\n\r\nYour URL proof that you work with the client {{ reference.client }} has not been accepted\r\n\r\nWe are looking for more concrete evidence that you are working with CLIENT.\r\n\r\nTo continue to increase your score, please upload more proof that you work with this client. If you feel that this is not correct, please get in touch with us.\r\n\r\nPlease go here {{ community_url }}{% url 'vendors:client_add' reference.vendor.id %} to continue to improve your profile.\r\n\r\nThanks, the Proven Team",
+        "html_content": "",
+        "language": "",
+        "default_template": null
+    }
+}
+]

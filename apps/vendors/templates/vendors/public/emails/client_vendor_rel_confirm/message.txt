@@ -1,0 +1,11 @@
+{% load i18n %}
+{% blocktrans %}
+The {{ object.client.name }} team has just verified your relationship with them. Please continue to fill out your profile, to ensure that your skills and clients can be found by other companies seeking your services
+<a href='{{ profile_url }}'>Edit profile here</a>
+{% endblocktrans %}
+
+{% blocktrans %}
+Best,
+{{ object.client.name }}
+{{ object.email }}
+{% endblocktrans %}

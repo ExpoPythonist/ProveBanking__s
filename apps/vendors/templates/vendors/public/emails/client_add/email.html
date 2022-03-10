@@ -1,0 +1,30 @@
+{% extends 'base_email.html' %}
+
+{% block body %}
+  <tr>
+    <td class="content-block">
+      <p>
+        <h4>{{ object.created_by.first_name }} from {{ object.vendor.name }} would like your help!</h4>
+        {% if object.vendor.logo %}
+          <a href="{{ vendor_url }}">
+            <img src="{{ object.vendor.logo.url }}" width="125" class="img-thumbnail">
+          </a>
+        {% endif %}
+      </p>
+      <p>Hi,</p>
+      <p>
+        {{ object.email_msg }}
+      </p>
+      <p>
+        <a href="{{ confirm_url }}" class="btn btn-warning btn-block">Prove {{ object.vendor.name }}</a>
+      </p>
+      <p>
+        <small class="text-muted">This link expires in 7 days for security reasons</small>
+      </p>
+      <p>
+        Thanks for helping {{ object.created_by.first_name }} out,<br>
+        Proven
+      </p>
+    </td>
+  </tr>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% load avatar_tags %}
+{% load review_tags %}
+
+<div class="panel panel-rating-{% get_review_color_class review.score %} panel-hint  panel-card review-card">
+  <div class="panel-body">
+    <div class="field-group">
+      <label>
+        {% if review.user %}
+          {% include 'partials/avatar_initials.html' with object=review.user size=25 %}
+          <span>{{ review.user.get_name_display }}</span>
+        {% else %}
+          <span>{{ review.response.vendor}}</span>
+        {% endif %}
+      </label>
+      <div class="field-value">
+        &nbsp;{% include 'reviews/partials/as_label.html' with score=review.score %}
+      </div>
+    </div>
+
+    <div class="field-group multi-line">
+      <div class="field-value">
+        {{ review.remarks }}
+      </div>
+    </div>
+
+    {% for metric in review.review_metrics.all %}
+      {% if metric.metric.is_enabled %}
+      <div class="field-group">
+        <label>{{ metric.metric.name }}</label>
+        <div class="field-value">
+          {{ metric.get_metric_score_display }}
+        </div>
+      </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>

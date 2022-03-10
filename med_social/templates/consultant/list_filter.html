@@ -1,0 +1,65 @@
+<div id="list-filter" class="{% if not request.mobile %}col-xs-12 col-md-3{% endif %} consultant-list-filter">
+  <div id="filter-body">
+    <form action="{% url 'consultant_list' %}" method="GET" class="form" id="filter-form">
+      <div class="form-group row">
+        <div class="input-group col-xs-12 search-input">
+          {{ filter_form.q }}
+          <span class="input-group-btn">
+            <button type="submit" class="btn btn-gray"><i class="fa fa-search"></i></button>
+          </span>
+        </div>
+      </div>
+      <div class="row form-group">
+        <div class="col-xs-12">
+          <div class="form-group">
+            <h5>{{ filter_form.cp.label }}</h5>
+            <hr/>
+            {{ filter_form.cp }}
+          </div>
+          <div class="form-group">
+            <h5>{{ filter_form.c.label }}</h5>
+            <hr/>
+            {{ filter_form.c }}
+          </div>
+          <div class="form-group">
+            <h5>{{ filter_form.i.label }}</h5>
+            <hr/>
+            {{ filter_form.i }}
+          </div>
+          {% comment %}
+          <div class="form-group">
+            <h5>{{ filter_form.f.label }}.....</h5>
+            <hr/>
+            <div class="select-container">
+            <select name="f" id="id_f" class="form-control">
+            {% for choice in filter_form.f.field.choices %}
+            <option value="{{ choice.0 }}" {% ifequal filter_form.f.value choice.0 %}selected{% endifequal %}>{{ choice.1 }} <i class="fa fa-sort-down"></i></option>
+            {% endfor %}
+            </select>
+            <h5 class="text-muted">.....between the date range</h5>
+            <div class="availability-dates">
+            {{ filter_form.fs }}
+            {{ filter_form.fe }}
+            </div>
+            </div>
+          </div>
+          <br/>
+          <div class="form-group">
+            <h5>{{ filter_form.r.label }}</h5>
+            <hr/>
+            <div class="select-container">
+            <select name="r" id="id_r" class="form-control" data-selectize>
+            {% for choice in filter_form.r.field.choices %}
+            <option value="{{ choice.0 }}" {% ifequal filter_form.r.value choice.0 %}selected{% endifequal %}>{{ choice.1 }} <i class="fa fa-sort-down"></i></option>
+            {% endfor %}
+            </select>
+            </div>
+          </div>
+          <br/>
+          {% endcomment %}
+          {% if request.mobile %}<button type="submit" class="btn btn-gray btn-block"><i class="fa fa-search"></i> Go</button>{% endif %}
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

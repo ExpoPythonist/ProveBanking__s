@@ -1,0 +1,9 @@
+ <form id="vendor-first-form"  enctype="multipart/form-data" class="form-mobile form-horizontal" role="form" action="{% url 'user_setup:setup_step_vendor_profile' %}" data-ajax-form data-parsley-validate method="POST">
+      {% csrf_token %}
+      {% include 'forms/mobile_form.html' with form=form %}
+      <div class="text-center form-actions">
+        <button type="submit" class="btn btn-block btn-primary">
+            Next <i class="fa fa-chevron-right"></i>
+        </button>
+      </div>
+    </form>

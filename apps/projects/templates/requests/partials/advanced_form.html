@@ -1,0 +1,7 @@
+<form id="advanced-request-form" class="form-mobile staffing-form " role="form" method="POST" enctype="multipart/form-data" data-parsley-validate action="{% if form.instance.id %}{% url 'staffing:requests:edit_advanced' form.instance.id %}{% else %}#{% endif %}" data-ajax-form data-parsley-validate>
+  {% csrf_token %}
+  {% include 'forms/naked_form.html' with form=form form_heading=None %}
+  <div class="text-center">
+    <button class="btn btn-primary" type="submit">Save</button>
+  </div>
+</form>

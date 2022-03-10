@@ -1,0 +1,96 @@
+{% pjaxr_extends "base_template.html" "Site" %}
+{% block title %}Settings - {{ current_tenant }}{% endblock %}
+
+{% block page_title %}<span id="page-title">Metric scores</span>{% endblock %}
+
+{% block left_nav_button %}
+  <span id="left-nav-btn" class="pull-left">
+    <a class="navbar-brand btn" href="{% url 'client_settings:metrics_type_list' %}"><i class="fa fa-chevron-left"></i></a>
+  </span>
+{% endblock %}
+
+{% block right_nav_button %}
+  <span id="right-nav-btn" class="pull-right"></span>
+{% endblock %}
+
+{% block right_sidebar %}
+  <div id="sidebar-right" class="sidebar sidebar-right"></div>
+{% endblock %}
+
+{% block notifications %}
+  {% include 'partials/notifications.html' %}
+{% endblock %}
+
+{% block page %}
+  <div id="page" class="container page">
+    {% block content %}
+      <ol class="breadcrumb custom">
+        <li><a href="{% url 'client_settings:home' %}">Settings</a></li>
+        <li><a href="{% url 'client_settings:metrics_type_list' %}">Metrics</a></li>
+        <li class="active">Metric scores</li>
+      </ol>
+      <div class="page-top-band">
+        <div class="col-xs-12">
+          <h6>Score breakdown by metrics</h6>
+        </div>
+        <div class="col-xs-6 text-right">
+        </div>
+      </div>
+
+      <div class="panel panel-default panel-metrics">
+        <div class="panel-heading actions col-xs-12">
+          <div class="actions-left text-center">
+            <a id="edit-weights-btn" class="btn btn-link btn-sm edit-mode-off " href="#">Edit weightage</a>
+            <div class="btn-group">
+              <a id="cancel-edit-btn" class="btn btn-default btn-sm edit-mode-on" href="#"><i class="fa fa-times"></i></a>
+              <a id="save-weights-btn" class="btn btn-default btn-sm edit-mode-on  btn-primary" href="#"><i class="fa fa-check"></i></a>
+            </div>
+          </div>
+          <div class="actions-right text-right">
+            <a href="{% url 'client_settings:create_metric' ctype.id %}" class="btn-link no-underline">Add metric</a>
+          </div>
+        </div>
+        <div class="panel-body">
+          <form id="metric-weights" action="{% url 'client_settings:metrics_list' ctype.id %}" method="POST">
+          {% csrf_token %}
+          {% for metric in metrics %}
+            <div class="field-group">
+              <label>
+                <div class="edit-mode-on">
+                {% if not metric.is_core_metric %}
+                  <a class="btn" href="{% url 'metrics:confirm_delete' metric.id %}" data-toggle="modal" data-target="#confirmMetricDeleteModal"><span><i class="fa fa-minus-circle fa-2x"></i></span></a>
+                {% endif %}
+
+                <input id="id_{{ metric_id }}" name="{{ metric.id }}" class="weight-input" value="{{ metric.weight }}" tabindex="1" data-toggle="tooltip" data-placement="right" title="edit weights here"/>
+                </div>
+                <div class="weight-value edit-mode-off">{{ metric.weight }}%</div>
+              </label>
+              <div class="field-value">
+                <a href="{% url 'client_settings:edit_metric' ctype.id metric.id %}">
+                  {{ metric.name }} <span class="icon-container"><i class="fa fa-chevron-right"></i></span>
+                  <div class="help-text">{{ metric.help_text|default:metric.name }}</div>
+                </a>
+              </div>
+            </div>
+          {% endfor %}
+          </form>
+        </div>
+        <div class="panel-footer">
+          <div class="field-group">
+            <label>
+              <div class="total-weight-container {{ total_weight_incorrect|yesno:"has-error,"}}" data-toggle="tooltip" data-placement="right" title="Must be 100%">
+              <span id="total-weight">{{ total_metric_weight }}</span>%<div class="meta">total</div>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="confirmMetricDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmMetricDeleteModal" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog">
+          <div class="modal-content">
+          </div>
+        </div>
+      </div>
+    {% endblock %}
+  </div>
+{% endblock %}
+{% block pjaxr_namespace %}Site.settings.score{% endblock pjaxr_namespace %}

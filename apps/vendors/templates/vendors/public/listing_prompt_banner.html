@@ -1,0 +1,18 @@
+{% if partner in vendor.get_unverified_client_partners %}
+    <form action="{% url 'vendors:partner_resend' vendor.id partner.id %}" method="POST">
+        {% csrf_token %}
+		<div class="alert alert-danger display-block alert-dismissible fade in">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+		  <i class="fa fa-exclamation-circle"></i> Your profile is pending approval by <strong>{{ partner.name }}</strong><button class="btn btn-danger btn-xs pull-right" type="submit">Resend verification</button> 
+		</div>
+	</form>
+{% else %}
+<a href="{% url 'vendors:partner_add' user.vendor.id partner.id %}" class="alert alert-danger display-block alert-dismissible fade in" data-toggle="modal" data-target="#genericModal" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  <i class="fa fa-exclamation-circle"></i> Your profile has not yet been approved by <strong>{{ partner.name }}</strong>.Click here to request approval from your IDA Contact.
+</a>
+{% endif %}

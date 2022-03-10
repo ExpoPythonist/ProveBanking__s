@@ -1,0 +1,208 @@
+.main-navbar {
+    //border-bottom: 1px solid #eee;
+    text-align: center;
+    box-shadow: 0px 1px 4px 0px rgba(0,0,0,0.09);
+    .navbar-white {
+        background-color: #fff;
+    }
+    > .container {
+        max-width:100%;
+    }
+
+    .navbar-brand {
+        font-size: 14px;
+        text-decoration: none;
+        &.navbar-brand-center {
+            margin: 0px;
+        }
+        // &.btn {
+        //     .primary {
+        //         color: @brand-primary;
+        //     }
+        //     position: relative;
+        //     > span {
+        //         position: absolute;
+        //         margin: -2px 5px 0px 5px;
+        //     }
+        //     i.fa {
+        //         font-size: 18px;
+        //     }
+        // }
+    }
+
+    .nav-btn {
+        .avatar-wrapper {
+            .initials {
+                color: @gray;
+                background: #d7d7d7;
+            }
+        }
+    }
+    .logo-warp {
+        @media  (max-width: @screen-xs-max) {
+            .navbar-brand.logo{
+                padding-left: 30px;
+            }
+        }
+        .navbar-brand {
+            padding-top: 14px;
+            padding-bottom: 10px;
+            text-align: left;
+        }
+        .block {
+            display: block;
+        }
+        img {
+            vertical-align: baseline;
+            height: 15px;
+        }
+        .logo-text {
+            display: inline-block;
+            margin-left: 5px;
+            font-size: 12px;
+            font-weight: bold;
+            color: #acacac;
+            text-transform: uppercase;
+        }
+
+    }
+    .poweredByLogo {
+        display:inline-block;
+        vertical-align: bottom;
+        position:relative;
+        top: -8px;
+        .text {
+            font-weight: bold;
+            color: #c9c9c9;
+            text-transform: uppercase;
+            font-size: 8px;
+            display: inline-block;
+            padding-right: 4px;
+        }
+        img {
+            height:7px;
+        }
+    }
+
+    .poweredByLogo-only {
+        display:inline-block;
+        vertical-align: bottom;
+        // position:relative;
+        // top: 24px;
+        .text {
+            font-weight: bold;
+            color: #c9c9c9;
+            text-transform: uppercase;
+            font-size: 8px;
+            display: inline-block;
+            padding-right: 4px;
+        }
+        img {
+            height:8px;
+        }
+    }
+
+    #notification-dropdown {
+        .fa {
+            color: #d7d7d7;
+            //margin-right: -18px;
+        }
+        .notification-small {
+            font-size: 12px;
+            display: none;
+            @media ( min-width: @screen-xs-max) {
+                display: inline-block;
+            }
+            padding: 0;
+        }
+    }
+    .fa-question-circle {
+        color: #d7d7d7;
+    }
+    .nav > li > a {
+        max-height: 54px;
+    }
+    .nav > li.active {
+        > a {
+            border-bottom: 2px solid @brand-primary;
+            font-weight: bold;
+            background: none;
+        }
+    }
+    .fa-home {
+        font-size: 30px;
+    }
+    .navbar-rfp-btn {
+        padding-right: 10px;
+        height: @navbar-height;
+        a {
+            padding-left: 0px;
+        }
+        @media ( max-width: @screen-xs-max) {
+            > a > div {
+                padding-left: 30px;
+            }
+        }
+
+    }
+    .navbar-right {
+        margin-left: ;
+        .nav > li > a {
+            padding: 10px 12px;
+        }
+    }
+    .btn-request {
+        font-size: 11px;
+        i {
+            font-size: 14px;
+        }
+    }
+    @media  (max-width: @screen-xs-max) {
+        li > a {
+            padding-left: 30px;
+            padding-right: 30px;
+        }
+        .navbar-toggle {
+            margin-right: 30px;
+            border: none;
+        }
+    }
+    .nav-divider{
+        height: @navbar-height;
+        width: 1px;
+        border-left: 1px solid #ededed;
+        display: inline-block;
+        margin: 0px 0 0 15px;
+        padding: 0px;
+    }
+    .nav-btn {
+        font-size: 11px;
+        .fa {
+            font-size: 14px;
+        }
+    }
+}
+
+.main-navbar {
+    .tooltip {
+        .tooltip-arrow {
+            border-bottom-color: #fff;
+        }
+        .tooltip-inner {
+            background: #fff;
+            color: @gray;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+            max-width: 250px;
+        }
+    }
+}
+
+.help-btn {
+    font-size: 23px;
+    font-weight: normal;
+    line-height: 1em;
+    margin-left:13px;
+    &, &:hover, &:active {
+        color: @gray;
+    }
+}

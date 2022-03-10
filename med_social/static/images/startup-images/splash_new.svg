@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="2048"
+   height="1496"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="splash_new.svg"
+   inkscape:export-filename="/home/junaid/touch-spash/1496x2048.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
+  <defs
+     id="defs4">
+    <linearGradient
+       id="linearGradient4713">
+      <stop
+         id="stop4725"
+         offset="0"
+         style="stop-color:#353535;stop-opacity:1;" />
+      <stop
+         style="stop-color:#25252b;stop-opacity:1;"
+         offset="1"
+         id="stop4717" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient4695">
+      <stop
+         style="stop-color:#8d8d8d;stop-opacity:1;"
+         offset="0"
+         id="stop4697" />
+      <stop
+         style="stop-color:#25252b;stop-opacity:0;"
+         offset="1"
+         id="stop4699" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient4683">
+      <stop
+         id="stop4691"
+         offset="0"
+         style="stop-color:#b7b7b7;stop-opacity:0.49803922;" />
+      <stop
+         style="stop-color:#25252b;stop-opacity:0;"
+         offset="1"
+         id="stop4687" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient3757">
+      <stop
+         id="stop3765"
+         offset="0"
+         style="stop-color:#444444;stop-opacity:1;" />
+      <stop
+         style="stop-color:#25252b;stop-opacity:0;"
+         offset="1"
+         id="stop3761" />
+    </linearGradient>
+    <filter
+       inkscape:collect="always"
+       id="filter4677"
+       x="-0.63055301"
+       width="2.261106"
+       y="-1.0251572"
+       height="3.0503144"
+       color-interpolation-filters="sRGB">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="267.521"
+         id="feGaussianBlur4679" />
+    </filter>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4683"
+       id="linearGradient4689"
+       x1="-6.272531"
+       y1="108.62897"
+       x2="1529.7275"
+       y2="108.62897"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.3008662,0,0,0.76278921,-1042.2788,678.21545)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4695"
+       id="linearGradient4701"
+       x1="-6.272531"
+       y1="108.62897"
+       x2="1529.7275"
+       y2="108.62897"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(1.2122269,0,0,1.2021783,-2575.8703,-148.84097)" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.35355339"
+     inkscape:cx="1248.5643"
+     inkscape:cy="720.22959"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:window-width="1600"
+     inkscape:window-height="876"
+     inkscape:window-x="0"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1">
+    <sodipodi:guide
+       orientation="1,0"
+       position="-1,-96"
+       id="guide3769" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="119.198,1947.5741"
+       id="guide3771" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="370.52395,1.4142136"
+       id="guide3773" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="1531.3913,-331.33003"
+       id="guide3775" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="1024,1540"
+       id="guide3777" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="576,746"
+       id="guide3779" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="816.00123,400.22244"
+       id="guide4839" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="316.78384,557.20014"
+       id="guide4841" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="157,209"
+       id="guide4843" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="284,172"
+       id="guide4845" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="50,1496"
+       id="guide4866" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,443.63782)">
+    <g
+       id="g4847"
+       transform="translate(-436.08379,-424.77151)">
+      <rect
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="/home/junaid/touch-spash/320x460.png"
+         y="652.62897"
+         x="-4.272531"
+         height="460"
+         width="320"
+         id="rect2985"
+         style="fill:#25252b;fill-opacity:1;fill-rule:evenodd;stroke:none" />
+      <path
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="/home/junaid/touch-spash/320x460.png"
+         transform="matrix(0.13883721,0,0,0.1675046,51.559029,715.35751)"
+         d="m 1260.6703,995.82715 c 0,172.94645 -227.9393,313.14725 -509.11683,313.14725 -281.17749,0 -509.11689,-140.2008 -509.11689,-313.14725 0,-172.94647 227.9394,-313.14728 509.11689,-313.14728 281.17753,0 509.11683,140.20081 509.11683,313.14728 z"
+         sodipodi:ry="313.14728"
+         sodipodi:rx="509.11688"
+         sodipodi:cy="995.82715"
+         sodipodi:cx="751.55347"
+         id="path3767"
+         style="opacity:0.5;fill:#444444;fill-opacity:1;fill-rule:evenodd;stroke:none;filter:url(#filter4677)"
+         sodipodi:type="arc" />
+      <text
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="/home/junaid/touch-spash/320x460.png"
+         sodipodi:linespacing="125%"
+         id="text4767"
+         y="879.85211"
+         x="96.779915"
+         style="font-size:8.33333302px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Helvetica Neue;-inkscape-font-specification:Helvetica Neue"
+         xml:space="preserve"><tspan
+           style="font-size:52.08333206px;font-style:normal;font-variant:normal;font-weight:100;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;font-family:Helvetica Neue;-inkscape-font-specification:Helvetica Neue Thin"
+           y="879.85211"
+           x="96.779915"
+           id="tspan4769"
+           sodipodi:role="line">vetted</tspan></text>
+      <text
+         inkscape:export-ydpi="90"
+         inkscape:export-xdpi="90"
+         inkscape:export-filename="/home/junaid/touch-spash/320x460.png"
+         inkscape:transform-center-y="-19.411323"
+         sodipodi:linespacing="125%"
+         id="text4771"
+         y="1076.9113"
+         x="95.703789"
+         style="font-size:15.87303257px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Helvetica Neue;-inkscape-font-specification:Helvetica Neue"
+         xml:space="preserve"><tspan
+           style="font-size:13.88888931px;font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;font-family:Helvetica Neue;-inkscape-font-specification:Helvetica Neue Light"
+           y="1076.9113"
+           x="95.703789"
+           id="tspan4773"
+           sodipodi:role="line">www.proven.cc</tspan></text>
+    </g>
+    <rect
+       y="-445.96692"
+       x="0.54566956"
+       height="1495.4707"
+       width="2048"
+       id="rect4818"
+       style="fill:#25252b;fill-opacity:1;fill-rule:evenodd;stroke:none"
+       inkscape:export-filename="/home/junaid/touch-spash/748x1024.png"
+       inkscape:export-xdpi="45"
+       inkscape:export-ydpi="45" />
+    <path
+       transform="matrix(0.64742959,0,0,0.77966833,535.94377,-471.11917)"
+       d="m 1260.6703,995.82715 a 509.11688,313.14728 0 1 1 -1018.23372,0 509.11688,313.14728 0 1 1 1018.23372,0 z"
+       sodipodi:ry="313.14728"
+       sodipodi:rx="509.11688"
+       sodipodi:cy="995.82715"
+       sodipodi:cx="751.55347"
+       id="path4820"
+       style="opacity:0.5;fill:#444444;fill-opacity:1;fill-rule:evenodd;stroke:none;filter:url(#filter4677)"
+       sodipodi:type="arc"
+       inkscape:export-filename="/home/junaid/touch-spash/748x1024.png"
+       inkscape:export-xdpi="45"
+       inkscape:export-ydpi="45" />
+    <text
+       inkscape:export-ydpi="45"
+       inkscape:export-xdpi="45"
+       inkscape:export-filename="/home/junaid/touch-spash/748x1024.png"
+       sodipodi:linespacing="125%"
+       id="text4822"
+       y="302.68054"
+       x="729.86804"
+       style="font-size:39.99291229px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Helvetica Neue;-inkscape-font-specification:Helvetica Neue"
+       xml:space="preserve"
+       transform="scale(1.000177,0.99982306)"><tspan
+         style="font-size:249.95568848px;font-style:normal;font-variant:normal;font-weight:100;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;font-family:Helvetica Neue;-inkscape-font-specification:Helvetica Neue Thin"
+         y="302.68054"
+         x="729.86804"
+         id="tspan4824"
+         sodipodi:role="line">vetted</tspan></text>
+    <text
+       inkscape:export-ydpi="45"
+       inkscape:export-xdpi="45"
+       inkscape:export-filename="/home/junaid/touch-spash/748x1024.png"
+       inkscape:transform-center-y="-20.376766"
+       sodipodi:linespacing="125%"
+       id="text4826"
+       y="989.14771"
+       x="871.52075"
+       style="font-size:39.99291229px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Helvetica Neue;-inkscape-font-specification:Helvetica Neue"
+       xml:space="preserve"
+       transform="scale(1.000177,0.99982306)"
+       inkscape:transform-center-x="-2.9311064e-05"><tspan
+         style="font-size:34.9937973px;font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;font-family:Helvetica Neue;-inkscape-font-specification:Helvetica Neue Light"
+         y="989.14771"
+         x="871.52075"
+         id="tspan4828"
+         sodipodi:role="line">www.proven.cc</tspan></text>
+  </g>
+</svg>

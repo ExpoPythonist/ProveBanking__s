@@ -1,0 +1,60 @@
+{% load avatar_tags %}
+{% load humanize %}
+
+<div id="suggested-user-{{ suggested.id }}" class="field-group user-card suggested-user-card {% if invited %}selected{% endif %}">
+  <div class="media">
+    <a href="{%url 'users:profile_modal' suggested.username %}" class="pull-left" data-toggle="modal" data-target="#userModal">
+      {% include 'partials/avatar_initials.html' with object=suggested size=25 %}
+    </a>
+    <div class="media-body text-left">
+      <h4 class="media-heading text-ellipsis col-xs-12 nopadding">
+        <div class="col-sm-6 nopadding">
+          <strong><a href="{%url 'users:profile_modal' suggested.username %}" data-toggle="modal" data-target="#userModal" class="no-link-style">
+            {{ suggested.get_name_display }}
+          </a></strong>
+          {% if suggested.avg_score %}
+            &nbsp;{% include 'reviews/partials/as_label.html' with score=suggested.avg_score count=reviews.count link=suggested.get_profile_modal_url extra_attrs='data-toggle="modal" data-target="#userModal"' %}
+          {% endif %}
+        </div>
+        <div class="col-sm-6 text-right">
+          <div class="pull-right suggested-resource-checkbox">
+            <label class="{% if invited %}active{% endif %}">
+              <input class="invite-checkbox" data-selectize="no" id="id_people_{{ forloop.counter }}" name="people" value="{{ suggested.id }}" type="checkbox" {% if invited %}checked{% endif %}>
+            </label>
+          </div>
+          <div class="pull-right">
+            {% include 'availability/as_field.html' with weeks=suggested.get_availability_as_weeks %}&nbsp;&nbsp;
+          </div>
+        </div>
+
+        {% if suggested.linkedin_profile_url %}
+          <a href="{{ suggested.linkedin_profile_url }}" target="_blank" class="tag tag-default"><i class="fa fa-linkedin"></i></a>
+        {% endif %}
+
+        {% if suggested.resume %}
+          <a href="{{ suggested.resume.url }}" target="_blank" class="tag tag-default"><i class="fa fa-file-text"></i></a>
+        {% endif %}
+      </h4>
+
+      <div class="user-tags">
+      <span class="company-name text-muted">
+        {{ suggested.resource.vendor|default:current_tenant }} -&nbsp;
+        {% if suggested.roles.count %}
+          {% for role in suggested.roles.all %}
+            <span class="btn btn-secondary btn-o btn-xs disabled">{{ role }}</span>&nbsp;
+          {% endfor %}
+          -&nbsp;
+        {% endif %}
+        {% if suggested.categories.count %}
+          {% for category in suggested.categories.all %}
+            <span class="btn btn-secondary btn-o btn-xs disabled">{{ category }}</span>&nbsp;
+          {% endfor %}
+        {% endif %}
+      </span>
+    </div>
+
+    </div>
+  </div>
+</div>
+<div class="col-xs-1 text-right">
+</div>

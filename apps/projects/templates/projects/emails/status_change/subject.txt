@@ -1,0 +1,1 @@
+Status changed for {{ proposed_resource.resource.get_name_display}} to {{ proposed_resource.status }}

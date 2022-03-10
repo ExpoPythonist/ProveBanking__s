@@ -1,0 +1,12 @@
+<div class="col-sm-12">
+  {% if messages %}
+    <ul class="list-unstyled message-list">
+      {% for message in messages %}
+      <li class="alert alert-{{ message.tags|default:"info" }}">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        {{message}}
+      </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+</div>

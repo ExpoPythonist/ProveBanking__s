@@ -1,0 +1,21 @@
+{% extends "base.new.html" %}
+{% load carton_tags %}
+
+{% block title %}{{ community }}{% endblock %}
+
+{% block container %}
+<div class="header">
+    <div class="container">
+      <div class="row">
+        {% include "navbar.shared.html" %}
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 pull-right header-logo">
+          <a href="http://proven.cc/" class="logo"></a>
+        </div>
+        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 pull-left">
+          <h1>{{ community.name }}</h1>
+          {{ community.description|linebreaks|urlize }}
+        </div>
+      </div>
+    </div>
+</div>
+{% endblock %}

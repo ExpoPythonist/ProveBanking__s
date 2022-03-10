@@ -1,0 +1,53 @@
+{% pjaxr_extends "base_template.html" "Site" %}
+{% block title %}Settings - {{ current_tenant }}{% endblock %}
+
+{% block page_title %}<span id="page-title">Score metrics</span>{% endblock %}
+
+{% block left_nav_button %}
+  <span id="left-nav-btn" class="pull-left">
+    <a class="navbar-brand btn" href="{% url 'client_settings:home' %}"><i class="fa fa-chevron-left"></i></a>
+  </span>
+{% endblock %}
+
+{% block right_nav_button %}
+  <span id="right-nav-btn" class="pull-right"></span>
+{% endblock %}
+
+{% block right_sidebar %}
+  <div id="sidebar-right" class="sidebar sidebar-right"></div>
+{% endblock %}
+
+{% block notifications %}
+  {% include 'partials/notifications.html' %}
+{% endblock %}
+
+{% block page %}
+  <div id="page" class="container page">
+    {% block content %}
+      <div class="page-top-band">
+        <div class="col-xs-12">
+          <h6>Score breakdown by metrics</h6>
+        </div>
+      </div>
+
+      <div class="panel panel-default panel-metrics">
+        <div class="panel-body">
+          <a href="{% url 'client_settings:metrics_type_list' %}" class="field-group">
+            <label>30%<div>weight</div></label>
+            <div class="field-value">
+              Customer Rating <span class="icon-container"><i class="fa fa-chevron-right"></i></span>
+            </div>
+          </a>
+
+          <a href="{% url 'client_settings:metrics_type_list' %}" class="field-group">
+            <label>30%<div>weight</div></label>
+            <div class="field-value">
+              Customer Rating <span class="icon-container"><i class="fa fa-chevron-right"></i></span>
+            </div>
+          </a>
+        </div>
+      </div>
+    {% endblock %}
+  </div>
+{% endblock %}
+{% block pjaxr_namespace %}Site.settings.score{% endblock pjaxr_namespace %}

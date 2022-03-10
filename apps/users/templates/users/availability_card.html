@@ -1,0 +1,27 @@
+{% load date_tags %}
+{% load availability_tags %}
+
+<div class="field-group thin">
+  <label class="{{ css_class }} invisible"><b>Availability</b></label>
+  <div class="field-value">
+    {% include 'availability/partials/last_updated.html' with for_user=object %}
+  </div>
+</div>
+{% for month, weeks in object.get_availability %}
+  <div class="field-group availability-card">
+    <label class="availability-month">{{ month|as_month_name }}</label>
+    <div class="field-value text-left">
+      <div class="col-xs-12">
+        {% for week in weeks %}
+          <div class="col-xs-6 col-sm-2 availability-week">
+            <small class="week-number text-muted">{{ week.date|date:"n/j" }}</small>
+            <a href="#availability-popover-{{ week.id }}" type="button" class="availability btn btn-{{ week|as_css_class }} btn-xs" data-container="body" data-toggle="popover" data-trigger="click" data-html="true" data-placement="bottom" data-trigger="manual" data-title="Week {{ week.date|date:'n/j' }}">{{ week.allocation }}% <span class="caret"></span></a>
+            <div id="availability-popover-{{ week.id }}" class="hide">
+              {% include 'availability/week_as_popover.html' with week=week %}
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endfor %}

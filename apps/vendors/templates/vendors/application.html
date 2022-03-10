@@ -1,0 +1,51 @@
+{% extends 'base_template.html' %}
+{% load crispy_forms_tags %}
+{% load utils %}
+{% block title %} Supplier Application - {{ current_tenant }}{% endblock %}
+{% if current_tenant.schema_name == 'intuit' %}
+  {% block main_navbar %}
+  {% endblock main_navbar %}
+{% endif%}
+{% block page %}
+
+  <div id="page" class="container page">
+    {% block content %}
+      {% if object %}
+        <div class="text-center text-muted">
+          <br>
+          <h1 class="text-primary">Thank you!</h1>
+          <br>
+          <p class="lead">
+            Your account has been created and an email with further instructions will be sent to <strong>{{ object.email }}</strong> shortly.
+          </p>
+        </div>
+      {% else %}
+        
+        <h1 class="text-center"><img width='150' src="{{ STATIC_URL }}images/{% if current_tenant.schema_name == 'intuit' %}intuit.png{% else %}landing01/proven-logo.png{% endif%}" ></h1>
+        
+      <br/>
+      <h6 class="section-title text-uppercase">Interested in becoming a supplier? If so, register your interest with us.</h6>
+      <div class="panel panel-default panel-card">
+        <div class="panel-body">
+          <form id="vendor-application-form" enctype="multipart/form-data" class="form-mobile form-horizontal" role="form" action="#" method="POST">
+              {% csrf_token %}
+              {% include 'forms/naked_form.html' with form=form %}
+
+              <div class="text-center form-actions">
+                <button type="submit" class="btn btn-block {% if current_tenant.schema_name == 'intuit' %}btn-blue{% else %}btn-primary{% endif %}">Submit</button>
+              </div>
+          </form>
+
+        </div>
+      </div>
+      {% if current_tenant.schema_name == 'intuit' %}
+        <div class="col-sm-12 poweredByLogo text-center">
+          <span class="text text-center hidden-xs">Powered by</span>
+          <a href="https://proven.cc/" target="_blank"><img src="{{STATIC_URL}}images/landing01/proven-logo.png"/></a>
+        </div>
+      {% endif %}
+      {% endif %}
+    {% endblock %}
+  </div>
+{% endblock %}
+{% block pjaxr_namespace %}Site.vendors{% endblock pjaxr_namespace %}

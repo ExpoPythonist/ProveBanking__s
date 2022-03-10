@@ -1,0 +1,62 @@
+{% load thumbnail %}
+{% load utils %}
+
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle collapsed btn btn-success" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+      MENU
+    </button>
+  </div>
+  <div id="navbar" class="navbar-collapse collapse">
+    <ul class="nav navbar-nav nav-pills nav-stacked top-bar">
+      <li class="anchor dropdown user-dropdown text-left">
+        {% if community.logo %}
+        {% thumbnail community.logo "200x36" as logo %}
+        <a class="dropdown-toggle no-underline btn" style="background: #fff; padding: 6px 12px; margin-right: 5px;" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+          <img src="{{logo.url}}" />
+        </a>
+        {% endthumbnail %}
+        {% else %}
+        <a class="dropdown-toggle no-underline btn-success" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+          {{ community }}
+        </a>
+        {% endif %}
+        <ul class="dropdown-menu text-left" role="menu">
+          {% if request.user.communities.exists %}
+          {% for other in request.user.communities.all %}
+          <li><a href="{% url "community_view" other.domain_slug %}">{{ other }}</a></li>
+          {% endfor %}
+          <li role="presentation" class="divider"></li>
+          {% endif %}
+          <li><a href="{% url "account_logout" %}"><i class="fa fa-sign-out"></i> Join a community</a></li>
+        </ul>
+      </li>
+      <li><a href="{% url "about" %}"><i class="fa fa-question-circle"></i> About</a></li>
+      {% if features.blog.is_enabled %}
+      <li><a href="{% url "posts:post_list" %}"><i class="fa fa-book"></i> Blog</a></li>
+      {% endif %}
+    </ul>
+    <ul class="nav navbar-nav nav-pills nav-stacked navbar-right top-bar">
+      {% if request.user.is_authenticated %}
+      <li class="anchor dropdown user-dropdown text-left">
+        <a class="dropdown-toggle no-underline btn-success" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+          {{ request.user.get_name_display }} <i class="fa fa-caret-down"></i>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-right text-left" role="menu">
+          <li><a href="{{ request.user.get_absolute_url }}"><i class="fa fa-user"></i> Profile</a></li>
+          {% if request.user.is_client %}
+          <li><a href="{% url "client_settings:home" %}"><i class="fa fa-cog text-muted"></i> Settings</a></li>
+          {% endif %}
+
+          <li role="presentation" class="divider"></li>
+          <li><a href="{% url "account_logout" %}"><i class="fa fa-sign-out"></i> Sign Out</a></li>
+        </ul>
+      </li>
+
+      {% else %}
+      <li><a href="{% url "users:register" %}?previous={{ request.get_full_path }}">Request an Invitation</a></li>
+      <li><a href="{% url "account_login" %}?next=/">Sign In</a></li>
+      {% endif %}
+    </ul>
+  </div>
+</div>

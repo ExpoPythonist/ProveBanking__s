@@ -1,0 +1,44 @@
+{% load avatar_tags %}
+<div class="modal-header text-center profile-banner">
+  <div class="col-xs-12 text-right">
+    <a href="#" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times text-muted"></i></a>
+  </div>
+  {% include 'users/banner.html' with modal=True %}
+</div>
+
+<div class="modal-body">
+  <ul class="list-group">
+    {% if features.projects.is_enabled %}
+      <li class="list-group-item clearfix">
+        {% include 'users/reviews_and_availability.html' %}
+      </li>
+      <li class="list-group-item clearfix">
+        <div class="col-xs-12">
+          <a href="{% url 'users:profile' object.username %}" class="no-underline pull-left">
+            <span class="btn btn-o btn-sm btn-secondary disabled">
+              <i class="fa fa-check text-muted"></i>&nbsp;
+              <strong>{{ completed_projects_count }}</strong> past project{{ completed_projects_count|pluralize }}
+            </span>
+            &nbsp;
+          </a>
+        </div>
+      </li>
+    {% else %}
+        <div class="list-group-item clearfix">
+          <div class="col-sm-6">
+            <div class="vertical-spacer-lg"></div>
+            <h5 class="text-muted">Contact details</h5>
+            <hr>
+              <p class="small text-left" title="email"><i class="fa fa-envelope text-muted"></i>&nbsp;&nbsp;<a href="mailto:{{object.email}}" class="no-underline">{{ object.email }}</a></p>
+              {% if object.phone %}
+                <p class="small text-left" title="phone"><i class="fa fa-phone text-muted"></i>&nbsp;&nbsp;<a href="tel:{{object.phone}}" class="no-underline">{{object.phone}}</a></p>
+              {% endif %}
+          </div>
+        </div>
+      {% endif %}
+
+    <li class="list-group-item clearfix">
+      <a href="{% url 'users:profile' object.username %}" class="no-underline pull-right">view full profile&nbsp;<i class="fa fa-chevron-right"></i></a>
+    </li>
+  </ul>
+</div>

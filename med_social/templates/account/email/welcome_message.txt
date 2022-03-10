@@ -1,0 +1,13 @@
+{% load i18n %}
+{% blocktrans with user_name=user.get_short_name%}
+Hello,
+
+Thanks for singing up on Proven!
+
+At Proven, we believe that having great clients says a lot. At Proven, we can help you showcase your great work at clients, your verified client relationships, and your core strengths. This will enable new clients to discover you and quickly trust your competency. 
+
+We require at least one high quality client recommendation before we show your profile to additional clients. And the quality and depth of your client relationships primarily determines your ranking, so we highly encourage you to add additional clients. 
+
+We look forward to welcoming you to the Proven community. 
+
+{% endblocktrans %}

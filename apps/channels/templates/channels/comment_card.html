@@ -1,0 +1,11 @@
+{% load avatar_tags %}
+<div class="field-group multi-line comment">
+  <label>
+    {% include 'partials/avatar_initials.html' with object=comment.posted_by size=25 %}
+    <span> {{ comment.posted_by }} <span class="text-muted company">({% if comment.posted_by.is_vendor %}{{ comment.posted_by.vendor}}{% else %}{{ current_tenant }}{% endif %})</span></span>
+    <span class="meta-right text-muted">{{ comment.natural_created_date }}</span>
+  </label>
+  <div class="field-value">
+    <p>{{ comment.comments|linebreaks }}</p>
+  </div>
+</div>

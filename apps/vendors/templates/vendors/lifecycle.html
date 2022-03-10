@@ -1,0 +1,34 @@
+{% pjaxr_extends "base_template.html" "Site" %}
+{% load avatar_tags %}
+{% load review_tags %}
+{% load utils %}
+
+{% block title %}Supplier - {{ current_tenant }}{% endblock %}
+
+{% block page_title %}<span id="page-title">Supplier details</span>{% endblock %}
+
+{% block notifications %}
+  {% include 'partials/notifications.html' %}
+{% endblock %}
+
+{% block page %}
+  {% block content %}
+    <div class="white-bg detail-full-card">
+      <div id="page" class="container ">
+          <div class="vertical-spacer-lg clearfix"></div>
+          {% include 'vendors/partials/profile-partials/vendor_overview.html' with vendor=vendor show_details=True %}
+      </div>
+    </div>
+
+    <div class="container ">
+      <div class="col-sm-12">
+        {% if user.is_superuser %}
+          <div class="lifecycle-pipeline" data-content-type="{{ vendor.get_content_type.id }}" data-object-id="{{ vendor.id }}"></div>
+        {% endif %}
+      </div>
+    </div>
+  {% endblock %}
+{% endblock %}
+{% block pjaxr_namespace %}Site.vendors{% endblock pjaxr_namespace %}
+
+

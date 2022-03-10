@@ -1,0 +1,52 @@
+{% extends "vendors/profile_edit_sidebar.html" %}
+{% load crispy_forms_tags %}
+
+{% block main_content %}
+<section class="profile-edit-form">
+<h6 class="section-title text-uppercase">Insurances</h6>
+  <div class="panel panel-default panel-card">
+    <div class="panel-body">
+  {% with vendor.insurance_verifications.all|slice:":5" as insurances %}
+	{% if insurances %}
+  <span class="block-meta-title">CURRENT INSURANCES</span>
+        <div class="col-sm-12">
+			  {% for insurance in insurances %}
+			    <div class="col-sm-3">
+			      <span>{{ insurance.insurance.name }}</span>{% if insurance.url %}&nbsp;<a target="_blank" href="{{ insurance.url }}"><i class="fa fa-external-link"></i></a>{% endif %}
+            <span title="delete insurance">
+              <a class="btn btn-xs" href="{% url 'vendors:insurance_delete' insurance.id %}" data-toggle="modal" data-target="#genericModal"><span><i class="fa fa-times small"></i></span></a>
+            </span>
+            <br>
+			      <small class="text-muted">expires on {{ insurance.expiry_date|date:"d F Y" }}</small>
+          </div>
+			  {%endfor%}
+          <br/>
+          <br/>
+          <div class="vertical-spacer-lg clearfix"></div>
+        </div>
+        
+        
+	{% endif %}
+  {% endwith %}
+  <form id="vendor-insurance-form" class="form-mobile" role="form" action="#" method="POST" enctype="multipart/form-data">
+  <div class="vertical-spacer-lg clearfix"></div>
+      {% csrf_token %}
+      {% include 'forms/naked_form.html' with form=form %}
+      <div class="form-actions text-center">
+        <input type="submit" value="Add Insurance" class="btn btn-primary"/>
+      </div>
+  </form>
+
+  <div class="row">
+        <div class="col-xs-6">
+            <a href="{% url 'user_setup:setup_step_vendor_projects' vendor.id %}" class="btn btn-default btn-backward">Back</a>
+        </div>
+        <div class="col-xs-6 text-right">
+          <a href="{% url 'vendors:cert_add' vendor.id %}" type="submit" class="btn btn-primary btn-forward">Next</a>
+        </div>
+      </div>
+ 
+     </div>
+    </div>
+</section>
+{% endblock %}

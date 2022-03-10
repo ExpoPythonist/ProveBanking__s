@@ -1,0 +1,30 @@
+{% extends "base.new.html" %}
+
+{% block title %}About{% endblock %}
+{% block body_class %}login-bg{% endblock %}
+{% block container %}
+<div class="header">
+  <div class="container">
+    <div class="row">
+      {% include "navbar.new.html" %}
+      <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 pull-right header-logo">
+        <a href="{% url "home" %}" class="logo"></a>
+      </div>
+      <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 pull-left">
+        <h1>{{ current_tenant.name }}</h1>
+        {{ current_tenant.about_page_content|default:current_tenant.description|linebreaks|urlize }}
+
+        {% if current_tenant.about_page_guide %}
+        <p><a class="btn btn-lg btn-success" href="{{ current_tenant.about_page_guide.url }}">How To Guide</a></p>
+        {% endif %}
+
+        {% if current_tenant.about_page_video %}
+        <div class="embed-responsive embed-responsive-16by9">
+        <iframe frameborder="0" width="100%" height="100%" class="embed-responsive-item" src="{{ current_tenant.get_video_embed_url }}"></iframe>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

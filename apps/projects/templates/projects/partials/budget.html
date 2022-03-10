@@ -1,0 +1,14 @@
+{% load projects %}
+{% load avatar_tags %}
+{% load humanize %}
+
+{% if perms.rates.view %}
+  {% if cost %}
+    <a href="{% url 'projects:budget_details' project.pk %}" class="btn btn-o btn-xs btn-v {% if user.is_client %}btn-{% get_budget_class cost budget %}{% else %}btn-secondary{% endif %}" data-toggle="modal" data-target="#genericModal">
+      {% include 'rates/lock.html' %}&nbsp;
+      <span><i class="fa fa-dollar"></i> </span>
+      {{ cost|intcomma }}
+      <small class="text-muted br"> {% if user.is_client %}estimated cost{% else %}total earned{% endif %} &nbsp;&nbsp;<i class="fa fa-angle-right"></i></small>
+    </a>
+  {% endif %}
+{% endif %}

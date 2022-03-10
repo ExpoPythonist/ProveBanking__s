@@ -1,0 +1,14 @@
+{% with result.object as object %}
+  <div class="col-xs-12 nopadding list-group-item user-item" data-user-id="{{ object.id }}" data-result-type="{{ view.result_type }}">
+    <div href="{% url 'users:profile_modal' object.username %}" data-toggle="modal" data-target="#userModal" class="col-xs-10 as-link">
+      {% include 'partials/avatar_initials.html' with object=object size=25 %}
+      <strong>{{ object.get_name_display }}</strong>
+    </div>
+    <div class="col-xs-2 text-right">
+      <input type="checkbox" class="btn btn-item-select btn-default btn-xs" data-name="{{ object.get_name_displayname }}" data-pk="{{ object.pk }}" target-template="#user-tmpl-{{ object.id }}">
+    </div>
+    <div id="user-tmpl-{{ object.id }}" class="select-template">
+      {% include 'requests/partials/selected_resource.html' with resource=object as_template=True %}
+    </div>
+  </div>
+{% endwith %}

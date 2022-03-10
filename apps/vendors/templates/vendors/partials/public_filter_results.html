@@ -1,0 +1,28 @@
+{% load utils %}
+<div id="results-list">
+  <div class="row">
+    <div class="col-xs-6">
+      <h6 class="section-title text-uppercase">suppliers</h6>
+    </div>
+  </div>
+
+  {% if vendors %}
+    <div id="vendor-selectable-list" class="results-items vendor-cards-container">
+      {% include 'vendors/partials/filter_cards.html' with vendors=vendors %}
+    </div>
+  {% else %}
+    <div class="col-sm-12">
+      <div class="no-padding hide" >
+        <p class="list-label"><span id="results-count">0</span> suppliers</p>
+      </div>
+    </div>
+    <div class="panel panel-default panel-card">
+      <div class="panel-body">
+        <br/>
+          <div class="text-muted">No related suppliers.</div>
+        <br/>
+      </div>
+    </div>
+  {% endif %}
+  <div class="block-cover text-center hide"></div>
+</div>

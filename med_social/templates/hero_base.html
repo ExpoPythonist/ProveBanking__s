@@ -1,0 +1,10 @@
+{% pjaxr_extends "guest_base_extended.html" "Site" %}
+
+{% block page %}
+  <div id="page" class="page container">
+    {% block content %}{% endblock %}  
+  </div>
+{% endblock %}
+
+
+{% block pjaxr_namespace %}Site.accounts{% endblock pjaxr_namespace %}

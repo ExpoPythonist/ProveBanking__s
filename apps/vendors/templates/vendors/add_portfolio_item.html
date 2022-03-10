@@ -1,0 +1,24 @@
+{% pjaxr_extends "base_template.html" "Site" %}
+{% load crispy_forms_tags %}
+{% block title %} Add Project - {{ current_tenant }}{% endblock %}
+
+{% block page_title %}<span id="page-title"> Add Project</span>{% endblock %}
+
+{% block page %}
+  <div id="page" class="container page">
+    {% block content %}
+      <ol class="breadcrumb custom">
+        <li><a href="{{ vendor.get_absolute_url }}">Company</a></li>
+        <li class="active">Add Project</li>
+      </ol>
+      <form id="role-form" class="form-mobile form-horizontal" role="form" action="{% if object %}{% url 'vendors:edit_portfolio' object.id %}{%else%}{% url 'vendors:add_portfolio' vendor.id %}{% endif %}" method="POST">
+          {% csrf_token %}
+          {% include 'forms/mobile_form.html' with form=form %}
+          <div class="text-center form-actions">
+            <button type="submit" class="btn btn-block btn-primary">Save</button>
+          </div>
+      </form>
+    {% endblock %}
+  </div>
+{% endblock %}
+{% block pjaxr_namespace %}Site.vendors{% endblock pjaxr_namespace %}

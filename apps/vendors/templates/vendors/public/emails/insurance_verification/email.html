@@ -1,0 +1,22 @@
+{% extends 'base_email.html' %}
+
+{% block body %}
+  <tr>
+    <td class="content-block">
+      <p>Hi, {{ object.vendor.name }} is using Proven to prove that they got insurance from you. Please click on Verify below to prove this. This is a message from the company:</p>
+      <p>
+        {{ object.email_msg }}
+      </p>
+      <p>
+        <a href="{{ confirm_url }}" class="btn btn-warning btn-block">Verify</a>
+      </p>
+      <p>
+        <small class="text-muted">This link expires in 7 days for security reasons</small>
+      </p>
+      <p>
+        Thanks for helping {{ object.vendor.name }} out,<br>
+        Proven
+      </p>
+    </td>
+  </tr>
+{% endblock %}

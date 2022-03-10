@@ -1,0 +1,82 @@
+{% load projects %}
+{% load humanize %}
+{% load avatar_tags %}
+<div class="modal-header text-center">
+  <div class="row">
+    <div class="col-xs-3 modal-action-left">
+    </div>
+    <div class="col-xs-6">
+      <h4 class="modal-title">Bugdet Details</h4>
+    </div>
+    <div class="col-xs-3 modal-action-right">
+      <a href="#" class="btn" data-dismiss="modal"><i class="fa fa-times"></i></a>
+    </div>
+  </div>
+</div>
+
+<div class="modal-body">
+  <table class="table project-budget-breakdown">
+    {% if staffed %}
+      <thead>
+        <tr>
+          <th>Resource</th>
+          <th>Estimated cost</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for proposal in staffed %}
+          <tr>
+            <td><img src="{% avatar_url proposal.resource 35 %}" class="avatar avatar-25 img-circle"/>&nbsp;{{ proposal.resource.get_name_display }}</td>
+            <td>${{ proposal.total_cost|intcomma }}
+              {% if proposal.total_cost %}
+              &nbsp;<span class="btn btn-xs" data-trigger="focus" data-container="body" data-toggle="popover"  data-placement="left"  data-trigger="click" data-html="true" data-content="{{ proposal.get_cost_calculation_display_sans_help_text|safe|default:'N/A' }}">
+                <i class="fa fa-info-circle text-muted"></i>
+              </span>
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+    {% else %}
+      <tbody>
+    {% endif %}
+      {% if user.is_client %}
+        <tr class="row-placeholder">
+          <td></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td class="text-muted">Total cost</td>
+          <td>${{ total_cost|intcomma }}</td>
+        </tr>
+        <tr>
+          <td class="text-muted">Project budget</td>
+          <td>{% if project.budget %}${{ project.budget|intcomma }}{% else %}Not specified{% endif %}</td>
+        </tr>
+        {% get_remaining_budget total_cost project.budget as remaining_budget %}
+        {% if remaining_budget != None %}
+          <tr>
+            <td>Remaining budget</td>
+            <td>
+              <span class="text-{% get_remaining_budget_class total_cost project.budget %}">
+                {% if remaining_budget > 0 %}
+                  ${{ remaining_budget|intcomma }}
+                {% else %}
+                  $0
+                  {% if remaining_budget < 0 %}
+                    <small> ({{ remaining_budget|intcomma }})</small>
+                  {% endif %}
+                {% endif %}
+              </span>
+            </td>
+          </tr>
+        {% endif %}
+      {% elif user.is_vendor %}
+        <tr>
+          <td class="text-muted">Total earned</td>
+          <td>${{ total_cost|intcomma }}</td>
+        </tr>
+      {% endif %}
+    </tbody>
+  </table>
+  <small class='text-muted'><i class="fa fa-info-circle"></i>&nbsp;Only visible to those with <strong>'Can view financial information'</strong> permission. See <a href='{% url 'groups:list' %}'>Permissions and Groups</a>.</small>
+</div>

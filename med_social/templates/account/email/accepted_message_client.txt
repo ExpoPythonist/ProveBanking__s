@@ -1,0 +1,5 @@
+{{ user.get_short_name }}, welcome to the Proven community.
+
+I usually do a 30 minute phone call to welcome and get to know every Proven client. You can schedule time with me at https://jlamba.youcanbook.me/ or feel free to email me a few time slot options at [suzanne@proven.cc](mailto:jl@thevetted.net). 
+
+We currently approve <20% of applicants, mainly by invitation only, and are slowly building a high quality community. We ask for your patience as we work through our network to find the right professional for your requirements.

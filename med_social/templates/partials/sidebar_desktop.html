@@ -1,0 +1,44 @@
+{% load avatar_tags %}
+<div id="sidebar-desktop" class=" sidebar-desktop" >
+
+  <div class="sidebar-content">
+    <div class="list-group">
+      {% if user.is_client %}
+        <a href="/" class="list-group-item" title="Home"><i class="fa fa-home"></i><small>Home</small></a>
+      {% endif %}
+
+      {% if user.is_vendor %}
+        <a href="{% url 'projects:list' %}" class="list-group-item" title="Requests"><i class="fa fa-files-o"></i><small>Requests</small></a>
+      {% endif %}
+      {% if user.is_client %}
+        <a  href="{% url 'vendors:list' %}" class="list-group-item" title="suppliers"><i class="fa fa-suitcase"></i><small>Suppliers</small></a>
+      {% endif %}
+
+      <a  href="{% url 'users:list' %}" class="list-group-item" title="people"><i class="fa fa-user"></i><small>People</small></a>
+
+      {% if user.is_vendor  %}
+        {% if features.financials.is_enabled %}
+          {% if perms.rates.view %}
+            <a  href="{% url 'rates:list' %}" class="list-group-item " title="Rates"> <i class="fa fa-money"></i><small>Rates</small></a>
+          {% endif %}
+        {% endif %}
+        {% if perms.auth.admin %}
+          <a  href="{% url 'groups:list' %}" class="list-group-item " title="Permissions and Groups"> <i class="fa fa-users"></i><small>Groups</small></a>
+        {% endif %}
+        <a href="{{ user.vendor.get_absolute_url }}" class="list-group-item" title="Company profile"><i class="fa fa-building"></i><small>Company</small></a>
+      {% endif %}
+    </div>
+
+    <div class="bottom list-group">
+        <a href="{{ user.get_absolute_url }}" class="list-group-item" title="{{ user.get_name_display }}">
+          {% include 'partials/avatar_initials.html' with object=user size=25 %}
+          <small>Profile</small>
+        </a>
+        {% if user.is_client %}
+          <a href="{% url 'client_settings:home' %}" class="list-group-item" title="Settings"><i class="fa fa-gear"></i><small>Settings</small></a>
+        {% endif %}
+        <a href="{% url 'account_logout' %}" class="list-group-item" title="Sign out"><i class="fa fa-sign-out"></i><small>Sign out</small></a>
+    </div>
+    </div>
+  </div>
+</div>

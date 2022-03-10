@@ -1,0 +1,29 @@
+<div class="company-profile-clients">
+  <div class="company-profile-clients-header">
+    <span>Clients</span>
+    <div class="company-profile-clients-total">
+      <span class="clients-total">{{ vendor.client_references.count }} total</span>
+      <span class="clients-total highlight-bg">{{ vendor.client_references_verified.count }} verified</span>
+    </div>
+  </div>
+  <div class="company-profile-clients-content">
+    <div class="row">
+      {% if show_all %}
+        <div class="col-xs-12 company-clients">
+          {% for reference in vendor.client_references.all %}
+            {% include "vendors/clients.item.inc.html" with col_width=2 %}
+          {% endfor %}
+        </div>
+      {% else %}
+        <div class="col-xs-12 col-sm-6 company-clients">
+          {% for reference in vendor.client_references.all|slice:":3" %}
+            {% include "vendors/clients.item.inc.html" with col_width=4 %}
+          {% endfor %}
+        </div>
+        <div class="col-xs-12 col-sm-6 company-client">
+          <a class="company-client_view-all" href="{% url "vendors:client_list" vendor.id %}">View All</a>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</div>

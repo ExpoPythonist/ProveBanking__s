@@ -1,0 +1,10 @@
+<form id="inline-request-form" action="{{action}}" data-ajax-form static-form>
+  {% include 'forms/mobile_form.html' with form=form %}
+  <div class="col-xs-12 text-center">
+    <button type="reset" class="btn btn-default">Cancel</button>&nbsp;&nbsp;
+    <button type="submit" class="btn btn-primary">Save</button>
+  </div>
+  {% if form_saved %}
+    {% include 'requests/as_field.html' %}
+  {% endif %}
+</form>

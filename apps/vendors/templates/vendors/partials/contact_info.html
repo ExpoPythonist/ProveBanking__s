@@ -1,0 +1,53 @@
+{% load thumbnail %}
+
+<div class="contact_modal">
+
+  <div class="modal-header contact_modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <h4 class="modal-title text-center">
+      <b class="text-muted">Contact Information for</b>&nbsp;
+      {% thumbnail vendor.logo "45x45" crop="center" format="PNG" as im %}
+        &nbsp;&nbsp;
+        <a href="{{ object.vendor.get_absolute_url }}" class="no-underline">
+          <img class="logo img-rounded thumbnail" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}"  />
+        </a>
+        &nbsp;&nbsp;
+      {% endthumbnail %}
+      <b>{{ vendor }}</b>
+    </h4>
+  </div>
+
+  <div class="modal-body contact_modal-body">
+
+    <h6 class="text-muted text-uppercase">INFORMATION&nbsp;/&nbsp;GUIDE</h6>
+    <p class="small">{{ vendor.engage_process|linebreaks|urlize }}</p>
+
+    
+      <h6 class="text-muted text-uppercase">SUPPLIER CONTACTS</h6>
+      {% if vendor.contacts.exists %}
+      <ul class="nopadding list-inline">
+        {% for contact in vendor.contacts.all %}
+          {% include 'vendors/partials/contact.html' %}
+        {% endfor %}
+      </ul>
+      {% else %}
+      <ul class="nopadding">
+        <p>No contact listed</p>
+      </ul>
+      {% endif %}
+
+    {% if procurement_contacts %}
+      <h6 class="text-muted text-uppercase">PROCUREMENT CONTACTS</h6>
+      <ul class="col-xs-12 nopadding">
+        {% for contact in procurement_contacts %}
+          {% include 'vendors/partials/contact.html' %}
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+    <div class="text-center">
+      <br><br>
+      <button type="button" class="btn btn-primary" data-dismiss="modal">Got it, thanks</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,39 @@
+.client-tile {
+  &.media {
+    margin-top: 0px;
+    margin-bottom: 10px;
+    .thumbnail {
+      background: #fff;
+      display: table;
+      &.thumb60 {
+        width: 60px;
+        height:60px;
+        overflow: hidden;
+      }
+      a {
+        display: table-cell;
+        vertical-align: middle;
+        width: 60px;
+        height: 55px;
+
+      }
+      img {
+        width: 100%;
+        verticle-align: middle;
+      }
+    }
+    .media-heading {
+      font-size: 13px;
+      font-weight: bold;
+      position: relative;
+      top: 5%;
+      margin-bottom: 0px;
+      margin-top: 4px;
+      .text-ellipsis();
+      a {
+        color: #6c6c6c;
+      }
+    }
+
+  }
+}

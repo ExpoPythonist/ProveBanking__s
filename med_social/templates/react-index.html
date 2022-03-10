@@ -1,0 +1,43 @@
+{% extends 'base_template_wide.html' %}
+
+{% block css_head %}
+  <style>
+    @keyframes loading-dots-1 { from { opacity: 0; } 25% { opacity: 1; } }
+    @keyframes loading-dots-2 { from { opacity: 0; } 50% { opacity: 1; } }
+    @keyframes loading-dots-3 { from { opacity: 0; } 75% { opacity: 1; } }
+    @-webkit-keyframes loading-dots-1 { from { opacity: 0; } 25% { opacity: 1; } }
+    @-webkit-keyframes loading-dots-2 { from { opacity: 0; } 50% { opacity: 1; } }
+    @-webkit-keyframes loading-dots-3 { from { opacity: 0; } 75% { opacity: 1; } }
+
+    .loading-dots span {
+        animation: loading-dots-1 2s infinite steps(1);
+        -webkit-animation: loading-dots-1 2s infinite steps(1);
+    }
+
+    .loading-dots span:first-child + span {
+        animation-name: loading-dots-2;
+        -webkit-animation-name: loading-dots-2;
+    }
+
+    .loading-dots span:first-child + span + span {
+        animation-name: loading-dots-3;
+        -webkit-animation-name: loading-dots-3;
+    }
+  </style>
+{% endblock %}
+
+
+{% block page %}
+  <div id="page" class="container-fluid page-full">
+    <div id="react-data-json">{% block REACT_DATA_JSON %}{% endblock %}</div>
+    <div id="react-data-html">{% block REACT_DATA_HTML %}{% endblock %}</div>
+    <div id="{% block REACT_APP_ID %}{% endblock %}" class="row">
+      <div class="col-xs-12 text-center">
+        <br/>
+        <br/>
+        <br/>
+        <h2 class="text-center">Loading <span class="loading-dots"><span>.</span><span>.</span><span>.</span></span></h2>
+      </div>
+    </div>
+  </div>
+{% endblock %}

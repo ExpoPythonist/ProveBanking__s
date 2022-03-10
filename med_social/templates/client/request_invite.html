@@ -1,0 +1,42 @@
+{% extends "guest_base_extended.html" %}
+{% load socialaccount %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+{% block title %}Request Invite{% endblock %}
+
+{% block left_nav_button %}
+  <span id="left-nav-btn" class="pull-left"></span>
+{% endblock %}
+
+{% block right_nav_button %}
+  {% if not success %}
+  <span id="right-nav-btn" class="pull-right">
+    <a class="navbar-brand btn pull-right" href="#" onClick="$('#request-invite-form').submit();"><span>Request invite</span></a>
+  </span>
+  {% else %}
+    <span id="right-nav-btn" class="pull-right">
+    <a class="navbar-brand btn pull-right" href="{% url 'account_logout' %}" ><span>Sign out</span></a>
+  </span>
+  {% endif %}
+{% endblock %}
+
+{% block page %}
+  <div id="page" class="page container">
+  {% block content %}
+    {% if success %}
+      {% include 'client/waitlist.html'%}
+    {% else %}
+    <div class="field-value pull-right text-right">
+            <a class="btn btn-link" href='{% provider_login_url "linkedin" process="connect" next="#" %}' > import from Linkedin </a>
+    </div>
+    <form method="POST" action="{% url 'client_invite_request' %}" role="form" id="request-invite-form" class="form-mobile form-horizontal">
+          {% csrf_token %}
+          {% include 'forms/mobile_form.html' with form=form %}
+      <div class="text-center form-actions">
+        <button type="submit" class="btn btn-block btn-primary">Request invite</button>
+      </div>
+    </form>
+    {% endif %}
+  {% endblock %}
+  </div>
+{% endblock %}

@@ -1,0 +1,15 @@
+<div class="panel panel-default panel-card">
+  <div class="panel-body">
+  {% if vendor.engage_process %}
+    <div class="row">
+        <div class="col-sm-12">
+          <p class="note-body description">{{ engage_process|safe |linebreaks }}</p>
+        </div>
+    </div>
+    {%else%}
+      <p class="text-muted  lighter">
+        <span>Nothing added yet</span>
+      </p>
+    {%endif%}
+  </div>
+</div>

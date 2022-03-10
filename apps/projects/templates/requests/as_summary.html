@@ -1,0 +1,57 @@
+{% load date_tags %}
+{% load projects %}
+{% with stfrq=staffing_request project=staffing_request.project %}
+<div class="request-{{staffing_request.id}} no-underline field-group {{ extra_css_classes }}">
+  <div class="field-label  project-heading clearfix ">
+    <div class="col-xs-12 no-left-padding">
+      <h4 class="clearfix">
+        {% if project %}
+          <a href="{{ project.get_absolute_url }}" class="no-underline head-link">{{ project|truncatechars:50 }}</a>
+        {% endif %}
+      </h4>
+    </div>
+    <div class="col-xs-12 no-left-padding">
+      <span class="small">
+        {% if role %}
+          {{ role }}&nbsp;{% if skill_level %}({{ skill_level }}){% endif %}
+        {% endif %}
+      </span>
+      <span class="text-muted small pull-right">
+        {% if start_date or end_date %}
+          {% if start_date and end_date %}
+            {{ start_date|natural_date|default:'' }}&nbsp;-&nbsp;{{ end_date|natural_date }}
+          {% elif start_date %}
+            <i class='fa fa-angle-right'></i>&nbsp;{{ start_date|natural_date }}
+          {% elif end_date %}
+            &nbsp;<i class='fa fa-angle-left'></i>&nbsp;{{ end_date|natural_date }}
+          {% endif %}
+      {% endif %}
+      </span>
+    </div>
+  </div>
+
+  <div class="field-label  clearfix ">
+    <p class="description">{{ project.description|truncatechars:240 }}</p>
+    {% if not hide_working_with %}
+      {% if stfrq.created_by %}
+      
+      <p class="clearfix small">
+        <span class="text-muted">working with</span>
+          <a href="{{ stfrq.created_by.get_profile_modal_url }}" class="no-underline" data-toggle="modal" data-target="#userModal">
+            {{ stfrq.created_by.get_full_name|default:stfrq.created_by }} {% if stfrq.created_by == user %}(You){% endif %}
+          </a>
+        {% get_request_colleagues stfrq user as working_with %}
+
+        {% for person in working_with %}
+          {% if not person == strfq.created_by %}
+            , <a href="{{ stfrq.created_by.get_profile_modal_url }}" class="no-underline" data-toggle="modal" data-target="#userModal">
+                {{ person.get_full_name|default:person }} {% if person == user %}(You){% endif %}
+              </a>
+          {% endif %}
+        {% endfor %}
+      </p>
+      {% endif %}
+    {% endif %}
+  </div>
+</div>
+{% endwith %}

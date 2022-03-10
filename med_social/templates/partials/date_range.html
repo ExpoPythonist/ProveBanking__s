@@ -1,0 +1,13 @@
+{% load date_tags %}
+{% if start_date or end_date %}
+  <span class='btn btn-secondary btn-o btn-xs btn-date disabled {{ css_class }}'>
+    <i class='fa fa-calendar text-muted'></i>&nbsp;
+    {% if start_date and end_date %}
+      <span class="text-muted">{{ start_date|natural_date|default:'' }}&nbsp;-</span><span class="text-{{ urgency }}">&nbsp;{{ end_date|natural_date }}</span>
+    {% elif start_date %}
+      <i class='fa fa-angle-right'></i>&nbsp;<span class="text-{{ urgency }}">{{ start_date|natural_date }}</span>
+    {% elif end_date %}
+      &nbsp;<i class='fa fa-angle-left'></i>&nbsp;{{ end_date|natural_date }}
+    {% endif %}
+  </span>&nbsp;
+{% endif %}

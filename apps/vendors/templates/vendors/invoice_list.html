@@ -1,0 +1,59 @@
+{% extends 'base_template.html' %}
+{% load humanize %}
+{% load utils %}
+{% block title %}Invoices{% endblock %}
+
+{% block page %}
+  <div id="page" class="container">
+    {% block content %}
+    	<ol class="breadcrumb custom">
+        <li><a href="{% url "vendors:invoice_list" %}">Invoices</a></li>
+        {% if vendor %}
+        <li class="active">{{ vendor }}</li>
+        {% endif %}
+      </ol>
+      <div class="vertical-spacer-lg"></div>
+
+      {% for client_ref in client_refs %}
+        <section class="client-list clients clearfix">
+          {% if not client_ref.is_fulfilled or client_ref.invoices_unapproved.exists %}
+            <form class="pull-right" method="POST" action="{% url "vendors:client_invoice_approve_all" client_ref.vendor.pk client_ref.pk %}">
+              {% csrf_token %}
+              {% if client_ref.billing_new %}
+              <button type="submit" name="declared_value" class="btn btn-warning">Approve declared value: {{ client_ref.get_billing_new_display }}</button> &nbsp;
+              {% endif %}
+              <button type="submit" class="btn btn-success">Verify All: ${{ client_ref.invoice_total|floatformat:0|intcomma }}</button>
+            </form>
+          {% endif %}
+          <h3>
+            <a href="{% url "vendors:invoice_list" client_ref.vendor.slug %}">{{ client_ref.vendor }}</a>: <a href="{% url "vendors:invoice_list" client_ref.vendor.slug client_ref.pk %}">{{ client_ref.client }}</a>
+          </h3>
+          {% for invoice in client_ref.invoices.all %}
+            {% include 'vendors/partials/invoice.html' %}
+          {% endfor %}
+          {% if client_ref.proof_url %}
+            <div class="media col-md-6 col-sm-6 client-tile" style="height: 100px;">
+              <div class="media-body">
+                <h5 class="media-heading">Proof url:</h5>
+                {% if client_ref.is_fulfilled %}
+                  <small class="btn btn-xs btn-success disabled">verified</small>
+                &nbsp;
+                {% endif %}
+                <a target="_blank" href="{{ client_ref.proof_url }}">{{ client_ref.proof_url }}</a>
+                {% if request.user.is_allowed_change %}
+                  {% if not client_ref.is_fulfilled %}
+                    <div class="client-actions">
+                      <a href="{% url 'vendors:client_reference_url_verify' client_ref.pk %}">Verify</a>
+                      &nbsp;<a href="{% url 'vendors:client_reference_url_delete' client_ref.pk %}">Delete</a>
+                    </div>
+                  {% endif %}
+                {% endif %}
+              </div>
+            </div>
+          {% endif %}
+        </section>
+      <hr>
+      {% endfor %}
+    {% endblock %}
+  </div>
+{% endblock %}

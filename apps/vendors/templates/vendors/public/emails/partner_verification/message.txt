@@ -1,0 +1,9 @@
+{% load i18n %}
+{% blocktrans %}
+Hi,
+
+{{ object.created_by.get_name_display }} has indicated that {{ object.vendor.name }} is a partner of {{ object.client }}. Please click the link below to verify this statement.
+
+{{ confirm_url }}
+
+{% endblocktrans %}

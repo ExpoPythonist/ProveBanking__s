@@ -1,0 +1,19 @@
+{{ object.username }}
+{{ object.first_name }}
+{{ object.last_name }}
+{{ object.email }}
+{{ object.headline }}
+{{ object.busy_till }}
+{{ object.kind }}
+{{ object.is_approved }}
+{% for network in object.networks.all %}
+{{ network.name }}
+{% endfor %}
+{% for position in object.positions.all %}
+{{ position.title }}
+{{ position.summary }}
+{% endfor %}
+{% for education in object.educations.all %}
+{{ education.degree }}
+{{ education.field_of_study }}
+{% endfor %}

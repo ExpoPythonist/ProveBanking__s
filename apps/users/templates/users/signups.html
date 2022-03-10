@@ -1,0 +1,45 @@
+{% extends 'base_template.html' %}
+{% load thumbnail %}
+{% load utils %}
+{% block title %}Signups to Approve{% endblock %}
+
+{% block page %}
+  <div id="page" class="container">
+    {% block content %}
+    	<ol class="breadcrumb custom">
+        <li class="active">Signups to Approve</li>
+      </ol>
+      <div class="vertical-spacer-lg"></div>
+
+      <section class="client-list clients">
+        {% for token in tokens %}
+          <div class="media col-md-6 col-sm-6 client-tile">
+              <div class="media-body">
+                  <div class="duration">
+                      <ul class="list-unstyled">
+                          <li><span class="text-muted">Email: <a href="mailto:{{ token.email }}">{{ token.email }}</a></span></li>
+                          <li><span class="text-muted">First Name (optional): {{ token.first_name }}</span></li>
+                          <li><span class="text-muted">Last Name (optional): {{ token.last_name }}</span></li>
+                      </ul>
+                  </div>
+                  <div class="client-actions">
+                      {% if request.user.is_superuser and request.user.is_client %}
+                      {% if not token.is_approved %}
+                      <a href="{% url "users:signup_approve" token.pk %}">Approve</a>&nbsp;|&nbsp;
+                      <a href="{% url "users:signup_delete" token.pk %}">Reject</a>
+                      {% else %}
+                      <span class="label label-success">Approved</span>
+                      {% endif %}
+                      {% endif %}
+                  </div>
+              </div>
+          </div>
+        {% empty %}
+          <div class="col-sm-12">
+          <span class = "text-muted small"> No signups to show.</span>
+          </div>
+        {% endfor %}
+      </section>
+    {% endblock %}
+  </div>
+{% endblock %}

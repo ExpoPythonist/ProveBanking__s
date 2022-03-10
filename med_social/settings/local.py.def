@@ -1,0 +1,120 @@
+# Create local.py with this file as the template. local.py will not be version controlled
+import os
+from common import *
+EXTRA_MIDDLEWARE_CLASSES = tuple()
+
+DEBUG = True
+REQUIRE_DEBUG = DEBUG
+
+TEMPLATES[0]['OPTIONS']['debug'] = DEBUG
+TEMPLATES[0]['OPTIONS']['loaders'] = (
+    # TODO: add caching loader
+    'django.template.loaders.filesystem.Loader',
+    'django.template.loaders.app_directories.Loader',
+    #'django.template.loaders.eggs.Loader',)
+)
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'tenant_schemas.postgresql_backend',
+        'NAME': 'thevetteddb',              # Or path to database file if using sqlite3.
+        'USER': 'postgres',                       # Not used with sqlite3.
+        'PASSWORD': '1234560',                   # Not used with sqlite3.
+        'HOST': '127.0.0.1',                       # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '5433',                       # Set to empty string for default. Not used with sqlite3.
+    }
+}
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+EXTRA_MIDDLEWARE_CLASSES = (
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'userswitch.middleware.UserSwitchMiddleware',
+)
+
+RAVEN_CONFIG = {
+    'dsn': '',
+}
+
+DEBUG_TOOLBAR_CONFIG = {
+    'INTERCEPT_REDIRECTS': False,
+}
+
+USE_PROTECTED_FILE_STORAGE = False
+DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+AVATAR_STORAGE = 'django.core.files.storage.FileSystemStorage'
+MEDIA_URL = '/media/'
+
+STATICFILES_STORAGE = 'pipeline.storage.PipelineCachedStorage'
+STATIC_URL = '/static/'
+
+
+CSRF_COOKIE_SECURE= False
+SESSION_COOKIE_SECURE = False
+PIPELINE_LESS_BINARY = '/home/ubuntu/vetted/node_modules/less/bin/lessc'
+
+SECRET_KEY = 'A1234567890a_secret'
+AWS_ACCESS_KEY_ID = 'AKIAJEB5LRIPSYMPAAAA'
+AWS_SECRET_ACCESS_KEY = 'HhjgwIVQtxD5cOf8sfgYYHPSOQM5wY7AAAAAAA'
+
+# CELERY LOCAL CONFIGURATION
+# uncomment for debug
+# CELERY_ALWAYS_EAGER = True
+
+EMAIL_HOST = 'smtp.sendgrid.net'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'USERNAME'
+EMAIL_HOST_PASSWORD = 'PASSWORD'
+
+
+_file_logging = {
+    'handlers': ['file'],
+    'level': 'INFO',
+    'propagate': True,
+    'formatter': 'verbose'
+}
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(pathname)s:%(lineno)s - %(message)s'
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        }
+    },
+    'handlers': {
+        'null': {
+            'level': 'ERROR',
+            'class': 'logging.NullHandler',
+        },
+        'stdout': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+        },
+        'file': {
+            'level': 'INFO',
+            'class': 'logging.handlers.RotatingFileHandler',
+            'filename': '/var/log/proven/django.log',
+            'backupCount': 1024 * 1024 * 64
+        }
+    },
+    'loggers': {
+        'django.security.DisallowedHost': {
+            'handlers': ['null'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+        'django.request': {
+            'handlers': ['stdout'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+        'med_social': _file_logging,
+        'apps': _file_logging,
+        'vendors': _file_logging,
+        'users': _file_logging
+    }
+}

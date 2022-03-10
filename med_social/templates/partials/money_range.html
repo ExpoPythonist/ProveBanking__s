@@ -1,0 +1,19 @@
+{% load humanize %}
+{% if perms.rates.view %}
+  <button type="button" class="btn btn-o btn-xs btn-secondary" data-trigger="focus" data-container="body" data-toggle="popover"  data-placement="left"  data-content="<small class='text-muted'>Only visible to those with <strong>'Can view financial information'</strong> permission. See <a href='{% url 'groups:list' %}'>Permissions and Groups</a>. </small>">
+  {% if min_rate and max_rate %}
+      <i class="fa fa-dollar"></i> {{ min_rate|intcomma }}
+      &nbsp;-&nbsp;
+      <i class="fa fa-dollar"></i> {{ max_rate|intcomma|default:"*" }}
+      {% include 'rates/lock.html' %}
+  {% elif min_rate %}
+      &nbsp;<i class="fa fa-angle-right"></i>&nbsp;
+      <i class="fa fa-dollar"></i> {{ min_rate|intcomma }}
+      {% include 'rates/lock.html' %}
+  {% elif max_rate %}
+      &nbsp;<i class="fa fa-angle-left"></i>&nbsp;
+      <i class="fa fa-dollar"></i> {{ max_rate|intcomma|default:"*" }}
+      {% include 'rates/lock.html' %}
+  {% endif %}
+  </button>&nbsp;
+{% endif %}

@@ -1,0 +1,10 @@
+{% load i18n %}
+{% blocktrans %}
+Name: {{ object.name }}
+Email: {{ object.email }}
+{% endblocktrans %}
+{% if object.phone %}{% blocktrans %}Phone: {{ object.phone }}<br />{% endblocktrans %}{% endif %}
+{% blocktrans %}
+Message:
+{{ object.text }}
+{% endblocktrans %}

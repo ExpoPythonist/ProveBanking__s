@@ -1,0 +1,54 @@
+{% pjaxr_extends "base_template.html" "Site" %}
+{% load crispy_forms_tags %}
+{% block title %} {{ location|yesno:'Edit,Add' }} Industries- {{ current_tenant }}{% endblock %}
+
+{% block page_title %}<span id="page-title"> Industry</span>{% endblock %}
+
+{% block left_nav_button %}
+  <span id="left-nav-btn" class="pull-left">
+    {% if previous_page %}
+      <a class="navbar-brand btn" href="{{ previous_page }}"><i class="fa fa-chevron-left"></i></a>
+    {% else %}
+      <a class="navbar-brand btn" href="{{ vendor.get_absolute_url }}" data-target="sidebar-left"><i class="fa fa-chevron-left"></i></a>
+    {% endif %}
+  </span>
+{% endblock %}
+
+{% block right_nav_button %}
+  <span id="right-nav-btn" class="pull-right"></span>
+{% endblock %}
+
+{% block right_sidebar %}
+  <div id="sidebar-right" class="sidebar sidebar-right"></div>
+{% endblock %}
+
+{% block notifications %}
+  {% include 'partials/notifications.html' %}
+{% endblock %}
+
+{% block page %}
+  <div id="page" class="container page">
+    {% block content %}
+      <ol class="breadcrumb custom">
+        <li><a href="{{ vendor.get_absolute_url }}">Company</a></li>
+        <li class="active">Add Industry</li>
+      </ol>
+
+      <br/>
+
+      <h6 class="section-title text-uppercase">add industry</h6>
+      <div class="panel panel-default panel-card">
+        <div class="panel-body">
+          <form id="location-form" class="form-mobile form-horizontal" role="form" action="{% url 'vendors:industries:create' vendor.id %}" method="POST">
+              {% csrf_token %}
+              {% include 'forms/naked_form.html' with form=form submit_btn=False submit_btn_label='Save'%}
+              <div class="text-center form-actions">
+                <button type="submit" class="btn btn-block btn-primary">Save</button>
+              </div>
+          </form>
+        </div>
+      </div>
+    {% endblock %}
+  </div>
+{% endblock %}
+{% block pjaxr_namespace %}Site.vendors{% endblock pjaxr_namespace %}

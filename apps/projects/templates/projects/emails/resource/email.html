@@ -1,0 +1,26 @@
+{% extends 'base_email.html' %}
+
+{% block body %}
+<tr>
+  <td class="content-block">
+    <p>Hi there,</p>
+    <p>
+      For project: "<a href="{{project_url}}" class="no-underline">
+      {{ proposed_resource.project.title }}</a>"
+      {% if proposed_resource.request %} 
+      requirement: “<a href="{{ staffing_req_url }}" 
+      class="no-underline">{{ proposed_resource.request.role }}</a>”
+      {% endif %}, 
+      I have proposed <a href="{{ proposed_resource_url }}" class="no-underline">
+      {{ proposed_resource.resource.get_name_display}}</a>
+    </p>
+    {% if proposed_resource.request %}
+      <a href="{{ staffing_req_url }}" class="btn btn-warning">View all candidates</a>
+      <p>You can view all candidates and their status here:<br/><a href="{{ staffing_req_url }}" 
+      class="no-underline">{{ staffing_req_url }}</a></p>
+    {% else %}
+      <a href="{{ project_url }}" class="btn btn-warning">View project</a>
+    {% endif %}
+  </td>
+</tr>
+{% endblock %}

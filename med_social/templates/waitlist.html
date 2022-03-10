@@ -1,0 +1,43 @@
+{% extends 'guest_base_extended.html' %}
+{% load pipeline %}
+{% load bootstrap3 %}
+
+{% block page_title %}<span id="page-title"></span>{% endblock %}
+
+{% block left_nav_button %}
+  <span id="left-nav-btn" class="pull-left">
+    <a class="navbar-brand hidden-xs" href="/"><img src="{{ STATIC_URL }}images/vpp-landing/vetted-logo.png" class="logo" width="103" height="12" /></a>
+  </span>
+{% endblock %}
+
+{% block right_nav_button %}
+  <span id="right-nav-btn" class="pull-right">
+    <a class="navbar-brand btn main-menu-btn" href="{% url 'account_logout' %}" >Sign out</a>
+  </span>
+{% endblock %}
+
+{% block page %}
+  <div id="page" class="page container">
+    {% block content %}
+      <div class="text-center">
+        <h1>Thank you!</h1>
+      </div>
+      <div id="onboarding-container" class="container" >
+       {% if user.is_client %}
+        <h3 class="header-thin text-center">Someone will get in touch with you shortly.</h3>
+      {% else %}
+        <h3 class="header-thin text-center">We are in the process of reviewing your profile.</h3>
+        <!-- <p class="text-center " >There are <b>{{ queue_position|add:"30"  }} people</b> ahead of you in the queue.</p> -->
+        <p class="text-center header-thin">Your application for membership will be reviewed by our team soon!</p>
+      {% endif %}
+        <div class="hide">
+          {% include 'partials/messages.html' %}
+        </div>  
+      </div> 
+    {% endblock %}
+  </div>
+{% endblock %}
+
+{% block js_foot %}
+  {% javascript 'onboarding' %}
+{% endblock %}

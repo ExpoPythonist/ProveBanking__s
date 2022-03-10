@@ -1,0 +1,13 @@
+{% load i18n %}
+{% blocktrans with user_name=user.username %}
+Hi,
+
+Welcome to {{ company }}'s supplier partnership platform.
+
+Please create an account by using the following personalized link
+{{ direct_url }}
+
+If you have any questions, criticism, or words of encouragement, please do not hesitate to reach me at suzanne@proven.cc or at (646) 207 3000.
+{% endblocktrans %}
+
+{% include 'account/email/footer_ceo.txt' %}

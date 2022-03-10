@@ -1,0 +1,76 @@
+{% pjaxr_extends "onboarding/base.html" "Site.onboarding" %}
+{% load avatar_tags %}
+{% load socialaccount %}
+
+{% block title %}
+  {% if  user.has_completed_onboarding %}
+    Edit Profile
+  {% else %}
+    Welcome aboard! Help your potential clients find you by providing some info about yourself.
+  {% endif %}
+{% endblock %}
+
+{% block page_title %}<span id="page-title">My Profile</span>{% endblock %}
+
+
+{% block content %}
+  {% if user.SETUP_USER_PROFILE in user.pending_setup_steps %}
+  <div class="alert alert-success">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <strong>Welcome Aboard!</strong> We would love to  learn more about you.
+  </div>
+  <br>
+  {% endif %}
+  <div class="panel panel-default panel-card profile-edit-panel">
+    <div class="panel-body">
+        <div class="btn-group btn-group-justified material-tab">
+          <a href="" class="btn-link btn active">Edit profile</a>
+          <a href="{% url 'users:password_reset' %}" class="btn-link btn">Change password</a>
+        </div>
+        <br>
+        <div class="profile-block-top profile-banner text-center">
+          {% include 'partials/avatar_initials.html' with object=object size=75 %}
+          <form id="avatar_form" method="POST" action="{% url 'users:upload_avatar' object.id %}" class="hide" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ avatar_form.as_p }}
+          <input type="submit" value="go"/>
+          </form>
+
+          <h4 class="user-full-name">{{ object.get_name_display }}</h4>
+          <h6 class="username-wrap">@<span class="username">{{ object.username }}</span></h6>
+        </div>
+
+        <h6 class="sub-section-title">
+          <span class="text-uppercase">About you</span>
+          <span class="pull-right">
+            {% if user == object %}
+              {% for provider in socialaccount.providers %}
+                {% if provider.name == 'LinkedIn' %}
+                  <a title="{{provider.name}}" class="socialaccount_provider {{provider.id}} no-underline btn-link" href="{% provider_login_url provider.id process='connect' next=request.path %}">import from LinkedIn</a>
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+          </span>
+        </h6>
+
+        <form enctype="multipart/form-data" id="onboarding-user-profile-form" class="form-mobile form-horizontal phonefield-form" role="form" action="{{ post_url }}" method="POST">
+
+          {% csrf_token %}
+          {% include 'forms/naked_form.html' with form=form %}
+          <div class="text-right col-xs-12">
+            <button type="submit" class="btn btn-primary">
+            {% if not user.has_completed_onboarding %}
+              Next <i class="fa fa-chevron-right"></i>
+            {% else %}
+              &nbsp;&nbsp;Save&nbsp;&nbsp;
+            {% endif %}
+            </button>
+          </div>
+          <br><br>
+        </form>
+
+    </div>
+  </div>
+
+{% endblock %}
+{% block pjaxr_namespace %}Site.onboarding.profile{% endblock pjaxr_namespace %}

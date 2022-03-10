@@ -1,0 +1,78 @@
+{% pjaxr_extends "base_template.html" "Site" %}
+{% block title %}Groups - {{ current_tenant }}{% endblock %}
+
+{% block page_title %}<span id='page-title'>Groups</span>{% endblock %}
+
+{% block left_nav_button %}
+  <span id="left-nav-btn" class='pull-left'>
+    {% if previous_page %}
+      <a class="navbar-brand btn" href="{{ previous_page }}"><i class="fa fa-chevron-left"></i></a>
+    {% elif user.is_client and perms.auth.admin %}
+      <a class="navbar-brand btn" href="{% url 'client_settings:home' %}"><i class="fa fa-chevron-left"></i></a>
+    {% endif %}
+  </span>
+{% endblock %}
+
+{% block right_nav_button %}
+  <span id="right-nav-btn" class="pull-right">
+    {% if perms.auth.admin %}
+      <span class="navbar-brand">
+        <a class="btn btn-xs btn-primary" href="{% url 'groups:create' %}" class="btn btn-sm btn-primary"><span>new group</span></a>
+      </span>
+    {% endif %}
+  </span>
+{% endblock %}
+
+{% block right_sidebar %}
+  <div id="sidebar-right" class="sidebar sidebar-right">
+    <div class="sidebar-heading clearfix">
+      <a href="#" class="no-underline btn btn-lg">
+        <i class="fa fa-chevron-right"></i>
+      </a>
+    </div>
+  </div>
+{% endblock %}
+
+{% block notifications %}
+  {% include 'partials/notifications.html' %}
+{% endblock %}
+
+{% block page %}
+  <div id="page" class="container page">
+    {% block content %}
+    <ol class="breadcrumb custom">
+      {% if user.is_client %}
+      <li><a href="{% url 'client_settings:home' %}">Settings</a></li>
+      {% endif %}
+      <li class="active">Groups</li>
+    </ol>
+
+    {% if groups %}
+      <div class="page-top-band clearfix">
+        <div class="col-xs-12 text-center">
+          <h6 class="list-count">all groups ({{ groups.count }})</h6>
+        </div>
+      </div>
+      <div class="panel panel-default role-card">
+        <div class="panel-body">
+          {% for group in groups %}
+            {% include 'ACL/card.html' with group=group %}
+          {% endfor %}
+        </div>
+      </div>
+    {% else %}
+      <div class='text-center'>
+        <br><br>
+        <h4>
+            {% if perms.auth.admin %}
+              <a href="{% url 'groups:create' %}" class="btn btn-primary">Add role</a>
+            {% else %}
+              Oops! we have got nothing to show you yet.
+            {% endif %}
+        </h4>
+       </div>
+    {% endif %}
+    {% endblock %}
+   </div>
+{% endblock %}
+{% block pjaxr_namespace %}Site.ACL.list{% endblock pjaxr_namespace %}

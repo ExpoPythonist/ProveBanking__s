@@ -1,0 +1,56 @@
+{% pjaxr_extends "base_template.html" "Site" %}
+{% load crispy_forms_tags %}
+{% block title %} Add allocation - {{ current_tenant }}{% endblock %}
+{% block page_title %}<span id="page-title">Add allocation</span>{% endblock %}
+
+{% block left_nav_button %}
+  <span id="left-nav-btn" class="pull-left">
+    {% if previous_page %}
+      <a class="navbar-brand btn" href="{{ previous_page }}"><i class="fa fa-chevron-left"></i></a>
+    {% else %}
+      <a class="navbar-brand btn" href="{% url 'users:profile' target_user.username %}"><i class="fa fa-chevron-left"></i></a>
+    {% endif %}
+  </span>
+{% endblock %}
+
+{% block right_nav_button %}
+  <span id="right-nav-btn" class="pull-right"></span>
+{% endblock %}
+
+{% block right_sidebar %}
+  <div id="sidebar-right" class="sidebar sidebar-right"></div>
+{% endblock %}
+
+{% block notifications %}
+  {% include 'partials/notifications.html' %}
+{% endblock %}
+
+{% block page %}
+  <div id="page" class="container page">
+    {% block content %}
+    <div id="content">
+      <ol class="breadcrumb custom">
+        <li><a href="{% url 'users:list' %}">People</a></li>
+        <li><a href="{% url 'users:profile' target_user.username %}">Profile</a></li>
+        <li><a href="{% url 'availability:confirm' %}">Confirm allocaton</a></li>
+        <li class="active">Add allocation</li>
+      </ol>
+      {% if form.instance and form.instance.project %}
+      <div class="page-top-band">
+        <div class="col-xs-12">
+          <span class="text-muted">Your availability for the project {{ form.instance.project }}</span>
+        </div>
+      </div>
+      {% endif %}
+      <form class="form-mobile" action="{{ view.action_url }}" method="post">
+        {% csrf_token %}
+        {% include 'forms/mobile_form.html' with form=form %}
+        {{ form.errors }}
+        <div class="form-actions text-center">
+          <button type="submit" class="btn btn-primary btn-block">{% if form.instance %}save{% else %}add allocation{% endif %}</button>
+        </div>
+      </form>
+    </div>
+    {% endblock %}
+  </div>
+{% endblock %}

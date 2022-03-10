@@ -1,0 +1,21 @@
+<div class='panel panel-default clearfix'>
+<div class='panel-body'>
+<div class='vertical-spacer-lg'></div>
+<div class='col-sm-8 form-group '>
+  <div class="input-group ">
+     <span class="input-group-addon">&nbsp;{{  role.role }}</span>
+     <input type="number" class="allocation-value text-center" value="{{ role.allocation }}">%
+  </div>
+   <span class="error text-danger"></span>
+  </div>
+  
+  
+
+  <div class='col-sm-4 text-right '>
+  <button class="btn btn-primary allocation-save-button" type="submit" data-submit-url="{% url 'vendors:roles:edit' role.id %}">update</button>
+  <i class="fa fa-check fa-lg hide success-icon"></i>
+  </div>
+
+</div>
+</div>
+    

@@ -1,0 +1,50 @@
+<div class="panel panel-default panel-card">
+  <div class="panel-body">
+    {% if portfolio_projects %}
+      {% if user.vendor = vendor and perms.vendors.edit_vendor %}
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="alert alert-info alert-dismissible clearfix" role="alert">
+             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <small>
+              Note: Add your representative projects here to showcase strengths of your organization.
+            </small>
+          </div>
+          <br><br>
+        </div>
+      </div>
+      {% endif %}
+
+      {% for project in portfolio_projects|slice:":2" %}
+        {% include 'projects/tile.html' with project=project tile=2 %}
+      {% endfor %}
+
+      {% if user.vendor = vendor and perms.vendors.edit_vendor  or portfolio_projects|length > 2 %}
+      <div>&nbsp;<hr class='thin'></div>
+      {% endif %}
+      
+      <div class="clearfix">
+        <p class="text-right col-xs-12 nopadding">
+          {% if user.vendor = vendor and perms.vendors.edit_vendor %}
+            <a href="{% url 'vendors:add_portfolio' vendor.id %}" class="btn btn-primary btn-o btn-xs">add project</a>
+          {% endif %}
+
+          {% if portfolio_projects|length > 2 %}
+            &nbsp;&nbsp;<a href="{% url 'vendors:portfolio' vendor.id %}" class="btn btn-primary btn-o btn-xs">view all</a>
+          {% endif %}
+        </p>
+      </div>
+    {%else%}
+      {% if user.vendor = vendor and perms.vendors.edit_vendor %}
+        <div class="alert alert-info alert-dismissible" role="alert">
+           <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <small>
+            Note: Add your representative projects here to showcase strengths of your organization.
+          </small>
+        </div>
+        <br><br>
+      {% endif %}
+      <p class="text-muted  lighter">No projects to show</p>
+    {% endif %}
+  </div>
+</div>

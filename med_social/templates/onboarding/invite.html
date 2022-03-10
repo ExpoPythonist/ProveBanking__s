@@ -1,0 +1,27 @@
+{% pjaxr_extends "onboarding/base.html" "Site" %}
+{% load bootstrap3 %}
+{% block title %} Welcome aboard! Help your potential clients find you by providing some info.{% endblock %}
+
+{% block page_title %}<span id="page-title"></span>{% endblock %}
+
+{% block content %}
+  <div class="hero-bg">
+    <h3>Welcome aboard!</h3>
+    <p>Help your potential clients find you by providing some info</p>
+  </div>
+  <form id="colleague-form"  class="form-mobile form-horizontal" role="form" action="{% url 'users:invite' %}" method="POST">
+    {% csrf_token %}
+    {% include 'forms/mobile_form.html' with form=form %}
+    <div class="col-xs-12 text-right">
+      <button type="submit" class="btn btn-primary" name="c-invite">save <i class="fa fa-angle-right"></i></button>
+    </div>
+  </form>
+  <form id="vendor-form" class="form-mobile" role="form" action="{% url 'vendors:invite' %}" method="POST">
+    {% csrf_token %}
+    {% include 'forms/mobile_form.html' with form=vform %}
+    <div class="col-xs-12 text-right">
+      <button type="submit" class="btn btn-primary " name='v-invite'>save <i class="fa fa-angle-right"></i></button>
+    </div>
+  </form>
+{% endblock %}
+{% block pjaxr_namespace %}Site.onboarding.profile{% endblock pjaxr_namespace %}

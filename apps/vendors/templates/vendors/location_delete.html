@@ -1,0 +1,52 @@
+{% pjaxr_extends "base_template.html" "Site" %}
+{% load crispy_forms_tags %}
+{% block title %} Delete Location, Roles and Employees- {{ current_tenant }}{% endblock %}
+
+{% block page_title %}<span id="page-title"> Location</span>{% endblock %}
+
+{% block left_nav_button %}
+  <span id="left-nav-btn" class="pull-left">
+    {% if previous_page %}
+      <a class="navbar-brand btn" href="{{ previous_page }}"><i class="fa fa-chevron-left"></i></a>
+    {% else %}
+      <a class="navbar-brand btn" href="{{ user.vendor.get_absolute_url }}" data-target="sidebar-left"><i class="fa fa-chevron-left"></i></a>
+    {% endif %}
+  </span>
+{% endblock %}
+
+{% block right_nav_button %}
+  <span id="right-nav-btn" class="pull-right"></span>
+{% endblock %}
+
+{% block right_sidebar %}
+  <div id="sidebar-right" class="sidebar sidebar-right"></div>
+{% endblock %}
+
+{% block notifications %}
+  {% include 'partials/notifications.html' %}
+{% endblock %}
+
+{% block page %}
+  <div id="page" class="container page">
+    {% block content %}
+      <ol class="breadcrumb custom">
+        <li><a href="{{ user.vendor.get_absolute_url }}">Company</a></li>
+        <li class="active">Delete location</li>
+      </ol>
+      <form method="POST" action="{% url 'vendors:locations:delete' object.id %}">
+      {% csrf_token %}
+      <div class="alert alert-warning row">
+        <div class="col-sm-10">
+          <i class="fa fa-trash-o no-padding"></i>
+          Are you sure you want to delete this location?
+        </div>
+        <div class="col-sm-2 text-right">
+          <button type="submit" class="btn btn-danger btn-xs">Yes</button>
+        </div>
+      </div>
+    </form>
+    {% include 'vendors/location-as-list.html' with location=object %}
+    {% endblock %}
+  </div>
+{% endblock %}
+{% block pjaxr_namespace %}Site.vendors{% endblock pjaxr_namespace %}

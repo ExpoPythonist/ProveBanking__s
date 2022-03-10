@@ -1,0 +1,7 @@
+<div class="panel panel-default panel-card">
+  <div class="panel-body">
+    {% for action in activity_log %}
+      {% include 'activity/partials/action.html' %}
+    {% endfor %}
+  </div>
+</div>

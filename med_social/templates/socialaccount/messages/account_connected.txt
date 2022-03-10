@@ -1,0 +1,3 @@
+{% load i18n %}
+{{ provider }}
+{% blocktrans %}Successfully imported basic information.{% endblocktrans %}

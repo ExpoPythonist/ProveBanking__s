@@ -1,0 +1,7 @@
+{% for rate in rates %}
+  {% include 'rates/as_field.html' with rate=rate edit_url=rate.get_absolute_url %}
+{% empty %}
+<div class="field-group muted">
+  <div class="text-left text-muted">No rate cards have been added</div>
+</div>
+{% endfor %}

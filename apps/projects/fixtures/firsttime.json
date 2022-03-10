@@ -1,0 +1,68 @@
+[
+{
+    "pk": 1, 
+    "model": "projects.proposedresourcestatus", 
+    "fields": {
+        "vendor_name": "", 
+        "name": "Proposed", 
+        "value": 3, 
+        "slug": "proposed"
+    }
+},
+{
+    "pk": 2, 
+    "model": "projects.proposedresourcestatus", 
+    "fields": {
+        "vendor_name": "", 
+        "name": "Invited", 
+        "value": 4, 
+        "slug": "invited"
+    }
+},
+{
+    "pk": 3, 
+    "model": "projects.proposedresourcestatus", 
+    "fields": {
+        "vendor_name": "", 
+        "name": "Staffed", 
+        "value": 5, 
+        "slug": "staffed"
+    }
+},
+{
+    "pk": 1, 
+    "model": "projects.statusflow", 
+    "fields": {
+        "forward": 3, 
+        "backward": 2, 
+        "driver": 2
+    }
+},
+{
+    "pk": 2, 
+    "model": "projects.statusflow", 
+    "fields": {
+        "forward": 3, 
+        "backward": 1, 
+        "driver": 1
+    }
+},
+{
+    "pk": 3, 
+    "model": "projects.statusflow", 
+    "fields": {
+        "forward": 2, 
+        "backward": 3, 
+        "driver": 1
+    }
+},
+{
+    "pk": 4, 
+    "model": "projects.statusflow", 
+    "fields": {
+        "forward": 1, 
+        "backward": 3, 
+        "driver": 1
+    }
+}
+]

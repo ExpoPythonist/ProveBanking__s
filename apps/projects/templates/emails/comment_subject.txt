@@ -1,0 +1,3 @@
+{% load i18n %}
+{% if created %}{%blocktrans%}{{user_name}} added a new comments on project '{{proj_title}}' .{% endblocktrans %}
+{% endif %}

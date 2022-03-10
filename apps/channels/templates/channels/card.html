@@ -1,0 +1,60 @@
+{% load crispy_forms_tags %}
+{% load projects %}
+
+<div class="panel panel-default discussion-card">
+  <div class="panel-body">
+    {% if version == 'mini' %}
+      <a href="{{ discussion.get_absolute_url }}" class="no-underline">
+        {% include 'discussions/as_field.html' %}
+      </a>
+    {% else %}
+      <div class="field-group">
+        <label>Project</label>
+        <div class="field-value">
+          {{ discussion.project }}
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label>Organization</label>
+        <div class="field-value">
+          {{ discussion.vendor }}
+        </div>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% if version != 'mini' %}
+  {% if discussion.comments.exists %}
+    <div class="page-top-band">
+      <div class="col-xs-12">
+        <h6><i class="fa fa-comments"></i> comments</h6>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-body">
+        {% for comment in discussion.comments.all %}
+          {% include 'discussions/comment_card.html' %}
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+
+  <form id="discussion-comment-form" class="form-mobile form-horizontal" role="form" action="{% url 'projects:discussions:comment' project.id discussion.id %}" method="POST">
+    <div class="page-top-band">
+      <div class="col-xs-12">
+        <h6>Add a new comment</h6>
+      </div>
+    </div>
+    <div class="panel panel-default">
+      <div class="panel-body align-left">
+        {% csrf_token %}
+        {{ comment_form.comments|as_crispy_field:"bootstrap3" }}
+        <div class="text-center form-actions">
+          <button type="submit" class="btn btn-sm btn-primary"><i class="fa fa-mail-forward"></i> Send</button>
+        </div>
+      </div>
+    </div>
+  </form>
+{% endif %}

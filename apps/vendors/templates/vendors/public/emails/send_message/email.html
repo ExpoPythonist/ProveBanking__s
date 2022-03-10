@@ -1,0 +1,17 @@
+{% extends 'base_email.html' %}
+
+{% block body %}
+  <tr>
+    <td class="content-block">
+      <p>
+        Name: {{ object.name }}<br />
+        Email: {{ object.email }}<br />
+        {% if object.phone %}Phone: {{ object.phone }}<br />{% endif %}
+      </p>
+      <p>
+        Message:<br />
+        {{ object.text }}
+      </p>
+    </td>
+  </tr>
+{% endblock %}

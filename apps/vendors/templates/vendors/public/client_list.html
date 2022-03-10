@@ -1,0 +1,27 @@
+{% extends 'base_template.html' %}
+{% load utils %}
+{% block title %}{{ vendor.name }} - Clients{% endblock %}
+
+{% block page %}
+  <div id="page" class="container">
+    {% block content %}
+    	<ol class="breadcrumb custom">
+        <li><a href="{{ vendor.get_absolute_url }}">Company</a></li>
+        <li class="active">Clients</li>
+      </ol>
+      <div class="vertical-spacer-lg"></div>
+
+      <section class="client-list clients">
+        {% for reference in references %}
+
+          {% include 'vendors/public/partials/client_tile.html' with reference=reference %}
+          {% empty %}
+          <div class="col-sm-12">
+          <span class = "text-muted small"> No clients to show.</span>
+          </div>
+          
+        {% endfor %}
+      </section>
+    {% endblock %}
+  </div>
+{% endblock %}

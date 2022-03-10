@@ -1,0 +1,99 @@
+//@font-family-sans-serif: 'Roboto', "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+@font-family-sans-serif: 'Arial' ,'Roboto', "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+@body-bg: #EFEFEF;
+@brand-primary: #365EBF; //
+@btn-primary-border: @brand-primary;
+//@brand-primary-hover : #f79156;
+@brand-secondary: #6b6b6b;
+
+@state-secondary-text:             #000;
+@state-secondary-bg:               @gray-lighter;
+@state-secondary-border:           darken(spin(@btn-secondary-bg, -10), 5%);
+
+@panel-success-text:          #239a56;
+@panel-success-heading-bg:    #a7dfbf;
+@panel-success-border:        darken(spin(@panel-success-heading-bg, -10), 5%);
+
+@panel-warning-text:          #d7b015;
+@panel-warning-heading-bg:    #f9e7a0;
+@panel-warning-border:        darken(spin(@panel-warning-heading-bg, -10), 1%);
+
+@panel-secondary-text:          @state-secondary-text;
+@panel-secondary-border:        @state-secondary-border;
+@panel-secondary-heading-bg:    @state-secondary-bg;
+@panel-secondary-bg:    #fff;
+
+@panel-border-radius: 0px;
+
+@font-family-serif: 'Merriweather', Georgia, "Times New Roman", Times, serif;
+
+@border-radius-base: 3px;
+@border-radius-large: 5px;
+@border-radius-small: 3px;
+
+// Navbar
+@navbar-default-color:             #777;
+@navbar-default-bg:                #FFF;
+
+@navbar-color: @gray;
+@navbar-inverse-color: #fff;
+@navbar-inverse-bg: #363636;
+@navbar-inverse-border: darken(@navbar-inverse-bg, 10%);
+@navbar-inverse-link-color: lighten(@gray, 50%);
+
+@navbar-border-radius: 0px;
+
+// input and forms
+@input-border-focus: @brand-primary;
+
+@state-warning-text:             #AB9C5B;
+@state-warning-bg:               #F2E9C0;
+@state-warning-border:           darken(spin(@state-warning-bg, -10), 3%);
+
+@input-bg:                       #f2f2f2;
+@input-bg-disabled:              darken(@body-bg, 10%);
+@input-border:                   @input-bg;
+
+
+@btn-secondary-color:            @state-secondary-text;
+@btn-secondary-bg:               @state-secondary-bg;
+@btn-secondary-border:           darken(@btn-secondary-bg, 20%);
+
+@btn-o-secondary-color:          @btn-secondary-color;
+@btn-o-secondary-bg:             lighten(@btn-secondary-bg, 2%);
+@btn-o-secondary-border:         @btn-secondary-border;
+
+@btn-o-primary-color:            @brand-primary;
+@btn-o-primary-bg:               rgba(253,97,7,0.10);
+@btn-o-primary-border:           @brand-primary;
+
+@btn-o-success-color:            #5cb85c;
+@btn-o-success-bg:               rgba(119,199,71,0.10);
+@btn-o-success-border:           rgba(119,199,71,0.61);
+
+@btn-o-warning-color:            #A1882B;
+@btn-o-warning-bg:               #FFEFC6;
+@btn-o-warning-border:           rgba(239,173,79,0.49);
+
+@btn-o-danger-color:             #d9534f;
+@btn-o-danger-bg:                rgba(217,83,79,0.10);
+@btn-o-danger-border:            rgba(217,83,79,0.49);
+
+@btn-o-info-color:               #5bc0de;
+@btn-o-info-bg:                  rgba(19,192,222,0.10);
+@btn-o-info-border:              rgba(19,192,222,0.49);
+
+@btn-o-default-color:            @gray;
+@btn-o-default-bg:               lighten(@gray-light, 20%);
+@btn-o-default-border:           lighten(@gray-light, 20%);
+
+
+
+@list-group-active-color:       @text-color;
+//** Background color of active list elements
+@list-group-active-bg:          @list-group-bg;
+//** Border color of active list elements
+@list-group-active-border:      @list-group-border;
+@list-group-active-text-color:  lighten(@list-group-active-bg, 40%);

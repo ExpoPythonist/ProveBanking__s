@@ -1,0 +1,34 @@
+<div class="panel panel-default panel-card ">
+  <div class="panel-body">
+  {% if vendor.brochure %}
+    <div class="col-md-6">
+    <p></p>
+      {% if vendor.brochure_extension == '.pdf' %}
+        <iframe src="https://docs.google.com/gview?url={{vendor.brochure.url}}&embedded=true" style="width:412px; height:300px;" frameborder="0"></iframe>
+      {% else %}
+        <iframe src='https://view.officeapps.live.com/op/embed.aspx?src={{vendor.brochure.url}}' width='412px' height='300px' frameborder='0'></iframe>
+      {% endif %}
+    </div>
+  {%endif%}
+    <div class="col-md-6">
+      {% if vendor.video %}
+        <div class="video-box">
+          {% if vendor.video %}
+            <div class="embed-responsive embed-responsive-4by3">
+              <iframe frameborder="0" width="100%" height="100%" class="embed-responsive-item" src="{{ vendor.get_video_embed_url }}"></iframe>
+            </div>
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+
+    <div class="col-sm-12">
+    {% if object.story %}
+        <p class="story description">
+          {{ object.story|linebreaks }}
+        </p>
+   {% endif %}
+    </div>
+
+  </div>
+</div>

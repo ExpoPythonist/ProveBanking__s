@@ -1,0 +1,70 @@
+{% extends "account/base.html" %}
+{% load i18n %}
+{% load account %}
+{% load socialaccount %}
+{% load crispy_forms_tags %}
+{% load crispy_forms_field %}
+{% load extra_form_utils %}
+
+{% block title %}Sign in - {{ current_tenant }}{% endblock %}
+
+{% block main_navbar %}{% endblock %}
+
+
+{% block burger_menu %}
+  <span id="main-menu-btn" class="pull-left"></span>
+{% endblock %}
+
+{% block notifications %}
+  {% include 'partials/notifications.html' %}
+{% endblock %}
+
+
+{% block content %}
+  <section class="hero-container">
+    <div class="page container ">
+      <div class="modal show auth-modal">
+        <div class="modal-dialog modal-sm">
+          <div class="modal-content">
+            <div class="modal-body">
+              <div class="auth-form-panel">
+                <div class="text-center">
+                  <h4>You are not a member of any pre-approved slack teams.</h4>
+                </div>
+
+                <div>
+                  <hr class="thin"/>
+                  <a href="{% provider_login_url "slack" process="login" %}" class="btn btn-slack btn-block">
+                    <i class="fa fa-slack"></i> &nbsp;try different slack team
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <br>
+          <div class="modal-content">
+            <div class="modal-body">
+              <div class="text-center">
+                {% if current_tenant.is_public_instance %}
+                  <p class="text-muted">Are you an <b class="text-default">{{ current_tenant.name}}</b> client?</p>
+                  <a class="btn btn-o btn-primary btn-block" href="{% url 'users:register' %}?previous={{ request.get_full_path }}">register for an account</a>
+                  <br/>
+                  <div class="text-info">
+                  <span class="small">If you are a service provider for {{ current_tenant.name}}, please ask your {{ current_tenant.name}} contact to invite you.</span>
+                  </div>
+                {% else %}
+                  <p class="text-muted">Are you an <b class="text-default">{{ current_tenant.name}}</b> employee?</p>
+                  <a class="btn btn-o btn-primary btn-block" href="{% url 'users:register' %}?previous={{ request.get_full_path }}">register for an account</a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+{% endblock %}
+
+{% block js_foot %}
+  <script type="text/javascript" src="{{ STATIC_URL }}js/lib/add2home.js"></script>
+{% endblock %}

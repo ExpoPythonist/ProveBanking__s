@@ -1,0 +1,29 @@
+{% extends 'base_email.html' %}
+
+{% block body %}
+    <tr>
+      <td class="content-block">
+        <p>Hi there,</p>
+        <p>
+          For project: "<a href="{{project_url}}" class="no-underline">
+          {{ staffing_request.project.title }}</a>", 
+          {% if staffing_request.kind == staffing_request.KIND_STAFFING %}
+          requirement: “<a href="{{resource_url}}" 
+          class="no-underline">{{ staffing_request.role }}</a>”,
+          {% else %}
+          deliverable: “<a href="{{resource_url}}" 
+          class="no-underline">{{ staffing_request.title }}</a>”,
+          {% endif %} 
+        {% if confirm %}
+        we are on it.</p>
+        {% else %}
+        I am sorry that we will not be able to fulfill it.</p>
+        {% endif %}
+        <p>
+        Best,<br/>
+        {{vendor.name}}<br/>
+        {{vendor.email}}
+        </p>
+      </td>
+    </tr>
+{% endblock %}

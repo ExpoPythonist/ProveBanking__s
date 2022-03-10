@@ -1,0 +1,27 @@
+<form enctype="multipart/form-data" id="invite-form" class="form-mobile" role="form" action="{% url 'users:invite' %}?{% if iframed %}iframed=yes{% endif %}{% if vendor %}&vendor_id={{vendor.id}}{%endif%}" method="POST" {% if request.is_ajax and not view.is_pjax %}data-ajax-form="true"{% endif %} {% if iframed %}target="ajaxUploadiFrame"{% endif %}>
+    {% csrf_token %}
+    {% if iframed %}
+      {% include 'forms/naked_form.html' with form=form %}
+    {% else %}
+      {% include 'forms/mobile_form.html' with form=form %}
+    {% endif %}
+    <div class="form-actions text-center">
+      <input type="submit" value="Add" class="btn btn-primary btn-block"/>
+    </div>
+</form>
+{% if iframed%}
+<script>
+  if(!$('#id_kind').is(":checked")) {
+      $('#div_id_vendor').addClass('hide');
+  }
+  $('#id_kind').change(function() {
+      
+      if($(this).is(":checked")) {
+        $('#div_id_vendor').removeClass('hide');
+      }
+      else{
+        $('#div_id_vendor').addClass('hide');
+      }        
+  });
+</script>
+{%endif%}

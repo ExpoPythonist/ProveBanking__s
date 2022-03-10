@@ -1,0 +1,14 @@
+{% if projects %}
+  {% for project in projects %}
+    {% include 'projects/card.html' with project=project %}
+  {% endfor %}
+  <div class="block-cover text-center hide"></div>
+{% else %}
+  <div class="panel panel-default">
+    <div class="panel-body">
+      <br/>
+        <div class="text-muted">No related projects.</div>
+      <br/>
+    </div>
+  </div>
+{% endif %}

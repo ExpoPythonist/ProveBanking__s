@@ -1,0 +1,24 @@
+{% load thumbnail %}
+{% if success == False %}
+<!--form id="recommendationForm" action="{% if form.instance.id %}{% url 'edit_position' form.instance.id %}{% else %}{% url 'positions' %}{% endif %}" method="POST" class="{{ css_class }}">
+  {% include 'consultant/profile/generic_form.html' with form=form %}
+</form-->
+{% else %}
+  {% if deleted %}
+    <li id="recommendation-{{ pk }}" data-deleted="True"></li>
+  {% else %}
+    <li id="recommendation-{{ recommendation.id }}">
+      <blockquote>
+        <p>{{ recommendation.text }}</p>
+          <footer> <cite title="{{ recommendation.recommender }}">
+          {% if recommendation.recommender_url %}
+            <a href='{{recommendation.recommender_url}}' target="_blank">
+              {{ recommendation.recommender }} </a>
+          {% else %}
+            {{ recommendation.recommender }}
+          {% endif %}
+          </cite></footer>
+      </blockquote>
+    </li>
+  {% endif %}
+{% endif %}

@@ -1,0 +1,124 @@
+{% load pipeline %}
+{% load account %}
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" class="no-js ie6 lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" class="no-js ie7 lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" class="no-js ie8 lt-ie9"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+  <head>
+    <title>{% if metadata.title %}{{ metadata.title }}{% else %}{% block title %}{% endblock %}{% endif %} - {{ current_tenant.name }}</title>
+    {% if metadata.description %}<meta name="description" content="{{ metadata.description }}">{% endif %}
+    {% if metadata.keywords %}<meta name="keywords" content="{{ metadata.keywords }}">{% endif %}
+
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, target-densityDpi=device-dpi, user-scalable=no">
+    <meta name="google-site-verification" content="w3UBSKIDYX1xMXiWj-VWl7NVO1FIWXdFRcNionz_ITM" />
+    <meta id="csrf-middleware-token" value="{{ csrf_token }}"></meta>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Proven">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="shortcut icon" href="{{ STATIC_URL }}images/favicon.png">
+    {% include 'partials/touchicons.html' %}
+    {% include 'partials/startup_images.html' %}
+    {% block CSS_INCLUDES %}
+      {% if current_tenant.schema_name == 'intuit' %}
+        {% stylesheet 'libs_blue' %}
+        {% stylesheet 'app_blue' %}
+      {% else %}
+        {% stylesheet 'libs' %}
+        {% stylesheet 'app' %}
+      {% endif%}
+    {% endblock %}
+    {% block css_head %}{% endblock %}
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      {% javascript 'legacy' %}
+    <![endif]-->
+
+    {% include 'partials/global_vars.html' %}
+    {% block js_head %}{% endblock %}
+    {% block extra_head %}{% endblock %}
+    {% include 'mixpanel.html' %}
+
+    {% block JS_INCLUES %}
+      {% javascript 'libs' %}
+      {% javascript 'app' %}
+    {% endblock %}
+    {% javascript 'app-ng' %}
+    <style>
+      #client-reference-form [id$="-DELETE"] {display: none;}
+    </style>
+  </head>
+
+  <body data-pjaxr-namespace="{% block pjaxr_namespace %}{% endblock pjaxr_namespace %}" {% if not request.mobile %}class="Desktop"{% endif %}>
+    <div id="body-wrapper">
+      {% block site %}
+        {% block main_navbar %}
+          {% include 'navbar.html' %}
+        {% endblock main_navbar %}
+        {% block notifications %}
+          {% include 'partials/notifications.html' %}
+        {% endblock %}
+
+      <div id="sidebar-backdrop" class="hide"></div>
+      <div id="sidebar-container">
+        {% block left_sidebar %}
+            {% include 'partials/left_sidebar.html' %}
+        {% endblock %}
+        {% block right_sidebar %}{% endblock %}
+      </div>
+      {% block page %}{% endblock %}
+
+      {% if user.is_client %}
+        {% if features.rfp.is_enabled %}
+        <a class="btn-floating btn-send-request cart-folder" data-toggle="tooltip" data-placement="top" title="View Shortlist" href="{% url "vendors:shortlist" %}"></a>
+        {% endif %}
+      {% endif %}
+
+      {% include 'users/profile_modal.html' %}
+
+      {% block js_foot %}{% endblock %}
+      {% block js_bundle %}{% endblock %}
+      {% if not debug %}
+        {% include 'google-analytics.html' %}
+        <script src="//static.getclicky.com/js" type="text/javascript"></script>
+        <script type="text/javascript">try{ clicky.init(100938778); }catch(e){}</script>
+        <noscript><p><img alt="Clicky" width="1" height="1" src="//in.getclicky.com/100938778ns.gif" /></p></noscript>
+      {% endif %}
+    {% endblock %}
+      <div class="generic-modal modal fade" id="genericModal" tabindex="-1" role="dialog" aria-labelledby="genericModel" aria-hidden="true" data-modal-is-remote="true" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <div class="row">
+                <div class="col-xs-12">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title">&nbsp;</h4>
+                </div>
+              </div>
+            </div>
+            <div class="modal-body">
+              <i class="fa fa-circle-o-notch fa-spin"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="spinnerModal" class="modal modal-spinner">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-body">
+              <div class="spinner-container">
+              </div>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div><!-- /.modal -->
+    </div>
+  </body>
+
+
+</html>

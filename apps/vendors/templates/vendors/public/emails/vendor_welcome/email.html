@@ -1,0 +1,27 @@
+{% extends 'base_email.html' %}
+
+{% block body %}
+  <tr>
+    <td class="content-block">
+      <p>
+        Dear {{ user.first_name }},
+      </p>
+      <p>
+        Thanks so much for joining our community. We want to create a place for you to succeed, to be found by great companies and for you to win more deals.  We created Proven because we wanted to solve two big problems:
+      </p>
+      <p>
+        1. For suppliers of professional services, it's sometimes very hard to be found.<br>
+        2. For buyers of professional services, its very hard to find the best service providers.
+      </p>
+      <p>
+        We hope that with Proven, we're helping to solve these problems, and we need you to be part of our community. We are reviewing your profile now, and when it is verified, we will be back in touch with you shortly. Remember, we only show companies on the community once they have at least one verified customer.
+      </p>
+      <p>
+        Thanks for being part of the Proven Community,<br>
+        Suzanne Jordan<br>
+        COO and Founder, Proven<br>
+        suzanne@proven.cc
+      </p>
+    </td>
+  </tr>
+{% endblock %}

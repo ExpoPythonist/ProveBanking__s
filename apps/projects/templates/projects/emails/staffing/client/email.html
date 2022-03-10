@@ -1,0 +1,33 @@
+{% extends 'base_email.html' %}
+{% load utils %}
+{% block body %}
+<tr>
+  <td class="content-block">
+    <p>Hi there,</p>
+    <p>For project: "<a href="{{project_url}}" class="no-underline">
+    {{ staffing_request.project.title }}</a>",
+    {% if staffing_request.kind == staffing_request.KIND_STAFFING %}
+    a new staffing request has been created for {{ staffing_request.role|an }} “<a href="{{resource_url}}"
+    class="no-underline">{{ staffing_request.role }}</a>” with
+    {% else %}
+    we are looking for deliverable: “<a href="{{resource_url}}"
+    class="no-underline">{{ staffing_request.title }}</a>” with
+    {% endif %} 
+    {% for skill in staffing_request.categories.all %}
+        {% if forloop.revcounter == 2 %}
+        "{{skill}}" & 
+        {% elif forloop.last %}
+        "{{skill}}"
+        {% else %}
+        "{{skill}}",
+        {% endif%} 
+    {%endfor%}
+    skills.
+    </p>
+
+    <p>You can view additional details and propose suitable candidates here:<br/><a href="{{ resource_url }}" class="no-underline">
+    {{ resource_url }}</a></p>
+  </td>
+</tr>
+
+{% endblock %}

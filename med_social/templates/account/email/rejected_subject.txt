@@ -1,0 +1,1 @@
+{% load i18n %}{% blocktrans %}Sorry, your application to join the {{ current_site.name }} community is rejected.{% endblocktrans %}

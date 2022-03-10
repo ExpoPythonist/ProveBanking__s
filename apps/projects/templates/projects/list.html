@@ -1,0 +1,84 @@
+{% pjaxr_extends "base_template.html" "Site" %}
+{% block title %}Projects - {{ current_tenant }}{% endblock %}
+
+{% block page_title %}<span id="page-title">Projects</span>{% endblock %}
+
+{% block left_nav_button %}
+  <span id="left-nav-btn" class="pull-left"></span>
+{% endblock %}
+
+{% block right_nav_button %}
+  <span id="right-nav-btn" class="pull-right">
+    <span class="navbar-brand"></span>
+  </span>
+{% endblock %}
+
+{% block notifications %}
+  {% include 'partials/notifications.html' %}
+{% endblock %}
+
+{% block page %}
+  <div id="page" class="container page project-list-page">
+    {% block content %}
+      {#% include 'requests/pipeline.html' with base_url_name='projects:list' %#}
+
+      <section class="vendor-filter filter-bar">
+        <h6 class="section-title text-muted text-uppercase">Search <b>{{current_tenant}}</b> Projects</h6>
+        <div class="panel panel-default panel-card">
+          <div class="panel-body">
+            <form id="filter-form" class="form-inline nopadding block-left col-md-9" role="form" action="{% url 'projects:list' %}">
+           
+              <!-- <strong class="text-lighter text-uppercase small">Filter Result by</strong>&nbsp;&nbsp; -->
+            {% for F in projects.form %}
+              {% if F.label != 'Search' %}
+                <div class="btn-group filter-btn-group">
+                  <button type="button" class="{{ F.label }} filter-btn btn dropdown-toggle" data-toggle="dropdown">
+                    {{ F.label }}...
+                  </button>
+                  <ul class="dropdown-menu {{ F.label }}-dropdown filter-dropdown" role="menu">
+                    <li>{{ F }}</li>
+                  </ul>
+                </div>
+              {% endif %}
+            {% endfor %}
+            </form>
+            <div class="col-md-3 nopadding text-right block-right">
+              {% if features.projects.is_enabled %}
+              {% if user.is_client %}
+                <a href="{% url 'users:list' %}?availability=now" class="btn btn-primary btn-sm btn-o">View People & Suppliers</a>&nbsp;
+              {% elif not user.vendor.is_prospective %}
+                <a href="{% url 'projects:list' %}" class="btn btn-primary btn-xs btn-o">View Requirements</a>&nbsp;
+              {% endif %}
+            {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <div class="container">
+          <div id="filter-tags" class="filter-container"></div>
+        </div>
+      </section>
+
+
+      <section class="vendor-results relative row">
+        <h6 class="section-title"></h6>
+        <div id="results-list" class="relative projects-filter-result">
+          {% include 'projects/partials/filter_results.html' with projects=projects %}
+          {% if archived_projects %}
+          <div class="collapse-trigger">
+            <a id="archive-show-btn" class="no-underline anchor" data-toggle="collapse" data-target="#archive-projects">Show archived projects</a>
+            <div class="vertical-spacer-sm"></div>
+          </div>
+          <div id="archive-projects" class='collapse'>
+            {% for project in archived_projects %}
+                {% include 'projects/card.html' with project=project %}
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
+      </section>
+
+    {% endblock %}
+  </div>
+{% endblock %}
+{% block pjaxr_namespace %}Site.projects{% endblock pjaxr_namespace %}

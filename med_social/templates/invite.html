@@ -1,0 +1,122 @@
+{% extends "account/base.html" %}
+{% load avatar_tags %}
+{% load i18n %}
+{% load account %}
+
+{% block title %}Invite{% endblock %}
+
+{% block page_title %}<span id="page-title">Invite</span>{% endblock %}
+
+{% block left_nav_button %}
+<span id="left-nav-btn" class="pull-left">
+  <a id="back-btn" class="navbar-brand btn" href="{% url 'home' %}"><i class="fa fa-chevron-left"></i><!--  <span>Cancel</span> --></a>
+</span>
+{% endblock %}
+
+{% block right_nav_button %}<span id="right-nav-btn" class="pull-right"></span>{% endblock %}
+
+{% block page %}
+  <div id="page" class="page">
+    <div class="hero-invite text-center">
+      <img src="" class="avatar img-circle" width="66">
+      <br/>
+      <h4>{{ user.get_full_name }}</h4>
+      <p class="lead"> invite connections to join your network</p>
+    </div>
+
+    <div class="container">
+      <div class="page-top-band">
+        <div class="col-xs-12">
+          <h6>Invite connections</h6>
+        </div>
+      </div>
+      <div class="panel panel-default invite-container response-cardd">
+        <div class="panel-body">
+          
+          <div class="field-group">
+            <label>
+              <a class="no-underline" href="mailto:?subject=Join my personal network of independent consultants&body=Join my personal network of independent consultants. {{WEBSITE.ROOT_URL}}{% url 'invite_link' user %}">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="text-muted">E-mail connections</span>
+              </a>
+            </label>
+              <!-- <label>{{ quote.vendor.name }}</label> -->
+            <div class="field-value">
+              <span class="icon-container"><i class="fa fa-chevron-right"></i></span>  
+            </div>
+          </div>
+
+
+          <div class="field-group">
+            <label>
+              <a href="#" class="no-underline">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="text-muted">Invite Linkedin connections</span>
+              </a>
+            </label>
+            <div class="field-value">
+              <span class="icon-container"><i class="fa fa-chevron-right"></i></span>  
+            </div>
+          </div>
+
+
+          <div class="field-group">
+            <label>
+              <a  class="no-underline"
+                  href="https://twitter.com/share"  
+                  data-lang="en" 
+                  data-related="thevetted" 
+                  data-text="Join my personal network of independent consultants" 
+                  data-count="none" 
+                  data-size="large" 
+                  data-url="{{WEBSITE.ROOT_URL}}{% url 'invite_link' user %}">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="text-muted">Share invitation on Twitter</span>
+              </a>
+            </label>
+            <div class="field-value">
+                <span class="icon-container"><i class="fa fa-chevron-right"></i></span>  
+            </div>
+          </div>
+
+          <div class="field-group">
+            <label>
+              <a href="fb-share-button" class="no-underline" data-href="{{WEBSITE.ROOT_URL}}{% url 'invite_link' user %}">
+                <span class="fa-stack fa-lg">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="text-muted">Share invitation on Facebook</span>
+              </a>
+            </label>
+            <div class="field-value">
+              <span class="icon-container"><i class="fa fa-chevron-right"></i></span>  
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block js_foot %}
+<div id="fb-root"></div>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="https://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=252540648241513";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+{% endblock %}
+

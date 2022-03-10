@@ -1,0 +1,8 @@
+{% load account %}{% user_display user as user_display %}{% load i18n %}{% autoescape off %}{% if user.is_approved == None %}{% include 'account/email/welcome_message.txt' with user=user %}{% endif %}
+{% if False %}{% blocktrans with current_site.name as site_name %}Please take a moment to confirm your email address by clicking this link {{ activate_url }}{% endblocktrans %}{% endif %}{% endautoescape %}
+
+Best Regards,
+
+Suzanne Jordan
+
+COO and Founder, Proven (http://www.proven.cc)

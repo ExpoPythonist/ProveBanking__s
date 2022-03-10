@@ -1,0 +1,28 @@
+ <div class="panel panel-default transaction-panel">
+    <div class="panel-body">
+        {% for response in responses %}
+          <div class="field-group field-nested-parent {{ extra_css_classes }}">
+            <span class="col-xs-12 no-underline nopadding text-left no-link-style">
+              <a href="{{ response.request.project.get_absolute_url }}" class="no-underline no-link-style">
+                <strong>{{ response.request.project }}</strong>
+              </a>
+              {% if response.request.role %}
+              &nbsp;<i class="fa fa-arrow-right text-muted"></i>&nbsp;
+              <strong class="no-link-style">{{ response.request.role }}</strong>&nbsp;({{ response.request.skill_level }})
+              {% endif %}
+            </span>
+          <label>
+            {% for skill in response.request.categories.all %}
+              <span class="btn btn-secondary btn-o btn-xs disabled">{{ skill }}</span>&nbsp;
+            {% endfor %}
+          </label>
+          <div class="field-value">
+            <span class="btn btn-secondary btn-o btn-xs disabled"><i class="fa fa-user"></i> {{ response.request.num_resources }}</span>&nbsp;
+            {% if response.request.location %}
+              <span class="btn btn-secondary btn-o btn-xs disabled"><i class="fa fa-map-marker"></i> {{ response.request.location }}</span>&nbsp;
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+  </div>
+</div>

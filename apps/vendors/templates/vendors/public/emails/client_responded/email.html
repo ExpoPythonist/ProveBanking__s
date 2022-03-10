@@ -1,0 +1,30 @@
+{% extends 'base_email.html' %}
+
+{% block body %}
+  <tr>
+    <td class="content-block">
+      <p>
+        Congratulations {{ object.created_by.first_name }}!<br>
+        {% if is_first_client %}
+          Your first client {{ object.client.name }} has verified your relationship with them. 
+        {% else %}
+          Your first client {{ object.client.name }} has verified your relationship with them. 
+        {% endif %}
+      </p>
+      <p>
+        {% if is_first_client %}
+          This means your profile is now eligible to be listed on Proven. To continue your growth and status in the Proven community, please get other clients of yours to verify their relationship with you. <a href="{{ add_client_url }}">Click here</a> to request verification from more clients.
+        {% else %}
+          Your profile will be better ranked the more clients you have verified, so keep requesting verifications from more clients. <a href="{{ add_client_url }}">Click here</a> to go there now
+        {% endif %}
+      </p>
+    
+      <p>
+        Thanks for being part of the Proven community,<br>
+        Suzanne Jordan<br>
+        Founder and COO, Proven<br>
+        suzanne@proven.cc
+      </p>
+    </td>
+  </tr>
+{% endblock %}

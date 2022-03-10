@@ -1,0 +1,141 @@
+{% pjaxr_extends "base_template.html" "Site" %}
+{% load crispy_forms_tags %}
+{% load projects %}
+
+{% block title %}{{ vendor.name }}'s proposal - {{ current_tenant.name }}{% endblock %}
+
+{% block page_title %}<span id="page-title">{{ vendor.name }}'s proposal</span>{% endblock %}
+
+{% block left_nav_button %}
+  <span id="left-nav-btn" class="pull-left">
+    <a class="navbar-brand btn" href="{% url 'projects:detail' project.id %}"><i class="fa fa-chevron-left"></i></a>
+  </span>
+{% endblock %}
+
+{% block right_nav_button %}
+  <span id="right-nav-btn" class="pull-right">
+    {% if not response.accepted and response.request.is_fixed_price %}
+      {% if user.is_client %}
+        <a class="navbar-brand btn" data-toggle="modal" data-target="#acceptResponseModal" href="{% url 'staffing:requests:response_accept' project.id staffing_request.id response.id %}"> <span>Accept</span></a>
+      {% elif user.vendor == response.vendor and perms.projects.add_staffingresponse %}
+        <a class="navbar-brand btn" href="{% url 'staffing:requests:edit_fixed_response' staffing_request.id response.id %}"> <span>Edit</span></a>
+      {% endif %}
+    {% endif %}
+  </span>
+{% endblock %}
+
+{% block right_sidebar %}
+  <div id="sidebar-right" class="sidebar sidebar-right"></div>
+{% endblock %}
+
+{% block notifications %}
+  {% include 'partials/notifications.html' %}
+{% endblock %}
+
+{% block page %}
+  <div id="page" class="container page">
+    {% block content %}
+      {% if perms.reviews.view_review %}
+      <div class="text-center">
+        <br>
+        <div class="btn-group" id="responses-page-tab">
+          <a href="#response-details" class="btn btn-sm btn-default active" data-toggle="tab">{{ user.is_client|yesno:"Supplier, Your" }} proposal</a>
+          <a href="#reviews" class="btn btn-sm btn-default" data-toggle="tab"><span class="tag tag-default">{{ response.reviews.count }}</span> Reviews</a>
+        </div>
+        <br>
+      </div>
+      {%endif%}
+      <div class="tab-content">
+        <div class="tab-pane fade in active" id="response-details">
+          {% if user.is_vendor or response.request.is_fixed_price and user.is_client and response.accepted %}
+            {{ response|render_response_status:'banner' }}
+          {% endif %}
+          {% include 'responses/card.html' %}
+
+          <!--- START: COMMENTS --->
+      <div class="page-top-band">
+        <div class="col-xs-12">
+          <h6><i class="fa fa-comments"></i> Discussion</h6>
+        </div>
+      </div>
+      {% if response.comments.exists %}
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <ul class="media-list">
+              {% for comment in response.comments.all %}
+                {% include 'responses/comment_card.html' %}
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      {% endif %}
+
+        <form id="response-comment-form" class="form-horizontal form-mobile" role="form" action="{% url 'staffing:requests:response_comment' project.id staffing_request.id response.id %}" method="POST">
+          <div class="panel panel-default">
+            <div class="panel-body align-left">
+              {% csrf_token %}
+              {{ comment_form.comments|as_crispy_field:"bootstrap3" }}
+              <div class="field-group">
+                <div class="field-value text-right">
+                  <button type="submit" class="btn btn-xs btn-primary">Comment</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+        {{ comment_form.errors }}
+
+          <!--- END: COMMENTS --->
+
+        </div>
+
+      {% if perms.reviews.view_review %}
+      <div id="reviews" class="tab-pane fade">
+        <div class="page-top-band">
+          <div class="col-xs-6">
+            <h6>Reviews</h6>
+          </div>
+          <div class="col-xs-6 text-right">
+            {% if False and perms.reviews.add_review %}
+            <a href="{% url 'staffing:requests:reviews:create' project.id staffing_request.id response.id %}" class="btn btn-primary btn-sm">Write a review</a>
+            {% endif %}
+          </div>
+        </div>
+        {% if not reviews %}
+        <div class="page-top-band">
+          <div class="col-xs-12">
+            <h6>{{ vendor }} has not received any reviews on this proejct.</h6>
+          </div>
+        </div>
+        {% endif %}
+        {% if reviews and perms.reviews.view_review %}
+        <div class="panel panel-default reviews-card">
+          <div class="panel-body">
+            {% for review in reviews %}
+              {% include 'reviews/as_field.html' %}
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+      </div>
+      {% endif %}
+    </div>
+  </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="sendProposalModal" tabindex="-2" role="dialog" aria-labelledby="sendProposalModal" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+      <div class="modal-dialog">
+        <div class="modal-content">
+        </div>
+      </div>
+    </div>
+    <div class="modal fade" id="acceptResponseModal" tabindex="-1" role="dialog" aria-labelledby="acceptResponseModal" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+      <div class="modal-dialog">
+        <div class="modal-content">
+        </div>
+      </div>
+    </div>
+  {% endblock %}
+</div>
+{% endblock %}
+{% block pjaxr_namespace %}Site.projects.response_details{% endblock pjaxr_namespace %}

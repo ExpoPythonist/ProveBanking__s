@@ -1,0 +1,66 @@
+{% pjaxr_extends "base_template.html" "Site" %}
+{% load crispy_forms_tags %}
+{% block title %} {{ view.get_title }} - {{ current_tenant }}{% endblock %}
+
+{% block page_title %}<span id="page-title">{{ stfrq.id|yesno:"Edit,New"}} {{ view.get_entity_title }}</span>{% endblock %}
+
+{% block left_nav_button %}
+  <span id="left-nav-btn" class="pull-left">
+    {% if previous_page %}
+      <a class="navbar-brand btn" href="{{ previous_page }}"><i class="fa fa-chevron-left"></i></a>
+    {% else %}
+      <a class="navbar-brand btn" href="{% url 'projects:list' %}"><i class="fa fa-chevron-left"></i><!-- <span>Cancel</span> --></a>
+    {% endif %}
+  </span>
+{% endblock %}
+
+{% block right_nav_button %}
+  <span id="right-nav-btn" class="pull-right">
+  </span>
+{% endblock %}
+
+{% block right_sidebar %}
+  <div id="sidebar-right" class="sidebar sidebar-right"></div>
+{% endblock %}
+
+{% block notifications %}
+  {% include 'partials/notifications.html' %}
+{% endblock %}
+
+{% block page %}
+  <div id="page" class="container page">
+    {% block content %}
+      <ol class="breadcrumb custom">
+        <li><a href="{% url 'projects:list' %}">Projects</a></li>
+        {% if project %}
+        <li><a href="{{ project.get_absolute_url }}">Project details</a></li>
+        {% endif %}
+        {% if stfrq.id %}
+          <li><a href="{{ staffing_request.get_absolute_url }}">Staffing request</a></li>
+          <li class="active">Edit request</li>
+        {% else %}
+          <li class="active">New staffing request</li>
+        {% endif %}
+      </ol>
+      {% if project %}
+        {% include 'projects/card.html' with project=project  %}
+      {% endif %}
+      <div class="panel-group">
+          <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="headingBasic">
+              <h4 class="panel-title">
+                  <span class="name">I am looking for ...</span>
+                  <span class="values hide"></span>
+              </h4>
+            </div>
+            <div >
+              <div class="panel-body">
+                {% include 'requests/partials/create_form.html' with form=basic_form %}
+              </div>
+            </div>
+          </div>
+      </div>
+    {% endblock %}
+  </div>
+{% endblock %}
+{% block pjaxr_namespace %}Site.projects.staffing.create{% endblock pjaxr_namespace %}

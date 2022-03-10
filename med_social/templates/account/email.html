@@ -1,0 +1,84 @@
+{% pjaxr_extends "partials/auth_modal.html" "Site" %}
+{% load i18n %}
+{% block title %}{% trans "Account" %}{% endblock %}
+
+{% block notifications %}{% include 'partials/notifications.html' %}{% endblock %}
+
+{% block content %}
+  <div class="auth-form-panel">
+    <div class="text-center">
+      <h4 class="header-thin">{% trans "Email addresses" %}</h4>
+      <br/>
+    </div>
+
+    {% if user.emailaddress_set.all %}
+    <form action="{% url 'account_email' %}" class="email_list form-mobile authforms" method="post">
+      {% csrf_token %}
+
+      {% if not user.emailaddress_set.all %}
+        {% trans 'The following email addresses are associated with your account:' %}
+      {% else %}
+
+      {% for emailaddress in user.emailaddress_set.all %}
+      <div class="field-group">
+        <label class="control-labels  {% if emailaddress.primary %}primary_email{%endif%}" for="email_radio_{{forloop.counter}}">
+          <input id="email_radio_{{forloop.counter}}" type="radio" name="email" {% if emailaddress.primary %}checked="checked"{%endif %} value="{{emailaddress.email}}"/>
+          {{ emailaddress.email }}
+        </label>
+        {% if emailaddress.verified %}
+        <span class="verified small text-successful">{% trans "Verified" %}</span>
+        {% else %}
+        <span class="unverified small text-warning">{% trans "Unverified" %}</span>
+        {% endif %}
+        {% if emailaddress.primary %}
+          <span class="primary small text-primary">{% trans "Primary" %}</span>
+        {% endif %}
+      </div>
+      {% endfor %}
+    {% endif %}
+      <div class="buttonHolder col-xs-12 col-centered ">
+        <button class="btn btn-xs btn-link secondaryAction" type="submit" name="action_primary" >{% trans 'Set primary' %}</button>
+        <span class="text-muted">&nbsp;|&nbsp;</span>
+        <button class="btn btn-xs btn-link secondaryAction" type="submit" name="action_send" >{% trans 'Verify again' %}</button>
+        <span class="text-muted">&nbsp;|&nbsp;</span>
+        <button class="btn btn-xs btn-link primaryAction" type="submit" name="action_remove" >{% trans 'Remove' %}</button>
+      </div>
+    </form>
+  {% else %} 
+    <p class="text-left">
+      <strong>{% trans 'Warning:'%}</strong> {% trans "You currently do not have any email address set up. You should really add an email address so you can receive notifications, reset your password, etc." %}
+    </p>
+  {% endif %}
+
+  <hr/>
+
+  <div class="text-center">
+    <h4 class="header-thin">{% trans "Add email address" %}</h4>
+    <hr/>
+  </div>
+
+  <form method="post" action="" class="add_email form-mobile authforms">
+    {% csrf_token %}
+    {% include 'forms/auth_form.html' with form=form %}
+    <div class="col-xs-12 col-centered text-center">
+      <button class="btn btn-primary btn-block" type="submit" name="action_primary" >Add</button>
+    </div>
+  </form>
+</div>
+{% endblock %}
+
+{% block js_foot %}
+<script type="text/javascript">
+(function() {
+  var message = "{% trans 'Do you really want to remove the selected email address?' %}";
+  var actions = document.getElementsByName('action_remove');
+  if (actions.length) {
+    actions[0].addEventListener("click", function(e) {
+      if (! confirm(message)) {
+        e.preventDefault();
+      }
+    });
+  }
+})();
+</script>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% with latest_comment=discussion.latest_comment %}
+<div class="field-group">
+  <label>
+    {% if user.is_client %}
+      {{ discussion.vendor.name }}
+    {% elif latest_comment %}
+      {{ latest_comment.posted_by }} ({{ current_tenant }})
+    {% else %}
+      {{ project.user.get_name_display }} ({{ current_tenant }})
+    {% endif %}
+  </label>
+  <div class="field-value">
+    {% if discussion.comments.count %}
+      <span class="tag tag-danger"><i class="fa fa-comments"></i> {{ discussion.comments.count }}</span>
+    {% endif %}
+
+    {% if latest_comment %}
+      <span class="text-muted">{{ latest_comment.natural_created_date }}</span>
+    {% endif %}
+    <span class="icon-container"><i class="fa fa-chevron-right"></i></span>
+  </div>
+</div>
+{% endwith %}

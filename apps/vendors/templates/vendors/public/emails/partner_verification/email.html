@@ -1,0 +1,18 @@
+{% extends 'base_email.html' %}
+
+{% block body %}
+  <tr>
+    <td class="content-block">
+      <p>Hi,</p>
+      <p>
+        {{ object.created_by.get_name_display }} has indicated that {{ object.vendor.name }} is working with {{ object.client }}. Please click the Verify button if this is the case.
+      </p>
+      <p>
+        <a href="{{ confirm_url }}" class="btn btn-warning btn-block">Verify</a>
+      </p>
+      <p>
+        <small class="text-muted">This link expires in 7 days for security reasons</small>
+      </p>
+    </td>
+  </tr>
+{% endblock %}

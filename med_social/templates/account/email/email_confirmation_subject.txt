@@ -1,0 +1,4 @@
+{% load i18n %}
+{% autoescape off %}
+{%if user.is_approved%}{% blocktrans with site_name=current_site.name %}Please confirm your email address{% endblocktrans %}{% else %}{% blocktrans %}Thanks from Proven{% endblocktrans %}{% endif %}
+{% endautoescape %}

@@ -1,0 +1,56 @@
+{% extends 'base_template.html' %}
+{% load utils %}
+{% block title %}{{ vendor.name }} - clients{% endblock %}
+
+{% block page %}
+  <div id="page" class="container">
+    {% block content %}
+      <div class="row">
+        <div class="col-sm-9 col-centered">
+          <div class="panel panel-default panel-card">
+            <div class="panel-body">
+              <h1 class="page-header">What is a Verified Client?</h1>
+              <p>We created the Verified Client process to build trust in our community and give you more information when you're deciding who to work with in Proven. </p>
+              <br>
+              <h4><b>How Verified Clients works</b></h4>
+              <p>Verified Clients works by verifying that you have worked with, or are currently working with clients listed in your Proven Profile.  As part of Verified Clients, you might be asked to:</p>
+              <ol>
+                <li><p>Verify via email that you have worked with clients. You request a verification from the client through our system, and you can choose the wording used. </p></li>
+                <li><p>In some cases, you might not be comfortable with sending an email to your client. In that case, we will be rolling out Verified Invoices. This will allow you to upload invoices from clients, to prove that you have worked with the clients you post on your profile.</p></li>
+              </ol>
+              <br>
+              <h4><b>How Ranking works</b></h4>
+              <p>Your ranking on Proven is based on a number of factors.  These are as follows:</p>
+              <ul>
+                <li>How complete your profile is</li>
+                <li>How many unverified and verified clients you have </li>
+                <li>How many years you're working with that client</li>
+                <li>The rating the client gives you</li>
+              </ul>
+              <br>
+              <p>We take all of this into consideration and come up with a quality score which then produces your ranking</p>
+              <br>
+              <br>
+              <h4><b>When you'll need to complete it</b></h4>
+              <p>You are not under any obligation to verify your clients. However, your ranking in Proven will improve greatly if you have verified clients.  You can still list clients, but they will not be verified unless you go through the verification process.</p>
+              <br>
+              <h4><b>Private and encrypted</b></h4>
+              <p>
+                We take privacy seriously, so the information you provide during this process is completely private. <br><br>
+
+                If you don't want to share who your clients are, there's no need to. You can add a private name instead of a company name. For example, if your client is Google, you can add  Leading Technology Firm instead. However, you will still need to tell Proven who you're working with, but then just use the “Anonymize” button.<br><br>
+
+                We won't share your private client details—only that you’ve successfully completed the process.
+              </p>
+              <br>
+              <h4><b>Get the Verified Client badge</b></h4>
+              <p>When you've completed the Verified Client process, we send an email to your client asking them to verifiy that you are indeed a client. Once they verify this information, you'll earn a badge next to the name of that client on your profile. Many companies look for this badge when deciding whether to request a quote from you or get in touch.</p>
+              <p>Companies  tell us they find Verified Client useful when deciding who to interact with on Proven, but it's not an endorsement or guarantee of getting new projects.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    {% endblock %}
+  </div>
+{% endblock %}

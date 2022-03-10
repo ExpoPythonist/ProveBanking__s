@@ -1,0 +1,22 @@
+{% extends 'base_email.html' %}
+
+{% block body %}
+<tr>
+  <td class="content-block">
+  {% if staffing_req %}
+	  <p>For project: "<a href="{{project_url}}" class="no-underline">
+	  {{ project }}</a>" 
+	  requirement: “<a href="{{staffing_req_url}}" 
+	  class="no-underline">{{ staffing_req }}</a>”, I have added the following comment:</p>
+	  <p>"{{ message.body }}"</p>
+	  <a href="{{ staffing_req_url }}" class="btn btn-warning">View discussion or respond</a>
+
+      <p>You can view entire discussion and respond here:<br /><a href="{{ staffing_req_url }}" class="no-underline">{{ staffing_req_url }} »</a></p>
+  {% else %}
+    <p>{{ message.posted_by }} has commented on a discussion.</p>
+    <p>{{ message.body }}</p>
+    <p>You can view entire discussion and respond here:<br /><a href="{{ discussion_url }}" class="no-underline">{{ discussion_url }} »</a></p>
+  {% endif %}
+  </td>
+</tr>
+{% endblock %}

@@ -1,0 +1,10 @@
+{% load i18n %}
+{% if created %}
+{% blocktrans with request.project.title as proj_title %}
+{{user}} has added a staffing request for project '{{proj_title}}'
+{% endblocktrans %}
+{% else %}
+{% blocktrans with request.project.title as proj_title %}
+{{user}} has updated staffing request for project '{{proj_title}}'
+{% endblocktrans %}
+{% endif %}

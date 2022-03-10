@@ -1,0 +1,15 @@
+{% extends "account/base.html" %}
+
+{% block title %}Sign Up{% endblock %}
+{% block content %}
+<form class="login-form" action="{% url "account_login" %}{% if request.GET.next %}?next={{ request.GET.next }}{% endif %}" method="POST">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit" class="btn btn-default log-in">Sign Up</button>
+
+  <div class="request-invite-block">
+    <span>Already have an account?</span>
+    <a href="{% url "account_login" %}?next={{ request.GET.previous }}" class="btn btn-default request-invite">Log In</a>
+  </div>
+</form>
+{% endblock %}

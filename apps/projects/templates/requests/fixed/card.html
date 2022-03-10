@@ -1,0 +1,54 @@
+<div class="panel panel-default response-card">
+<div class="panel-body">
+    {% if staffing_request.description %}
+      <div class="field-group">
+        <div class="field-value text-left">
+          {{ staffing_request.description|linebreaks }}
+        </div>
+      </div>
+    {% endif %}
+    {% if staffing_request.document %}
+      <a target="_blank" href="{{ staffing_request.document.url }}"
+        onclick="window.open('{{ staffing_request.document.url }}'); return false;" class="field-group">
+        <label>Attachment</label>
+        <div class="field-value">
+          <span class="btn btn-o"><i class="fa fa-file-text"></i></span>
+          <span class="icon-container"><i class="fa fa-chevron-right"></i></span>
+        </div>
+      </a>
+    {% endif %}
+    <div class="field-group">
+      <div class="field-value">
+        <div class="text-left">
+          {% if staffing_request.role %}
+            <span class="btn btn-secondary btn-o btn-xs disabled"><i class="fa fa-briefcase"></i> {{ staffing_request.role }}</span> &nbsp;
+          {% endif %}
+          {% for category in staffing_request.categories.all %}
+            <span class="btn btn-secondary btn-o btn-xs disabled">{{ category }}</span> &nbsp;
+          {% endfor %}
+          <span class="pull-right">
+            {% include 'partials/money_range.html' with min_rate=staffing_request.min_rate max_rate=staffing_request.max_rate %}
+            {% if staffing_request.location %}
+              <span class="btn btn-secondary btn-o btn-xs disabled"><i class="fa fa-map-marker"></i> {{ staffing_request.location }}</span> &nbsp;
+            {% endif %}
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="clearfix">
+      <div class="col-xs-12 col-sm-6 field-group field-group-inline">
+        <label>Start</label>
+        <div class="field-value">
+          {{ staffing_request.natural_start_date|default:"ASAP" }}
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6 field-group field-group-inline">
+        <label>End</label>
+        <div class="field-value">
+          {{ staffing_request.natural_end_date }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

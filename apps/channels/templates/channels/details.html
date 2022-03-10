@@ -1,0 +1,31 @@
+{% pjaxr_extends "base_template.html" "Site" %}
+{% block title %}Project discussion - {{ current_tenant.name }}{% endblock %}
+
+{% block page_title %}<span id="page-title">Discussion</span>{% endblock %}
+
+{% block left_nav_button %}
+  <span id="left-nav-btn" class="pull-left">
+    <a class="navbar-brand btn" href="{{ channel.content_object.get_absolute_url }}"><i class="fa fa-chevron-left"></i></a>
+  </span>
+{% endblock %}
+
+{% block right_nav_button %}
+  <span id="right-nav-btn" class="pull-right"></span>
+{% endblock %}
+
+{% block right_sidebar %}
+  <div id="sidebar-right" class="sidebar sidebar-right"></div>
+{% endblock %}
+
+{% block notifications %}
+  {% include 'partials/notifications.html' %}
+{% endblock %}
+
+{% block page %}
+  <div id="page" class="container page">
+    {% block content %}
+      {% include 'channels/embed.html' with show_details=True %}
+    {% endblock %}
+  </div>
+{% endblock %}
+{% block pjaxr_namespace %}Site.projects.discussion{% endblock pjaxr_namespace %}

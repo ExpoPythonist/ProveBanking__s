@@ -1,0 +1,113 @@
+{% load avatar_tags utils %}
+{% load review_tags %}
+
+<div class="card resource-card success selectable" id="user-{{ object.id }}">
+  <script class="as-json" type="application/json" data-type="person">{{object.as_json|safe}}</script>
+  <div class="shadows">
+    <div class="shadow-bottom"></div>
+    <div class="shadow-top"></div>
+  </div>
+  <div class="selected-overlay select-input">
+    <i class="fa fa-check fa-4x"></i>
+  </div>
+  <div class="card-label"></div>
+  <div class="card-body">
+    {% with object.roles.first as role %}
+      <div class="context strip" style="background:{{ role.color|default:'#F6F5F4' }};color:{{ role.color|reverse_color }};">
+        {{ role.name }}
+      </div>
+    {% endwith %}
+    <div  class="lens row">
+      <div class="col-xs-6 text-left">
+        <a href="{% url 'users:profile_modal' object.username %}" data-toggle="modal" data-target="#userModal">
+          {% if object|has_avatar %}
+            <img class="circle" src="{% avatar_url object 45 %}">
+          {% else %}
+            <div class="circle placeholder">{{ object.get_initials }}</div>
+          {% endif %}
+        </a>
+      </div>
+      <div class="col-xs-6 text-right">
+        {% if object.avg_score %}
+          <div class="rating-stars star_{% rating_stars_color  object.avg_score %}" title="Average review score: {{ object.avg_score }}">
+            {% rating_stars object.avg_score %}
+          </div>
+        {% endif %}
+        <a class="" href="{% get_review_url 'add' object %}">rate</a>
+      </div>
+
+      <div class="col-xs-12">
+        <h4>
+          <a href="{% url 'users:profile_modal' object.username %}" data-toggle="modal" data-target="#userModal" class="profile-link">
+            {{ object.get_name_display }}
+          </a>
+        </h4>
+        {% with object.divisions.all as divisions %}
+        <span class="col-xs-12 nopadding text-ellipsis">{{ object.get_company_display }} {% if divisions %}({{ object.divisions.all|join:', '}}){% endif %}</span>
+        {% endwith %}
+        <br/>
+        <br/>
+        <div class="row">
+          {% if features.projects.is_enabled %}
+          <!--div class="col-xs-6">
+            {% include 'availability/as_field.html' with weeks=object.get_availability_as_weeks %}
+          </div-->
+          <div class="col-xs-6 text-left" >
+            <small>
+              {% if object.next_available_in_future %}Available on{% else %}
+                {% if object.get_next_available_date_display == 'Unknown'%}
+                  availability
+                {% else %}
+                  Available since
+                {% endif %}
+              {% endif %}
+            </small>
+            <br/>
+            <span class="text-capitalize {{object.get_next_available_css_class}}" title="Next available on">{{ object.get_next_available_date_display }}</span>
+          </div>
+          <div class="col-xs-6 text-right">
+            <small>
+              Recent project
+            </small>
+            <br/>
+            <span title="Recent project" class="text-ellipsis">
+              {% with object.get_recent_project as project %}
+                {% if project %}
+                  {{ project.title|truncatechars:15 }}
+                {% else %}
+                  None
+                {% endif %}
+              {% endwith %}
+            </span>
+          </div>
+          {% else %}
+          <div class="col-xs-12">
+          <span class="text-muted small text-left email" title="email"><i class="fa fa-envelope text-muted"></i>&nbsp;&nbsp;{{ object.email }}</span><br/>
+          {% if object.phone %}
+            <span class="text-muted small text-left phone" title="phone"><i class="fa fa-phone text-muted"></i>&nbsp;&nbsp;{{ object.phone }}</span><br/>
+          {% endif %}
+          </div>
+          {% endif %}
+        </div>
+
+        <!-- dummy rating  -->
+        <div class="card-section score-bar">
+           <div class="card-section score-bar">
+          <div class="col-xs-9 nopadding nopadding">
+          </div>
+
+
+        </div>
+        </div>
+        <!-- end -->
+
+      </div>
+
+    </div>
+    <div class="triggers">
+      <div class="anchor trigger first last select-input">
+        <span><b>select</b></span>
+      </div>
+    </div>
+  </div>
+</div>

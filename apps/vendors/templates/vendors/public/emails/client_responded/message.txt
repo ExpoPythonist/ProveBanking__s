@@ -1,0 +1,31 @@
+{% load i18n %}
+{% blocktrans %}
+Congratulations {{ object.created_by.first_name }}!
+{% endblocktrans %}
+
+{% if is_first_client %}
+  {% blocktrans %}
+  	Your first client {{ object.client.name }} has verified your relationship with them. 
+  {% endblocktrans %}
+{% else %}
+  {% blocktrans %}
+  	Your first client {{ object.client.name }} has verified your relationship with them. 
+  {% endblocktrans %}
+{% endif %}
+
+{% if is_first_client %}
+  {% blocktrans %}
+  	This means your profile is now eligible to be listed on Proven. To continue your growth and status in the Proven community, please get other clients of yours to verify their relationship with you. <a href="{{ add_client_url }}">Click here</a> to request verification from more clients.
+  {% endblocktrans %}
+{% else %}
+  {% blocktrans %}
+  	Your profile will be better ranked the more clients you have verified, so keep requesting verifications from more clients. <a href="{{ add_client_url }}">Click here</a> to go there now
+  {% endblocktrans %}
+{% endif %}
+
+{% blocktrans %}
+Thanks for being part of the Proven community,
+Suzanne Jordan
+Founder and COO, Proven
+suzanne@proven.cc
+{% endblocktrans %}

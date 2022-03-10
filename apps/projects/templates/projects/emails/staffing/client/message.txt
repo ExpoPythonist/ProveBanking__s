@@ -1,0 +1,4 @@
+{% load utils %}
+New staffing request {{ staffing_request }} for {{ staffing_request.project }} created
+
+To reply, go to: {{ resource_url }}

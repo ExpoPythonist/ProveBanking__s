@@ -1,0 +1,34 @@
+{% load thumbnail %}
+{% if success == False %}
+<form id="busyslotForm" action="{% url 'edit_availability' %}" method="POST" class="{{ css_class }}">
+  {% include 'consultant/profile/generic_form.html' with form=form %}
+</form>
+{% else %}
+  <li id="busyslot-default" class="media period">
+    <span class="pull-left timestamp sideline busyslot busyslot-{{ profile.default_availability }}">
+      <div class="pie-cont"></div>
+    </span>
+    <div class="media-body">
+      <h4 class="media-heading busyslot-heading">
+        {% if profile.default_availability == AVAILABILITY.UNAVAILABLE %}
+        <span class="busyslot-value">unavailable</span>
+        {% elif profile.default_availability == AVAILABILITY.AVAILABLE_FULLTIME %}
+        available <span class="busyslot-value">full-time</span>
+        {% else %}
+        available for <span class="busyslot-value">{{ profile.get_default_availability_display }}</span>
+        {% endif %}
+        ...
+      </h4>
+      <div class="busyslot-hours">
+      </div>
+      <h5>
+        {% if profile == user %}
+        <a href="{% url 'edit_availability' %}" class="link-gray edit-trigger" data-editable="ul#busyslots" data-hide="#busyslotsContainer" data-form-container="#busyslotFormContainer"><i class="fa fa-edit"></i> edit</a>
+        {% endif %}
+      </h5>
+      <span id="busyslot-title" class="text-muted" data-text-changes="... except for the following specific date ranges" data-text-nochanges="">
+        {% if busyslots %}... except for the following specific date ranges{% endif %}
+      </span>
+    </div>
+  </li>
+{% endif %}

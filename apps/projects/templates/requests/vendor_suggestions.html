@@ -1,0 +1,32 @@
+{% load avatar_tags %}
+{% load thumbnail %}
+{% load humanize %}
+
+<div id="suggested-vendors" class="panel-body">
+  {% for vendor in suggestions %}
+    <div id="suggested-vendor-{{ vendor.id }}" class="field-group suggested-vendor-card">
+      <label>
+        <div>
+          <a href="{{ vendor.get_absolute_url }}" class="no-link-style no-underline">{{ vendor.name }}</a>
+          {% if vendor.avg_score %}
+            {% url 'vendor:score' vendor.id as score_url %}
+            &nbsp;{% include 'reviews/partials/as_label.html' with score=vendor.avg_score link=score_url count=meta_counts.reviews %}
+          {% endif %}
+        </div>
+      </label>
+      <div class="field-value">
+        <div class="btn-group" data-toggle="buttons">
+          <label class="btn btn-primary btn-xs">
+            <input class="invite-checkbox" data-selectize="no" id="id_vendors_{{ forloop.counter }}" name="vendors" value="{{ vendor.id }}" type="checkbox"> <span class="btn-label">invite</span>
+          </label>
+        </div>
+      </div>
+    </div>
+  {% empty %}
+    <div class="field-group muted">
+      <div class="text-left text-muted">
+        No suggested organizations
+      </div>
+    </div>
+  {% endfor %}
+</div>

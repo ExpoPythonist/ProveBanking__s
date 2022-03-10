@@ -1,0 +1,31 @@
+{% load avatar_tags %}
+{% load humanize %}
+
+{% with rate=suggested %}
+<div class="field-group">
+  <label>
+   <span class="btn btn-xs">
+      <input class="pick-rate-radio rate-card-option-{{ rate.id }}" data-selectize="no" id="id_people_{{ forloop.counter }}" name="rate_card" value="{{ suggested.id }}" type="radio" {% if selected %}checked{% endif %}>
+    </span>&nbsp;
+    <span class="btn btn-secondary btn-sm btn-o btn-xs disabled disabled">
+      <i class="fa fa-building"></i>&nbsp;{{ rate.vendor|default:current_tenant }}
+    </span>&nbsp;
+    {% if rate.role %}
+    <span class="btn btn-secondary btn-sm btn-o btn-xs disabled disabled">
+      <i class="fa fa-briefcase"></i>&nbsp;{{ rate.role }}{% if rate.skill_level %}&nbsp;({{ rate.skill_level }}){% endif %}
+    </span>&nbsp;
+    {% endif %}
+    {% if rate.location %}
+      <span class="btn btn-secondary btn-sm btn-o btn-xs disabled disabled">
+        <i class="fa fa-map-marker"></i>
+        {{ rate.location }}
+      </span>&nbsp;
+    {% endif %}
+  </label>
+  <div class="field-value">
+    <span class="btn btn-secondary btn-sm btn-o btn-xs disabled">
+    <i class="fa fa-dollar"></i>&nbsp;{{ rate.rate }}
+    </span>
+  </div>
+</div>
+{% endwith %}

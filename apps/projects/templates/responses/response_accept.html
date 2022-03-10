@@ -1,0 +1,39 @@
+{% load projects %}
+{% load avatar_tags %}
+{% load humanize %}
+<div class="modal-header text-center">
+  <div class="row">
+    <div class="col-xs-3 modal-action-left">
+      <a href="#" class="btn" data-dismiss="modal"><i class="fa fa-chevron-left"></i> <span>Cancel</span></a>
+    </div>
+    <div class="col-xs-6">
+      <h4 class="modal-title" id="myModalLabel">Accept proposal</h4>
+    </div>
+    <div class="col-xs-3 modal-action-right">
+      <a href="#" class="btn" data-dismiss="modal" onClick="$('#responseAcceptForm').submit();"><i class="fa fa-check"></i> Accept</a>
+    </div>
+  </div>
+</div>
+  <div class="modal-body">
+    <form id="responseAcceptForm" action="{% url 'staffing:requests:response_accept' project.id staffing_request.id response.id %}" method="POST">
+      {% csrf_token %}
+    </form>
+
+    <dl class="dl-horizontal">
+      <dt>Proposed rate <i class="fa fa-dollar"></i></dt>
+      <dd>{{ response|render_response_field:"rate"|intcomma }}</dd>
+
+      <dt></dt>
+      <dd><hr class="thin"/></dd>
+
+      <dt>Start date <i class="fa fa-calendar"></i></dt>
+      <dd>{{ response|render_response_field:"start_date" }}</dd>
+
+      <dt></dt>
+      <dd><hr class="thin"/></dd>
+
+      <dt>End date <i class="fa fa-calendar"></i></dt>
+      <dd>{{ response|render_response_field:"end_date" }}</dd>
+    </dl>
+  </div>
+</div>

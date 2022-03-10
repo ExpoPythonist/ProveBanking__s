@@ -1,0 +1,154 @@
+{% load avatar_tags %}
+{% load thumbnail %}
+{% load crispy_forms_tags %}
+{% load review_tags %}
+{% load utils %}
+{% load carton_tags %}
+{% get_cart as shortlist %}
+
+<div
+    id="vendor-{{ vendor.id }}"
+    class="panel panel-default panel-card field-group selectable vendor-card {% if current_tenant.is_public_instance %}{% if user.is_client %}public {%else%}public-vendor{% endif%}{% else%}not-public{% endif%}"
+    data-selected-list="#selected-list"
+    data-list="#vendor-selectable-list"
+    data-counter=".selected-count">
+  <script class="as-json" type="application/json" data-type="vendor">{{vendor.as_json|safe}}</script>
+
+  <div class="panel-body ">
+    {% if vendor.get_risk_grade %}
+        <span class="pull-right grade-badge grade-badge-sm {{ grade_colors|get_item:vendor.get_risk_grade }}" data-toggle="tooltip" title="Risk Grade" data-placement="left">
+          {{ vendor.get_risk_grade }}
+        </span>
+    {% endif %}
+
+
+    <div class="card-section-1">
+
+      {% if vendor.kind_labels_diplayable|get_item:vendor.kind %}
+        <span class="sticker sticker-{{vendor.KIND_CSS_CLASSES|get_item:vendor.kind}} text-uppercase">{{vendor.kind_labels_diplayable|get_item:vendor.kind}}</span>
+      {% endif %}
+
+      <span class="logo-wrapper">
+        <a href="{{ vendor.get_absolute_url }}" class="">
+          {% thumbnail vendor.logo "150x40" as thumb %}
+            <img src="{{ thumb.url }}">
+          {% empty %}
+            <img src="{{ STATIC_URL }}images/defaults/placeholder-co.png">
+          {% endthumbnail %}
+        </a>
+      </span>
+
+
+      <div>
+        <a href="{{ vendor.get_absolute_url }}" class="no-link-style" title="{{ vendor.name }}">
+          <h5 class="heading">{{ vendor.name }}</h5>
+        </a>
+        {% if vendor.vendor_locations.exists %}
+          <span class="text-muted vendor-location">
+            &nbsp;<i class="fa fa-map-marker"></i>&nbsp;
+            {% for location in vendor.vendor_locations.all %}
+              {% if forloop.counter < 3 %}
+                {{ location.location }} {% if forloop.counter < 2 %}{% if forloop.last %}{% else %},{% endif %}{% endif %}
+              {% elif forloop.counter == 3 %}
+                & {{ forloop.revcounter }} more
+              {% endif %}
+            {% endfor%}
+          </span>
+        {% endif %}
+    </div>
+
+    <div class="card-section">
+        {% if features.proven_score.is_enabled or request.user.is_superuser %}
+          <span class="pull-right">
+            <i class="fa fa-question-circle text-primary" data-toggle="tooltip" data-placement="left"
+               title="The Proven Score is a proprietary algorithm that computes specific variables about a company, such as client verifications, profile completeness and other factors.">
+            </i>
+          </span>
+          <strong>Proven Score: {{ vendor.proven_score|floatformat:0 }}%</strong><br>
+        {% endif %}
+      </div>
+
+        {% if vendor.get_primary_service and vendor.get_primary_service.rank %}
+        <div class="section-ranking">
+          <span class="left">
+            <span class="rank">#{{vendor.get_primary_service.rank}}</span>
+            of {{ vendor.get_total_primary }} in
+            <a href="{% url 'vendors:list' %}?find=category-{{vendor.get_primary_service.category.id}}" class="">{{vendor.get_primary_service.category}}</a>
+          </span>
+        </div>
+        {% endif%}
+    </div>
+
+    {% with vendor.get_meta_counts as meta_counts %}
+      {% assign_review_url 'list' vendor as score_url %}
+
+      {% comment %}
+      {% if user.is_client %}
+      <div class="card-section score-bar">
+        <a href="{% url 'vendors:reviews' vendor.id %}" data-target="#genericModal" data-toggle="modal">
+        {% if vendor.reviews.exists %}
+        <div class="col-xs-8 nopadding">
+            {% if vendor.avg_score %}
+              <span class="score-value rating-stars  star_{% rating_stars_color vendor.avg_score %}" >
+                {% rating_stars vendor.avg_score %} <a href="{{ score_url }}" class="no-underline"><span class="text-muted">({{ meta_counts.reviews }} review{{ meta_counts.reviews|pluralize }})</span></a>
+              </span>
+            {% endif %}
+        </div>
+        {% endif %}
+        </a>
+
+        <div class="{% if vendor.reviews.exists %}col-xs-4 text-right{% else %}col-xs-12 text-center{% endif %} nopadding">
+          {% if False and perms.reviews.add_review  %}
+            <a class="" href="{% get_review_url 'add' vendor %}">rate</a>
+          {% endif %}
+        </div>
+      </div>
+      {% endif %}
+      {% endcomment %}
+
+      <div class="card-section card-description {% if not vendor.summary %}hide-xxs{% endif%}">
+        <div class="card-section-title text-uppercase">DESCRIPTION</div>
+        <p>
+          {% if vendor.summary %}
+            <a href="{{ vendor.get_absolute_url }}">{{ vendor.summary }}</a>
+          {% else %}
+            <span class="section-empty">The supplier has not provided any description</span>
+          {% endif %}
+        </p>
+      </div>
+
+      {% if current_tenant.is_public_instance %}
+        {% include 'vendors/public/partials/card_clients.html' with vendor=vendor %}
+      {% endif %}
+
+    {% endwith %}
+
+
+    <div class="selected-overlay select-input">
+      <i class="fa fa-check-circle text-primary"></i>
+    </div>
+
+    <div class="card-section" style="text-align: center;">
+        {% if features.rfp.is_enabled %}
+        <form
+            class="shortlist-form"
+            method="POST"
+            {% if vendor in shortlist %}
+            action="{% url "vendors:shortlist_remove" vendor.slug %}"
+            {% else %}
+            action="{% url "vendors:shortlist_add" vendor.slug %}"
+            {% endif %}
+            data-shortlisted="{% if vendor in shortlist %}yes{% else %}no{% endif %}"
+            data-action-remove="{% url "vendors:shortlist_remove" vendor.slug %}"
+            data-action-add="{% url "vendors:shortlist_add" vendor.slug %}">
+          {% csrf_token %}
+          {% if vendor in shortlist %}
+          <button type="submit" class="btn btn-warning btn-xs"><i class="fa fa-shopping-cart"></i> Remove from Shortlist</button>
+          {% else %}
+          <button type="submit" class="btn btn-primary btn-xs"><i class="fa fa-shopping-cart"></i> Add to Shortlist</button>
+          {% endif %}
+        </form>
+        {% endif %} 
+    </div>
+  </div>
+</div>

@@ -1,0 +1,59 @@
+<div class="bg-info modal-header">  
+     {% include 'vendors/detail-card.html' with vendor=vendor show_details=True modal_header=True%}
+</div>
+
+<div class="modal-body">
+   
+          <div class="col-xs-12  ">
+            <h4><i class="fa fa-building-o fa-lg text-muted"></i>&nbsp;Locations</h4>
+            <div class="vertical-spacer-sm"></div>
+              <div>
+                {% for location in vendor.vendorlocation_set.all %}
+                  {% include 'vendors/location.html' with location=location %}
+                {% empty %}
+                  <div class="field-group">
+                    <div class="field-value">
+                      <div class="text-muted text-left">
+                          No resource locations are added.
+                      </div>
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+              <hr >
+
+          <div class="vertical-spacer-lg"></div>
+            <h4><i class="fa fa-laptop fa-lg text-muted"></i>&nbsp;Skills</h4>
+            <div class="vertical-spacer-lg"></div>
+            <div>
+              {% for category in vendor.categories.all %}
+                 <button class="btn btn-secondary btn-o btn-xs disabled">{{category}}</button>&nbsp;&nbsp;
+              {% empty %}
+                <div class="field-group">
+                  <div class="field-value">
+                    <div class="text-muted text-left">
+                        No resource locations are added.
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}
+              </div>
+              <hr >
+            <h4><i class="fa fa-folder-close fa-lg text-muted"></i>&nbsp;Projects</h4>
+            <div class="vertical-spacer-lg"></div>
+            <div>
+              <span class="btn btn-o btn-secondary btn-xs disabled">
+                {{ meta_counts.projects }} <small class="text-muted"> past project{{ meta_counts.projects|pluralize }}</small>
+              </span>&nbsp;
+              <span class="btn btn-o btn-secondary btn-xs disabled">
+                {{ completed_projects.count }} <small class="text-muted"> completed project{{ completed_projects.count|pluralize }}</small>
+              </span>&nbsp;
+            </div>
+              <hr >
+          </div>
+          <div class="vertical-spacer-lg"></div>
+</div>
+
+<div class="modal-footer text-right">
+  <a href="{{ vendor.get_absolute_url }}" target="_blank">View full profile <i class="fa fa-chevron-right"></i></a>
+</div>

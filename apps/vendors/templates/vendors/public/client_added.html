@@ -1,0 +1,88 @@
+{% extends "vendors/profile_edit_sidebar.html" %}
+{% load crispy_forms_tags %}
+{% load thumbnail %}
+
+{% block extra_sidebar_content %}
+ 
+{% endblock %}
+
+{% block main_content %}
+<style>
+.clients .popover h3 {
+    padding: 10px;
+    font-weight: bold;
+    font-size: 16px;
+    color: #6c6c6c;
+}
+.clients .popover-content {
+    font-size: 13px;
+    color: #acacac;
+    padding: 10px;
+}
+</style>
+  
+<section class="profile-edit-form clients">
+  <div class="panel panel-default panel-card">
+    <div class="panel-body">
+
+      <div class="alert alert-success alert-dismissible row" role="alert">
+          <div class="col-sm-8">
+          <i class="fa fa-check no-padding"></i>
+          Client <b>{{ reference.client.name}}</b> added successfully
+        </div>
+      </div>
+      <div class="alert alert-success  alert-verification alert-dismissible" role="alert">
+          <div class="row">
+            
+          <div class="col-xs-11">
+            <div class="media">
+              <span class="pull-left">
+                <img src="{{ STATIC_URL}}images/shake.svg" width="150">
+              </span>
+              <div class="media-body">
+                <h4 class="media-heading"><b>Customer Verification</b></h4>
+                <p>
+                  <b>Proven</b> is built on trust and reputation, where new clients find you on the basis of the quality of current verified clients. Here you can request verifications from your existing clients.
+                </p>
+                <p>
+                  Your clients can chose to remain anonymous (e.g. they can be listed as "Fortune 500 healthcare firm" vs having to share their company name). Name of your client contacts will never be shared with anyone without your approval.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-1">
+          </div>
+          </div>
+        </div>
+        <br><br>
+        <div class="row text-center">
+            <h3>Prove that you work with {{ reference.client }}</h3>
+            <a href="{% url 'vendors:client_ref_update' reference.id %}" style="margin-right: 2px;" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#genericModal"  data-modal-is-remote="true">Verify by Email</a>
+            <i  class="fa fa-question-circle"
+                data-toggle="popover"
+                title="Verify by Email"
+                data-html="true"
+                data-placement="bottom"
+                data-content="
+                  <p>
+                  This will send an email to your client to prove that you work with them.
+                  </p>
+                "></i>
+            <b class="text-muted small">&nbsp;&nbsp;Or&nbsp;&nbsp;</b>
+            <a href="{% url 'vendors:client_invoice_add' vendor.id reference.id %}" style="margin-right: 2px;" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#genericModal"  data-modal-is-remote="true">Upload Proof</a>
+            <i  class="fa fa-question-circle"
+                data-toggle="popover"
+                title="Upload Invoice"
+                data-html="true"
+                data-placement="bottom"
+                data-content="
+                  <p>
+                  If you prefer not to email your client, your can securely upload a recent invoice or some other proof that you work with this client. We will verify it at Proven, and this will be your method of verification.
+                  </p>
+                "></i>
+            &nbsp;
+            <a href="{% url 'vendors:clients_list' %}" class="btn btn-default btn-sm">Back to Clients</a>
+        </div>
+    </div>
+  </div>
+{% endblock %}

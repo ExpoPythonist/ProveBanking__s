@@ -1,0 +1,29 @@
+//floation_button
+section.floating-footer {
+    .btn-floating {
+        border-radius: 50%;
+        position: fixed;
+        bottom: 5%;
+        right: 5%;
+        z-index: 1;
+        height: 60px;
+        width: 60px;
+        .BoxShadowHelper(@level: 3);
+        transition: all 0.3s ease;
+        &:hover{
+            .BoxShadowHelper(@level: 4);
+        }
+        .fa-stack{
+            top: 8px;
+            left: 2px;
+        }
+        .fa-stack-1x {
+            font-size: 11px;
+            color: @brand-primary !important;
+            top: 7px;
+            font-weight: bold;
+            font-family: @font-family-sans-serif;
+            text-shadow: 0 0 3px #fff;
+        }
+    }
+}

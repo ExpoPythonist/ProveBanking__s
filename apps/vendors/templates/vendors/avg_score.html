@@ -1,0 +1,98 @@
+{% pjaxr_extends "base_template.html" "Site" %}
+{% load avatar_tags %}
+{% load utils%}
+{% block title %}Organization - {{ current_tenant }}{% endblock %}
+{% block page_title %}<span id="page-title">Organization Score Details</span>{% endblock %}
+
+{% block left_nav_button %}
+  <span id="left-nav-btn" class="pull-left">
+    {% if previous_page %}
+      <a class="navbar-brand btn" href="{{ previous_page }}"><i class="fa fa-chevron-left"></i></a>
+    {% else %}
+      <a class="navbar-brand btn" href="{{ vendor.get_absolute_url }}"><i class="fa fa-chevron-left"></i></a>
+    {% endif %}
+  </span>
+{% endblock %}
+
+{% block right_nav_button %}
+  <span id="right-nav-btn" class="pull-right"></span>
+{% endblock %}
+
+{% block right_sidebar %}
+  <div id="sidebar-right" class="sidebar sidebar-right"></div>
+{% endblock %}
+
+{% block notifications %}
+  {% include 'partials/notifications.html' %}
+{% endblock %}
+
+{% block page %}
+  <div id="page" class="page container">
+    {% block content %}
+      {% include 'vendors/as_field.html' with vendor=vendor %}
+      <div class="page-top-band">
+        <div class="col-xs-8">
+          <h6 class="list-count">Score break down by metric</h6>
+        </div>
+        <div class="col-xs-4 text-right ">
+          <h6><small class="text-muted">AVG. SCORE</small></h6>
+        </div>
+      </div>
+
+      <div class="panel panel-default panel-metrics panel-score">
+        <div class="panel-body">
+        {% for metric, score in avg_score.items %}
+          <div class="field-group">
+            <label>
+              <div class="weight-value">
+                {{metric.weight}}%
+                <div class="meta">weight</div>
+              </div>
+            </label>
+            <div class="field-value">
+              <span class="pull-left field-value-left">{{metric.name}}</span>
+              <div class="field-value-right">
+                <span class="score-value {{ vendor.get_score_level }} ">{{score|floatformat}}</span>
+                <span class="score-constant">/5</span>
+                <div class="score-metrics small">{{ vendor.get_score_level }}</div>
+                {% comment %}
+                <div class="score-metrics small">{{ metric.labels|keyvalue:score }}</div>
+                {% endcomment %}
+              </div>
+            </div>
+          </div>
+        {% endfor%}
+
+        <!-- uncomment this line and see how it looks
+        </div></div>
+        <div class="panel panel-default">
+        <div class="panel-body">
+        -->
+
+
+        <div class="panel-footer field-group">
+            <div class='col-xs-6'>
+              <h4>
+              {{ reviews.count }} review{{ reviews|pluralize }} from peers
+              </h4>
+            </div>
+            <div class="col-xs-6 text-right">
+              <div class="">
+                {% if user.vendor == None or user.vendor == vendor %}
+                <a href="{% url 'vendors:review_list' vendor.pk %}">read all reviews <i class="fa fa-chevron-right"></i></a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="text-center col-centered col-xs-6">
+          <!--a class="btn btn-primary btn-block" href="# write revie link goes here">Write a review</a-->
+      </div>
+    {% endblock %}
+  </div>
+{% endblock %}
+
+{% block pjaxr_namespace %}Site.vendors.score_details{% endblock pjaxr_namespace %}

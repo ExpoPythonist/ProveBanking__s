@@ -1,0 +1,83 @@
+//Slider style
+
+.h-tab-warpper{
+  //anitmation 
+  margin: 20px 0px;
+  position: relative;
+  border-radius: 2px;
+  margin: auto;
+  display: block;
+  max-width: 50%;
+  @media(max-width: @screen-sm-max) and (max-width: @screen-xs-max){
+    max-width:100%;
+  }
+
+  .liner {
+    position: absolute;
+    height: 2px;
+    overflow: hidden;
+    background: @brand-primary;
+    width: 96%;
+    left: 6px;
+    top: 10px;
+  }
+  label {
+    max-width: 33%;
+    min-width: 33%;
+    padding: 0px;
+    height: 100%;
+    &.active,&:active {
+      box-shadow: none;
+    }
+    &.text-left {
+      text-align: left;
+      .filter {
+        left: 0px;
+      }
+    }
+    &.text-center {
+      text-align: center;
+      .filter {
+        left: 0px;
+      }
+    }
+    &.text-right {
+      text-align: right;
+      .filter {
+        right:0px; 
+      }
+    }
+    .circle {
+      background: transparent;
+      display: inline-block;
+      height: 20px;
+      width: 20px;
+      margin-bottom: 10px;
+      overflow: hidden;
+      position: relative;
+    }
+    .filter {
+      display: table-cell;
+      vertical-align: center;
+      background-color: lighten(@brand-primary, 10%);
+      position: absolute;
+      border-radius: 50%;
+      top: 5px;
+      //left: 50%;
+      width: 10px;
+      height: 10px;
+      -webkit-transition: all 0.3s ease-out;
+      -moz-transition: all 0.3s ease-out;
+      -o-transition: all 0.3s ease-out;
+      transition: all 0.3s ease-out;
+    }
+    &.active{
+      .filter {
+        background-color: @brand-primary;
+        top: 0px;
+        width: 20px;
+        height: 20px;
+        }
+      }
+    }
+}

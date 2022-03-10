@@ -1,0 +1,41 @@
+{% load thumbnail %}
+
+{% if success == False %}
+<form id="schoolForm" action="{% if form.instance.id %}{% url 'edit_school' form.instance.id %}{% else %}{% url 'schools' %}{% endif %}" method="POST" class="{{ css_class }}">
+  {% include 'consultant/profile/generic_form.html' with form=form %}
+</form>
+{% else %}
+  {% if deleted %}
+  <li id="school-{{ pk }}" data-deleted="True"></li>
+  {% else %}
+  <li id="school-{{education.id}}" class="media period" >
+    <span class="pull-left timestamp sideline hidden-xs hidden-sm">
+      <span title="{{ education.start_date|date:"M Y" }} - {% if education.is_current == True %} Present {% else %}{{ education.end_date|date:"M Y" }} {% endif %}">
+      {{ education.start_date|date:"Y" }} - {% if education.is_current == True %} Present {% else %}{{ education.end_date|date:"Y" }} {% endif %}</span>
+    </span>
+    <div class="media-body">
+      <div class="timestamp visible-xs visible-sm">
+        <span title="{{ education.start_date|date:"M Y" }} - {% if education.is_current == True %} Present {% else %}{{ education.end_date|date:"M Y" }} {% endif %}">
+        {{ education.start_date|date:"Y" }} - {% if education.is_current == True %} Present {% else %}{{ education.end_date|date:"Y" }} {% endif %}</span>
+      </div>
+
+      <h4 class="media-heading ">
+        {% thumbnail education.school.logo "x28" as im %}
+          <img src="{{ im.url }}" width="{{im.width}}" height="{{im.height}}"/>
+        {% empty %}
+          {{ education.school.name }}
+        {% endthumbnail %}
+      </h4>
+      <h5 class="text-muted">{{ education.degree }} -  {{ education.field_of_study }}</h5>
+      {% if education.notes %}
+      <p class="description">{{ education.notes|linebreaks }}</p>
+      {% endif %}
+      <h5>
+        {% if education.user == user %}
+        <a href="{% url 'edit_school' education.id %}" class="link-gray edit-trigger" data-editable="ul#schools" data-hide="#schoolsContainer" data-form-container="#schoolFormContainer"><i class="fa fa-edit"></i> edit</a>
+        {% endif %}
+      </h5>
+    </div>
+  </li>
+  {% endif %}
+{% endif %}

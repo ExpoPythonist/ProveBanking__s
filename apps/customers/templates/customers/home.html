@@ -1,0 +1,104 @@
+{% pjaxr_extends "base_template.html" "Site" %}
+{% block title %}Home{% endblock %}
+
+{% block page_title %}<span id="page-title">Home</span>{% endblock %}
+
+{% block left_nav_button %}
+  <span id="left-nav-btn" class="pull-left"></span>
+{% endblock %}
+
+{% block right_nav_button %}
+  <span id="right-nav-btn" class="pull-right">
+    <span class="navbar-brand"></span>
+  </span>
+{% endblock %}
+
+{% block notifications %}
+  {% include 'partials/notifications.html' %}
+{% endblock %}
+
+{% block page %}
+  <div id="page" class="container page">
+    {% block content %}
+      <form class="form-inline vendor_search_form" action="{% url 'vendors:list' %}">
+          {{ form }}
+          <button type="submit" class="btn btn-primary">Go</button>
+      </form>
+      <br/>
+      <div class="row">
+        <div class="col-xs-6">
+          <span>{{current_projects_count}} current project(s)</span>
+        </div>
+        <div class="col-xs-6">
+          <span class="pull-right"> <a href="{% url 'projects:list' %}" class="no-underline">past RFQs</a></span>
+        </div>
+      </div>
+      {% if draft_requests_count %}
+        <div class="panel panel-hint panel-danger">
+          <div class="panel-body">
+            <a href="{% url 'staffing:drafts' %}" class="no-link-style">
+              <div class="row">
+                <div class="col-xs-11">
+                  <h5>You have <span class="btn btn-xs btn-o btn-danger">{{ draft_requests_count }} draft</span> request(s).</h5>
+                </div>
+                <div class="col-xs-1">
+                  <h5><i class="text-muted fa fa-chevron-right"></i></h5>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      {% endif %}
+
+      <div id="results-list" class="relative">
+        {% if current_projects %}
+          {% for project in current_projects %}
+            {% include 'projects/card.html' with project=project %}
+          {% endfor %}
+          <div class="block-cover text-center hide"></div>
+        {% else %}
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <br/>
+                <div class="text-muted">No current projects.</div>
+              <br/>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+      <br/>
+      <div class="row">
+        <div class="col-xs-6">
+          <span>{{current_vendors_count}} current supplier(s)</span>
+        </div>
+        <div class="col-xs-6">
+          <span class="pull-right"> <a href="{% url 'vendors:list' %}" class="no-underline">Suppliers used in the past</a></span>
+        </div>
+      </div>
+
+      <div>
+        {% if current_vendors %}
+        <div class="panel panel-default vendor-panel">
+        <div class="panel-body">
+          {% for vendor in current_vendors %}
+            {% include 'vendors/card.html' with vendor=vendor  %}
+          {% endfor %}
+          </div>
+          </div>
+          <div class="block-cover text-center hide"></div>
+        {% else %}
+          <div class="panel panel-default">
+            <div class="panel-body">
+              <br/>
+                <div class="text-muted">No current suppliers.</div>
+              <br/>
+            </div>
+          </div>
+        {% endif %}
+      </div>
+
+
+    {% endblock %}
+  </div>
+{% endblock %}
+{% block pjaxr_namespace %}Site.projects{% endblock pjaxr_namespace %}

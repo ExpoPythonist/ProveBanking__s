@@ -1,0 +1,64 @@
+{% pjaxr_extends "base_template.html" "Site" %}
+{% block title %}Locations - {{ current_tenant }}{% endblock %}
+
+{% block page_title %}<span id='page-title'>Locations</span>{% endblock %}
+
+{% block left_nav_button %}
+  <span id="left-nav-btn" class='pull-left'>
+  <a class="navbar-brand btn" href="{% url 'client_settings:home' %}"><i class="fa fa-chevron-left"></i></a></span>
+{% endblock %}
+
+{% block right_nav_button %}
+  <span id="right-nav-btn" class="pull-right">
+    {% if user.is_client %}
+      <span class="navbar-brand">
+        <a href="{% url 'client_settings:create_location' %}" class="btn btn-sm btn-xs btn-primary">new location</a>
+      </span>
+    {% endif %}
+  </span>
+{% endblock %}
+
+{% block right_sidebar %}
+  <div id="sidebar-right" class="sidebar sidebar-right">
+    <div class="sidebar-heading clearfix">
+      <a href="#" class="no-underline btn btn-lg pull-right">
+        <i class="fa fa-chevron-right"></i>
+      </a>
+    </div>
+  </div>
+{% endblock %}
+
+{% block notifications %}
+  {% include 'partials/notifications.html' %}
+{% endblock %}
+
+{% block page %}
+  <div id="page" class="container page">
+    {% block content %}
+      <ol class="breadcrumb custom">
+        <li><a href="{% url 'client_settings:home' %}">Settings</a></li>
+        <li class="active">Locations</li>
+      </ol>
+    {% if locations %}
+      <div class="page-top-band">
+          <div class="col-xs-12 text-center">
+            <h6>all locations ({{ locations.count }})</h6>
+          </div>
+      </div>
+      <div class="panel panel-default role-card">
+        <div class="panel-body">
+          {% for location in locations %}
+            {% include 'locations/card.html' with location=location %}
+          {% endfor %}
+        </div>
+      </div>
+    {% else %}
+      <div class='text-center'>
+        <br><br>
+        <a href="{% url 'client_settings:create_location' %}" class="btn btn-primary">Add location</a>
+       </div>
+    {% endif %}
+    {% endblock %}
+   </div>
+{% endblock %}
+{% block pjaxr_namespace %}Site.locations.list{% endblock pjaxr_namespace %}

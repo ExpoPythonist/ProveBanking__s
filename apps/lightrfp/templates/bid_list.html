@@ -1,0 +1,234 @@
+{% extends 'base_template.html' %}
+{% load bootstrap3 %}
+{% load humanize %}
+{% block title %}Requests{% endblock %}
+
+{% block page %}
+<div id="page" class="container-fluid page-full">
+    <div id="rfps-app" class="row">
+        <div>
+            <div class="container">
+                <br>
+                {% if rfps_out %}
+                <div class="col-xs-12">
+                    <section class="rfp-filter filter-bar">
+                        <div class="panel panel-default panel-card">
+                            <div class="panel-body">
+                                <h2 class="rfp-title">Requests Sent</h2>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <div class="clearfix">
+                </div>
+                <div class="position-relative rfp-list">
+                    {% for rfp in rfps_out %}
+                    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 rfp-card-container">
+                        <div class="panel rfp-card panel-default">
+                            <div class="clearfix section-upper">
+                                <div class="col-xs-10 header">
+                                    <div class="project-title project-status-success">
+                                        <h4>
+                                            <a href="{% url "rfp_view" user.username rfp.uuid %}" class="rfp-title">
+                                                <span>{{ rfp.question }}</span>
+                                            </a>
+                                        </h4>
+                                        <div class="subtitle">
+                                            <span>
+                                                <span class="text-muted">created on </span>
+                                                <span>{{ rfp.date_created }}</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="meta-row">
+                                    <hr class="thin">
+                                    <a class="pull-right btn btn-sm btn-secondary" href="{% url "rfp_edit" rfp.client.username rfp.uuid %}">
+                                        <small>
+                                            <span data-reactid=".2.0.1.0.0.0.2.1.0.3">Edit Request</span>
+                                        </small>
+                                    </a>
+                                    <small>
+                                        <span class="text-muted">
+                                            <span data-reactid=".2.0.3.1:$rfp-4.0.0.2.2.0.0">sent to</span>
+                                            <span data-reactid=".2.0.3.1:$rfp-4.0.0.2.2.0.1">{{ rfp.vendors.count }} vendors</span>
+                                        </span>
+                                        <span data-reactid=".2.0.3.1:$rfp-4.0.0.2.2.1"></span>
+                                    </small>
+                                </div>
+                                <div class="col-xs-12">
+                                    <hr>
+                                    <a href="{% url "rfp_view" user.username rfp.uuid %}" class="no-underline">
+                                        <span class="label label-{% if rfp.messages.count > 0 %}primary{% else %}default{% endif %}" data-reactid=".2.0.3.1:$rfp-4.0.0.3.1.0">{{ rfp.messages.count }}</span>
+                                        <small class="text-muted">
+                                            <span data-reactid=".2.0.3.1:$rfp-4.0.0.3.1.1.0">&nbsp;&nbsp;</span>
+                                            <span data-reactid=".2.0.3.1:$rfp-4.0.0.3.1.1.1">messages</span>
+                                        </small>
+                                    </a>
+                                </div>
+                                <div class="clearfix vertical-spacer-lg">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                {% if bids_in %}
+                <div class="col-xs-12">
+                    <section class="rfp-filter filter-bar">
+                        <div class="panel panel-default panel-card">
+                            <div class="panel-body">
+                                <h2 class="rfp-title">Requests Received</h2>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <div class="clearfix">
+                </div>
+                <div class="position-relative rfp-list">
+                    {% for bid in bids_in %}
+                    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 rfp-card-container">
+                        <div class="panel rfp-card panel-default">
+                            <div class="clearfix section-upper">
+                                <div class="col-xs-10 header">
+                                    <div class="project-title project-status-success">
+                                        <h4>
+                                            <a href="{% url "bid_view" user.username bid.uuid %}" class="rfp-title">
+                                                <span data-reactid=".2.0.3.1:$rfp-4.0.0.0.0.0.0.1">{{ bid.rfp.question }}</span>
+                                            </a>
+                                        </h4>
+                                        <div class="subtitle">
+                                            <span>
+                                                <span class="text-muted" data-reactid=".2.0.3.1:$rfp-4.0.0.0.0.1.0.0">created on </span>
+                                                <span data-reactid=".2.0.3.1:$rfp-4.0.0.0.0.1.0.1">{{ bid.rfp.date_created }}</span>
+                                            </span>
+                                        </div>
+                                        <div class="subtitle">
+                                            <span>
+                                                <span class="text-muted" data-reactid=".2.0.3.1:$rfp-4.0.0.0.0.1.0.0">created by </span>
+                                                <span data-reactid=".2.0.3.1:$rfp-4.0.0.0.0.1.0.1">{{ bid.rfp.client.get_full_name }}</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="meta-row">
+                                    <hr class="thin">
+                                    <small>
+                                        <span class="text-muted">
+                                            <span data-reactid=".2.0.3.1:$rfp-4.0.0.2.2.0.0">sent to</span>
+                                            <span data-reactid=".2.0.3.1:$rfp-4.0.0.2.2.0.1">{{ bid.vendor }} {% if bid.rfp.vendors.count > 1 %}and {{ bid.rfp.vendors.count|add:-1 }} vendors{% endif %}</span>
+                                        </span>
+                                        <span data-reactid=".2.0.3.1:$rfp-4.0.0.2.2.1"></span>
+                                    </small>
+                                </div>
+                                <div class="col-xs-12">
+                                    <hr>
+                                    <a href="{% url "bid_view" user.username bid.uuid %}" class="no-underline">
+                                        <span class="label label-{% if bid.messages.count > 0 %}primary{% else %}default{% endif %}" data-reactid=".2.0.3.1:$rfp-4.0.0.3.1.0">{{ bid.messages.count }}</span>
+                                        <small class="text-muted">
+                                            <span data-reactid=".2.0.3.1:$rfp-4.0.0.3.1.1.0">&nbsp;&nbsp;</span>
+                                            <span data-reactid=".2.0.3.1:$rfp-4.0.0.3.1.1.1">messages</span>
+                                        </small>
+                                    </a>
+                                </div>
+                                <div class="clearfix vertical-spacer-lg">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                {% if open_rfps %}
+                <div class="col-xs-12">
+                    <section class="rfp-filter filter-bar">
+                        <div class="panel panel-default panel-card">
+                            <div class="panel-body">
+                                <h2 class="rfp-title">Open Requests (matching your categories)</h2>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <div class="clearfix">
+                </div>
+                <div class="position-relative rfp-list">
+                    {% for rfp in open_rfps %}
+                    <div class="col-lg-4 col-md-6 col-sm-6 col-xs-12 rfp-card-container">
+                        <div class="panel rfp-card panel-default">
+                            <div class="clearfix section-upper">
+                                <div class="col-xs-10 header">
+                                    <div class="project-title project-status-success">
+                                        <h4>
+                                            <span data-reactid=".2.0.3.1:$rfp-4.0.0.0.0.0.0.1">{{ rfp.question }}</span>
+                                        </h4>
+                                        <div class="subtitle">
+                                            <span>
+                                                <span class="text-muted" data-reactid=".2.0.3.1:$rfp-4.0.0.0.0.1.0.0">created on </span>
+                                                <span data-reactid=".2.0.3.1:$rfp-4.0.0.0.0.1.0.1">{{ rfp.date_created }}</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="meta-row">
+                                    <hr class="thin">
+                                    <small>
+                                        <span class="text-muted">
+                                            <span data-reactid=".2.0.3.1:$rfp-4.0.0.2.2.0.0">sent to</span>
+                                            <span data-reactid=".2.0.3.1:$rfp-4.0.0.2.2.0.1">{{ rfp.vendors.count }} vendors</span>
+                                        </span>
+                                        <span data-reactid=".2.0.3.1:$rfp-4.0.0.2.2.1"></span>
+                                    </small>
+                                </div>
+                                <div class="col-xs-12">
+                                    <hr>
+                                    <form method="POST">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="rfp" value="{{ rfp.uuid }}" /> {# TODO: replace other hidden IDs with uuid #}
+                                        <button class="pull-right btn btn-primary btn-xs" name="join" data-reactid=".2.0.3.1:$rfp-4.0.0.2.1">Join RFP</button>
+                                    </form>
+                                    <span class="label label-{% if rfp.messages.count > 0 %}primary{% else %}default{% endif %}" data-reactid=".2.0.3.1:$rfp-4.0.0.3.1.0">{{ rfp.messages.count }}</span>
+                                    <small class="text-muted">
+                                        <span data-reactid=".2.0.3.1:$rfp-4.0.0.3.1.1.0">&nbsp;&nbsp;</span>
+                                        <span data-reactid=".2.0.3.1:$rfp-4.0.0.3.1.1.1">messages</span>
+                                    </small>
+                                </div>
+                                <div class="clearfix vertical-spacer-lg">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                <div class="col-xs-12">
+                    <section class="rfp-filter filter-bar">
+                        <div class="panel panel-default panel-card">
+                            <div class="panel-body">
+                                <h2 class="rfp-title">Create Request for Quotation</h2>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <div class="col-xs-12">
+                    <div class="panel panel-default rfp-edit-panel">
+                        <div class="panel-body">
+                            <form method="POST" id="newRFPForm" class="form-horizontal rfp-field-form">
+                                {% csrf_token %}
+                                {% include 'forms/naked_form.html' with form=form submit_btn=False submit_btn_label='Create Request'%}
+
+                                <div class="text-center form-actions">
+                                  <button type="submit" class="btn btn-block btn-primary">Create Request</button>
+                                </div>
+                                </div>
+                            </form>
+                            <div class="clearfix">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

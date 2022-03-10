@@ -1,0 +1,674 @@
+.rpfs-container {
+    @media (max-width: @screen-xs-max) {
+        padding: 0 15px;
+    }
+}
+.rfp-title-input {
+    font-size: 22px;
+    font-weight: bold;
+    border: 0px none;
+    background: none repeat scroll 0% 0% transparent;
+}
+
+.rfp-field-form {
+    input, textarea {
+        color: darken(@gray, 50%);
+    }
+    &.form-horizontal {
+        padding: 10px;
+    }
+    label {
+        padding-right: 0px;
+
+        &.file-attachment-label {
+            font-size: 90% !important;
+            margin-top: 3px;
+        }
+    }
+}
+
+.rfp-answer-list {
+    padding: 0px 12px;
+
+    .answer {
+        margin: 15px 0px;
+
+        .question-title {
+            font-weight: bold;
+            margin-botton: 5px;
+        }
+        .content {
+            color: @gray-light;
+        }
+    }
+}
+
+.rfp-card {
+    position: relative;
+    z-index: 2;
+    border-radius: 4px;
+    .BoxShadowHelper(@level: 1);
+    border: none;
+
+    &.transition-enter {
+        transition: all 0.4s ease-in;
+        opacity: 0.2;
+        &.transition-enter-active {
+            opacity: 1;
+        }
+    }
+
+    &.transition-leave {
+        transition: all 0.4s ease-in;
+        opacity: 0.2;
+        &.transition-leave-active {
+            opacity: 1;
+        }
+    }
+
+    .section-upper {
+        .header {
+            min-height: 72px;
+
+            &.actions-menu {
+                padding-top: 15px;
+                padding-right: 15px;
+            }
+        }
+
+        .meta-row {
+            min-height: 31px;
+            padding: 0 15px;
+            clear: both;
+        }
+
+        > div {
+            vertical-align: middle;
+            &.col-sm-2 {
+                padding:0 10px
+            }
+            .project-title {
+                margin: 15px 0 12px -15px ;
+                border-width: 0 0 0 4px;
+                border-style: solid;
+                padding: 4px 11px;
+                white-space: nowrap;
+                color: @gray;
+                overflow: hidden;
+                min-height:60px;
+            }
+            .project-status-default {
+                border-color: @color-unconfirmed;
+            }
+            .project-status-success {
+                border-color: @color-staffed;
+            }
+            .project-status-danger {
+                border-color: @brand-danger;
+            }
+            .project-status-warning {
+                border-color: @color-staffing;
+            }
+            .project-status-info {
+                border-color: @color-completed;
+            }
+            h4 {
+                margin-top: 0px;
+                margin-bottom: 2px;
+                font-size: 16px;
+                font-weight: 700;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+                a, a:hover {
+                    color: @gray;
+                    text-decoration: none;
+                }
+                .dropdown-toggle .fa {
+                    font-size: 14px;
+                    color: @gray;
+                }
+            }
+            .subtitle {
+                font-size: 80%;
+            }
+            hr {
+                margin: 10px 0px;
+            }
+        }
+    }
+
+    .section-lower {
+        margin: 0px !important;
+        padding: 8px 15px 8px 15px !important;
+        background-color: #f4f4f4;
+        border-bottom-right-radius: 5px;
+        border-bottom-left-radius: 5px;
+
+        .last-response {
+            font-size: 85%;
+            margin: 5px 0px;
+
+            .seperator {
+                margin: 0px 10px;
+                font-weight: bold;
+            }
+            a {
+                font-weight: bold;
+                &:hover {
+                    color: @brand-primary;
+                }
+            }
+        }
+    }
+}
+
+.panel.rfp-field-panel {
+    padding: 5px 10px;
+    z-index: 2;
+    &.rfp-placeholder {
+        background: transparent;
+        color: @brand-primary;
+        border: 1px dashed @brand-primary;
+    }
+    &.rfp-field-def {
+        box-shadow: 0px 2px 1px @gray-light;
+    }
+    &.rfp-field-preview {
+        margin: -20px 0px 20px;
+        z-index: 1;
+
+        &.type-break {
+            background: transparent;
+        }
+
+        label {
+            // font-size: 14px !important;
+            // color: @gray !important;
+        }
+
+        .panel-body {
+            padding: 20px;
+        }
+    }
+    .panel-body, .panel-heading {
+        margin: 0px;
+        padding: 10px;
+    }
+    &.relative {
+        position: relative;
+    }
+}
+
+.rfp-field-def {
+    margin: 20px 0px 40px;
+    @border-color: @gray-lighter;
+
+    &.edit {
+        margin: 20px -10px 40px;
+    }
+
+    .panel {
+        background: rgba(255, 255, 255, 0.8);
+        border-radius: 3px;
+        .BoxShadowHelper(@level: 1);
+        .panel-body {
+            border: 0px;
+        }
+        .panel-heading {
+            border: 0px;
+            border-bottom: 1px solid @border-color;
+        }
+    }
+
+    .modal-body {
+        min-height: 100px;
+    }
+}
+
+.rfp-template-switch {
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-weight: bold;
+    font-size: 85%;
+    a {
+        font-weight: normal;
+        color: lighten(@gray-light, 7.5%);
+
+        &:hover {
+            color: @gray-dark;
+        }
+    }
+}
+
+.rfp-field-list {
+    margin-top: 40px;
+    .sortable-placeholder {
+        position: relative;
+        border: 2px dashed @gray-light;
+        width: 100%;
+        height: 100px;
+        display: block;
+        margin-bottom: 40px;
+        &:after {
+            content: "DROP TO RE-ORDER";
+            color: @gray;
+            position: absolute;
+            top: 0px;
+            bottom: 0px;
+            left: 0px;
+            right: 0px;
+            padding-top: 40px;
+            text-align: center;
+        }
+    }
+    .rfp-field-panel {
+        &.dim {
+            opacity: 0.4;
+        }
+        .drag-handle {
+            float: right;
+        }
+    }
+}
+
+.rfp-share-panel {
+    padding: 12px 15px 4px 8px;
+    margin-bottom: 0px;
+}
+
+.h-seperator {
+    display: inline-block;
+    margin-right: 15px;
+}
+
+.rfp-field-kind {
+    padding-bottom: 5px;
+    .trigger {
+        display: inline-block;
+        margin: 0px 5px;
+    }
+    .add-btn {
+        font-size: 90%;
+        color: @brand-primary;
+        cursor: pointer;
+    }
+}
+
+.rfp-empty-holder {
+    padding: 25px 0px;
+    background-color: #f7f7f7;
+    margin-bottom: 20px;
+}
+
+.rfp-actions-menu {
+    .dropdown-menu{
+        min-width: 90px;
+    }
+}
+
+
+.rfp-edit-panel {
+    .BoxShadowHelper(@level: 1);
+    border-radius: 3px;
+    padding-top: 10px;
+
+    .title {
+        border-width: 0 0 0 4px;
+        border-style: solid;
+        padding: 4px 0px;
+        white-space: nowrap;
+        border-color: @color-unconfirmed;
+    }
+
+    label:not(.ignore-enhancement) {
+        color: lighten(@gray, 12.5%);
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: 85%;
+    }
+
+    #newRFPForm {
+        padding: 5px;
+
+        label:not(.ignore-enhancement) {
+            padding-top: 8px;
+            padding-right: 5px;
+            text-align: right;
+        }
+    }
+
+}
+
+.rfp-new-field {
+    .rfp-field-panel {
+        margin-bottom: 5px;
+
+        div.form-group:last-child{
+            margin-bottom: 0px;
+        }
+    }
+}
+
+.rfp-shares-box {
+    margin-top: 20px;
+    .BoxShadowHelper;
+
+    .panel-body {
+        margin: 0px;
+        height: 500px;
+        overflow: hidden;
+    }
+
+    .left-container{
+        border-right: 1px solid lighten(@gray-light, 30%);
+        height: inherit;
+        overflow-y: auto;
+
+        .rfp-share-item {
+            padding: 15px 10px 15px 15px;
+            border-bottom: 1px solid lighten(@gray-light, 35%);
+
+            .logo-container {
+                width: 45px;
+                height: 45px;
+                border: 1px solid @gray-lighter;
+                border-radius: 3px;
+                position: relative;
+
+                img {
+                    max-height: 90%;
+                    max-width: 90%;
+                    width: auto;
+                    height: auto;
+                    position: absolute;
+                    top: 0;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    margin: auto;
+                }
+            }
+
+            .vendor-title {
+                font-weight: bold;
+                margin-bottom: 5px;
+                color: @gray;
+                margin-left: 8px;
+            }
+
+            .rating-stars {
+                display: inline-block;
+                font-size: 90%;
+                margin-left: 5px;
+
+                i {
+                    margin-left: 3px;
+                }
+            }
+
+            &.active, &:hover {
+                background-color: lighten(@gray-light, 37.5%);
+            }
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+
+    .right-container {
+        height: inherit;
+        overflow: hidden;
+
+        .header {
+            border-bottom: 1px solid lighten(@gray-light, 35%);
+            padding: 15px;
+            height: 10%;
+
+            .share-status {
+                font-size: 80%;
+
+                .fa {
+                    margin-left: 8px;
+                }
+            }
+        }
+
+        .main-content{
+            padding: 10px 15px;
+            height: 80%;
+            overflow-y: auto;
+
+            .answer-list {
+                .rfp-answer-list;
+                border: 1px solid @brand-primary;
+                border-radius: 5px;
+
+                .footer {
+                    padding: 8px;
+                    border-top: 1px dotted lighten(@brand-primary, 15%);
+                }
+            }
+
+            .rfp-reminder {
+                padding: 20px;
+
+                h4 {
+                    margin: 20px 0px;
+                }
+            }
+
+            .comment {
+                margin-top: 25px;
+
+                .media-body {
+                    color: @gray-light;
+                    word-wrap: break-word;
+
+                    .media-heading {
+                        color: @gray;
+                        font-weight: bold;
+
+                        .timestamp {
+                            color: lighten(@gray-light, 22.5%);
+                        }
+                    }
+                }
+            }
+        }
+
+        .message-box {
+            background-color: lighten(@gray-light, 37.5%);
+            padding: 10px 5px;
+            height: 10%;
+
+            .form-control {
+                display: inline-block;
+                height: 30px;
+                margin: 0px 10px;
+                background-color: #FFF;
+            }
+        }
+    }
+}
+
+.rfp-staffed-panel {
+    .BoxShadowHelper(@level: 1);
+    padding: 0px 10px 20px 10px;
+    margin-top: 40px;
+
+    .panel-body {
+        padding-top: 15px;
+    }
+
+    .media-heading {
+        margin-bottom: 0px;
+    }
+    .media-heading, .media-description {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .title {
+        color: @gray;
+        font-weight: bold;
+    }
+}
+
+.people-create-menu {
+    .BoxShadowHelper(@level: 1);
+    max-width: 350px;
+    background-color: #FFF;
+    padding: 10px;
+    margin-top: 5px;
+
+    .form-control, .file-attachment-btn {
+        margin-top: 5px;
+    }
+}
+
+.rfp-filter {
+    .Select-item {
+        display: none;
+    }
+    .Select-value {
+        font-size: 10px;
+        line-height: 1.2;
+
+    }
+    .Select-control {
+        border: none;
+        height: 26px;
+    }
+    .Select-placeholder {
+        line-height: 26px;
+    }
+    .Select-input {
+        height: 26px;
+    }
+}
+
+.list-spinner {
+    padding-top: 30px;
+    z-index: 3;
+}
+
+.rfp-edit-page {
+    .nav-wizard {
+        .BoxShadowHelper(@level: 1);
+        background-color: #FFF;
+    }
+}
+
+.rfp-requirements-panel {
+    .rfp-staffed-panel;
+    padding-bottom: 15px;
+}
+
+.rating-form-group {
+    border-spacing: 10px;
+}
+
+
+div.radio-field {
+        display: inline-block;
+        margin: 6px 5px 0 0;
+        textarea.description {
+            border: none;
+        }
+}
+
+label.radio-field {
+        display: table-cell;
+        width: 145px;
+}
+.radio-field{
+    min-height: 80px;
+    height: 80px;
+    border: 1px solid #eee;
+    border-radius: 3px;
+    color: #6c6c6c;
+    vertical-align: middle;
+    text-align: center;
+    transition: all 0.3s ease;
+    &:hover {
+        border-width: 2px;
+    }
+    &.selected {
+        border-width: 2px;
+        .description {
+            color: #6c6c6c;
+        }
+    }
+
+    &.radio-field-sm {
+        width: 100px;
+    }
+
+    .description{
+        padding: 10px 10px;
+        font-size: 12px;
+        color: #acacac;
+        font-weight: normal;
+    }
+    .radio-wrapper {
+        display: none;
+    }
+
+    &.radio-1 {
+        &.selected {
+                border-color: #ff4f4f;
+        }
+        &:hover {
+            border-color: #ff4f4f;
+        }
+    }
+    &.radio-2 {
+        &.selected {
+            border-color: #ff4f4f;
+        }
+        &:hover {
+            border-color: #ff4f4f;
+        }
+    }
+    &.radio-3 {
+        &.selected {
+            border-color: #f8be1c;
+        }
+        &:hover {
+            border-color: #f8be1c;
+        }
+    }
+    &.radio-4 {
+        &.selected {
+            border-color: #7ed321;
+        }
+        &:hover {
+            border-color: #7ed321;
+        }
+    }
+    &.radio-5 {
+        &.selected {
+            border-color: #7ed321;
+        }
+        &:hover {
+            border-color: #7ed321;
+        }
+    }
+}
+
+
+@media (min-width: @screen-lg-min) {
+    // .rfp-card-container:nth-child(3n+2) {
+    //     clear: left;
+    // }
+}
+
+@media (min-width: @screen-sm-min) and (max-width: @screen-md-max) {
+    // .rfp-card-container:nth-child(2n+3) {
+    //     clear: left;
+    // }
+}
+

@@ -1,0 +1,23 @@
+{% extends "base.new.html" %}
+
+{% block title %}{{ post.title }}{% endblock %}
+{% block body_class %}login-bg{% endblock %}
+{% block container %}
+<div class="header">
+  <div class="container">
+    <div class="row">
+      {% include "navbar.new.html" %}
+      <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 pull-right header-logo">
+        <a href="{% url "home" %}" class="logo"></a>
+      </div>
+      <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 pull-left">
+        <section class="blog">
+          <h2><a class="blog-title" href="{{ post.get_absolute_url }}">{{ post.title }}</a></h2>
+          <h6>Posted {{ post.date_created }}</h6>
+          {{ post.body|linebreaks }}
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

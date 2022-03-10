@@ -1,0 +1,27 @@
+<div class="panel panel-default">
+  <div class="panel-body">
+    <div class="field-group">
+      <label>
+        <h4>
+          <a href="{% url 'projects:status:details' status.id %}" class="no-link-style">
+            {{ status }}
+          </a>
+          <span class="btn btn-secondary btn-xs disabled">value: {{ status.get_value_display }}</span>
+        </h4>
+        {% if status.value == status.INITIATED %}
+          <small class="text-muted">Suppliers can use this status to propose resources.</small><br/>
+        {% endif %}
+        {% if status.forward_flows.exists %}
+          <small class="text-muted">Can be changed to: </small>
+          <ul class="list-unstyled">
+            {% for flow in status.forward_flows.all %}
+              <li>&nbsp;&nbsp;&nbsp;<i class="fa fa-level-up fa-rotate-90 text-muted"></i>&nbsp;<small>{{ flow.forward }} <span class="text-muted">by {{ flow.get_driver_display }}</span></small></li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <small class="text-muted">Cannot be changed any other status</small>
+        {% endif %}
+      </label>
+    </div>
+  </div>
+</div>

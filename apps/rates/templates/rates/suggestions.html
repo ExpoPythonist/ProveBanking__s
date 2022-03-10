@@ -1,0 +1,24 @@
+{% load crispy_forms_tags %}
+<div id="suggested-cards" class="panel-body radio-options-list">
+  {% if selected_rate %}
+    {% include 'rates/rate_suggestion.html' with suggested=selected_rate selected=True %}
+  {% endif %}
+  {% for suggested in suggestions %}
+    {% if not selected_rate %}
+      {% include 'rates/rate_suggestion.html' with selected=forloop.first %}
+    {% else %}
+      {% include 'rates/rate_suggestion.html' with selected=forloop.first %}
+    {% endif %}
+  {% empty %}
+    {% if not selected_rate %}
+      <div class="field-group muted placeholder">
+        <div class="text-left text-muted">
+          No rates were found for the selected criteria
+        </div>
+      </div>
+    {% endif %}
+  {% endfor %}
+  <div class="block-cover block-cover-rates text-center jumbotron hide">
+    <h4 class="sub-message">Remove hourly rate below to pick a rate card</h4>
+  </div>
+</div>

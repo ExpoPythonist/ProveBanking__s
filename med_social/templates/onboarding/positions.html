@@ -1,0 +1,47 @@
+{% extends 'onboarding/base.html' %}
+{% load bootstrap3 %}
+{% block onboarding_content %}
+{% include "onboarding/partials/steps.html" %}
+<div class="container-820px">
+  <div class="col-xs-12">
+    <div class="alert alert-complex alert-warning alert-dismissable text-center">
+      <strong class="alert-name">TIP</strong>
+      <span class="alert-text">In addition to your work experience, add descriptions of recent projects you've completed as a consultant.  Take care to anonymize the description to protect sensitive information</span>
+      <a class="fa fa-remove alert-link alert-dismiss" data-dismiss="alert" aria-hidden="true"></a>
+    </div>
+    <div class="horizontal-separator">&nbsp;</div>
+    <div class="panel panel-default profile-panel">
+      <div class="panel-body">
+        <div id="positionsContainer">
+          <ul class="list-unstyled timeline" id="positions">
+            {% if user.positions.all %}
+              {% for position in user.positions.all %}
+                {% include 'consultant/profile/position.html' %}
+              {% endfor %}
+            {% else %}
+              <div data-type="placeholder" class="text-center">
+                <a href="{% url 'positions' %}" id="btn-new-position" class="text-underline edit-trigger" data-hide="#positionsContainer, #btn-new-position" data-editable="ul#positions" data-form-container="#positionFormContainer" data-type="placeholder">Click here</a> to add a work position to your profile
+              </div>
+            {% endif %}
+          </ul>
+        </div>
+        <div id="positionFormContainer"></div>
+      </div>
+    </div>
+  </div>
+</div>
+<br/>
+<div class="row container-820px">
+  <div class="col-sm-2 col-xs-12">
+  </div>
+  <div class="col-sm-8 col-xs-12 text-center">
+    <a href="{% url 'positions' %}" id="btn-new-position" class="btn btn-primary edit-trigger" data-hide="#positionsContainer, #btn-new-position" data-editable="ul#positions" data-form-container="#positionFormContainer">add new position</a>
+  </div>
+  <div class="col-sm-2 col-xs-12 text-center">
+    <form class="form" method="POST" action="{% url 'setup_step_work_history' %}">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-naked btn-underline btn-next-step"><strong>next step </strong><i class="fa fa-long-arrow-right"></i></button>
+    </form>
+  </div>
+</div>
+{% endblock %}

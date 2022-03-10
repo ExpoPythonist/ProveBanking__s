@@ -1,0 +1,18 @@
+<div class="modal-header text-center">
+  <div class="row">
+    <div class="col-xs-3 modal-action-left">
+      <a href="#" class="btn btn-no" data-dismiss="modal">Cancel</a>
+    </div>
+    <div class="col-xs-6">
+      <h4 class="modal-title" id="myModalLabel">Create</h4>
+    </div>
+    <!--div class="col-xs-3 modal-action-right">
+      <a href="#" class="btn" data-dismiss="modal" onClick="$('#responseAcceptForm').submit();"><i class="fa fa-check"></i> Accept</a>
+    </div-->
+  </div>
+</div>
+<div class="modal-body">
+  {% include 'projects/create_form.html' with iframed=True %}
+  <iframe id="ajaxUploadiFrame" name="ajaxUploadiFrame" data-form="#project-create-form" width="0" height="0" class="hide"></iframe>
+</div>
+

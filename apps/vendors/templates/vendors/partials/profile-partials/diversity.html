@@ -1,0 +1,36 @@
+<div class="panel panel-default panel-card">
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-sm-6">
+        <div class="text-semi-dark people-count-wrap">
+        {{ vendor.name}} employees <span class="count-badge">{{ vendor.get_employee_count }}</span> people
+        </div>
+      </div>
+      {% comment %} 
+        <div class="col-sm-6 text-right">
+          <div class="certified">
+            certified small business <i class="fa fa-check-circle text-primary"></i>
+          </div>
+        </div>
+      {% endcomment %}
+    </div>
+    <hr class="">
+    {% if diversity_owned %}
+      <h6 class="text-semi-dark text-uppercase">Company ownership diversity</h6>
+      <ul class="list-inline">
+        {% for obj in diversity_owned %}
+          <li> <i class="fa fa-square-o"></i>&nbsp;&nbsp;{{obj}}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+    {% if diversity_employee %}
+      <h6 class="text-semi-dark text-uppercase">Ethnic groups employed</h6>
+      <ul class="list-inline">
+        {% for obj in diversity_employee %}
+          <li> <i class="fa fa-square-o"></i>&nbsp;&nbsp;{{obj}}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+    <br>
+  </div>
+</div>

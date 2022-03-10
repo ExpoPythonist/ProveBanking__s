@@ -1,0 +1,28 @@
+<div class="modal-header text-center">
+  <div class="col-xs-12 text-right">
+    <a href="#" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times text-muted"></i></a>
+  </div>
+  <span class="text-muted">Industries for &ldquo;{{ vendor.name }}&rdquo;</span>
+  <span class="text-muted"></span>
+</div>
+
+<div class="modal-body">
+  <div class="row">
+    {% for object in industries %}
+      <div class="col-sm-12 ">
+        <div class="col-sm-{% if active_industry %}5{%else%}12{%endif%} nopadding">
+          <p>{{object.industry}}</p>
+        </div>
+        {% if active_industry %}
+        <div class="col-sm-7">
+          <div class="progress">
+            <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: {{object.allocation}}%;">
+              {{object.allocation}}%
+            </div>
+          </div>
+        </div>
+        {%endif%}
+      </div>
+    {% endfor %}
+  </div>
+</div>

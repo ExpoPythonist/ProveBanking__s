@@ -1,0 +1,30 @@
+{% load review_tags %}
+<div class="field-group">
+{% if user.is_client %}
+
+<div class="col-xs-6 ">
+  <div>
+      Ratings and reviews 
+      {% if not object == user %}
+        {% if False and perms.reviews.add_review and user.is_client %}
+          (<a href="{% get_review_url 'add' object %}">add a review</a>)
+        {% endif %}
+      {% endif%}
+  </div>
+  {% if object.avg_score %}
+    {% assign_review_url 'list' object as reviews_url %}
+    {% include 'reviews/partials/as_label.html' with score=object.avg_score count=object.reviews_count link=reviews_url button_size="sm"%}&nbsp;
+  {% else %}
+    <small class="text-muted">No reviews yet</small>&nbsp;
+  {% endif %}
+</div>
+{% endif %}
+
+{% if user.is_client or user.vendor == object.vendor %}
+<div class="col-xs-6">
+  <div>Availability</div>
+  {% include 'availability/as_field.html' with weeks=object.get_availability_as_weeks %}
+  <div>{% include 'availability/partials/last_updated.html' with for_user=object %}</div>
+</div>
+{% endif %}
+</div>

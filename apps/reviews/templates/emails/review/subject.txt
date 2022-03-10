@@ -1,0 +1,10 @@
+{% load i18n %}
+{%if anonymous %}
+{% blocktrans %}
+Someone at {{current_tenant}} added a review
+{% endblocktrans %}
+{% else %}
+{% blocktrans %}
+{{user}} added a review 
+{% endblocktrans %}
+{% endif %}

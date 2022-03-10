@@ -1,0 +1,60 @@
+{% pjaxr_extends "base_template.html" "Site" %}
+{% block title %}Confirm availability {% endblock %}
+
+{% block page_title %}<span id="page-title">Confirm availability</span>{% endblock %}
+
+{% block left_nav_button %}
+  <span id="left-nav-btn" class="pull-left"></span>
+{% endblock %}
+
+{% block right_nav_button %}
+  <span id="right-nav-btn" class="pull-right"></span>
+{% endblock %}
+
+{% block right_sidebar %}
+  <div id="sidebar-right" class="sidebar sidebar-right"></div>
+{% endblock %}
+
+{% block notifications %}
+  {% include 'partials/notifications.html' %}
+{% endblock %}
+
+{% block page %}
+  <div id="page" class="container page">
+    {% block content %}
+      <ol class="breadcrumb custom">
+        <li><a href="{% url 'users:list' %}">People</a></li>
+        <li><a href="{% url 'users:profile' object.username %}">Profile</a></li>
+        <li class="active">Confirm availability</li>
+      </ol>
+      {% if view.confirmed %}
+        <div class="alert alert-success alert-dismissible" role="alert">
+          <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          Thank you for confirming your availibility
+        </div>
+      {% else %}
+        <div class="alert alert-success">
+          <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          Please edit your upcoming availability below.
+        </div>
+      {% endif %}
+
+      <div class="page-top-band">
+        <div class="col-xs-6">
+          <h6>Your upcoming availability</h6>
+        </div>
+        <div class="col-xs-6 text-right">
+          {% if object == user %}
+            <h6><a href="{% url 'users:add_allocation' object.username %}" class="no-underline">add allocation</a></h6>
+          {% endif %}
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          {% include 'users/availability_card.html' %}
+        </div>
+      </div>
+    {% endblock %}
+  </div>
+{% endblock %}
+{% block pjaxr_namespace %}Site.availability_confirm{% endblock pjaxr_namespace %}

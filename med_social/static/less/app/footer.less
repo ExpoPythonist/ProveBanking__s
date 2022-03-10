@@ -1,0 +1,33 @@
+.navbar-footer {
+    height: 100%;
+    overflow-y: visible;
+    background: #f4f3f2;
+    border: 1px solid #e3e2e1;
+    max-height: 45px;
+    transition: max-height 0.3s ease-in-out;
+    &.slide-in {
+        transform: translate3d(0, 0, 0);
+        max-height: 400px;
+    }
+}
+
+.Desktop {
+  .navbar-footer {
+    min-width: (@screen-xs-max - 30px);
+    .content {
+      max-width: (@screen-xs-max - 30px);
+    }
+    @media (max-width: @screen-xs-max) {
+        min-width: 100%;
+        .content {
+            width: 100%;
+        }
+    }
+    margin: 0 auto;
+    right: auto;
+    left: auto;
+    .content {
+      //width: 100%;
+    }
+  }
+}

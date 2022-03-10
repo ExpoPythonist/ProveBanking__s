@@ -1,0 +1,49 @@
+{% if not request.mobile %}
+<ul class="nav nav-pills nav-justified" role="tablist">
+  <li role="presentation" {% if active == 'staff' %}class="active"{% endif %}>
+    <a  class="filter-url"
+        default-href="{% url 'users:list' %}?kind=1"
+        role="tab"
+        data-toggle="tooltip"
+        data-placement="bottom"
+        title="{{ current_tenant }} folks">
+        Dedicated pool&nbsp;<span class="badge">{{ staff_count }}</span>
+    </a>
+  </li>
+
+  <li role="presentation" {% if active == 'virtual' %}class="active"{% endif %}>
+    <a  class="filter-url" default-href="{% url 'users:list' %}?kind=2" role="tab"
+        data-toggle="tooltip"
+        data-placement="bottom"
+        title="People from our vendor partners"> Virtual pool &nbsp;<span class="badge">{{ virtual_count }}</span>
+    </a>
+  </li>
+
+  <li role="presentation" {% if active == 'vendors' %}class="active"{% endif %}>
+    <a  class="filter-url" default-href="{% url 'vendors:list' %}" role="tab"
+        data-toggle="tooltip"
+        data-placement="bottom"
+        title="Our vendor partners can provide people or implement deliverables">
+        Suppliers &nbsp;<span class="badge">{{ vendors_count }}</span>
+    </a>
+  </li>
+</ul>
+{% else %}
+<nav class="navbar navbar-default navbar-fixed-bottom nav-pool-tab">
+  <div class="container">
+    <ul class="nav navbar-nav row text-center small">
+      <li role="presentation" class="col-xs-4 nopadding {% if active == 'staff' %}active{% endif %}">
+        <a class="filter-url" default-href="{% url 'users:list' %}?kind=1" role="tab">MDL pool<br><span class="badge">{{ staff_count }}</span></a>
+      </li>
+
+      <li role="presentation" class="col-xs-4 nopadding {% if active == 'virtual' %}active{% endif %}">
+        <a class="filter-url" default-href="{% url 'users:list' %}?kind=2" role="tab">Virtual pool<br><span class="badge">{{ virtual_count }}</span></a>
+      </li>
+
+      <li role="presentation" class="col-xs-4 nopadding {% if active == 'vendors' %}active{% endif %}">
+        <a class="filter-url" default-href="{% url 'vendors:list' %}" role="tab">Suppliers<br><span class="badge">{{ vendors_count }}</span></a>
+      </li>
+    </ul>
+  </div>
+</nav>
+{% endif %}

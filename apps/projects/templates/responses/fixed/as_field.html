@@ -1,0 +1,42 @@
+{% load humanize %}
+<a href="{{ response.get_absolute_url }}" class="no-underline field-group response-as-field">
+  <div class="field-value">
+    <span class="col-xs-12 col-sm-6 nopadding text-left">
+        <strong>{{ response.vendor.name }}</strong>
+        {% if response.vendor.avg_score != None %}
+        &nbsp;{% include 'reviews/partials/as_label.html' with score=response.vendor.avg_score link=None %}
+        {% endif %}
+    </span>
+    <span class="col-xs-12 col-sm-6 nopadding">
+      {% if response.accepted %}
+        <span class="btn btn-secondary btn-o btn-success btn-xs disabled"><i class="fa fa-check"></i> Accepted </span>
+      {% endif %}
+
+      {% if response.start_date != response.request.start_date or response.end_date != response.request.end_date %}
+        {% include 'partials/date_range.html' with start_date=response.start_date end_date=response.end_date %}
+      {% endif %}
+
+      {% if response.is_draft %}
+        <span class="btn btn-secondary btn-o btn-warning btn-xs disabled"><i class="fa fa"></i> Draft </span>
+      {% endif %}
+
+      {% with comments_count=response.comments.count %}
+        {% if comments_count %}
+          <span class="btn btn-secondary btn-o btn-xs disabled"><i class="fa fa-comments"></i>&nbsp;{{ comments_count }}</span>&nbsp;
+        {% endif %}
+      {% endwith %}
+
+      {% if features.financials.is_enabled and perms.rates.view %}
+        <button type="button" class="btn btn-o btn-xs btn-secondary" data-trigger="focus" data-container="body" data-toggle="popover" data-trigger="click" data-html="true" data-placement="left"  data-content="<small class='text-muted'>Only visible to those with <strong>'Can view financial information'</strong> permission. See <a href='{% url 'groups:list' %}'>Permissions and Groups</a>.</small>">
+          <i class="fa fa-dollar"></i>
+          <span> {{ response.rate|intcomma }}</span>
+          {% include 'rates/lock.html' %}
+        </button>&nbsp;
+      {% endif %}
+      {% if response.people.count %}
+        <span class="btn btn-secondary btn-o btn-xs disabled"><i class="fa fa-user"></i> {{ response.people.count }}</span>&nbsp;
+      {% endif %}
+      <!--span class="text-muted">{{ response.natural_modified_date }}</span-->
+    </span>
+  </div>
+</a>

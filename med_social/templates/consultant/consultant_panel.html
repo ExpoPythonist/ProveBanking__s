@@ -1,0 +1,59 @@
+{% load utils %}
+{% load thumbnail %}
+{% load humanize %}
+{% load i18n %}
+{% get_is_following consultant as is_following %}
+<div id="consultant-panel-{{ consultant.pk }}" class="grid-item panel panel-consultant {{ consultant.is_available|yesno:"panel-black,panel-gray" }}">
+  <div class="panel-body">
+    <div id="subProfileFormContainer"></div>
+    <div class="consultant-details">
+      {% include 'consultant/basic_profile.html' %}
+      <hr class="divider">
+      {% if consultant != user %}
+        {% common_connections consultant as connections %}
+        {% if connections %}
+        <dl class="dl-horizontal dl-default">
+          <dt class="">In Common</dt>
+          <dd>{{ connections.networks.0.name }}</dd>
+          <dd>{{ connections.people.0 }}</dd>
+        </dl>
+        <hr class="divider"/>
+        {% endif %}
+      {% endif %}
+      {% include 'consultant/work_highlights.html' %}
+      {% include 'consultant/education_highlights.html' %}
+      {% include 'consultant/profile_expertise.html' with is_last=True %}
+
+      {% ifnotequal profile_page True %}
+        {% ifnotequal consultant user %}
+        <div class="text-center">
+          {% include 'follow_button.html' with target=consultant is_following=is_following class="btn-follow btn-block" %}
+        </div>
+        {% else %}
+        <a href="{{ consultant.profile_url }}" class="btn btn-sm link-gray"></a>
+        {% endifnotequal %}
+      {% else %}
+      <div class="text-center">
+        {% if profile == user %}
+          {% if show_setup_btn %}
+          <a href="{% url 'run_setup_wizard' %}" class="btn btn-default btn-block"><i class="fa fa-cogs"></i> run setup wizard</a>
+          {% endif %}
+        {% else %}
+          {% include 'follow_button.html' with target=consultant is_following=is_following class="btn-block btn-follow " %}
+        {% endif %}
+      </div>
+      {% endifnotequal %}
+
+
+      {% if not profile == user and not short_version %}
+      <div class="text-center">
+        <a class="btn btn-block btn-contact" href="{% url 'messages:new_to_user' consultant.id %}">contact {{ consultant.get_short_name }}</a>
+      </div>
+      {% endif %}
+
+      {% ifnotequal profile_page True %}
+        <a href="{{ consultant.profile_url }}" class="text-right btn-details pull-right" >view profile details <i class="fa fa-long-arrow-right"></i></a>
+      {% endifnotequal %}
+    </div>
+  </div>
+</div>

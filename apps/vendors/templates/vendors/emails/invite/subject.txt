@@ -1,0 +1,5 @@
+{%if current_tenant.is_public_instance %}
+Invite to Proven - {{current_tenant}} Service Provider Database
+{% else %}
+Invitation to collaborate on Proven
+{% endif %}

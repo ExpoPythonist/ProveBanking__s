@@ -1,0 +1,14 @@
+{{ requested_by.get_name_display }} has requested you to update your availability.
+
+Your current availability for the next few weeks:
+
+
+Week (Month/Day)  -  Allocation %
+
+
+{% for week in availability %}
+{{ week.date|date:"n/j" }} --------------------------- {{ week.allocation }}%
+{% endfor %}
+
+
+Is the above information correct? <a href="{{ confirm_url }}?confirm=yes">Yes</a> | <a href="{{ confirm_url }}">No</a>

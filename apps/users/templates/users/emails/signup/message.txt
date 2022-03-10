@@ -1,0 +1,17 @@
+{% load i18n %}
+{% blocktrans %}
+Hi,
+{% endblocktrans %}
+{% blocktrans %}
+<p>Welcome to {{ current_tenant.name }}'s supplier partnership platform.<br>
+Please create an account by using the following personalized link<br>
+</p>
+{% endblocktrans %}
+
+{{ direct_url }}
+
+
+{% blocktrans %}
+Regards,
+Proven Team
+{% endblocktrans %}

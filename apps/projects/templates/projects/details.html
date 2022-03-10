@@ -1,0 +1,79 @@
+{% pjaxr_extends "base_template.html" "Site" %}
+{% load projects %}
+{% load review_tags %}
+{% load crispy_forms_tags %}
+{% block title %}Project details - {{ current_tenant.name }}{% endblock %}
+
+{% block page_title %}<span id="page-title">Project Details</span>{% endblock %}
+
+{% block left_nav_button %}
+  <span id="left-nav-btn" class="pull-left">
+    <a class="navbar-brand btn" href="{% url 'projects:list' %}"><i class="fa fa-chevron-left"></i></a>
+  </span>
+{% endblock %}
+
+{% block right_nav_button %}
+  <span id="right-nav-btn" class="pull-right"></span>
+{% endblock %}
+
+{% block right_sidebar %}
+  <div id="sidebar-right" class="sidebar sidebar-right"></div>
+{% endblock %}
+
+{% block notifications %}
+  {% include 'partials/notifications.html' %}
+{% endblock %}
+
+{% block page %}
+  <div id="page" class="container page project-details-page">
+    {% block content %}
+      <ol class="breadcrumb custom">
+        <li><a href="{% url 'projects:list' %}">Projects</a></li>
+        <li class="active">Project details</li>
+      </ol>
+
+      {% include 'projects/card.html' with project=project show_details=True %}
+
+      {% if perms.projects.view_project %}
+        {% if requests %}
+        <div class="page-top-band clearfix">
+          <div class="col-xs-12 text-muted">
+            <h6>Related requests</h6>
+          </div>
+        </div>
+        {% endif %}
+
+        {% if perms.projects.add_project %}
+          {% if user.is_client %}
+          <div class="row">
+            <div class="col-sm-12">
+              <button class="btn btn-block btn-primary {% if requests %}btn-o btn-dash{% endif %} new-request-btn">+ new request</button>
+            </div>
+          </div>
+          <div class="new-request hide">
+            {% include 'requests/partials/inline-form.html' %}
+          </div>
+          {% if not requests %}<div class="vertical-spacer-lg"></div>{% endif %}
+          {% endif %}
+        {% endif %}
+
+        <div id="request-list">
+          {% for staffing_request in requests %}
+            {% include 'requests/as_field.html' %}
+          {% empty %}
+            <div class="panel panel-default staffing-card request-placeholder">
+              <div class="panel-body">
+                <div class="field-group muted">
+                  <div class="text-left text-muted">
+                    No staffing requirements added yet
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endblock %}
+  </div>
+{% endblock %}
+{% block pjaxr_namespace %}Site.projects_details{% endblock pjaxr_namespace %}

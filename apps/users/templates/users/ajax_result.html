@@ -1,0 +1,7 @@
+<div class="text-center result-item" data-pk="{{ object.pk }}" data-kind="user" data-text="{{ object.get_name_display }}">
+  <h2>
+    <i class="fa fa-check-circle text-muted"></i> {{ invited|yesno:"Invitation sent!, Added!" }}
+  </h2>
+  <p>Successfully added a new user. {% if invited %}We've sent an invitation to <strong>{{ object.email }}</strong> to join the Proven platform.{% else %}As per your instruction, the user has not been invited to the platform. You can do it later by visiting the user's profile or by inviting the user again.{% endif %}</p>
+  <a href="#" class="btn btn-primary" data-dismiss="modal">Continue</a>
+</div>

@@ -1,0 +1,55 @@
+#notifications {
+    top: 55px;
+    max-width: @screen-xs-max;
+    margin: 0 auto;
+    opacity: 0.95;
+    .alert {
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    .alert-error {
+      .alert-variant(@alert-danger-bg; @alert-danger-border; @alert-danger-text);
+    }
+}
+
+.notif-spacer {
+    display: inline-block;
+    width: 17px;
+    i {
+        opacity: 0.6;
+    }
+}
+
+//Navbar notification icon
+.notification-bubble {
+    font-size: 23px;
+    line-height: 1em;
+    cursor: pointer;
+    margin-right: 0px;
+    &, &:hover {
+        color: @gray;
+    }
+
+    &.notif {
+        span.unread-count {
+            display: inline-block;
+        }
+    }
+    position: relative;
+    span.unread-count {
+        display: none;
+        position: absolute;
+        font-size: 10px;
+        line-height: 1em;
+        padding: 2px;
+        background: @brand-primary;
+        text-shadow: -1px 1px 1px rgba(0, 0, 0, 0.6);
+        border-radius: 2px;
+        z-index: @zindex-navbar+2;
+        color: #fff;
+        top: 10px;
+        right: 10px;
+        font-weight: bold;
+        border-radius: 3px;
+    }
+}

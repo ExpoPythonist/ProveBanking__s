@@ -1,0 +1,27 @@
+{% extends 'onboarding/base.html' %}
+{% load bootstrap3 %}
+{% block onboarding_content %}
+{% include "onboarding/partials/steps.html" %}
+<div class="container-820px">
+  <div class="col-xs-12">
+    <div class="alert alert-complex alert-warning alert-dismissable text-center">
+      <strong class="alert-name">TIP</strong>
+      <span class="alert-text">
+        <strong>Impressive!</strong> Please review and refine your profile card. It is the first thing that clients will see. Use the <i class="fa fa-edit"></i> edit buttons to choose highlights from each category.</span>
+      </span>
+      <a class="fa fa-remove alert-link alert-dismiss" data-dismiss="alert" aria-hidden="true"></a>
+    </div>
+    <div class="horizontal-separator">&nbsp;</div>
+    <div id="profileCard" class="container-350px">
+      {% include 'consultant/consultant_panel.html' with consultant=user profile=user profile_page=True %}
+      <br/>
+      <div class="col-xs-12 text-right">
+        <form class="form" method="POST" action="{% url 'setup_step_highlights' %}">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-naked btn-underline btn-next-step"><strong>next step </strong> <i class="fa fa-long-arrow-right"></i></button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

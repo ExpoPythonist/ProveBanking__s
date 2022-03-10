@@ -1,0 +1,20 @@
+{% load utils %}
+{% if success == False %}
+  <form id="workHighlightsForm" action="{% url 'edit_work_highlights' %}" method="POST" class="{{ css_class }}">
+    {% include 'consultant/profile/generic_form.html' with form=form %}
+  </form>
+{% else %}
+  {% load_featured_positions consultant as featured_positions %}
+  {% if featured_positions or user == consultant %}
+    <dl id="workHighlights-{{consultant.id}}" class="dl-horizontal dl-default">
+      <dt>worked</dt>
+      {% for position in featured_positions %}
+        <dd title="{{ position.company.name }}">{{ position.company.name }}</dd>
+      {% endfor %}
+      {% if user == consultant and profile_page %}
+      <dd><a href="{% url 'edit_work_highlights' %}" id="editWorkHighlightsBtn" class="edit-trigger" data-editable=".consultant-details" data-form-container="#subProfileFormContainer" data-toggle="tooltip" title="edit work highlights" data-placement="right"><i class="fa fa-edit fa-small"></i> edit</a></dd>
+      {% endif %}
+      <dd class="divider"></dd>
+    </dl>
+  {% endif %}
+{% endif %}

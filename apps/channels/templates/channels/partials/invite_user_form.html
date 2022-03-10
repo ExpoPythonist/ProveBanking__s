@@ -1,0 +1,8 @@
+    <form id="channel-user-invite-form" action="{% url 'channels:invite_user' channel.id %}?email={{ initial_email }}" data-ajax-form="true">
+      {% include 'forms/mobile_form.html' with form=form %}
+      <div class="row">
+        <div class="col-xs-6 col-xs-offset-3">
+          <button type="submit" class="btn btn-block btn-primary">Invite</button>
+        </div>
+      </div>
+    </form>

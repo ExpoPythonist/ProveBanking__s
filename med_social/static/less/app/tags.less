@@ -1,0 +1,49 @@
+.tag {
+    font-size: 12px;
+    border-radius: 4px;
+    padding: 2px 4px;
+    position: relative;
+    white-space: nowrap;
+    margin-left: 2px;
+    margin-right: 2px;
+    &.tag-default {
+        background: lighten(@gray-light, 27%);
+    }
+    &.tag-warning {
+        background: @brand-warning;
+        color: #fff;
+    }
+    &.tag-info {
+        background: @brand-info;
+        color: #fff;
+    }
+    &.tag-dark {
+        background: @gray;
+        color: #fff;
+    }
+    &.tag-primary {
+        background: @brand-primary;
+        color: #fff;
+    }
+    &.tag-danger {
+        background: @brand-danger;
+        color: #fff;
+        i.fa {
+            color: @gray-lighter;
+        }
+    }
+    &.tag-success {
+        background: @brand-success;
+        color: #fff;
+    }
+    &:first-child {
+        margin-left: 0px;
+    }
+    &:last-child {
+        margin-right: 0px;
+    }
+    &:only-child {
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+}

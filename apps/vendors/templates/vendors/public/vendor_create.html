@@ -1,0 +1,53 @@
+{% extends 'guest_base_extended.html' %}
+{% block title %}Create supplier profile - Proven{% endblock %}
+{% block page %}
+  <div id="page" class="container page profile">
+    <div class="text-center">
+      <h6 class="text-muted">Proven helps you to be found by new clients</h6>
+      <p class="text-muted">Proven profiles offer new customers a deep understanding of the strengths of your company. To add a Proven profile, please enter the company name and your email address at this company. Only current employees are eligible to create a Proven profile.</p>
+      <br>
+    </div>
+
+    {% block content %}
+      <form id="invite-form" class="form-mobile" role="form" action="#" method="POST">
+        {% csrf_token %}
+        {% include 'forms/mobile_form.html' with form=form %}
+        <div class="form-actions text-center">
+          <input type="submit" value="Get Proven" class="btn btn-primary"/>
+        </div>
+      </form>
+    {% endblock %}
+    <br>
+    <hr/>
+    <div class="row text-center">
+      <div class="col-xs-12 col-sm-4">
+        <div>
+          <p><strong>Fair</strong></p>
+          <p>
+            Our algorithm decides which companies get listed, not a human. The more clients you have, the stronger the signal.
+          </p>
+          <br>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-4">
+        <div>
+          <p> <strong>Private & Confidential</strong></p>
+          <p>
+            Your clients can choose to remain anonymous. It's up to them and it won't affect your ranking.
+          </p>
+          <br>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-4">
+        <div>
+          <p><strong>Simple</strong></p>
+          <p>
+            Once a client finds you, they can request a quote, all within the app. It's fast and simple.
+          </p>
+          <br>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+{% block pjaxr_namespace %}Site.vendor_profile.create{% endblock pjaxr_namespace %}

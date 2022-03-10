@@ -1,0 +1,65 @@
+{% load thumbnail %}
+{% load utils %}
+
+<div class="col-md-{{ col_width }} col-sm-4 company-client">
+  <span class="company-client-image">
+    {% if not reference.use_alt_name %}
+    {% thumbnail reference.client.logo "90x90" as thumb %}
+    <img src="{{ thumb.url }}" alt="{{ reference.display_name }}" />
+    {% empty %}
+    <img src="{{ STATIC_URL }}new/img/clients/rte.png" alt="{{ reference.display_name }}" />
+    {% endthumbnail %}
+    {% else %}
+    <img src="{{ STATIC_URL }}new/img/clients/rte.png" alt="{{ reference.display_name }}" />
+    {% endif %}
+  </span>
+  <div class="company-client-name">
+    <i class="icon {% if reference.is_fulfilled %}icon-check highlight{% else %}icon-question not-verified{% endif %}"
+      data-toggle="popover"
+      title="{% if reference.is_fulfilled %}Verified Client{% else %}Unverified Client{% endif %}"
+      data-html="true"
+      data-placement="bottom"
+      data-content="
+        {% if reference.is_fulfilled %}
+        <p>
+          Verified by
+          {% if reference.invoice_verification %}
+          proof uploaded by vendor
+          {% elif reference.email %}
+          {% if not reference.use_alt_name %}
+          {{ reference.email|email_anonymize }}
+          {% else %}
+          an employee at this company
+          {% endif %}
+          {% endif %}
+        </p>
+        {% endif %}
+        {% if reference.duration and not reference.duration_private %}
+        <p>Client for {{ reference.get_duration_display }}</p>
+        {% endif %}
+
+        {% if request.user.is_superuser %}
+        <p class='well'>
+          <strong>Weighted Value:</strong> {{ reference.weighted_value }}%<br />
+          <strong>Client Quality:</strong> {{ reference.client.client_quality_score|floatformat:0 }}% ({{ reference.client.client_quality_score_weighted|floatformat:0 }}/10)<br />
+          <strong>Billing:</strong> {{ reference.billing|default:0 }}/8 ({{ reference.get_billing_display }})<br />
+          <strong>Duration:</strong> {{ reference.duration|default:0 }}/5 ({{ reference.get_duration_display }})<br />
+        </p>
+        {% endif %}
+      "></i>
+
+    <span>
+      {% if not reference.use_alt_name and not reference.review_anonymous and reference.client.website %}
+        <a target="_blank" href="{{ reference.client.website }}" class="text-muted">{{ reference.display_name }}</a>
+      {% else %}
+        {{ reference.display_name }}
+      {% endif %}
+      {% if user.is_allowed_change or user.vendor == reference.vendor %}
+      &nbsp;
+      <span title="View client"><a href="{% url 'vendors:client_view' vendor.slug reference.id %}"><small class='text-primary' title='View Client'><i class="fa fa-pencil-square-o text-muted"></i></small></a></span>
+      &nbsp;
+      <span title="Delete client"><a href="{% url 'vendors:client_delete' reference.id %}" data-toggle="modal" data-target="#genericModal"><small class='text-primary' title='Delete Client'><i class="fa fa-trash-o text-muted"></i></small></a></span>
+      {% endif %}
+    </span>
+  </div>
+</div>

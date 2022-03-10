@@ -1,0 +1,26 @@
+{% extends 'guest_base_extended.html' %}
+{% load avatar_tags %}
+{% load thumbnail %}
+{% block title %}{{ object.client.name }}{% endblock %}
+{% block page %}
+  <div id="page" class="container page profile">
+    {% block content %}
+      <div class="text-center">
+        {% thumbnail object.client.logo "180x100" as thumb %}
+          <img src="{{ thumb.url }}">
+        {% empty %}
+          <strong class="h3">{{ object.client.name }}</strong>
+        {% endthumbnail %}
+        <hr>
+      </div>
+      <form class="form-mobile" role="form" action="#" method="POST">
+        {% csrf_token %}
+        {% include 'forms/mobile_form.html' with form=form %}
+        <div class="form-actions text-center">
+          <input type="submit" value="Resend request" class="btn btn-primary"/>
+        </div>
+      </form>
+    {% endblock %}
+  </div>
+{% endblock %}
+{% block pjaxr_namespace %}Site.vendor_profile.client_request_resend{% endblock pjaxr_namespace %}

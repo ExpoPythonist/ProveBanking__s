@@ -1,0 +1,94 @@
+{% pjaxr_extends "base_template.html" "Site" %}
+{% load pipeline %}
+{% load thumbnail %}
+{% load projects %}
+{% load utils %}
+
+{% block title %}Suppliers - {{ current_tenant }}{% endblock %}
+
+{% block notifications %}
+  {% include 'partials/notifications.html' %}
+{% endblock %}
+
+{% block page %}
+  <div id="page" class="container">
+    {% block content %}
+    <section class="vendor-filter filter-bar">
+
+      <!-- <div class="row nopadding">
+        <div class="col-sm-6">
+          <h6 class="section-title text-muted text-uppercase">Search <b>{{current_tenant}}</b> suppliers</h6>
+        </div>
+        <div class="col-sm-6">
+        {% if not current_tenant.is_public_instance %}
+          {% if user.is_procurement %}
+          <a  href="{% url 'vendors:export_data' %}"class="section-title small pull-right no-underline"><i class="fa fa-file-excel-o"></i>&nbsp;Download supplier data</a>
+          {%endif%}
+        {% endif %}
+        </div>
+      </div>
+
+      <div class="panel panel-default panel-card">
+        <div class="panel-body">
+          <form id="filter-form" class="form-inline col-md-12 nopadding block-left" role="form" action="{% url 'vendors:list' %}">
+
+            <div class="col-sm-8 nopadding">
+            {% for F in vendors.form %}
+              {% if F.name not in vendors.Meta.exclude_from_render and F.name != 'kind' %}
+              <span class="{% if F.name == 'my_suppliers'%}hidden{% endif%}">
+                <div class="btn-group filter-btn-group text-left filter-label-wrap">
+                  <span class="filter-label">{{ F.label }}</span>
+                </div>
+                <div class="btn-group filter-btn-group vendor-filter-btn-group text-left">
+                  <button type="button" class="{{ F.label }} {{ F.name }} filter-btn dropdown-toggle btn" data-toggle="dropdown">
+                    {{ F.field.widget.attrs.placeholder }}...
+                  </button>
+                  <ul class="dropdown-menu {{ F.label }}-dropdown filter-dropdown" role="menu" {% for key, val in F.field.widget.attrs %}{{ key }}={{val}}{% endfor %}>
+                    <li>{{ F }}</li>
+                  </ul>
+                </div>
+                <br class="visible-xs">
+              </span>
+            {% endif %}
+            {% if F.name == 'kind' %}
+            </div>
+
+              <div class="col-md-4 text-right btn-filter nopadding">
+                <span class="form-inline form-right">
+                  <div class="checkbox">
+                    {% for obj in kind_labels %}
+                    <label class="filter-option">
+                        <input type="checkbox" ignore-enhance="true" name="kind" value='{{obj.kind}}' data-name='kind' data-value="{{obj.kind}}" {% if obj.filter_default %} checked {% endif %}> <span {% if obj.description %}data-toggle="tooltip" title="{{obj.description}}" data-placement="bottom" data-trigger="hover focus" {% endif %}>{{ obj.label}}</span>
+                    </label>
+                    {% endfor %}
+                  </div>
+                </span>
+              </div>
+
+              {% endif %}
+            {% endfor %}
+            <input name="sort" value="rating" class="hide" hidden/>
+          </form>
+
+        </div>
+      </div>
+
+      <div class="container">
+        <div id="filter-tags" class="filter-container"></div>
+      </div>
+    </section>
+ -->
+
+    <section class="vendor-results relative row">
+
+      <div id="vendor-selectable-list" class="results-items vendor-cards-container">
+        {% for vendor in vendors %}
+            {% include 'vendors/partials/public_card.html' %}
+        {% endfor %}
+      </div>
+    </section>
+    {% endblock %}
+  </div>
+{% endblock %}
+
+{% block pjaxr_namespace %}Site.vendors.list{% endblock pjaxr_namespace %}

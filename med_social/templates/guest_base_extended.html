@@ -1,0 +1,94 @@
+{% load pipeline %}
+{% load account %}
+{% load notifications_tags %}
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" class="no-js ie6 lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" class="no-js ie7 lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" class="no-js ie8 lt-ie9"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+  <head>
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, target-densityDpi=device-dpi, user-scalable=no">
+    <meta name="google-site-verification" content="w3UBSKIDYX1xMXiWj-VWl7NVO1FIWXdFRcNionz_ITM" />
+    <meta id="csrf-middleware-token" value="{{ csrf_token }}"></meta>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Proven">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+    <link rel="shortcut icon" href="{{ STATIC_URL }}images/favicon.png">
+    {% include 'partials/touchicons.html' %}
+    {% include 'partials/startup_images.html' %}
+    {% block CSS_INCLUDES %}
+      {% stylesheet 'libs' %}
+      {% stylesheet 'public' %}
+      <!-- {% stylesheet 'app' %} -->
+    {% endblock %}
+    {% block css_head %}{% endblock %}
+
+    {% include 'partials/global_vars.html' %}
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      {% javascript 'legacy' %}
+    <![endif]-->
+    {% block js_head %}{% endblock %}
+    {% block extra_head %}{% endblock %}
+    {% include 'mixpanel.html' %}
+  </head>
+
+  <body class="{% if not request.mobile %}Desktop{% endif %} public">
+      {% block site %}
+        {% block main_navbar %}
+          <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <div class="container text-center">
+              <div class="col-xs-3 navbar-left">
+                  <a href="/" class="navbar-brand btn main-menu-btn"><img src="{{ STATIC_URL }}images/vpp-landing/logo/logo.png" class="logo" /></a>
+              </div>
+              <div class="col-xs-6 navbar-center">
+                <span class="navbar-brand navbar-brand-center">
+                  {% block page_title %}{% endblock %}
+                </span>
+              </div>
+              <div class="col-xs-3 navbar-right">
+                {% block right_nav_button %}{% endblock %}
+              </div>
+              {% block extra_nav_content %}{% endblock %}
+            </div>
+          </nav>
+        {% endblock main_navbar %}
+      <div id="sidebar-container">
+        {% block left_sidebar %}
+          {% if not current_tenant.schema_name == 'public' %}
+            {% include 'partials/left_sidebar.html' %}
+          {% endif %}
+        {% endblock %}
+        {% block right_sidebar %}{% endblock %}
+      </div>
+      {% block messages %}
+        <div class="container">
+          {% include 'partials/messages.html' %}
+        </div>
+      {% endblock %}
+      {% block page %}{% endblock %}
+      {% block JS_INCLUES %}
+        {% javascript 'libs' %}
+        {% javascript 'app' %}
+      {% endblock %}
+      {% block js_foot %}{% endblock %}
+      {% include 'google-analytics.html' %}
+      <script src="//static.getclicky.com/js" type="text/javascript"></script>
+      <script type="text/javascript">try{ clicky.init(100938778); }catch(e){}</script>
+      <noscript><p><img alt="Clicky" width="1" height="1" src="//in.getclicky.com/100938778ns.gif" /></p></noscript>
+    {% endblock %}
+    <div id="spinnerModal" class="modal modal-spinner">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="spinner-container">
+            </div>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+  </body>
+</html>

@@ -1,0 +1,90 @@
+/**Blog Css**/
+@import "../bootstrap/variables.less";
+@import "../bootstrap/mixins.less";
+@import "../bootstrap-variables.less";
+@import "../variables.less";
+@import "../functions.less";
+@import "pages.less";
+@import "animations.less";
+@import "grid.less";
+@import "panels.less";
+@import "sidebars.less";
+@import "avatars.less";
+@import "notifications.less";
+@import "common.less";
+
+div.page-blog {
+  padding-top: 10px; 
+  .panel {
+    a.blog-table{
+    display: table;
+    margin: 1px;
+    margin: 0px;
+    width: 100%;
+    }
+    img {
+      float: left;
+      max-width: 150px;
+      padding: 10px;
+    }
+    .article-title {
+      text-decoration: none;
+      color: @gray-dark;
+      font-size: 16px;
+      font-weight: 300;
+      line-height: 1.1;
+      margin-top:10px;
+      margin-bottom: 4px;
+    }
+    .date-stamp {
+      color: @gray-light;
+      font-size: 12px;
+      font-style: normal;
+    }
+  }
+
+  .cell {
+    display: table-cell;
+  }
+
+  .panel-body .field-group.blog-table{
+    label.cell {
+    width: 96%;
+    float: none;
+    display: table-cell;
+    }
+    div.cell {
+      width: 4%;
+      vertical-align: middle;
+      text-align: center;
+      a {
+        padding:10px;
+      }
+    }
+  }
+}
+
+.page-about {
+  padding-top: 10px; 
+  font-size: 16px;
+  color: @gray;
+  letter-spacing: 0.015em;
+  line-height: 1.8em;
+  div.panel-body {
+    padding: 10px;
+  }
+  .media {
+    margin-bottom: 10px;
+    img.avatar {
+      padding :5px;
+      background: @color-white;
+      width: 80px;
+      border: 1px solid @gray-light;
+    }
+    h4.media-heading {
+      margin-top: 20px;
+      font-size: 22px;
+    }
+  }
+
+}

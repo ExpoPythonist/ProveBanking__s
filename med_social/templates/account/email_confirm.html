@@ -1,0 +1,32 @@
+{% pjaxr_extends "partials/auth_modal.html" "Site" %}
+{% load i18n %}
+{% load account %}
+{% block title %}{% trans "Confirm email address" %}{% endblock %}
+
+{% block notifications %}
+  {% include 'partials/notifications.html' %}
+{% endblock %}
+
+{% block content %}
+  <div class="auth-form-panel">
+    <div class="text-center">
+      <h4 class="header-thin">{% trans "Confirm email address" %}</h4>
+      <br/>
+    </div>
+    {% if confirmation %}
+      {% user_display confirmation.email_address.user as user_display %}
+      <p>{% blocktrans with confirmation.email_address.email as email %}Please confirm that <a href="mailto:{{email}}">{{ email }}</a> is an email address for user {{ user_display }}.{% endblocktrans %}</p>
+      <form method="post" action="{% url 'account_confirm_email' confirmation.key %}" class="form-mobile authforms">
+        {% csrf_token %}
+        {% include 'forms/auth_form.html' with form=form %}
+        <div class="col-xs-12 col-centred text-center">
+          <button type="submit" class="btn btn-primary">{% trans 'Confirm' %}</button>  
+        </div>
+      </form>
+    {% else %}
+        {% url 'account_email' as email_url %}
+        <p>{% blocktrans %}This email confirmation link expired or is invalid. Please <a href="{{ email_url}}">issue a new email confirmation request</a>.{% endblocktrans %}</p>
+        <br/>
+    {% endif %}
+  </div>
+{% endblock %}

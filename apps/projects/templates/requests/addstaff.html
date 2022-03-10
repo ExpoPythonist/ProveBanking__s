@@ -1,0 +1,69 @@
+{% pjaxr_extends "base_template.html" "Site" %}
+{% load crispy_forms_tags %}
+{% block title %}
+  {% if staff_object.id %}
+    Edit staff
+  {% else %}
+    Add project staff
+  {% endif %}
+- {{ current_tenant }}{% endblock %}
+
+{% block page_title %}<span id="page-title">
+  {% if staff_object.id %}
+    Edit staff
+  {% else %}
+    Add project staff
+  {% endif %}
+</span>{% endblock %}
+
+{% block left_nav_button %}
+  <span id="left-nav-btn" class="pull-left">
+    {% if previous_page %}
+      <a class="navbar-brand btn" href="{{ previous_page }}"><i class="fa fa-chevron-left"></i></a>
+    {% else %}
+      <a class="navbar-brand btn" href="{% url 'projects:detail' project.id %}"><i class="fa fa-chevron-left"></i><!--  <span>Cancel</span> --></a>
+    {% endif %}
+  </span>
+{% endblock %}
+
+{% block right_nav_button %}
+  <span id="right-nav-btn" class="pull-right">
+    <a class="navbar-brand btn pull-right" href="#" ></a>
+  </span>
+{% endblock %}
+
+{% block right_sidebar %}
+  <div id="sidebar-right" class="sidebar sidebar-right"></div>
+{% endblock %}
+
+{% block notifications %}
+  {% include 'partials/notifications.html' %}
+{% endblock %}
+
+{% block page %}
+  <div id="page" class="container page">
+    {% block content %}
+    <form id="add-staff-direct-form" class="form-mobile staffing-form form-horizontal" role="form" action="." method="POST" data-rate-suggestions-url="{% url 'rates:suggestions' %}">
+        {% csrf_token %}
+        {% include 'forms/mobile_form.html' with form=form %}
+        {% include 'responses/proposed_rates.html' with form=form %}
+
+        <div class="text-center form-actions">
+        {% if staff_object.id %}
+          <a data-toggle="modal" data-target="#confirmRemoveFromStaffModal" href="{% url 'staffing:remove' staff_object.project_id staff_object.id %}" class="btn btn-default">Remove</a>&nbsp;
+        {% endif %}
+          <button type="submit" class="btn btn-primary">{% if staff_object.id %}Save{% else %}Add staff{% endif %}</button>
+        </div>
+    </form>
+    {% include 'users/invite_modal.html' %}
+    {% endblock %}
+      <!-- Modal -->
+      <div class="modal fade" id="confirmRemoveFromStaffModal" tabindex="-1" role="dialog" aria-labelledby="confirmRemoveFromStaffModal" aria-hidden="true" data-keyboard="false" data-backdrop="static">
+        <div class="modal-dialog">
+          <div class="modal-content">
+          </div>
+        </div>
+      </div>
+  </div>
+{% endblock %}
+{% block pjaxr_namespace %}Site.projects.staffing.add{% endblock pjaxr_namespace %}

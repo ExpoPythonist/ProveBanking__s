@@ -1,0 +1,133 @@
+{% load avatar_tags %}
+{% load activity %}
+{% load projects %}
+{% load user_tags %}
+{% load review_tags %}
+{% load humanize %}
+
+<div class="row relative proposed-staff-card user-card proposed-member-{{ proposed_resource_object.id }} {% if not show_details %}unread-event{% endif %}" 
+    data-staff-id="{{ proposed_resource_object.id }}" 
+    data-request-id="{{ proposed_resource_object.response.request.id }}"
+    {% if not show_details %} data-unread-event-url="{% url 'activity:event_update' content_id=proposed_content_id object_id=proposed_resource_object.id %}" {% endif %}>
+
+  <div class="col-xs-12 block-cover hide"></div>
+
+  <div class="col-xs-12 col-sm-7">
+    <div class="media">
+      <a href="{{ person.get_profile_modal_url }}" class="pull-left" data-toggle="modal" data-target="#userModal">
+        {% include 'partials/avatar_initials.html' with object=person size=35 %}
+      </a>
+      <div class="media-body text-left">
+        <h5 class="media-heading">
+          <div>
+            <a href="{{ person.get_profile_modal_url }}" class="no-link-style" data-toggle="modal" data-target="#userModal">
+              {{ person.get_name_display }}
+            </a>&nbsp;
+
+            {% if person.get_linkedin_url %}
+              <a href="{{ person.get_linkedin_url }}" class="no-link-style" title="Linkedin" target="_blank" ><i class="fa fa-linkedin-square"></i></a>&nbsp;
+            {% endif %}
+
+            {% if person.resume %}
+              <a target="_blank" href="{{ person.resume.url }}" onclick="window.open('{{ person.resume.url }}'); return false;" class="no-link-style" title="Resume / CV">
+                <i class="fa fa-file-text"></i>
+              </a>&nbsp;
+            {% endif %}
+
+            <span class="btn btn-o btn-secondary btn-xs disabled">{{proposed_resource_object.past_projects }} past project{{ proposed_resource_object.past_projects|pluralize }}</span>&nbsp;
+
+            {% if person.avg_score %}
+              {% assign_review_url 'list' person as reviews_url %}
+              {% include 'reviews/partials/as_label.html' with score=person.avg_score count=person.reviews_count link=reviews_url %}&nbsp;
+            {% endif %}
+          </div>
+          <div class="text-muted">
+            <small>{{ person.vendor|default:current_tenant }}</small>
+          </div>
+        </h5>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-sm-5 col-xs-12 text-right">
+    {% if unread_events %}
+      {% has_unread_events proposed_resource_object unread_events as events %}
+      {% if events %}
+        <span title="new activity" class="no-underline text-primary fa fa-circle activity-counter"></span>
+        <span class="v-divider"></span>
+      {% endif %}
+    {% endif %}
+
+    {% get_fields_with_conflicts proposed_resource_object as conflicts %}
+    {% if conflicts %}
+      <i class="text-muted fa fa-exclamation-circle proposed-field-icon danger"
+        data-toggle="popover"
+        data-trigger="click"
+        data-html="true"
+        data-placement="bottom"
+        data-title="Requested v/s Proposed"
+        data-content="
+        <table class='table table-condensed'>
+          {% for conflict in conflicts %}
+            <tr>
+              <td class='text-muted'><small><i class='fa fa-{{ conflict.icon }}'></i></small>&nbsp;</td>
+              <td><small>{{ conflict.expected }}</small>&nbsp;</td>
+                <td><small>{{ conflict.value }}</small>&nbsp;</td>
+            </tr>
+          {% endfor %}
+        </table>
+        "></i>
+    {% endif %}
+    {% if features.financials.is_enabled and perms.rates.view %}
+      {% if proposed_resource_object.rate_card and proposed_resource_object.total_cost %}
+        &nbsp;
+        <button type="button" class="btn btn-o btn-xs {% if staffing_request.max_rate and proposed_resource_object.hourly_rate > staffing_request.max_rate %}btn-danger{% else %}btn-secondary{% endif %}" data-trigger="focus" data-container="body" data-toggle="popover" data-trigger="click" data-html="true" data-placement="bottom"  data-content="{{ proposed_resource_object.get_cost_calculation_display|safe|default:'N/A' }}">
+          <i class="fa fa-dollar"></i>
+          {{ proposed_resource_object.total_cost|intcomma }}
+          {% include 'rates/lock.html' %}
+        </button>
+        {% if not conflicts %}
+          <span class="v-divider"></span>
+        {% endif %}
+      {% endif %}
+    {% endif %}
+
+    {% if conflicts %}
+      <span class="v-divider"></span>
+    {% endif %}
+
+    <span>
+      {% if perms.projects.add_proposedresource %}
+        {% include 'responses/partials/proposed_status_button_group.html' %}
+        <!-- Split button -->
+        <span class="v-divider"></span>
+      {% endif %}
+      <div class="btn-group">
+        <button type="button" class="btn btn-xs btn-link no-link-style no-underline dropdown-toggle" data-toggle="dropdown" title="actions">
+          <i class="fa fa-chevron-down small"></i>
+          <span class="sr-only">actions</span>
+        </button>&nbsp;
+        <ul class="dropdown-menu dropdown-menu-right text-left" role="menu">
+          {% if perms.projects.add_staffingresponse %}
+            <li>
+              <a class="no-link-style no-underline small" href="{% url 'staffing:edit_proposed' proposed_resource_object.id %}"><i class="fa fa-pencil"></i>&nbsp;edit</a>
+            </li>
+          {% endif %}
+
+          {% if False and perms.reviews.add_review %}
+            <li>
+            <a href="{% get_review_url 'add' proposed_resource_object %}" class="no-link-style no-underline small">
+              <i class="fa fa-star"></i>&nbsp;add review</a>
+          </li>
+          {% endif %}
+
+          <li>
+            <a href="{{ proposed_resource_object.get_delete_url }}" class="no-link-style no-underline small" >
+              <i class="fa fa-trash-o"></i>&nbsp;remove</a>
+          </li>
+        </ul>
+      </div>
+      &nbsp;
+    </span>
+  </div>
+</div>

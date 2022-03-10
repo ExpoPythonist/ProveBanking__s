@@ -1,0 +1,26 @@
+{% load avatar_tags %}
+{% load review_tags %}
+{% load utils %}
+{% url 'reviews:detail' review.id as review_url %}
+<div class="panel panel-default">
+  <div class="panel-heading flat"></div>
+  <div class="panel-body" href="{% url 'reviews:detail' review.id %}" class="review-card review-field">
+      <blockquote>
+        <p><i><a href="{{ review_url }}" class="no-link-style">{{ review.remarks }}</a></i></p>
+      </blockquote>
+
+      <div class="score-value score-font-size " >
+                Rating: <span class="text-{% get_review_class vendor.avg_score %}">{% rating_stars vendor.avg_score %}</span> <h1>{{vendor.avg_score}}</h1>
+      </div> 
+
+      {% if review.anonymous %}
+            <span>Someone at {{ review.posted_by.get_company_display }}<cite class="timestamp"> - {{ review.natural_created_date }}</cite></span>
+          {% else %}
+            <a href="{{ review.posted_by.get_profile_modal_url }}" class="no-link-style" data-toggle="modal" data-target="#userModal">
+              <img src="{% avatar_url review.posted_by 25 %}" class="avatar avatar-25 img-circle"/>
+              {{ review.posted_by }} 
+            </a>
+      {% endif %}
+  </div>
+</div>
+

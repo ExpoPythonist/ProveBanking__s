@@ -1,0 +1,63 @@
+{% extends 'base_email.html' %}
+
+{% block body %}
+  <tr>
+    <td class="content-block">
+        {%if current_tenant.is_public_instance%}
+        <p>Hi,</p>
+        {% if current_tenant.schema_name == 'ida' %}
+          <p>Welcome to the beta {{current_tenant.name}} Service Provider platform for client companies who are looking for services in Ireland to help them get established.</p>
+          <p>This private database will allow companies to search and find existing Irish service providers, view their work history with {{ current_tenant.name }} Clients and initiate requests for services.</p>
+        {% else %}
+          {% if current_tenant.schema_name == 'commercialdrones' or current_tenant.schema_name == 'dronesireland' %}
+            <p>Welcome to the beta {{current_tenant.name}} Service Provider platform for companies who are looking for UAV services.</p> 
+            <p>This database will allow companies to search and find existing UAV service providers, view their work history with clients and initiate requests for services.</p>
+          {% else %}
+            <p>Welcome to the Proven Service Provider platform. This database will allow companies to search and find service providers, view their work history with clients and initiate requests for services.</p>
+          {% endif %}
+        {% endif %}
+
+        <p>Please create an account using the following personalized link:</p>
+
+        <a href="{{direct_url}}">{{ direct_url }}</a>
+        <p>(For security, this link will expire in 48 hours)</p>
+
+        <p>After you have created a username and password using the above link, you can access the website from {{ tenant_url }}. Your email address is your user name and if you forget your password, you can create a new one using your email address.</p>
+
+        <p>If you require technical support, please contact Suzanne Jordan at suzanne@proven.cc.</p>
+
+        <p>
+        Best regards,<br>
+        {{ sender.get_name_display }}<br>
+        </p>
+        {%else%}
+        {% if message %}
+        {{ message|linebreaks }}
+        {%else%}
+        <p class="lead panel">Hi {{username}},</p>
+          <p>Welcome to the beta collaboration platform for {{ current_tenant.name }} suppliers. This private website will allow {{ current_tenant.name }} employees to search and find existing {{ current_tenant.name }} suppliers, view work history with {{ current_tenant.name }}, and initiate requests. This website will be available to all {{ current_tenant.name }} employees from the {{ current_tenant.name }} Intranet and will be powered by the Proven platform. </p>
+      
+          <p>Please create an account using the following personalized link:</p>
+          <a href="{{direct_url}}">{{ direct_url }}</a>
+          <p>(For security, this link will expire in 48 hours)</p>
+
+          <p>After you have created a username and password using the above link, you can access the website from  <a href="{{ tenant_url }}">{{ tenant_url }}</a>. Your email address is your user name and if you forget your password, you can create a new one using your email address.</p>
+
+            <p>
+            If you have any questions about the pilot, please contact {{ current_tenant.email }}. If you have any questions about the Proven platform, please contact Suzanne Jordan at suzanne@proven.cc.
+            </p>
+          <p>This website is available from {{ current_tenant.name }}'s intranet or directly at {{ tenant_url }}. </p>
+        <p>
+            Best,<br>
+            {{ sender.get_name_display }},<br>
+            {% if sender.is_vendor %}
+            {{ sender.vendor.name }}
+            {% else %}
+            {{ sender.email }}
+            {% endif%}
+          </p>
+          {%endif%}
+      {% endif %}
+    </td>
+  </tr>
+{% endblock %}

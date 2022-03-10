@@ -1,0 +1,26 @@
+{% load review_tags %}
+<h6 class="section-title text-uppercase">score breakdown</h6>
+{% for metric in review.review_metrics.all %}
+  {% if metric.metric %}
+    <div class="panel panel-rating-{% get_review_color_class metric.score %} panel-hint panel-card">
+      <div class="panel-heading">
+        <div class="row">
+          <div class="col-xs-10">
+            {{ metric.metric.name }}
+          </div>
+          <div class="col-xs-2 text-right">
+            
+            <span class="small">
+              <b class="text-semi-dark">{{ metric.score}}</b><small class="text-muted">/5</small>
+            </span>
+            
+          </div>
+        </div>
+      </div>
+      <div class="panel-body">
+        <p><small>{{ metric.metric.help_text}}</small></p>
+        {{ metric.get_metric_score_display }}
+      </div>
+    </div>
+  {% endif %}
+{% endfor %}

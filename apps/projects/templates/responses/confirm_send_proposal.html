@@ -1,0 +1,64 @@
+{% load projects %}
+{% load avatar_tags %}
+{% load humanize %}
+<div class="modal-header text-center">
+  <div class="row">
+    <div class="col-xs-3 modal-action-left">
+      <a href="#" class="btn" data-dismiss="modal"><i class="fa fa-chevron-left"></i> <span>Cancel</span></a>
+    </div>
+    <div class="col-xs-6">
+      <h4 class="modal-title" id="myModalLabel">Send Proposal</h4>
+    </div>
+    <div class="col-xs-3 modal-action-right">
+      <a href="#" class="btn" data-dismiss="modal" onClick="$('#sendProposalForm').submit();"><i class="fa fa-send"></i> <span>Send</span></a>
+    </div>
+  </div>
+</div>
+  <div class="modal-body">
+    <form id="sendProposalForm" action="{% url 'projects:send_proposal' object.id %}" method="POST">
+      {% csrf_token %}
+    </form>
+    {% if object.request.is_fixed_price %}
+      <dl class="dl-horizontal">
+        <dt>Proposed rate <i class="fa fa-dollar"></i></dt>
+        <dd>{{ object|render_response_field:"rate"|intcomma }}</dd>
+
+        <dt></dt>
+        <dd><hr class="thin"/></dd>
+
+        <dt>Start date <i class="fa fa-calendar"></i></dt>
+        <dd>{{ object|render_response_field:"start_date" }}</dd>
+
+        <dt></dt>
+        <dd><hr class="thin"/></dd>
+
+        <dt>End date <i class="fa fa-calendar"></i></dt>
+        <dd>{{ object|render_response_field:"end_date" }}</dd>
+      </dl>
+    {% else %} 
+    <h4>Review proposed candidates</h4><br>
+    <hr class="thin">
+      {% for pr in object.proposed.all %}
+        <div class="row">
+          <div class="col-xs-3 text-lefft">
+            <span class="text-elips">{{ pr.resource }}</span>
+          </div>
+          <div class="col-xs-9 text-right">
+              {% include 'partials/date_range.html' with start_date=pr.start_date end_date=pr.end_date %}
+            <span class="btn btn-o btn-xs btn-secondary disabled">
+              {{ pr.allocation }}%
+            </span>&nbsp;
+            {% with tc=pr.total_cost %}
+              {% if tc %}
+              <span class="btn btn-o btn-xs btn-secondary disabled">
+              <i class="fa fa-dollar"></i> {{ pr.total_cost }}
+              </span>&nbsp;
+            {% endif %}
+          {% endwith %}
+          </div>
+        </div>
+        <hr class="thin">
+      {% endfor %}
+  {% endif %}
+  </div>
+</div>

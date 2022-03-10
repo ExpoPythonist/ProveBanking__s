@@ -1,0 +1,69 @@
+{% load thumbnail %}
+{% load utils %}
+
+  <div class="card-section client-section ">
+    <div class="card-section-title text-uppercase ">CLIENTS</div>
+    {% if vendor.client_references.exists %}
+
+      {% for reference in vendor.client_references.all|slice:"3" %}
+        <div class="client-logo-item">
+
+          <div class="media client-logo-wrap">
+            {% if reference.client.website %}
+              {% if not reference.use_alt_name %}
+                <a href="{{ reference.client.website }}" target="_blank" class="">
+              {% endif %}
+            {% endif %}
+
+            <span class="thumb pull-left">
+              {% thumbnail reference.client.logo '120x90' as thumb %}
+                {% if not reference.use_alt_name %}
+                  <img class="client-logo" src="{{ thumb.url }}" alt="{{ reference.display_name }}" />
+                {% else %}
+                  <img class="client-logo" src="{{ STATIC_URL }}images/defaults/placeholder-co.png" />
+                {% endif %}
+              {% empty %}
+                <img class="client-logo" src="{{ STATIC_URL }}images/defaults/placeholder-co.png" />
+              {% endthumbnail %}
+            </span>
+
+            {% if reference.client.website %}
+              {%if not reference.use_alt_name%}</a>{% endif %}
+            {% endif %}
+            <div class='small text-semi-dark client-name media-body' title="{{ reference.display_name}}">
+              {{ reference.display_name}}
+              &nbsp;
+              {% if reference.is_fulfilled %}
+                <i  class="fa fa-check-circle"
+                    style="color: #1df14c;"
+                    data-toggle="popover"
+                    title=" Verified Client"
+                    data-html="true"
+                    data-placement="top"
+                    data-content="
+                      <p>
+                      {% if reference.email %}
+                        {% if not reference.use_alt_name %}
+                          {{ reference.email|email_anonymize }} has verified their relationship with {{ vendor.name }}
+                        {% else%}
+                          verified by an employee at this company
+                        {% endif %}
+                      {% endif %}
+                      <br/>
+                      <br/>
+                      <a href='/vendors/client/learnmore/'>learn more</a>
+                      </p>
+                    ">
+                </i>
+              {% else %}
+              <i class="fa fa-question-circle" data-toggle="tooltip" data-placement="right" title="This client has not been verified<br>by Proven."></i>
+              {% endif%}
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+
+    {% else %}
+      <span class="section-empty">No clients listed</span>
+    {% endif %}
+  </div>

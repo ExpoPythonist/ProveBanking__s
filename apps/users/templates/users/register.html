@@ -1,0 +1,46 @@
+{% extends "account/base.html" %}
+
+{% block title %}Sign Up{% endblock %}
+{% block content %}
+<form class="login-form" action="{% url "users:register" %}{% if request.GET.previous %}?previous={{ request.GET.previous }}{% endif %}" method="POST">
+  {% csrf_token %}
+
+  {% if object %}
+  <div class="request-invite-block">
+    <span>Your request has been submitted and an email with further instructions will be sent to <strong>{{ object.email }}</strong> shortly.</span>
+  </div>
+  {% else %}
+  {% if form.errors.email %}
+  <div class="request-invite-block">
+    {% for error in form.errors.email %}
+    <span>{{ error }}</span>
+    {% endfor %}
+  </div>
+  {% endif %}
+  <input autofocus="autofocus" id="id_email" name="email" placeholder="Email" type="text" required>
+  {% if form.errors.first_name %}
+  <div class="request-invite-block">
+    {% for error in form.errors.first_name %}
+    <span>{{ error }}</span>
+    {% endfor %}
+  </div>
+  {% endif %}
+  <input id="id_first_name" name="first_name" placeholder="First Name" type="text">
+  {% if form.errors.last_name %}
+  <div class="request-invite-block">
+    {% for error in form.errors.last_name %}
+    <span>{{ error }}</span>
+    {% endfor %}
+  </div>
+  {% endif %}
+  <input id="id_last_name" name="last_name" placeholder="Last Name" type="text">
+
+  <button type="submit" class="btn btn-default log-in">Sign Up</button>
+
+  <div class="request-invite-block">
+    <span>Already have an account?</span>
+    <a href="{% url "account_login" %}?next={{ request.GET.previous }}" class="btn btn-default request-invite">Log In</a>
+  </div>
+  {% endif %}
+</form>
+{% endblock %}

@@ -1,0 +1,8 @@
+{% load crispy_forms_tags %}
+<form id="staffing-request-form" class="form-mobile staffing-form " role="form" action="{{ view.get_action_url }}" method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+  {% include 'forms/naked_form.html' with form=form form_heading=None %}
+  <div class="text-center">
+    <button type="submit" class="btn btn-primary" name="submit" value="save">Save</button>
+  </div>
+</form>

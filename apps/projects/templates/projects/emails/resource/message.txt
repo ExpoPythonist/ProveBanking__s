@@ -1,0 +1,9 @@
+{% if staffing_req_url %}
+New candidate {{ proposed_resource.resource.get_name_display}} for {{ proposed_resource.request.role }}
+
+To view all candidates, go to: {{ staffing_req_url }}
+{% else %}
+New candidate {{ proposed_resource.resource.get_name_display}} for {{proposed_resource.project.title}}
+
+To view all candidates, go to: {{ project_url }}
+{% endif %}

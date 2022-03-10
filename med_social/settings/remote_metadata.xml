@@ -1,0 +1,53 @@
+<md:EntityDescriptor xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata" entityID="http://localhost:8000/saml2/metadata/" validUntil="2015-11-25T20:11:07Z">
+<md:SPSSODescriptor AuthnRequestsSigned="false" WantAssertionsSigned="true" protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+<md:KeyDescriptor use="encryption">
+<ds:KeyInfo>
+<ds:X509Data>
+<ds:X509Certificate>
+MIID3TCCAsWgAwIBAgIJAJY3aMGjRF4XMA0GCSqGSIb3DQEBCwUAMIGEMQswCQYD VQQGEwJBVTETMBEGA1UECAwKU29tZS1TdGF0ZTENMAsGA1UEBwwEY2l0eTEPMA0G A1UECgwGVmV0dGVkMQwwCgYDVQQLDANlbmcxDDAKBgNVBAMMA2dhZzEkMCIGCSqG SIb3DQEJARYVZ2FnYW4uemluZ2hAZ21haWwuY29tMB4XDTE1MTExODE5MjMwMVoX DTE1MTIxODE5MjMwMVowgYQxCzAJBgNVBAYTAkFVMRMwEQYDVQQIDApTb21lLVN0 YXRlMQ0wCwYDVQQHDARjaXR5MQ8wDQYDVQQKDAZWZXR0ZWQxDDAKBgNVBAsMA2Vu ZzEMMAoGA1UEAwwDZ2FnMSQwIgYJKoZIhvcNAQkBFhVnYWdhbi56aW5naEBnbWFp bC5jb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCjCoCXqaZC40V0 Hl9/8GOf0ad0zdbZEJzRKSJSa4+0Xsl8fA0kMA5u9FI6n7XakOzbOMIPvZND3Rhf 0E5XsUD2xg9LWzQhylt6rfoTjEurPpwjPZiUUnNXjfel3BjePO2d+3LcODbixN3n uMGRGTEkA4pLGVoaAarpGNlDbj7k6xsHh5i0EL15zc3ATf97DqehXQhuR8uzD+hK O8zarQqUUB1zLrHU6T54SRyRqPY9OyCfy+8nwuJoE2cevPpI79jddg5ABSzeuowV F/4xLn8GSgyean83thDxSNNWi6n4+Oon44sd5rYRDfY5ajUKLrOoFhZFfYi5ePkl HwTjNISRAgMBAAGjUDBOMB0GA1UdDgQWBBS9m04/XKUOuIkOfXdkMgw7vyMp/jAf BgNVHSMEGDAWgBS9m04/XKUOuIkOfXdkMgw7vyMp/jAMBgNVHRMEBTADAQH/MA0G CSqGSIb3DQEBCwUAA4IBAQAlxG75/V5G4+9cgThQpjvRzbh7LUOzwqJz7b+gkYEi JhXDegZstiHDD0LcU0T5ziGZ5KP5Mg0gdjjEP7kHWPNYRQMp/2IVRNSDjXRxu9N+ PAmmYciTdXIyLNs0iE2vTX+F4BOz4vpYD3Sxtb263lnLbBslEuJlm+XvHuwc6xCt rIYx+KongWfO15igHQiidRslZ0AjPQhEZb2OeO3oQV2fX3/IBDp0FV13NfbhRob3 JPA1i5wCK0Z1D2x3REwsi9rksVwfRQDzmVadYPACnxbaMubZMouU65mUeZe50JNv mPrCpNRLyaOLBUyiBrTW403m2PvE0y/F4OtVm+5z16wE
+</ds:X509Certificate>
+</ds:X509Data>
+</ds:KeyInfo>
+</md:KeyDescriptor>
+<md:KeyDescriptor use="signing">
+<ds:KeyInfo>
+<ds:X509Data>
+<ds:X509Certificate>
+MIID3TCCAsWgAwIBAgIJAJY3aMGjRF4XMA0GCSqGSIb3DQEBCwUAMIGEMQswCQYD VQQGEwJBVTETMBEGA1UECAwKU29tZS1TdGF0ZTENMAsGA1UEBwwEY2l0eTEPMA0G A1UECgwGVmV0dGVkMQwwCgYDVQQLDANlbmcxDDAKBgNVBAMMA2dhZzEkMCIGCSqG SIb3DQEJARYVZ2FnYW4uemluZ2hAZ21haWwuY29tMB4XDTE1MTExODE5MjMwMVoX DTE1MTIxODE5MjMwMVowgYQxCzAJBgNVBAYTAkFVMRMwEQYDVQQIDApTb21lLVN0 YXRlMQ0wCwYDVQQHDARjaXR5MQ8wDQYDVQQKDAZWZXR0ZWQxDDAKBgNVBAsMA2Vu ZzEMMAoGA1UEAwwDZ2FnMSQwIgYJKoZIhvcNAQkBFhVnYWdhbi56aW5naEBnbWFp bC5jb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQCjCoCXqaZC40V0 Hl9/8GOf0ad0zdbZEJzRKSJSa4+0Xsl8fA0kMA5u9FI6n7XakOzbOMIPvZND3Rhf 0E5XsUD2xg9LWzQhylt6rfoTjEurPpwjPZiUUnNXjfel3BjePO2d+3LcODbixN3n uMGRGTEkA4pLGVoaAarpGNlDbj7k6xsHh5i0EL15zc3ATf97DqehXQhuR8uzD+hK O8zarQqUUB1zLrHU6T54SRyRqPY9OyCfy+8nwuJoE2cevPpI79jddg5ABSzeuowV F/4xLn8GSgyean83thDxSNNWi6n4+Oon44sd5rYRDfY5ajUKLrOoFhZFfYi5ePkl HwTjNISRAgMBAAGjUDBOMB0GA1UdDgQWBBS9m04/XKUOuIkOfXdkMgw7vyMp/jAf BgNVHSMEGDAWgBS9m04/XKUOuIkOfXdkMgw7vyMp/jAMBgNVHRMEBTADAQH/MA0G CSqGSIb3DQEBCwUAA4IBAQAlxG75/V5G4+9cgThQpjvRzbh7LUOzwqJz7b+gkYEi JhXDegZstiHDD0LcU0T5ziGZ5KP5Mg0gdjjEP7kHWPNYRQMp/2IVRNSDjXRxu9N+ PAmmYciTdXIyLNs0iE2vTX+F4BOz4vpYD3Sxtb263lnLbBslEuJlm+XvHuwc6xCt rIYx+KongWfO15igHQiidRslZ0AjPQhEZb2OeO3oQV2fX3/IBDp0FV13NfbhRob3 JPA1i5wCK0Z1D2x3REwsi9rksVwfRQDzmVadYPACnxbaMubZMouU65mUeZe50JNv mPrCpNRLyaOLBUyiBrTW403m2PvE0y/F4OtVm+5z16wE
+</ds:X509Certificate>
+</ds:X509Data>
+</ds:KeyInfo>
+</md:KeyDescriptor>
+<md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="http://intuit.vetted.dev:8000/saml2/ls/"/>
+<md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="http://intuit.vetted.dev:8000/saml2/ls/post"/>
+<md:NameIDFormat>
+urn:oasis:names:tc:SAML:2.0:nameid-format:persistent
+</md:NameIDFormat>
+<md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="http://intuit.vetted.dev:8000/saml2/acs/" index="1"/>
+<md:AttributeConsumingService index="1">
+<md:ServiceName xml:lang="en"/>
+<md:RequestedAttribute FriendlyName="email" Name="urn:oid:1.2.840.113549.1.9.1.1" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="true"/>
+<md:RequestedAttribute Name="eduPersonAffiliation" NameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri" isRequired="false"/>
+</md:AttributeConsumingService>
+</md:SPSSODescriptor>
+<md:Organization>
+<md:OrganizationName xml:lang="es">Yaco Sistemas</md:OrganizationName>
+<md:OrganizationName xml:lang="en">Yaco Systems</md:OrganizationName>
+<md:OrganizationDisplayName xml:lang="es">Yaco</md:OrganizationDisplayName>
+<md:OrganizationDisplayName xml:lang="en">Yaco</md:OrganizationDisplayName>
+<md:OrganizationURL xml:lang="es">http://www.yaco.es</md:OrganizationURL>
+<md:OrganizationURL xml:lang="en">http://www.yaco.com</md:OrganizationURL>
+</md:Organization>
+<md:ContactPerson contactType="technical">
+<md:Company>Opinr Inc</md:Company>
+<md:GivenName>Gagandeep</md:GivenName>
+<md:SurName>Singh</md:SurName>
+<md:EmailAddress>lgs@yaco.es</md:EmailAddress>
+</md:ContactPerson>
+<md:ContactPerson contactType="administrative">
+<md:Company>Yaco Sistemas</md:Company>
+<md:GivenName>Angel</md:GivenName>
+<md:SurName>Fernandez</md:SurName>
+<md:EmailAddress>angel@yaco.es</md:EmailAddress>
+</md:ContactPerson>
+</md:EntityDescriptor>

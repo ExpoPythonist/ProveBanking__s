@@ -1,0 +1,143 @@
+{% load pipeline %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+      {% if metadata.title %}
+        {{ metadata.title }}
+      {% else %}
+        {% block title %}{% endblock %}
+      {% endif %} - {{ current_tenant.name }}
+    </title>
+    {% if metadata.description %}<meta name="description" content="{{ metadata.description }}">{% endif %}
+    {% if metadata.keywords %}<meta name="keywords" content="{{ metadata.keywords }}">{% endif %}
+
+    {% stylesheet 'libs' %}
+    {% stylesheet 'app' %}
+    <link href="{{ STATIC_URL }}new/css/style.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <style>
+    {% if current_tenant.background %}
+    .header:before, .login-bg:before {
+      background: url('{{ current_tenant.background.url }}') no-repeat 50% 0;
+      background-size: 100%;
+    }
+    {% endif %}
+    body {padding-top: 0;}
+    .login-bg .container {background: rgba(0,0,0,.65); padding: 20px;}
+    .login-bg .header:before, .login-bg:before {background-size: cover;}
+    .login-bg .blog a {color: #fff;}
+    .login-bg .blog h2 {font-family: 'AvenirLTStd-Black'; font-size: 2em;}
+    .login-bg .blog h2, .login-bg .blog h6 {margin: 0;}
+    .login-bg .blog p {margin-bottom: 1em;}
+    .login-bg .blog a.blog-title {text-decoration: underline;}
+    @media screen and (min-width: 992px) {
+      .header:before {background-size: 100%;}
+    }
+    @media (max-width: 767px) {
+      .navbar-nav .open .dropdown-menu {background: #fff;}
+    }
+    .top-bar a {
+      font-family: 'AvenirLTStd-Black';
+      font-weight: bold;
+      text-transform: uppercase;
+      color: #fff;
+    }
+    .top-bar a:hover {color: #7ED321;}
+    .selectize-option-label, .selectize-input .item {
+      color: #000 !important;
+      padding: 5px 10px;
+    }
+    .sticker {
+      font-size: 10px;
+      text-transform: uppercase;
+      padding: 1px;
+      font-weight: bold;
+      width: 100%;
+      text-align: center;
+      display: block;
+    }
+    .sticker.sticker-primary {background: #ffe4d4; color: #ff9c62;}
+    .sticker.sticker-success {background: #e5f1d9; color: #a7c785;}
+    .sticker.sticker-warning {background: rgba(255, 185, 71, 0.12); color: #333;}
+    .sticker.sticker-secondary {background: #f5f5f5; color: #333;}
+    #client-reference-form [id$="-DELETE"] {display: none;}
+    .company-score-wrapper {float: initial;}
+    .company-score-header {
+      text-transform: uppercase;
+      font-size: 0.75em;
+      font-weight: bold;
+      display: block;
+    }
+    </style>
+
+    {% block css %}
+    {% endblock %}
+  </head>
+  <body class="{% block body_class %}body-bg{% endblock %}">
+    {% block container %}
+    {% endblock %}
+
+    <div class="generic-modal modal fade" id="genericModal" tabindex="-1" role="dialog" aria-labelledby="genericModel"
+         aria-hidden="true" data-modal-is-remote="true" data-keyboard="false" data-backdrop="static">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <div class="row">
+              <div class="col-xs-12">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">&nbsp;</h4>
+              </div>
+            </div>
+          </div>
+          <div class="modal-body">
+            <i class="fa fa-circle-o-notch fa-spin"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="spinnerModal" class="modal modal-spinner">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div class="spinner-container">
+            </div>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+    {% include "google-analytics.html" %}
+    <script src="//static.getclicky.com/js" type="text/javascript"></script>
+    <script type="text/javascript">try{ clicky.init(100938778); }catch(e){}</script>
+
+    <script>
+      window.intercomSettings = {
+        app_id: "vvhqvzvu"
+      };
+    </script>
+    <script>(function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',intercomSettings);}else{var d=document;var i=function(){i.c(arguments)};i.q=[];i.c=function(args){i.q.push(args)};w.Intercom=i;function l(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/vvhqvzvu';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);}if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})()</script>
+
+    {% include 'partials/global_vars.html' %}
+    {% javascript 'libs' %}
+    {% javascript 'app' %}
+    {% javascript 'app-ng' %}
+
+    {% block js %}
+    {% endblock %}
+  </body>
+</html>

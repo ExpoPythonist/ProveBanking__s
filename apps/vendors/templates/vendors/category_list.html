@@ -1,0 +1,93 @@
+{% extends "vendors/profile_edit_sidebar.html" %}
+  {% block main_content %}
+<section class="profile-edit-form service-skill-list">
+  <h6 class="section-title text-uppercase">Expertise / Specialties</h6>
+  <div class="panel panel-default panel-card">
+    <div class="panel-body">
+      {% if is_service %}
+      <div class="alert alert-info alert-dismissible fade in" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+        <p>
+        <b>Optional:&nbsp;</b> 
+          Add skill/keyword that clients can use to find your company(e.g., IOS development, multilingual support, product launches)
+        </p>
+      </div>
+      {% endif %}
+      <br>
+      <h6 class="block-meta-title text-uppercase">{% if is_service %}List services that you offer and their % distribution based on last year's work /sales{%else%}List Expertise / Specialties that you offer. Clients can search on the basis  of these keywords.{%endif%}</h6>
+      <br>
+      <form id="role-allocations" action="{% if is_service %}{% url 'vendors:services:list' vendor.id %}{%else%}{% url 'vendors:categories:list' vendor.id %}{%endif%}" method="POST">
+        {% csrf_token %}
+
+        <ul id="role-list" class="list-group panel-metrics container-md">
+          <li class="list-group-item header">
+            <h6 class="text-uppercase">
+            </h6>
+          </li>
+
+          {% for object in objects %}
+          <li class="list-group-item">
+            <b>
+            {% if is_service %}
+              {{ object.service.name }}
+            {% else %}
+              {{ object.skill.name }}
+            {% endif %}
+            </b>
+            <span class="pull-right">
+                  <a class="btn " href="{% if is_service %}{% url 'vendors:services:delete' object.id %}{% else %}{% url 'vendors:categories:delete' object.id %}{% endif %}" data-toggle="modal" data-target="#genericModal"><span><i class="fa fa-trash-o"></i></span></a>
+            </span>
+          </li>
+          {% endfor %}
+
+          <li class="list-group-item">
+            {% if is_service %}
+              <a href="{% url 'vendors:services:create' vendor.id %}" class="btn btn-primary" data-toggle="modal" data-target="#genericModal" >Add Service</a>
+            {%else%}
+              <a href="{% url 'vendors:categories:create' vendor.id %}" class="btn btn-primary" data-toggle="modal" data-target="#genericModal" >Add keyword</a>
+            {%endif%}
+
+
+            <span class="pull-right">
+              {% if objects %}
+              <div class="btn-group">
+                <a id="cancel-edit-btn" class="btn btn-default btn-sm edit-mode-on" href="#"><i class="fa fa-times"></i></a>
+                <a id="save-allocation-btn" class="btn btn-default btn-sm edit-mode-on  btn-primary" href="#"><i class="fa fa-check"></i></a>
+              </div>
+              {% endif %}
+            </span>
+          </li>
+
+          <li class="list-group-item text-right footer">
+            <div class="total-allocation-container {{ total_allocation_incorrect|yesno:"has-error,"}}" data-toggle="tooltip" data-placement="right" title="Must be 100%">
+             
+            </div>
+          </li>
+        </ul>
+      </form>
+      <br><br>
+      {% if is_service %}
+        <div class='container-md'>
+         <p class='small'><b>IMP:</b><span class='text-muted'> This is the main criteria by which clients will discover your firm in the supplier portal</span></p>
+        </div>
+      {% endif %}
+      <div class="container-md text-right">
+        
+      </div>
+
+      <div class="row">
+        <div class="col-xs-6">
+            <a href="{% url 'vendors:procurement:list' vendor.id %}" class="btn btn-default btn-backward">Back</a>
+        </div>
+        <div class="col-xs-6 text-right">
+         <a href="{% url 'user_setup:setup_step_vendor_industries' vendor.id %}" type="submit" class="btn btn-primary btn-forward">
+            Next
+        </a>
+        </div>
+      </div>
+    
+    </div>
+  </div>
+</section>
+   
+{% endblock %}

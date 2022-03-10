@@ -1,0 +1,31 @@
+{% load thumbnail %}
+
+<div class="panel panel-default panel-card">
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-md-6">
+        <h6 class="text-uppercase section-title">{{ vendor.name }} contacts</h6>
+        {% if supplier_contacts %}
+          <div class="row">
+            {% for contact in supplier_contacts %}
+              {% include 'vendors/partials/contact.html' %}
+            {% endfor %}
+          </div>
+          {% else %}
+            <p class="text-muted">No contact listed</p>
+        {% endif %}
+      </div>
+
+      <div class="col-md-6">
+        {% if procurement_contacts %}
+          <h6 class="section-title text-uppercase">{{ current_tenant.name }} CONTACTS</h6>
+          <div class="row">
+            {% for contact in procurement_contacts %}
+              {% include 'vendors/partials/contact.html' %}
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>

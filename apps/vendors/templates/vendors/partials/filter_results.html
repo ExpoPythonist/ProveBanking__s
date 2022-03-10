@@ -1,0 +1,118 @@
+{% load utils %}
+<div id="results-list">
+  {% comment %}
+  {% if new_filter_choices %}
+    <script type="text/javascript">
+      (function(){
+        var updateFilters = function(){
+          _.each({{ new_filter_choices|safe }}, function(choices, key){
+            console.log(choices);
+            var $selectize = _inExec.modules.autocomplete.$instances['filter-form_id_' + key].$selectize;
+
+            _.each($selectize.options, function(option){
+              if ($selectize.getItem(option.pk).length === 0) {
+                $selectize.removeOption(option.pk);
+              }
+            });
+            _.each(choices, function(choice){
+              var newOption = {pk: choice.id, text: choice.name};
+              $selectize.addOption(newOption);
+              $selectize.refreshOptions();
+            });
+          });
+        };
+
+        if (window._inExec === undefined) {
+          window.addEventListener('inExec.initialized', function(){
+            updateFilters();
+          });
+        } else {
+          updateFilters();
+        }
+      }());
+    </script>
+  {% endif %}
+  {% endcomment %}
+  <div class="row">
+    <div class="col-xs-12">
+      <h6 class="section-title text-uppercase">
+        {% if not features.projects.is_enabled %}
+          {{ vendors_count }} suppliers
+          {% if total_lc_amount %}
+            <span class="pull-right">YTD $<span data-humanize="compactInteger">{{ total_lc_amount }}&nbsp;&nbsp;</span></span>
+          {% endif %}
+        {% else %}
+        <div class="btn-group btn-group-tabs" role="group">
+          <a  class="btn btn-default btn-sm filter-url  {% if active == 'staff' %}active{% endif %}"
+              default-href="{% url 'users:list' %}?kind=1"
+              role="tab"
+              data-toggle="tooltip"
+              title="{{ current_tenant }} folks">
+              Dedicated pool ({{ staff_count }})
+          </a>
+          <a  class="btn btn-default btn-sm filter-url {% if active == 'virtual' %}active{% endif %}"
+              default-href="{% url 'users:list' %}?kind=2" role="tab"
+              data-toggle="tooltip"
+              title="People from our vendor partners">
+                Virtual pool ({{ virtual_count }})
+          </a>
+          <a  class="btn btn-default btn-sm filter-url {% if active == 'vendors' %}active{% endif %}"
+              default-href="{% url 'vendors:list' %}"
+              role="tab"
+              data-toggle="tooltip"
+              title="Our vendor partners can provide people or implement deliverables">
+              Suppliers ({{ vendors_count }})
+          </a>
+        </div>
+
+        {% endif %}
+      </h6>
+    </div>
+    {% comment %}
+    <!-- div class="col-xs-6">
+      <h6>
+        <div class="dropdown pull-right">
+          <button class="btn btn-o btn-sm dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+            <i class="fa fa-sort"></i>&nbsp;{{ vendors.data.sort|default:"Rating"|capfirst }}
+          </button>
+          <ul class="dropdown-menu text-left" role="menu" aria-labelledby="dropdownMenu1">
+            <li role="presentation">
+              <a role="menuitem" class="fake-filter-btn" tabindex="-1" data-name="sort" data-value="rating">Rating</a>
+            </li>
+            <li role="presentation">
+              <a role="menuitem" class="fake-filter-btn" tabindex="-1" data-name="sort" data-value="alphabetical">Alphabetically</a>
+            </li>
+          </ul>
+        </div>
+      </h6>
+    </div -->
+    {% endcomment %}
+  </div>
+
+  {% if vendors %}
+    {% if not features.projects.is_enabled %}
+      <div class="col-sm-12 hide">
+        <div class=" no-padding" >
+          <p class="list-label"><span id="results-count">{{ vendors.count }}</span> {{ vendors.count|pluralize:"supplier, suppliers" }}</p>
+        </div>
+      </div>
+    {% endif %}
+    <div id="vendor-selectable-list" class="results-items vendor-cards-container">
+      {% include 'vendors/partials/filter_cards.html' with vendors=vendors %}
+    </div>
+  {% else %}
+    <div class="col-sm-12">
+      <div class="no-padding hide" >
+        <p class="list-label"><span id="results-count">0</span> suppliers</p>
+      </div>
+    </div>
+    <div class="panel panel-default panel-card">
+      <div class="panel-body">
+        <br/>
+          <div class="text-muted">No related suppliers.</div>
+        <br/>
+      </div>
+    </div>
+  {% endif %}
+  <div class="block-cover text-center hide"></div>
+</div>

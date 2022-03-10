@@ -1,0 +1,21 @@
+
+<form action="{% url 'vendors:partner_add' vendor.id client.id %}" data-ajax-form="true" method="POST">
+  <div class="modal-header text-center">
+    <div class="col-xs-12 text-right">
+      <a href="#" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times text-muted"></i></a>
+    </div>
+    Send verification request to {{ client.name }}
+  </div>
+
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-sm-12">
+        {% csrf_token %}
+        {% include 'forms/naked_form.html' with form=form %}
+        <div class="form-actions text-center">
+          <input type="submit" value="Send verification request" class="btn btn-primary"/>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

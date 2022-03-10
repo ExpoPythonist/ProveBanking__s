@@ -1,0 +1,21 @@
+{% extends "partials/auth_modal.html" %}
+{% load i18n %}
+{% block title %}{% trans "Verify your email address" %}{% endblock %}
+
+
+{% block notifications %}
+  {% include 'partials/notifications.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="auth-form-panel">
+  <div class="text-center">
+    <h4 class="header-thin">{% trans "Verify your email address" %}</h4>
+    <hr/>
+    <p>
+      {% blocktrans %}We have sent an email for verification. Follow the link provided to finalize the signup process. Please <a href="mailto:suzanne@proven.cc">contact us</a>  if you do not receive it within a few minutes.{% endblocktrans %}
+    </p>
+    <p class="text-center"><br><a href="{% url 'account_login'%}">back to sign in</a></p>
+  </div>
+</div>
+{% endblock %}

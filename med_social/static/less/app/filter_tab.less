@@ -1,0 +1,21 @@
+.btn-group-tabs {
+  .btn {
+    font-weight: bold;
+    font-size: 11px;
+    background: #F5F5F5;
+    border-color: #ABABAB;
+    color: #ABABAB;
+    &:first-child {
+      border-radius: 4px 0 0 4px;
+    }
+    &:last-child, &.last{
+      border-radius:  0 4px 4px 0 !important;
+    }
+
+    &.active {
+      box-shadow: none;
+      background: #ABABAB;
+      color: #fff;
+    }
+  }
+}

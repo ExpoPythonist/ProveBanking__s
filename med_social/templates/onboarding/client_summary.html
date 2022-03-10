@@ -1,0 +1,70 @@
+{% extends 'onboarding/base.html' %}
+{% load bootstrap3 %}
+{% load avatar_tags %}
+{% block onboarding_content %}
+{% include "onboarding/partials/steps_client.html" %}
+  <div class="text-center profile-summary container-620px">
+    <div class="panel">
+      <div class="panel-body">
+        <div id="client-summary-container">
+        <!--div class="alert alert-complex alert-warning alert-dismissable text-center">
+            <strong class="alert-name">TIP</strong>
+            <span class="alert-text">Don't forget to mention accomplishments in notes</span>
+            <a class="fa fa-remove alert-link alert-dismiss" data-dismiss="alert" aria-hidden="true"></a>
+        </div-->
+        <h3>Welcome, {{ user.get_full_name }}</h3>
+        <span class="avatar-container-big">
+          <img src="{% avatar_url user 110 %}" class="img-circle avatar avatar-110"/>
+        </span>
+        <form id="avatar_form" action="{% url 'upload_avatar' %}" method="POST" enctype="multipart/form-data">
+          <br/>
+          {% csrf_token %}
+          <span class="hide">{{ avatar_form.avatar }}</span>
+          <a href="#" id="avatar_submit" class="btn btn-underline">choose another picture</a>
+          {% for error in avatar_form.avatar.errors %}
+          <div class="alert alert-error alert-sm">{{ error }}</div>
+          {% endfor %}
+        </form>
+        <div>
+          <form id="onboarding-summary-form" class="form" method="POST" action="{% url 'setup_step_client_summary' %}">
+            {% csrf_token %}
+            <div class="form-group">
+              <label>select current position *</label>
+              {{ form.current_position }}
+              <a href="{% url 'positions' %}" id="btn-new-position" class="pull-right btn btn-underline edit-trigger" data-hide="#client-summary-container, #btn-new-position" data-editable="ul#positions" data-form-container="#positionFormContainer">or add new position</a>
+              {% for error in form.current_position.errors %}
+              <div class="alert alert-error alert-sm">{{ error }}</div>
+              {% endfor %}
+            </div>
+            <div class="form-group">
+              <label>industries (up to 3) *</label>
+              {{ form.industries }}
+              {% for error in form.industries.errors %}
+              <div class="alert alert-error alert-sm">{{ error }}</div>
+              {% endfor %}
+            </div>
+            <div class="form-group">
+              <label>functional expertise (up to 3) </label>
+              {{ form.categories }}
+              {% for error in form.categories.errors %}
+              <div class="alert alert-error alert-sm">{{ error }}</div>
+              {% endfor %}
+            </div>
+            <div class="form-group">
+              <label>interest in vetted </label>
+              {{ form.reason_interested }}
+              {% for error in form.reason_interested.errors %}
+              <div class="alert alert-error alert-sm">{{ error }}</div>
+              {% endfor %}
+            </div>
+          </form>
+        </div>
+      </div><!--/#client-summary-container-->
+      <div id="positionFormContainer"></div>
+    </div>
+  </div>
+  <div class="col-xs-12 text-right">
+    <a href="{% url 'setup_step_linkedin_import' %}" class="pull-left btn btn-naked btn-underline">import from linkedin</a>
+    <a href="#" id="next-step" class="btn btn-naked btn-underline"><strong>next step </strong><i class="fa fa-long-arrow-right"></i></button>
+  </div>
+{% endblock %}

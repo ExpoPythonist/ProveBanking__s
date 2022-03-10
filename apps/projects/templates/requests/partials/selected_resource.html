@@ -1,0 +1,7 @@
+<div {% if as_template %}data-{% endif %}id="user-{{ resource.id }}" class="btn-group">
+  <input class="hide" {% if as_template %}data-{% endif %}name="users" value="{{ resource.id }}">
+  <button disabled class="btn btn-xs btn-default" >
+    <i class="fa fa-user"></i>&nbsp;{{ resource.get_name_display }}
+  </button>
+  <button type="button" class="btn btn-xs btn-default btn-item-remove" data-target="#user-{{ resource.id }}"><i class="fa fa-times"></i></button>
+</div>

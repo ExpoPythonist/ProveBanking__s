@@ -1,0 +1,22 @@
+{% load date_tags %}
+{% load availability_tags %}
+
+<div class="availability-strip">
+  <ul class="blocks list-inline">
+    {% for week in weeks %}
+      {% ifchanged week.date.month %}
+        {% if not forloop.first %}
+          </li>&nbsp;&nbsp;
+        {% endif %}
+        <li class="month month-{{ week.date.month }} text-left">
+          <div><small class="availability-month text-muted">{{ week.date.month|as_month_name }}</small></div>
+      {% endifchanged %}
+
+      <span class="availability-block {{ week|as_css_class }}" data-toggle="tooltip" data-placement="top" title="{% if not week.allocation %}{% if week.user.next_available %}Available{%else%}No allocation information{%endif%}{% else %}{{ week.allocation }}% allocated for the week of {{ week.date|date:'n/j' }}{% endif %}" data-container="body">&nbsp;</span>
+      {% if forloop.last %}
+        </li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+  </span>
+</div>

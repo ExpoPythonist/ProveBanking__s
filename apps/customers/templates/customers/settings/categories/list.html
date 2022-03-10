@@ -1,0 +1,73 @@
+{% pjaxr_extends "base_template.html" "Site" %}
+{% block title %} {{ kind_label_plural|capfirst }} - {{ current_tenant }}{% endblock %}
+{% block page_title %}<span id="page-title">{{ kind_label_plural|capfirst }}</span>{% endblock %}
+
+{% block left_nav_button %}
+  <span id="left-nav-btn" class="pull-left">
+    {% if previous_page %}
+      <a class="navbar-brand btn" href="{{ previous_page }}"><i class="fa fa-chevron-left"></i></a>
+    {% else %}
+      <a class="navbar-brand btn" href="{% url 'client_settings:home' %}" data-target="sidebar-left"><i class="fa fa-chevron-left"></i></a>
+    {% endif %}
+  </span>
+{% endblock %}
+
+{% block right_nav_button %}
+  <span id="right-nav-btn" class="pull-right">
+    <span class="navbar-brand">
+      <a href="{% url 'client_settings:create_category' kind_label %}" class="btn btn-primary btn-xs" >new {{ kind_label }}</a>
+    </span>
+  </span>
+{% endblock %}
+
+{% block right_sidebar %}
+  <div id="sidebar-right" class="sidebar sidebar-right"></div>
+{% endblock %}
+
+{% block notifications %}
+  {% include 'partials/notifications.html' %}
+{% endblock %} 
+
+{% block page %}
+  <div id="page" class="container page">
+    {% block content %}
+    <ol class="breadcrumb custom">
+      <li><a href="{% url 'client_settings:home' %}">Settings</a></li>
+      <li class="active">{{ kind_label_plural|capfirst }}</li>
+    </ol>
+    <div id="content" class="">
+      {% if categories %}
+      <div class="page-top-band">
+        <div class="col-xs-12 text-center">
+          <h6>all {{ kind_label_plural }} ({{ categories.count }}) </h6>
+        </div>
+      </div>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="skills-form">
+          </div>
+          <div class="skills-list">
+          {% for category in categories %}
+          <a href="{% url 'client_settings:edit_category' kind_label category.id %}" class="field-group">
+              <label>{{ category }}</label>
+              <div class="field-value">
+                <span class="icon-container"><i class="fa fa-chevron-right"></i></span>
+                <!-- <span class="tag tag-dark" title="edit skill"><i class="fa fa-pencil"></i></span> -->
+              </div>
+          </a>
+          {% endfor %}
+          </div>
+        </div>
+      </div>
+      {% else %}
+      <div class="text-center">
+        <br><br>
+        <h4>
+          Get started by creating a <a href="{% url 'client_settings:create_category' kind_label %}" class="no-underline">new {{ kind_label }}</a>
+        </h4>
+      </div>
+      {% endif %}
+    </div>
+    {% endblock %}
+  </div>
+{% endblock %}

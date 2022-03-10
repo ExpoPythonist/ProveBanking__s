@@ -1,0 +1,49 @@
+{% load avatar_tags %}
+<div id="sidebar-left" class="sidebar sidebar-left">
+  <div class="sidebar-heading clearfix">
+    <a href="{% url 'home' %}" class="btn btn-lg"><img src="{{ STATIC_URL }}images/vpp-landing/sidebar-logo.png" class="sidebar-logo" width="103" height="12"/></a>
+
+    <a href="#" class="no-underline btn btn-lg pull-right">
+      <i class="fa fa-chevron-left"></i>
+    </a>
+  </div>
+  <div class="sidebar-content">
+    <div class="list-group">
+      {% if user.is_client %}
+        <a href="/" class="list-group-item"><i class="fa fa-home"></i>&nbsp; Home</a>
+      {% endif %}
+
+      {% if user.is_vendor and features.projects.is_enabled %}
+        <a href="{% url 'projects:list' %}" class="list-group-item"><i class="fa fa-files-o"></i>&nbsp; Requests</a>
+      {% endif %}
+
+      {% if user.is_client and features.projects.is_enabled %}
+        <a href="{% url 'vendors:list' %}" class="list-group-item "><i class="fa fa-suitcase"></i>&nbsp; Suppliers</a>
+      {% endif %}
+
+      <a href="{% url 'users:list' %}" class="list-group-item "><i class="fa fa-user"></i>&nbsp; People</a>
+
+      {% if user.is_vendor  %}
+        {% if perms.rates.view %}
+          <a href="{% url 'rates:list' %}" class="list-group-item"><i class="fa fa-money"></i>&nbsp; {{ 'Rates' }}</a>
+        {% endif %}
+        {% if perms.auth.admin %}
+          <a href="{% url 'groups:list' %}" class="list-group-item"><i class="fa fa-users"></i>&nbsp; {{ 'Permissions and Groups' }}</a>
+        {% endif %}
+        <a href="{{ user.vendor.get_absolute_url }}" class="list-group-item"><i class="fa fa-building"></i>&nbsp; {{ 'Company profile' }}</a>
+      {% endif %}
+      <br><br>
+      <a href="{{ user.get_absolute_url }}" class="list-group-item ">
+        {% include 'partials/avatar_initials.html' with object=user size=15 %}
+        {{ user.get_name_display }}
+      </a>
+      {% if user.is_client %}
+        <a href="{% url 'client_settings:home' %}" class="list-group-item"><i class="fa fa-gear"></i>&nbsp; Settings</a>
+      {% endif %}
+      <!-- <a class="list-group-item list-separator"></a> -->
+      <a href="{% url 'account_logout' %}" class="list-group-item"><i class="fa fa-sign-out"></i>&nbsp; Sign out</a>
+    </div>
+    <br>
+    <div class="col-xs-12 text-muted small ">&nbsp;Keep calm, this is a beta product.</div>
+  </div>
+</div>

@@ -1,0 +1,18 @@
+{% if success == False %}
+<form id="profileSummaryForm" action="{% url 'edit_profile_summary' %}" method="POST" class="{{ css_class }}">
+  {% include 'consultant/profile/generic_form.html' with form=form %}
+</form>
+{% else %}
+  <div id="profile-summary-body">
+    {% if profile.summary %}
+      <p>{{ profile.summary|linebreaks }}</p>
+      <h5>
+        {% if profile == user %}
+        <a href="{% url 'edit_profile_summary'%}" id="btn-edit-summary" class="link-gray edit-trigger" data-form-container="#summaryFormContainer" data-editable="#summaryContainer"><i class="fa fa-edit"></i> edit</a>
+        {% endif %}
+      </h5>
+    {% else %}
+    <p class="text-center"><a href="{% url 'edit_profile_summary'%}" id="btn-edit-summary" class="edit-trigger btn btn-underline" data-form-container="#summaryFormContainer" data-editable="#summaryContainer"><i class="fa fa-plus"></i> add profile summary</a></p>
+    {% endif %}
+  </div>
+{% endif %}

@@ -1,0 +1,14 @@
+{% load i18n %}
+{% blocktrans %}
+Hi, {{ object.vendor.name }} is using Proven to prove that they got insurance from you. Please click on Verify below to prove this. This is a message from the company:
+
+{{ object.email_msg }}
+
+{{ confirm_url }}
+
+{% endblocktrans %}
+
+{% blocktrans %}
+Thanks for helping {{ object.vendor.name }} out,
+Proven
+{% endblocktrans %}

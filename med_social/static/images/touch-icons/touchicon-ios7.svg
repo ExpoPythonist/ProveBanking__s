@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:osb="http://www.openswatchbook.org/uri/2009/osb"
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="152"
+   height="152"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="touchicon-ios7.svg"
+   inkscape:export-filename="/home/junaid/touchicons/touch-icon-57x57.png"
+   inkscape:export-xdpi="33.75"
+   inkscape:export-ydpi="33.75">
+  <defs
+     id="defs4">
+    <linearGradient
+       id="linearGradient3768">
+      <stop
+         id="stop3776"
+         offset="0"
+         style="stop-color:#2b2b25;stop-opacity:1;" />
+      <stop
+         style="stop-color:#0d0d0d;stop-opacity:1;"
+         offset="1"
+         id="stop3779" />
+    </linearGradient>
+    <linearGradient
+       id="linearGradient3776"
+       osb:paint="solid">
+      <stop
+         style="stop-color:#000000;stop-opacity:1;"
+         offset="0"
+         id="stop3778" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3768"
+       id="linearGradient3774"
+       x1="-0.19453807"
+       y1="977.10748"
+       x2="151.80546"
+       y2="977.10748"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(901.30194,-1052.9129)" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3768"
+       id="linearGradient3788"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(901.30194,-1052.9129)"
+       x1="-0.19453807"
+       y1="977.10748"
+       x2="151.80546"
+       y2="977.10748" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3768"
+       id="linearGradient3004"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(901.30194,-1052.9129)"
+       x1="-0.19453807"
+       y1="977.10748"
+       x2="151.80546"
+       y2="977.10748" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3768"
+       id="linearGradient3021"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(901.30194,-1052.9129)"
+       x1="-0.19453807"
+       y1="977.10748"
+       x2="151.80546"
+       y2="977.10748" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="4"
+     inkscape:cx="100.98708"
+     inkscape:cy="83.149549"
+     inkscape:document-units="px"
+     inkscape:current-layer="g3790"
+     showgrid="false"
+     showguides="false"
+     inkscape:guide-bbox="true"
+     inkscape:window-width="1600"
+     inkscape:window-height="876"
+     inkscape:window-x="0"
+     inkscape:window-y="24"
+     inkscape:window-maximized="1">
+    <sodipodi:guide
+       orientation="0,1"
+       position="197.85714,364.28571"
+       id="guide3002" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="151.99777,148.47656"
+       id="guide3004" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="152.5,152"
+       id="guide3006" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="308.29856,0"
+       id="guide3790" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="0,156.80093"
+       id="guide3792" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="169.70563,72.124891"
+       id="guide3794" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="76.367532,267.99347"
+       id="guide3796" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="35.499999,116.53125"
+       id="guide3007" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="115.78873,60.987958"
+       id="guide3009" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="37.390624,116.53125"
+       id="guide3011" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="91.747102,43.487066"
+       id="guide3013" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="67.499998,28.609374"
+       id="guide3015" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="33.057241,122.94819"
+       id="guide3024" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="117.99844,143.98461"
+       id="guide3026" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="68.147414,33.234018"
+       id="guide3028" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="83.615375,37.299882"
+       id="guide3030" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="66.202871,28.461047"
+       id="guide3032" />
+    <sodipodi:guide
+       orientation="1,0"
+       position="85.47153,37.653435"
+       id="guide3034" />
+    <inkscape:grid
+       type="xygrid"
+       id="grid3036" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-900.36218)">
+    <g
+       id="g3790"
+       inkscape:export-filename="/home/junaid/touchicons/touch-icon-72x72.png"
+       inkscape:export-xdpi="42.63158"
+       inkscape:export-ydpi="42.63158"
+       transform="translate(0.25,-0.74999998)">
+      <g
+         id="g3023">
+        <rect
+           style="fill:url(#linearGradient3021);fill-opacity:1;stroke:none"
+           id="rect2996"
+           width="152"
+           height="152"
+           x="901.10742"
+           y="-151.80547"
+           transform="matrix(0,1,-1,0,0,0)"
+           inkscape:export-filename="/home/junaid/touchicons/touch-icon-72x72.png"
+           inkscape:export-xdpi="42.63158"
+           inkscape:export-ydpi="42.63158" />
+        <g
+           id="text3017"
+           style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Helvetica Neue;-inkscape-font-specification:Helvetica Neue">
+          <path
+             sodipodi:nodetypes="ccccccccc"
+             inkscape:connector-curvature="0"
+             id="path3022"
+             style="font-size:170px;text-align:start;line-height:125%;writing-mode:lr-tb;text-anchor:start;fill:#ffffff;font-family:Helvetica Neue;-inkscape-font-specification:Helvetica Neue"
+             d="m 85.216663,1024.5021 c 34.387937,-87.92117 -2.918484,6.8219 34.371357,-87.92117 l -19.21094,0.0312 -23.969999,73.27007 -0.34,0 -24.65,-73.27007 -18.60984,-0.0312 33.14563,87.92187 19.263792,-7e-4" />
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>

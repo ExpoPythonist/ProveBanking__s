@@ -1,0 +1,34 @@
+{% load thumbnail %}
+{% if success == False %}
+<form id="busyslotForm" action="{% if form.instance.id %}{% url 'edit_busyslot' form.instance.id %}{% else %}{% url 'busyslots' %}{% endif %}" method="POST" class="{{ css_class }}">
+  {% include 'consultant/profile/generic_form.html' with form=form %}
+</form>
+{% else %}
+  {% if deleted %}
+  <li id="busyslot-{{ pk }}" data-deleted="True"></li>
+  {% else %}
+  <li id="busyslot-{{ busyslot.id }}" class="media period">
+    <span class="pull-left timestamp sideline busyslot busyslot-{{ busyslot.hours_per_week }}">
+      <div class="pie-cont"></div>
+    </span>
+    <div class="media-body">
+      <h4 class="media-heading busyslot-heading">
+        <span class="busyslot-value">{{ busyslot.start|date:"d M Y" }}</span> to <span class="busyslot-value">{{ busyslot.end|date:"d M Y" }}</span>
+      </h4>
+      <div class="busyslot-hours">
+      {% if busyslot.hours_per_week == busyslot.UNAVAILABLE %}
+      will be <span class="busyslot-value">unavailable</span>
+      {% else %}
+      available <span class="busyslot-value">{{ busyslot.get_hours_per_week_display }}</span>
+      {% endif %}
+      </div>
+      <p class="work-description">{{ busyslot.notes }}</p>
+      <h5>
+        {% if busyslot.user == user %}
+        <a href="{% url 'edit_busyslot' busyslot.id %}" class="link-gray edit-trigger" data-editable="ul#busyslots" data-hide="#busyslotsContainer" data-form-container="#busyslotFormContainer"><i class="fa fa-edit"></i> edit</a>
+        {% endif %}
+      </h5>
+    </div>
+  </li>
+  {% endif %}
+{% endif %}

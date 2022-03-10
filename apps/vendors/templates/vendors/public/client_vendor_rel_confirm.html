@@ -1,0 +1,28 @@
+{% pjaxr_extends "vendor_profiles/base.html" "Site" %}
+{% load thumbnail %}
+{% block title %}{{ object.vendor.name }}{% endblock %}
+{% block page %}
+  <div id="page" class="container page profile">
+    {% block content %}
+      <div class="text-center">
+        {% thumbnail object.vendor.logo "180x100" as thumb %}
+          <img src="{{ thumb.url }}">
+        {% empty %}
+          <strong class="h4">{{ object.vendor.name }}</strong>
+        {% endthumbnail %}
+        <div class="vertical-spacer-lg"></div>
+        <hr>
+        <p class="lead">
+          {{ object.created_by.get_name_display }} indicated that {{ object.vendor.name }} is a <strong>{{ object.client.name }}</strong> partner
+        </p>
+        <hr>
+        <form action="{% url 'vendor_profiles:partner_confirm' object.vendor.slug object.token %}" method="POST">
+          {% csrf_token %}
+          <input class="btn btn-primary" name="verify" type="submit" value="Yes, This is correct">
+          <input class="btn btn-default" type="submit" value="No, This is not correct">
+        </form>
+      </div>
+    {% endblock %}
+  </div>
+{% endblock %}
+{% block pjaxr_namespace %}Site.vendor_profile.cert_confirm{% endblock pjaxr_namespace %}

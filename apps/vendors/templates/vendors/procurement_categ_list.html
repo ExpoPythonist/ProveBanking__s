@@ -1,0 +1,87 @@
+{% extends "vendors/profile_edit_sidebar.html" %}
+  {% block main_content %}
+<section class="profile-edit-form service-skill-list">
+  <h6 class="section-title text-uppercase">Primary services that your company provides</h6>
+  <div class="panel panel-default panel-card">
+    <div class="panel-body">
+      <br>
+      <h6 class="block-meta-title text-uppercase">List the primary services that are offered by your firm</h6>
+      <br>
+      <form id="role-allocations" action="{% url 'vendors:procurement:list' vendor.id %}" method="POST">
+        {% csrf_token %}
+
+        <ul id="role-list" class="list-group panel-metrics container-md">
+          <li class="list-group-item header">
+            <h6 class="text-uppercase">
+              Service(s) <span class="pull-right">% allocated</span>
+            </h6>
+          </li>
+
+          {% for object in objects %}
+          <li class="list-group-item">
+            <b>        
+              {{ object.category.name }}
+            </b>
+            <span class="pull-right">
+                <span class="edit-mode-on ">
+                  <a class="btn" href="{% if is_service %}{% url 'vendors:procurement:delete' object.id %}{% else %}{% url 'vendors:categories:delete' object.id %}{% endif %}" data-toggle="modal" data-target="#genericModal"><span><i class="fa fa-trash-o"></i></span></a>
+                  <input id="id_{{ object.id }}" name="{{ object.id }}" class="allocation-input" value="{{ object.allocation }}" tabindex="1" data-toggle="tooltip" data-placement="right" title="edit allocation here"/>
+                </span>
+                {% if not object.primary %}
+                <a class="btn edit-mode-off" href="{% url 'vendors:procurement:vendor_custom_primary' object.id %}" data-toggle="modal" data-target="#genericModal"><span><i class="fa fa-star-o"></i></span></a>
+                {% else%}
+                <a class="btn  edit-mode-off" ><span data-toggle="tooltip" data-placement="left" title="Primary service"><i class="fa fa-star text-primary"></i></span></a>
+                {% endif %}
+                <span class="weight-value edit-mode-off">{{ object.allocation }}%</span>
+            </span>
+          </li>
+          {% endfor %}
+
+          <li class="list-group-item">
+              <a href="{% url 'vendors:procurement:create' vendor.id %}" class="btn btn-primary" data-toggle="modal" data-target="#genericModal" >Add Service</a>
+
+            <span class="pull-right">
+              {% if objects %}
+              <a id="edit-allocation-btn" class="btn-link edit-mode-off " href="#">Edit allocation</a>
+
+              <div class="btn-group">
+                <a id="cancel-edit-btn" class="btn btn-default btn-sm edit-mode-on" href="#"><i class="fa fa-times"></i></a>
+                <a id="save-allocation-btn" class="btn btn-default btn-sm edit-mode-on  btn-primary" href="#"><i class="fa fa-check"></i></a>
+              </div>
+              {% endif %}
+            </span>
+          </li>
+
+          <li class="list-group-item text-right footer">
+            <div class="total-allocation-container {{ total_allocation_incorrect|yesno:"has-error,"}}" data-toggle="tooltip" data-placement="right" title="Must be 100%">
+              <strong class="text-uppercase meta small">total:
+                <span id="total-allocation" class="text-muted">{{ total_role_allocation }}</span>%
+              </strong>
+            </div>
+          </li>
+        </ul>
+      </form>
+      <br/>
+      <p class="text-muted small">If the service that you provide is not in the list of options, please email <a href="mailto:suzanne@proven.cc">suzanne@proven.cc</a></p>
+      <br/><br/>
+      <div class="container-md text-right">
+      </div>
+
+      <div class="row">
+        <div class="col-xs-6">
+          {% if features.diversity.is_enabled %}
+          <a href="{% url 'vendors:diversity:list' vendor.id %}" class="btn btn-default btn-backward">Back</a>
+          {% else %}
+          <a href="{% url 'vendors:cert_add' vendor.id %}" class="btn btn-default btn-backward">Back</a>
+          {% endif %}
+        </div>
+        <div class="col-xs-6 text-right">
+            <a href="{% url 'user_setup:setup_step_vendor_skill' vendor.id %}" type="submit" class="btn btn-primary btn-forward">Next</a>
+        </div>
+      </div>
+    
+    </div>
+  </div>
+</section>
+   
+{% endblock %}

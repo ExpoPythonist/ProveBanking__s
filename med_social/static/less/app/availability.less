@@ -1,0 +1,89 @@
+.availability-strip {
+    margin-bottom: 5px;
+    @media (max-width: @screen-sm-max) {
+        .text-muted {
+            line-height: 25px;
+        }
+        float: left;
+    }
+    ul.blocks.list-inline {
+        margin: 0px;
+        li.month {
+            padding-right: 0px;
+            padding-left: 0px;
+            line-height: 10px;
+        }
+    }
+    .availability-month {
+        font-size: 11px;
+        line-height: 10px;
+    }
+    .availability-block {
+        cursor: pointer;
+        display: inline;
+        clear: none;
+        width: 10px;
+        height: 10px;
+        min-width: 10px;
+        min-height: 10px;
+        margin: 4px 1px;
+        float: left;
+        border-radius: 1px;
+        // @media (max-width: @screen-sm-max) {
+        //     width: 15px;
+        //     height: 15px;
+        //     min-width: 15px;
+        //     min-height: 15px;
+        //     margin: 4px 2px;
+        // }
+        &.default {
+            background: lighten(@gray-light, 5%);
+        }
+        &.success {
+            background: lighten(@brand-success, 5%);
+        }
+        &.warning {
+            background: lighten(@brand-warning, 5%);
+        }
+        &.danger {
+            background: lighten(@brand-danger, 5%);
+        }
+        &.separator {
+            width: 1px;
+            min-width: 1px;
+            color: @gray-light;
+            background: @gray-light;
+        }
+    }
+}
+
+.availability-week-popover {
+    @media (max-width: @screen-xs-max) {
+        min-width: 100%;
+    }
+    h5 {
+        padding: 0px;
+        font-size: 13px;
+        line-height: 16px;
+    }
+    .btn {
+        font-size: 10px;
+    }
+}
+
+.availability-card {
+  .availability-month {
+    width:20px;
+    line-height: 20px;
+  }
+  .btn-xs {
+    line-height: 1.2em;
+  }
+}
+
+
+.avl-update-request {
+    margin-bottom: 10px;
+    margin-top: 10px;
+    line-height: 1.1em;
+}

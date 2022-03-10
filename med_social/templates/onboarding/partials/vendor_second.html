@@ -1,0 +1,24 @@
+<div id="location-object" class="clearfix">
+  <div class="col-xs-12">
+    <ul class="list-group" id="location-list">
+      {% for location in vendor.vendorlocation_set.all %}
+        {% include 'vendors/location-as-list.html' with location=location no_edit_button=True %}
+      {% endfor %}
+      <li class='btn-add list-group-item'>
+        <a href="{% if location %}{% url 'vendors:locations:edit' location.id %}{% else %}{% url 'vendors:locations:create' %}{% endif %}" class="btn btn-o btn-xs btn-v" data-toggle="modal" data-target="#genericModal">
+        Add new
+        </a>
+      </li>
+    </ul>
+    <p class="col-sm-5 col-centered text-center ">
+    <button id="location-next-button" class="btn btn-block btn-primary">
+      Next <i class="fa fa-chevron-right"></i>
+    </button>
+    </p>
+    <br/>
+  </div>
+</div>
+
+
+
+

@@ -1,0 +1,66 @@
+{% extends "vendors/profile_edit_sidebar.html" %}
+{% load crispy_forms_tags %}
+
+{% block main_content %}
+<section class="profile-edit-form">
+<h6 class="section-title text-uppercase">Certifications</h6>
+  <div class="panel panel-default panel-card">
+    <div class="panel-body">
+  {% with vendor.cert_verifications.all|slice:":5" as certs %}
+    {% if certs %}
+      <span class="block-meta-title">CURRENT CERTIFICATIONS</span>
+      <div class="col-sm-12">
+      {% for cert in certs %}
+        <div class="col-sm-3">
+          <span>{{ cert.cert.name }}</span>
+          {% if cert.url %}
+            &nbsp;<a target="_blank" href="{{ cert.url }}"><i class="fa fa-external-link"></i></a>
+          {% endif %}
+          <span title="delete certificate">
+            <a class="btn btn-xs" href="{% url 'vendors:cert_delete' cert.id %}" data-toggle="modal" data-target="#genericModal"><span><i class="fa fa-times small"></i></span></a>
+          </span>
+          <br>
+          {% if cert.date_awarded %}
+            <small class="text-muted">date awarded: {{ cert.date_awarded }}</small>
+          {% endif %}
+          {% if cert.attached_file %}
+            <a class="certificate__download" href="{{ MEDIA_URL }}{{ cert.attached_file }}">Download certificate</a>
+          {% endif %}
+        </div>
+      {%endfor%}
+        <br/>
+        <br/>
+        <div class="vertical-spacer-lg clearfix"></div>
+      </div>
+    {% endif %}
+  {% endwith %}
+  <form id="vendor-cert-form" class="form-mobile" role="form" action="#" method="POST" enctype="multipart/form-data">
+  <div class="vertical-spacer-lg clearfix"></div>
+      {% csrf_token %}
+      {% include 'forms/naked_form.html' with form=form %}
+      <div class="form-actions text-center">
+        <input type="submit" value="Add Certification" class="btn btn-primary"/>
+      </div>
+  </form>
+
+  <div class="row">
+        <div class="col-xs-6">
+            {% if features.insurance.is_enabled %}
+            <a href="{% url 'vendors:insurance_add' vendor.id %}" class="btn btn-default btn-backward">Back</a>
+            {% else %}
+            <a href="{% url 'user_setup:setup_step_vendor_projects' vendor.id %}" class="btn btn-default btn-backward">Back</a>
+            {% endif %}
+        </div>
+        <div class="col-xs-6 text-right">
+          {% if features.diversity.is_enabled %}
+          <a href="{% url 'vendors:diversity:list' vendor.id %}" type="submit" class="btn btn-primary btn-forward">Next</a>
+          {% else %}
+          <a href="{% url 'vendors:procurement:list' vendor.id %}" type="submit" class="btn btn-primary btn-forward">Next</a>
+          {% endif %}
+        </div>
+      </div>
+ 
+     </div>
+    </div>
+</section>
+{% endblock %}

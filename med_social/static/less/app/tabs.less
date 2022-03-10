@@ -1,0 +1,37 @@
+@badge-active-color : #fff;
+@badge-active-bg: @brand-primary;
+
+.nav.nav-tabs > li.active > a {
+    background: @color-white;
+}
+
+.tab-pane-white {
+    background: @color-white;
+    border: 1px solid @panel-default-border;
+    border-top: 0px;
+    .panel {
+        border: 0px;
+    }
+}
+
+.nav-tab-wrapper {
+  margin-bottom: 20px;
+  .nav {
+    li {
+      a {
+    //    border-bottom: 2px solid rgba(255, 255, 255, 0);
+        border-radius: 0px;
+      }
+      background: lighten(@gray-lighter, 2%);
+      border-right: 1px solid @gray-lighter;
+      &.active a{
+        background: darken(@gray-lighter, 10%);
+        color: @gray;
+        .badge {
+          color: @badge-active-color;
+          background-color: @badge-active-bg;
+        }
+      }
+    }
+  }
+}

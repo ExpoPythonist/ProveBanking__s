@@ -1,0 +1,23 @@
+{% load humanize %}
+<div class="clearfix">
+  <div class="media action-item">
+    <div class="img-circle pull-left anchor text-center">
+      <a href="{% url 'users:profile_modal' action.actor.username %}" data-toggle="modal" data-target="#userModal"  data-modal-is-remote="true" class="new-user">
+        {% include 'partials/avatar_initials.html' with object=action.actor size=45 title=action.objects.get_name_display %}
+      </a>
+    </div>
+    <div class="media-body">
+      <div class="col-md-4">
+        <h5 class="media-heading">
+          <a href="{% url 'users:profile_modal' action.actor.username %}" data-toggle="modal" data-target="#userModal">{{ action.actor }}</a>
+        </h5>
+        <div class="media-description">{{ action.actor.vendor }}</div>
+      </div>
+      <div class="col-md-4 action">
+        {{ action.verb_object.past_tense }} as a member of&nbsp;
+        <a href="{{ action.target.get_absolute_url }}">{{ action.target }}</a>.
+      </div>
+      <div class="col-md-4 text-right date">{{ action.published|naturaltime }}</div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,102 @@
+{% pjaxr_extends "base_template.html" "Site" %}
+{% load crispy_forms_tags %}
+{% block title %}Settings - {{ current_tenant }}{% endblock %}
+
+{% block page_title %}<span id="page-title">{{ form.instance.id|yesno:"Edit Metric,Create a new metric"}}</span>{% endblock %}
+
+{% block left_nav_button %}
+  <span id="left-nav-btn" class="pull-left">
+    <a class="navbar-brand btn" href="{% url 'client_settings:metrics_list' ctype.id %}"><i class="fa fa-chevron-left"></i><!--  <span>Cancel</span> --></a>
+  </span>
+{% endblock %}
+
+{% block right_nav_button %}
+  <span id="right-nav-btn" class="pull-right"></span>
+{% endblock %}
+
+{% block right_sidebar %}
+  <div id="sidebar-right" class="sidebar sidebar-right"></div>
+{% endblock %}
+
+{% block notifications %}
+  {% include 'partials/notifications.html' %}
+{% endblock %}
+
+{% block page %}
+  <div id="page" class="container page">
+    {% block content %}
+      <ol class="breadcrumb custom">
+        <li><a href="{% url 'client_settings:home' %}">Settings</a></li>
+        <li><a href="{% url 'client_settings:metrics_type_list' %}">Metrics</a></li>
+        <li><a href="{% url 'client_settings:metrics_list' ctype.id %}">Scores</a></li>
+        <li class="active">{{ form.instance.id|yesno:"Edit Metric,Create a new metric"}}</li>
+      </ol>
+      <form id="metric-form" class="form-mobile form-metric form-horizontal" role="form" action="{% if form.instance.id %}{% url 'client_settings:edit_metric' ctype.id form.instance.id %}{% else %}{% url 'client_settings:create_metric' ctype.id %}{% endif %}" method="POST">
+        {% csrf_token %}
+          <span class="block-meta-title">Metric details</span>
+          <div class="panel panel-default">
+            <div class="panel-body">
+              {% for field in form.fieldsets.0.1.fields %}
+                {{ field|as_crispy_field:"bootstrap3" }}
+              {% endfor %}
+              {% if form.non_field_errors %}
+                <div class="form-group">
+                  <label></label>
+                  <div class="controls">
+                    <ul class="form-errors">
+                      {% for error in form.non_field_errors %}
+                        <li>{{ error }}</li>
+                      {% endfor %}
+                    </ul>
+                  </div>
+                </div>
+              {% endif %}
+            </div>
+          </div>
+          <div id="inner-content" class="form-horizontal form-mobile-inline ">
+            {% if labels_form.is_editable %}
+              <div class="block-meta-title col-xs-12">
+                <div class="col-xs-6">
+                  Score values
+                </div>
+
+                <div class="col-xs-6 text-right">
+                  <!--div class="dropdown pull-right">
+                    <a data-toggle="dropdown" class="no-underline" href="#">Ascending <i class="fa fa-caret-down"></i></a>
+                    <ul class="dropdown-menu text-left" role="menu" aria-labelledby="dLabel">
+                      <li><a href="#" class="no-underline">Ascending</a></li>
+                      <li><a href="#" class="no-underline">Descending</a></li>
+                    </ul>
+                  </div-->
+                </div>
+              </div>
+              <div class="panel panel-default score-label-panel">
+                <div class="panel-body">
+                  {% for field in labels_form %}
+                    {{ field|as_crispy_field:"bootstrap3-inline" }}
+                  {% endfor %}
+                  {% if labels_form.non_field_errors %}
+                    <div class="form-group">
+                      <label></label>
+                      <div class="controls">
+                        <ul class="form-errors">
+                          {% for error in labels_form.non_field_errors %}
+                            <li>{{ error }}</li>
+                          {% endfor %}
+                        </ul>
+                      </div>
+                    </div>
+                  {% endif %}
+                </div>
+              </div>
+            {% endif %}
+          </div>
+          <div class="col-xs-6 col-centered text-center">
+            <button type="submit" class="btn btn-primary btn-block">Save</button>
+          </div>
+        <a class="hide" id="update-form-fields" base-href="{% if form.instance.id %}{% url 'client_settings:edit_metric' ctype.id form.instance.id %}{% else %}{% url 'client_settings:create_metric' ctype.id %}{% endif %}">update</a></a>
+      </form>
+    {% endblock %}
+  </div>
+{% endblock %}
+{% block pjaxr_namespace %}Site.settings.score.edit{% endblock pjaxr_namespace %}

@@ -1,0 +1,23 @@
+{% extends 'base_email.html' %}
+
+{% block body %}
+  <tr>
+    <td class="content-block">
+      <p>
+        The {{ object.client.name }} team has just verified your relationship with them. Please continue to fill out your profile, to ensure that your skills and clients can be found by other companies seeking your services
+      </p>
+        
+      <p>
+      <a href="{{ profile_url }}" class="btn btn-warning">Edit profile</a>
+      </p>
+
+      <p>
+        Best,<br>
+        {{ object.client.name }}<br>
+        {% if object.email%}
+          {{ object.email }}
+        {% endif %}
+      </p>
+    </td>
+  </tr>
+{% endblock %}

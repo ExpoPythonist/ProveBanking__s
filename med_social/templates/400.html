@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html lang="en" class="no-js ie6 lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html lang="en" class="no-js ie7 lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html lang="en" class="no-js ie8 lt-ie9"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+  <head>
+    <title>Error 400: BAD REQUEST</title>
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, target-densityDpi=device-dpi, user-scalable=no">
+    <meta name="google-site-verification" content="w3UBSKIDYX1xMXiWj-VWl7NVO1FIWXdFRcNionz_ITM" />
+    <meta id="csrf-middleware-token" value="{{ csrf_token }}"></meta>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-title" content="Proven">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link href='http://fonts.googleapis.com/css?family=Raleway:300,400,700' rel='stylesheet' type='text/css'>
+    <link rel="shortcut icon" href="/static/images/favicon.png">
+    <style type="text/css">
+      * {
+        padding: 0px;
+        margin: 0px;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+      }
+      html {
+        height: 100%;
+      }
+      body {
+        font-size: 14px;
+        height: 100%;
+        width: 100%;
+        font-family: 'Raleway',Arial, 'Roboto', "Helvetica Neue", sans-serif;
+        background-color: #F7F7F7;
+        background-attachment: fixed;
+        background-image: url('https://dev-proven-cc.s3.amazonaws.com/images/landing01/background1.jpg');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+      }
+      .container {
+        max-width: 640px;
+        margin: 0 auto;
+      }
+      header {
+        height: 60px;
+        background: #fff;
+        box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.2);
+      }
+      header .container {
+        max-width: 900px;
+        margin: 0 auto 10px;
+      }
+      header .navbar-brand.logo {
+        padding: 20px;
+        height: 60px;
+        vertical-align: middle;
+        display: inline-block;
+      }
+      header .navbar-brand.logo img {
+        display: inline-block;
+      }
+      section.container {
+        margin-top: 100px;
+      }
+      .panel {
+        display: block;
+        background: rgba(255,255,255,1);
+        box-shadow: 0 0 10px rgba(0,0,0,0.3);
+        border-radius: 3px;
+        max-width: 600px;
+        margin: 0 auto 20px;
+        padding:  30px;
+        color: #6c6c6c;
+      }
+      .message {
+        padding-top: 15px;
+        border-top: 1px solid #aaa;
+        font-size: 14px;
+        font-weight: bold;
+      }
+      .description {
+        margin-top: 0px;
+        font-size: 26px;
+        font-weight: 300;
+        line-height: 1.45;
+      }
+      a {
+        color: #FD6107;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="body-wrap">
+      <header class="header">
+        <nav class="main-navbar navbar-white navbar navbar-default navbar-fixed-top {% block navbar_classes %}{% endblock %}" role="navigation" >
+          <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+              <span id="main-menu-btn" class="pull-left logo-warp">
+                <a class="navbar-brand btn main-menu-btn logo" href="/">
+                  <img src="https://dev-proven-cc.s3.amazonaws.com/images/landing01/proven-logo.png" class="logo" height="18" />
+                </a>
+              </span>
+            </div>
+          </div><!-- /.container-fluid -->
+        </nav>
+      </header> 
+      <section class="container-main container">
+        <div class="content">
+        <div class="panel">
+          <p class="description">This was a bad request thats all we know, please keep calm and <a href="mailto:suzanne@proven.cc">contact</a> our team for assistance or come again later. Sorry for the trouble.</p>
+          <br>
+          <p class="message">ERROR CODE: 400</p>
+        </div>
+
+
+        </div>
+      </section>
+    </div>
+    <script type="text/javascript" src="https://dev-proven-cc.s3.amazonaws.com/static/js/libs/retina.js"></script>
+  </body>
+</html>

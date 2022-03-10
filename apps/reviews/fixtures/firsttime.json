@@ -1,0 +1,97 @@
+[
+{
+    "pk": 6, 
+    "model": "reviews.metric", 
+    "fields": {
+        "metric_data": {"labels": {"1": "Poor", "3": "Good", "2": "Fair", "5": "Excellent", "4": "Very good"}, "order": "1"}, 
+        "kind": "nps", 
+        "is_deleted": false, 
+        "name": "Overall Evaluation", 
+        "weight": 60, 
+        "created": "2014-04-23T09:44:56.459Z", 
+        "source": 3, 
+        "content_type": [
+            "users", 
+            "user"
+        ], 
+        "help_text": "How likely is it that you would recommend our company/product/service/candidate to a friend or colleague?", 
+        "slug": "overall-evaluation"
+    }
+},
+{
+    "pk": 7, 
+    "model": "reviews.metric", 
+    "fields": {
+        "metric_data": {"labels": {"1": "Poor", "3": "Good", "2": "Fair", "5": "Excellent", "4": "Very good"}, "order": "1"}, 
+        "kind": "rating", 
+        "is_deleted": false, 
+        "name": "Quality Rating", 
+        "weight": 40, 
+        "created": "2014-04-23T09:45:12.950Z", 
+        "source": 3, 
+        "content_type": [
+            "users", 
+            "user"
+        ], 
+        "help_text": "", 
+        "slug": "quality-rating"
+    }
+},
+{
+    "pk": 10, 
+    "model": "reviews.metric", 
+    "fields": {
+        "metric_data": {"labels": {"1": "Poor", "3": "Good", "2": "Fair", "5": "Excellent", "4": "Very good"}, "order": "1"}, 
+        "kind": "rating", 
+        "is_deleted": false, 
+        "name": "Quality Rating", 
+        "weight": 100, 
+        "created": "2014-06-24T16:43:49.369Z", 
+        "source": 3, 
+        "content_type": [
+            "projects", 
+            "project"
+        ], 
+        "help_text": "", 
+        "slug": "quality-rating"
+    }
+},
+{
+    "pk": 12, 
+    "model": "reviews.metric", 
+    "fields": {
+        "metric_data": {"labels": {"1": "Poor", "3": "Good", "2": "Fair", "5": "Excellent", "4": "Very good"}, "order": "1"}, 
+        "kind": "nps", 
+        "is_deleted": false, 
+        "name": "Overall Evaluation", 
+        "weight": 100, 
+        "created": "2014-07-07T14:20:10.824Z", 
+        "source": 3, 
+        "content_type": [
+            "projects", 
+            "proposedresource"
+        ], 
+        "help_text": "How likely is it that you would recommend our company/product/service/candidate to a friend or colleague?", 
+        "slug": "overall-evaluation"
+    }
+},
+{
+    "pk": 15, 
+    "model": "reviews.metric", 
+    "fields": {
+        "metric_data": {"labels": {"1": "Poor", "3": "Good", "2": "Fair", "5": "Excellent", "4": "Very good"}, "order": "1"}, 
+        "kind": "rating", 
+        "is_deleted": false, 
+        "name": "Quality Rating", 
+        "weight": 100, 
+        "created": "2014-07-09T04:03:42.771Z", 
+        "source": 3, 
+        "content_type": [
+            "vendors", 
+            "vendor"
+        ], 
+        "help_text": "", 
+        "slug": "quality-rating"
+    }
+}
+]

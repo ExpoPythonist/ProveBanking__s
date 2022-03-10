@@ -1,0 +1,8 @@
+<div class="company-score-wrapper">
+  <span class="company-score-header {% if vendor.open_for_business %}highlight{% endif %}">Proven Score</span>
+  {% if vendor.client_references_verified.exists %}
+  <span class="company-score {% if vendor.open_for_business %}highlight-bg{% endif %}">{{ vendor.proven_score|floatformat:0 }}</span>
+  {% else %}
+  <span class="company-score" style="text-transform: lowercase;">(No Score)</span>
+  {% endif %}
+</div>

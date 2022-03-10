@@ -1,0 +1,97 @@
+{% load avatar_tags %}
+{% load thumbnail %}
+{% load crispy_forms_tags %}
+{% load review_tags %}
+
+<div class="{% if not modal_header %}panel panel-default {%endif%} vendor-panel">
+  <div class="panel-body">
+    <div class="field-group">
+      <div class="media nopadding">
+          {% thumbnail vendor.logo "100x100" crop="center" format="PNG" as im %}
+            {% if not show_details %}
+              <a href="{{ vendor.get_absolute_url }}" class="pull-left">
+                <img class="logo" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}"/>
+              </a>
+            {% else %}
+              <span class="pull-left">
+                <img class="logo" src="{{ im.url }}" width="{{ im.width }}" height="{{ im.height }}"/>
+              </span>
+            {% endif %}
+          {% empty %}
+            {% if not show_details %}
+              <a href="{{ vendor.get_absolute_url }}" class="pull-left">
+                <img class="logo" src="{{ STATIC_URL }}images/defaults/placeholder-co.png" width="{{ im.width }}" height="{{ im.height }}"/>
+              </a>
+            {% else %}
+              <span class="pull-left">
+                <img class="logo" src="{{ STATIC_URL }}images/defaults/placeholder-co.png" width="{{ im.width }}" height="{{ im.height }}"/>
+              </span>
+            {% endif %}
+          {% endthumbnail %}
+        <div class="media-body">
+          <div class="col-sm-10">
+            <h1 class="title media-heading">{{ vendor.name }} {% if show_details and vendor.founded %}<small>founded in {{ vendor.founded }}</small>{% endif %}</h1>
+            <div class="vertical-spacer-sm"></div>
+            <p>{{ vendor.summary }}</p>
+          
+          </div>
+          <div class="col-sm-2 text-right col-right">
+          {% if modal_header %}
+          
+          <p><a href="#" data-dismiss="modal" aria-hidden="true"><i class="fa fa-times text-muted"></i></a></p>
+          {% endif %}
+            {% with vendor.get_meta_counts as meta_counts %}
+              {% assign_review_url 'list' vendor as score_url %}
+              {% if user.is_client %}
+                {% if vendor.reviews.exists %}
+                  {% if vendor.avg_score %}
+                    <span class="score-value text-{% get_review_class vendor.avg_score %}" >
+                      <i class='fa fa-star'></i>&nbsp;{{ vendor.avg_score }}
+                    </span>
+                  {% elif show_details %}
+                    <a href="{% get_review_url 'add' vendor %}">write review</a>&nbsp;
+                  {% endif %}
+                {% endif %}
+              {% endif %}
+            {% if listview %}
+              <input class="btn-vendor-select" data-id="{{ vendor.pk }}" data-name="{{ vendor.name }}"type="checkbox" ignore-enhance/>
+            {% endif %}
+            <br>
+            <a href="{{ score_url }}" class="no-underline">
+              <span class="text-muted small">{{ meta_counts.reviews }} review{{ meta_counts.reviews|pluralize }}</span>
+            </a>
+            {% endwith %}
+          </div>
+          <br />
+          
+          <div class="col-sm-8">
+            {% if vendor.brochure %}
+              <a target="_blank" class="btn btn-primary"  href="{{ vendor.brochure.url }}"><i class="fa fa-cloud-download"></i>&nbsp;Brochure</a>
+            {% endif %}
+            {% if False and perms.reviews.add_review  %}
+              <a class="btn btn-primary" href="{% get_review_url 'add' object %}">Write a review</a>
+            {% endif %}
+          </div>
+          <div class="col-sm-4 text-right">
+            {% if vendor.website %}
+              <a href="{{ object.website }}" class="no-underline text-muted" title="Website"><i class="fa fa-globe fa-lg"></i></a>&nbsp;
+            {% endif %}
+            {% if vendor.linkedin %}
+              <a href="{{ object.linkedin }}" class="no-underline text-muted" title="Linkedin" target="_blank" ><i class="fa fa-linkedin-square fa-lg"></i></a>&nbsp;
+            {% endif %}
+            {% if vendor.github %}
+              <a href="{{ object.github }}" class="no-underline text-muted" title="Github"><i class="fa fa-github fa-lg"></i></a>&nbsp;
+            {% endif %}
+            {% if vendor.twitter %}
+              <a href="https://twitter.com/{{ object.twitter }}" class="no-underline text-muted" title="Linkedin" target="_blank" ><i class="fa fa-twitter-square fa-lg"></i></a>&nbsp;
+            {% endif %}
+            {% if vendor.facebook %}
+              <a href="{{ object.facebook }}" class="no-underline text-muted" title="Linkedin" target="_blank" ><i class="fa fa-facebook-square fa-lg"></i></a>&nbsp;
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+ <br/>
+</div>

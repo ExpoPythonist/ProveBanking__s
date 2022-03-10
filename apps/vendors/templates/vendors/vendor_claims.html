@@ -1,0 +1,68 @@
+{% extends 'base_template.html' %}
+{% load thumbnail %}
+{% load utils %}
+{% block title %}Vendor Claims{% endblock %}
+
+{% block page %}
+  <div id="page" class="container">
+    {% block content %}
+    	<ol class="breadcrumb custom">
+        <li class="active">Vendor Claims</li>
+      </ol>
+      <div class="vertical-spacer-lg"></div>
+
+      <section class="client-list clients">
+        {% for claim in claims %}
+          <div class="media col-md-6 col-sm-6 client-tile">
+              <span class="pull-left thumbnail thumb60">
+                <a target="_blank" href="{{ claim.vendor.get_absolute_url }}" target="_blank">
+                    {% if claim.vendor.logo %}
+                    {% thumbnail claim.vendor.logo '120x90' as thumb %}
+                    <img src="{{ thumb.url }}">
+                    {% endthumbnail %}
+                    {% else %}
+                    <img src="{{ STATIC_URL }}images/defaults/placeholder-co.png">
+                    {% endif %}
+                </a>
+              </span>
+              <div class="media-body">
+                  <h5 class="media-heading">
+                      <a target="_blank" href="{{ claim.vendor.get_absolute_url }}" class="no-underline ">{{ claim.vendor }}</a>
+                  </h5>
+                  <div class="verification">
+                      {% if claim.approved == None %}
+                      <small class="btn btn-xs btn-secondary disabled">Pending</small>
+                      {% elif claim.approved %}
+                      <small class="btn btn-xs btn-success disabled">Approved</small>
+                      {% else %}
+                      <small class="btn btn-xs btn-danger disabled">Rejected</small>
+                      {% endif %}
+                  </div>
+                  <div class="duration">
+                      <ul class="list-unstyled">
+                          <li><span class="text-muted">Claimant: {{ claim.first_name }} {{ claim.last_name }} {% if claim.user %}(Already Registered: <a href="{{ claim.user.get_absolute_url }}">{{ claim.user.get_full_name }}</a>){% else %}(Not Registered){% endif %}</span></li>
+                          <li><span class="text-muted">Email: <a href="mailto:{{ claim.email }}">{{ claim.email }}</a></span></li>
+                          {% if claim.notes %}
+                          <li><span class="text-muted">Notes: {{ claim.notes|linebreaksbr }}</span></li>
+                          {% endif %}
+                      </ul>
+                  </div>
+                  <div class="client-actions">
+                      {% if request.user.is_superuser and request.user.is_client %}
+                      {% if claim.approved == None %}
+                      <a href="{% url "vendors:vendor_claim_approve" claim.pk %}">Approve</a>&nbsp;|&nbsp;
+                      <a href="{% url "vendors:vendor_claim_reject" claim.pk %}">Reject</a>
+                      {% endif %}
+                      {% endif %}
+                  </div>
+              </div>
+          </div>
+        {% empty %}
+          <div class="col-sm-12">
+          <span class = "text-muted small"> No claims to show.</span>
+          </div>
+        {% endfor %}
+      </section>
+    {% endblock %}
+  </div>
+{% endblock %}

@@ -1,0 +1,11 @@
+<form id="rate-form" class="form-mobile" action="{% if object %}{% url 'rates:edit' object.id %}{% else %}{% url 'rates:create' %}{% endif %}{% if iframed %}?iframed=yes{% endif %}" method="post" {% if is_ajax %}data-ajax-form="true"{% endif %} {% if iframed %}target="ajaxFormiFrame"{% endif %}>
+  {% csrf_token %}
+  {% include 'forms/mobile_form.html' %}
+  <div class="form-actions text-center">
+    {% if object.id %}
+    <a data-toggle="modal" data-target="#removeRateModal" href="{% url 'rates:delete' object.id %}" class="btn btn-default ">Remove</a>&nbsp;
+    {% endif %}
+    <button type="submit" class="btn btn-primary ">{{ submit_btn_label|default:'Save' }}</button>
+  </div>
+  <iframe id="ajaxFormiFrame" name="ajaxFormiFrame" data-form="#rate-form" width="0" height="0" class="hide"></iframe>
+</form>

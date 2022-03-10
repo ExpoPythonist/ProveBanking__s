@@ -1,0 +1,19 @@
+{% comment %}
+{% if features.projects.is_enabled %}
+  <div class="clearfix nav-tab-wrapper">
+    {% include 'partials/pool_tabs.html' with active=active %}
+  </div>
+{% endif %}
+{% endcomment %}
+
+{% if users %}
+  <div id="user-selectable-list" class="results-items card-list user-list">
+    {% include 'users/partials/filter_cards.html' with users=users %}
+  </div>
+  <div class="block-cover text-center hide"></div>
+{% else %}
+  <div class="field-group selectable">
+    <div class="text-muted description">No resource matches the above criteria.</div>
+  </div>
+{% endif %}
+<div class="block-cover text-center hide"></div>

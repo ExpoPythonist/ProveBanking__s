@@ -1,0 +1,16 @@
+.clients__popup {
+    top: 400px;
+}
+
+.clients__verify-modal {
+    overflow-y: auto;
+}
+
+.clients__errors {
+    color: red;
+    text-align: center;
+}
+
+.clients__icon {
+    margin-left: 4px;
+}

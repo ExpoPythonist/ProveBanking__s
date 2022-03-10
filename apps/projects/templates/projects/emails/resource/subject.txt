@@ -1,0 +1,6 @@
+{% if staffing_req_url %}
+New candidate {{ proposed_resource.resource.get_name_display}} for {{ proposed_resource.request.role }}
+{% else %}
+New candidate {{ proposed_resource.resource.get_name_display}} proposed
+{% endif %}
+

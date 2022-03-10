@@ -1,0 +1,26 @@
+{% extends 'base_email.html' %}
+
+{% block body %}
+  <tr>
+    <td class="content-block">
+      <p class="lead panel">Hi,</p>
+      <p>Welcome to {{ current_tenant.name }}'s supplier partnership platform.<br>
+        Please create an account by using the following personalized link<br>
+      </p>
+      <a href="{{direct_url}}">{{ direct_url }}</a><br><br>
+      <p>(for security, this link will expire within 48 hours)</p>
+
+      <p>After you have created a username and password using the above link, you can access the website from  {{ tenant_url }}. Your email address is your user name and if you forget your password, you can create a new one using your email address. </p>
+      
+      <p>
+      If you have any questions about the pilot, please contact {{ current_tenant.email }}. If you have any questions about the Proven platform, please contact Suzanne Jordan at suzanne@proven.cc.
+      </p>
+
+      <p>This website is available from {{ current_tenant.name }}'s intranet or directly at {{ tenant_url }}. </p>
+      <p>
+        Best,<br>
+        Proven Team
+      </p>
+    </td>
+  </tr>
+{% endblock %}

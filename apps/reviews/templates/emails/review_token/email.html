@@ -1,0 +1,22 @@
+{% extends 'base_email.html' %}
+
+{% block body %}
+  <tr>
+    <td class="content-block">
+      <p class="lead panel">Hi,</p>
+      {% if token.created_by %}
+        <p>{{token.created_by}} wants you to add a review.</p>
+      {% else %}
+        <p>{{ token.content_object }} has expressed interest in working with {{current_tenant}} and has indicated that they have been in touch with you.</p>
+        <p>Can you add a quick review for {{ token.content_object }}? This review will be available only to {{current_tenant}} employees and help them in evaluating the supplier.</p>
+      {% endif %}
+      <a href="{{token_url}}">{{ token_url }}</a><br><br>
+      <p>(for security, this link will expire within 7 days)</p>
+      {% if not token.created_by %}
+      <p>
+        {{ token.content_object }}’s company profile will be made available on {{current_tenant}}’s supplier portal {{tenant_url}}. {{current_tenant}}’s supplier portal is a private {{current_tenant}}-only website that allows {{current_tenant}} employees to search existing {{current_tenant}} suppliers and those interested in becoming an {{current_tenant}} supplier
+      </p>
+      {% endif %}
+    </td>
+  </tr>
+{% endblock %}

@@ -1,0 +1,87 @@
+{% pjaxr_extends "onboarding/base.html" "Site" %}
+{% block title %}Supplier Profile{% endblock %}
+
+{% block page %}
+  <div id="page" class="container profile-form-container">
+    {% block content %}
+
+    {% block extra_sidebar_content %}{% endblock %}
+
+    <div class="row">
+      <div class="col-sm-3 {% if skip_to_lifecycle %}hide{% endif %}">
+        <section class="profile-edit-steps">
+          <h6 class="section-title text-uppercase">Create your company profile</h6>
+          <div class="panel panel-default panel-card onboarding-panel">
+            <div class="panel-body">
+
+              <a {% if active_procurement and vendor_custom_exits %}{%else %}href="{% url 'user_setup:setup_step_vendor_profile' vendor.id %}"{%endif%} class="{% if not vendor.EDIT_PROFILE in vendor.pending_edit_steps %} check{% endif %} {% if active_profile %}active{%endif%} first">
+                <span>Profile</span>
+              </a>
+
+              <a  {% if active_procurement and vendor_custom_exits %}{%else %}href="{% url 'user_setup:setup_step_vendor_media' vendor.id %}"{%endif%} class="{% if not vendor.EDIT_MEDIA in vendor.pending_edit_steps %} check{% endif %} {% if active_media %}active{%endif%}">
+                <span>Links</span>
+              </a>
+
+              <a {% if admin_editing %}
+                  href="{% url 'vendors:client_list_new' vendor.slug %}"
+                 {%else %}
+                  href="{% url 'vendors:clients_list' %}"
+                 {%endif%} class="{% if not vendor.EDIT_CLIENTS in vendor.pending_edit_steps %}check{% endif %}
+                                  {% if active_clients %}active{% endif %}">
+                <span>Clients</span>
+              </a>
+
+              <a {% if active_procurement and vendor_custom_exits %}{%else %}href="{% url 'user_setup:setup_step_vendor_projects' vendor.id %}"{%endif%} class="{% if not vendor.EDIT_PROJECT in vendor.pending_edit_steps %}check{% endif %} {% if active_projects %}active{%endif%}">
+                <span>Past projects</span>
+              </a>
+
+              {% if features.insurance.is_enabled %}
+              <a {% if active_procurement and vendor_custom_exits %}{%else %}href="{% url 'vendors:insurance_add' vendor.id %}"{%endif%} class="{% if not vendor.EDIT_INSURANCE in vendor.pending_edit_steps %} check{% endif %} {% if active_insurances %}active{%endif%}">
+                <span>Insurance</span>
+              </a>
+              {% endif %}
+
+              <a {% if active_procurement and vendor_custom_exits %}{%else %}href="{% url 'vendors:cert_add' vendor.id %}"{%endif%} class="{% if not vendor.EDIT_CERTS in vendor.pending_edit_steps %} check{% endif %} {% if active_certs %}active{%endif%}">
+                <span>Certifications</span>
+              </a>
+
+              {% if features.diversity.is_enabled %}
+              <a href="{% url 'vendors:diversity:list' vendor.id %}" class="{% if not vendor.EDIT_DIVERSITY in vendor.pending_edit_steps %} check{% endif %} {% if active_diversity %}active{%endif%}">
+                <span>Diversity</span>
+              </a>
+              {% endif %}
+
+              <a href="{% url 'vendors:procurement:list' vendor.id %}" class="{% if vendor.vendor_custom.exists %}check{% endif %} {% if active_procurement %}active{%endif%}"><span>Services</span></a>
+
+              <a {% if active_procurement and vendor_custom_exits %}{%else %}href="{% url 'user_setup:setup_step_vendor_skill' vendor.id %}"{%endif%} class="{% if vendor.categories.all %}check{% endif %} {% if active_categ %}active{%endif%}">
+                <span>Expertise / Specialties</span>
+              </a>
+
+              <a {% if active_procurement and vendor_custom_exits %}{%else %}href="{% url 'user_setup:setup_step_vendor_industries' vendor.id %}"{%endif%} class="{% if vendor.industries_served.all %}check{% endif %} {% if active_industry %}active{%endif%}">
+                <span>Industries</span>
+              </a>
+
+
+
+              <a {% if active_procurement and vendor_custom_exits %}{%else %}href="{% url 'user_setup:setup_step_vendor_location' vendor.id %}"{%endif%} class="{% if vendor.locations.all %}check{% endif %} {% if active_location %}active{%endif%}"><span>Location</span></a>
+
+              <a {% if active_procurement and vendor_custom_exits %}{%else %}href="{{ vendor.get_absolute_url }}"{%endif%} class="  last"><span>View profile</span></a>
+
+            </div>
+          </div>
+        </section>
+      </div>
+
+
+
+      <div class="{% if skip_to_lifecycle %}col-sm-8 col-sm-offset-2{% else %}col-sm-9{% endif %}">
+        {% block main_content %}{% endblock %}
+      </div>
+    </div>
+    {% endblock %}
+    {% include 'users/invite_modal.html' %}
+  </div>
+
+
+{% endblock %}
+{% block pjaxr_namespace %}Site.vendor_profile.edit{% endblock pjaxr_namespace %}

@@ -1,0 +1,96 @@
+{% load thumbnail %}
+{% load utils %}
+
+<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle collapsed btn btn-success" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+      MENU
+    </button>
+    {% if current_tenant.logo %}
+      {% thumbnail current_tenant.logo "200x36" as logo %}
+      <a class="btn" style="background: #fff; margin-right: 5px;" href="{% url "home" %}"><img src="{{logo.url}}" /></a>
+      {% endthumbnail %}
+    {% else %}
+      <ul class="nav navbar-nav nav-pills nav-stacked top-bar">
+        <li class="anchor dropdown user-dropdown text-left">
+          <a class="dropdown-toggle no-underline btn-success" href="{% url "home" %}">
+            {{ current_tenant }}
+          </a>
+        </li>
+      </ul>
+    {% endif %}
+  </div>
+  <div id="navbar" class="navbar-collapse collapse">
+    <ul class="nav navbar-nav nav-pills nav-stacked top-bar">
+      <li><a href="{% url "about" %}"><i class="fa fa-question-circle"></i> About</a></li>
+      {% if features.blog.is_enabled %}
+      <li><a href="{% url "posts:post_list" %}"><i class="fa fa-book"></i> Blog</a></li>
+      {% endif %}
+    </ul>
+    <ul class="nav navbar-nav nav-pills nav-stacked navbar-right top-bar">
+      {% if request.user.is_authenticated %}
+        {% if request.user.is_client %}
+          {% get_total_vendors as count %}
+          <li class="{% if active_nav_tab == "vendors" %}active{%endif%}">
+            <a href="{% url "vendors:list" %}">
+              <i class="fa fa-building-o"></i>
+              {{ count }} {% if current_tenant.schema_name == "voxpro" %}potential{% endif %} {{ count|pluralize:"supplier,suppliers" }}
+            </a>
+          </li>
+        {% endif %}
+
+      {% if features.rfp.is_enabled %}
+        {% get_total_rfps as count %}
+        <li class="{% if active_nav_tab == "rfp" %}active{%endif%}">
+          <a href="{% url "bid_list" request.user.username %}">
+            <i class="fa fa-envelope-o"></i>
+            {{ count }} {{ count|pluralize:"request,requests" }}
+          </a>
+        </li>
+      {% endif %}
+
+      {% include "partials/notifications_dropdown.html" %}
+      {% include "partials/invite-menu.html" %}
+
+      <li class="anchor dropdown user-dropdown text-left">
+        <a class="dropdown-toggle no-underline btn-success" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+          {{ request.user.get_name_display }} <i class="fa fa-caret-down"></i>
+        </a>
+        <ul class="dropdown-menu dropdown-menu-right text-left" role="menu">
+          <li>
+            <a href="{% url 'users:edit_profile' request.user.username %}">
+            <i class="fa fa-user"></i> Profile</a>
+          </li>
+          {% if request.user.is_vendor %}
+            <li>
+              <a href="{% url 'user_setup:setup_step_vendor_profile' request.user.vendor.id %}">
+                <i class="fa fa-building text-muted"></i>Vendor Profile</a>
+            </li>
+          {% endif %}
+          {% if request.user.is_client %}
+            <li><a href="{% url "client_settings:home" %}">
+              <i class="fa fa-cog text-muted"></i> Settings</a>
+            </li>
+          {% endif %}
+
+          {% if request.user.is_superuser %}
+          <li role="presentation" class="divider"></li>
+          {% if not current_tenant.direct_signup %}
+          <li><a href="{% url 'users:signups' %}"><i class="fa fa-users text-muted"></i> Signups</a></li>
+          {% endif %}
+          <li><a href="{% url "vendors:invoice_list" %}"><i class="fa fa-file-text-o text-muted"></i> Invoices</a></li>
+          <li><a href="{% url "vendors:vendor_claims" %}"><i class="fa fa-shopping-cart text-muted"></i> Claims</a></li>
+          {% endif %}
+
+          <li role="presentation" class="divider"></li>
+          <li><a href="{% url "account_logout" %}"><i class="fa fa-sign-out"></i> Sign Out</a></li>
+        </ul>
+      </li>
+
+      {% else %}
+        <li><a href="{% url "users:register" %}?previous={{ request.get_full_path }}">Request an Invitation</a></li>
+        <li><a href="{% url "account_login" %}?next=/">Sign In</a></li>
+      {% endif %}
+    </ul>
+  </div>
+</div>

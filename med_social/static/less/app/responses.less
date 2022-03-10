@@ -1,0 +1,105 @@
+div.panel-default > .panel-body .field-group {
+    &.proposed-staff-card {
+        //padding-top: 24px;
+        padding-left: 15px;
+        .status-dropdown {
+            // position: absolute;
+            // font-weight: bold;
+            // left: 0px;
+            // top: 0px;
+            button {
+                border-radius: 3px;
+                z-index: 1;
+            }
+            .btn {
+                min-width: 90px;
+            }
+            .btn-success {
+                .button-variant(@btn-success-color; @panel-success-border; @btn-o-success-border);
+            }
+
+            .btn-warning {
+                .button-variant(@btn-warning-color; lighten(@btn-warning-bg, 8%); @btn-warning-border);
+            }
+
+            .btn-danger {
+                .button-variant(@btn-danger-color; @panel-danger-border; @btn-o-danger-border);
+            }
+
+            .btn-info {
+                .button-variant(darken(@btn-o-info-color, 10%); @panel-info-border; @btn-o-info-border);
+            }
+
+            .btn-secondary {
+                .button-variant(@btn-secondary-color; @btn-o-secondary-bg; @btn-o-secondary-border);
+            }
+
+            .btn-primary {
+                .button-variant(@btn-primary-color; @panel-primary-border; @btn-o-primary-border);
+            }
+        }
+    }
+}
+
+.proposed-field-icon {
+    &.danger {
+        color: @brand-danger;
+    }
+    font-size: 14px;
+    padding: 0px 5px;
+    cursor: pointer;
+}
+
+.response-as-field {
+    > label {
+        span.fa-stack {
+            position: relative;
+            margin-right: -5px;
+            margin-left: -5px;
+            max-height: 10px;
+            top: -6px;
+        }
+    }
+}
+
+.proposed-staff-card {
+    padding-top: 5px;
+    padding-bottom: 4px;
+    .staff-btn-container {
+        padding-top: 8px;
+    }
+    .response-details {
+        @media (max-width: @screen-xs-max) {
+            margin-top : 15px;
+        }
+    }
+    .media-heading {
+        margin-top: 5px;
+        small, .small {
+            color: inherit;
+        } 
+    }
+}
+
+.response-contradiction {
+    cursor: help;
+    color: darken(red, 10%);
+}
+div.panel-default > .panel-body .field-group > .field-value > i.fa {
+    &.response-contradiction {
+        cursor: help;
+        color: darken(red, 10%);
+    }
+}
+
+.panel.response-card {
+    .panel-heading {
+        min-height: 48px;
+        line-height: 30px;
+    }
+    .panel-heading:after , .panel-heading:before {
+        display: table;
+        content: " ";
+        clear: both;
+    }
+}

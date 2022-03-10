@@ -1,0 +1,33 @@
+{% load i18n %}
+{% blocktrans %}
+Hi,
+{% endblocktrans %}
+{% if sender.is_vendor %}
+{% blocktrans %}
+<p>Welcome to the beta collaboration platform for {{ current_tenant.name }} suppliers. This private website will allow {{ current_tenant.name }} employees to search and find existing {{ current_tenant.name }} suppliers, view work history with {{ current_tenant.name }}, and initiate requests. This website will be available to all {{ current_tenant.name }} employees from the {{ current_tenant.name }} Intranet and will be powered by the Proven platform. </p>
+<p>This will offer you and your company the opportunity to showcase your capabilities and past successes at {{ current_tenant.name }}, and provide an easy way to match {{ current_tenant.name }} employee’s project needs with supplier capability.</p>
+{% endblocktrans %}
+{% endif %}
+
+{{ direct_url }}
+
+{% blocktrans %}
+<p>
+If you have any questions about the pilot, please contact {{ current_tenant.email }}. If you have any questions about the Proven platform, please contact Suzanne Jordan at suzanne@proven.cc.
+</p>
+<p>This website is available from {{ current_tenant.name }}'s intranet or directly at {{ tenant_url }}. </p>
+{% endblocktrans %}
+
+{% blocktrans %}
+Regards,
+{{ sender.get_name_display }},
+{% endblocktrans %}
+{% if sender.is_vendor %}
+{% blocktrans %}
+{{ sender.vendor.name }}
+{% endblocktrans %}
+{% else %}
+{% blocktrans %}
+{{ current_tenant.name }}
+{% endblocktrans %}
+{% endif%}

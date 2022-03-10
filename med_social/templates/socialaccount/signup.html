@@ -1,0 +1,59 @@
+{% extends "account/base.html" %}
+{% load i18n %}
+{% load account %}
+{% load crispy_forms_tags %}
+
+{% block title %}{% trans "Sign up"%} - {{ current_tenant }}{% endblock %}
+
+{% block page_title %}<span id="page-title">Sign Up</span>{% endblock %}
+
+{% block burger_menu %}
+  <span id="main-menu-btn" class="pull-left"></span>
+{% endblock %}
+
+{% block left_nav_button %}
+  <span id="left-nav-btn" class="pull-left">
+    <a id="back-btn" class="navbar-brand btn" href="{% url 'home' %}"><i class="fa fa-chevron-left"></i><!--  <span>Cancel</span> --></a>
+  </span>
+{% endblock %}
+
+{% block right_nav_button %}
+  <span id="right-nav-btn" class="pull-right">
+    <a class="navbar-brand btn" href="#" onClick="$('#signin-form').submit();"><span>Sign in</span></a>
+  </span>
+{% endblock %}
+
+{% block left_sidebar %}
+  <div id="left-right" class="sidebar sidebar-left"></div>
+{% endblock %}
+
+{% block right_sidebar %}
+  <div id="sidebar-right" class="sidebar sidebar-right"></div>
+{% endblock %}
+
+{% block notifications %}
+  {% include 'partials/notifications.html' %}
+{% endblock %}
+
+{% block content %}
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h4>Sign up using social accounts</h4>
+    </div>
+    <div class="panel-body">
+      <p>
+        {% blocktrans with provider_name=account.get_provider.name site_name=site.name %}You are about to use your {{provider_name}} account to sign in to 
+        {{site_name}}. As a final step, please complete the following form:{% endblocktrans %}
+      </p>
+    </div>
+  </div>
+
+  <form class="signup" id="signup_form" method="post" action="">
+    {% csrf_token %}
+    {{ form.as_p }}
+    {% if redirect_field_value %}
+      <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+    {% endif %}
+    <button type="submit">{% trans "Sign Up" %} &raquo;</button>
+  </form>
+{% endblock %}

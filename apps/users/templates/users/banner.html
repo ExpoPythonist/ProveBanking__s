@@ -1,0 +1,63 @@
+{% load avatar_tags %}
+
+  {% include 'partials/avatar_initials.html' with object=object size=75 %}
+  <h4 class="user-full-name">
+    {{ object.get_name_display }}
+    <span class="text-muter">(@{{ object.username }})</span>
+  </h4>
+  <h5 class="profile-location text-muted">
+    {% if object.location %}
+      <span title="location">{{ object.location }}</span>&nbsp;&middot;
+    {% endif %}
+    {% if not current_tenant.is_public_instance %}
+    <span title="company">{{ object.vendor|default:current_tenant }}
+    {% else %}
+    <span title="company">{{ object.vendor|default:object.organization_name }}
+    {% endif %}
+    {% if object.roles.all %}&nbsp;&middot;&nbsp;{{ object.roles.first }}{% endif %}</span>
+  </h5>
+
+  <div class="profile-links">
+    {% if object.get_linkedin_url %}
+      <a href="{{ object.get_linkedin_url }}" class="no-underline text-semi-dark" title="Linkedin" target="_blank" ><i class="fa fa-linkedin-square"></i>&nbsp;LinkedIn</a>
+    {% endif %}
+
+    {% if object.get_linkedin_url and object.resume %}
+      <span class="text-muter">&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+    {% endif %}
+
+    {% if object.resume %}
+      <a target="_blank" href="{{ object.resume.url }}" onclick="window.open('{{ object.resume.url }}'); return false;" class="no-underline text-semi-dark" title="Resume / CV"><i class="fa fa-file-text"></i>&nbsp;Resume</a>
+    {% endif %}
+  </div>
+
+
+  {% if perms.users.invite_user %}
+    {% if user != object %}
+      {% if user.is_client or user.vendor == object.vendor %}
+        {% if modal %}
+        <br>
+        <div class="alert alert-info alert-sm rounded text-left">
+            {% csrf_token %}
+            {% if not object.has_joined %}
+              {% if object.invitations.all %}
+              <div class="row">
+                <div class="col-sm-8">{{ object.get_name_display }} has not accepted the invitation to join Proven</div>
+                <div class="col-sm-4 text-right">
+                  <a href="{% url 'users:resend_invite' object.id %}" title="Invite to the platform" class="btn btn-xs btn-primary pull-right">Resend invitation</a>
+                </div>
+              </div>
+              {% else %}
+              <div class="row">
+                <div class="col-sm-8">{{ object.get_name_display }} has not joined Proven yet.</div>
+                <div class="col-sm-4 text-right">
+                  <a href="{% url 'users:resend_invite' object.id %}" title="Invite to the platform" class="btn btn-xs btn-primary pull-right">Invite to Proven</a>
+                </div>
+              </div>
+              {% endif%}
+            {% endif %}
+        </div>
+        {% endif %}
+      {% endif %}
+    {% endif %}
+  {% endif %}

@@ -1,0 +1,20 @@
+<a class="notice field-group" href="{% if notice.target %}{{ notice.target.get_absolute_url }}{% elif notice.action_object.get_absolute_url %}{{ notice.action_object.get_absolute_url}}{% else %}{{ notice.actor.get_absolute_url }}{% endif %}" data-notification-id="{{ notice.id }}">
+  {% comment %}{% url 'notifications:mark_as_read' notice.slug %}{% endcomment %}
+    <label class='notif-spacer small'>{% if notice.unread %}<i class="small fa fa-circle text-primary"></i>{% endif %}</label>
+    <label>
+      {{ notice.actor }}
+      {{ notice.verb }}
+      {% if notice.target %}
+        {{ notice.target }}
+      {% endif %}
+      <p class="small text-muted">{{ notice.description|linebreaksbr }}</p>
+      <div class="notice-actions">
+        {% for action in notice.data.actions %}
+          <a class="btn" href="{{ action.href }}">{{ action.title }}</a>
+        {% endfor %}
+      </div>
+    </label>
+    <div class="field-value">
+      <span class="icon-container"><small class="text-muted">{{ notice.timesince }} ago</small> <i class="fa fa-chevron-right"></i></span>
+    </div>
+  </a>

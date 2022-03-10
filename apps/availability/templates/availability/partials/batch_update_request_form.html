@@ -1,0 +1,17 @@
+<div class="success-result {% if not success %}hide{% endif %} text-center">
+  <h4><i class="fa fa-check"></i> Successfully asked users to the update/confirm their availability</h4>
+  <div class="col-xs-4 col-xs-offset-4">
+    <a href="#" class="success-hide-btn btn btn-sm btn-primary">continue</a>
+  </div>
+</div>
+
+<div class="form-horizontal {% if success %}hide{% endif %}">
+  <h4>The selected users will be emailed and asked to update/confirm their availability.</h4>
+  {% if form_error %}
+    <h5 class="text-center text-danger">no users selected</h5>
+  {% endif %}
+  <div class="row text-center">
+    <a action="{% url 'availability:batch_request_update' %}" class="btn-submit btn btn-sm btn-primary">Ask to update/confirm</a>
+  </div>
+</div>
+<div class="block-cover hide"></div>

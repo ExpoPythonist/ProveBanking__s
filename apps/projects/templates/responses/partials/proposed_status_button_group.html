@@ -1,0 +1,27 @@
+{% load projects %}
+
+{% get_possible_forward_statuses proposed_resource_object user as possible_statuses %}
+
+{% if possible_statuses.exists %}
+  &nbsp;
+  <div class="proposed-status-btn-{{ proposed_resource_object.id }} btn-group status-dropdown">
+    <button type="button" class="btn btn-{{ proposed_resource_object.status.get_css_class|default:'default' }} btn-xs dropdown-toggle" data-toggle="dropdown" title="{{ proposed_resource_object.status|lower }}">
+      {{ proposed_resource_object.status|default:"No status"|lower }} <span class="caret"></span>
+      <span class="sr-only">{{ proposed_resource_object.status|lower }}</span>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-right dropdown-menu-status text-left" role="menu">
+      {% for status in possible_statuses %}
+      <li>
+        {% include 'responses/partials/proposed_status_button.html' %}
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+{% else %}
+  &nbsp;
+  <div id="proposed-status-btn-{{ proposed_resource_object.id }}" class="btn-group status-dropdown">
+    <button type="button" class="btn btn-{{ proposed_resource_object.status.get_css_class }} btn-xs disabled">
+      {{ proposed_resource_object.status.vendor_name|default:proposed_resource_object.status|lower }}
+    </button>
+  </div>
+{% endif %}

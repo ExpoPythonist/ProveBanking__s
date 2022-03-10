@@ -1,0 +1,48 @@
+{% pjaxr_extends "base_template.html" "Site" %}
+{% block title %}User invitation - {{ current_tenant }}{% endblock %}
+
+{% block page_title %}<span id="page-title">User invitation</span>{% endblock %}
+
+{% block left_nav_button %}
+  <span id="left-nav-btn" class="pull-left">
+    {% if previous_page %}
+      <a class="navbar-brand btn" href="{{ previous_page }}"><i class="fa fa-chevron-left"></i></a>
+    {% else %}
+      <a class="navbar-brand btn" href="{% url 'client_settings:skill_levels:list' %}" data-target="sidebar-left"><i class="fa fa-chevron-left"></i></a>
+    {% endif %}
+  </span>
+{% endblock %}
+
+{% block right_nav_button %}
+  <span id="right-nav-btn" class="pull-right"></span>
+{% endblock %}
+
+{% block right_sidebar %}
+  <div id="sidebar-right" class="sidebar sidebar-right"></div>
+{% endblock %}
+
+{% block notifications %}
+  {% include 'partials/notifications.html' %}
+{% endblock %}
+
+{% block page %}
+  <div id="page" class="container page">
+    {% block content %}
+      <ol class="breadcrumb custom">
+        <li><a href="{% url 'users:profile' object.username %}">{{ object.get_name_display }}'s profile</a></li>
+        <li class="active">Review and send email</li>
+      </ol>
+      <div id="content">
+        <form id="invite-form" class="form-mobile form-horizontal" action="{% url 'users:resend_invite' object.id %}" method="post">
+          {% csrf_token %}
+          {% include 'forms/mobile_form.html' %}
+          <div class="form-actions text-center">
+            <button type="submit" class="btn btn-primary btn-block">{{ submit_btn_label|default:'Send invitation email' }}</button>
+          </div>
+        </form>
+      </div>
+      </div>
+    {% endblock %}
+  </div>
+{% endblock %}
+{% block pjaxr_namespace %}Site.skill_level_form{% endblock pjaxr_namespace %}

@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<EntityDescriptor xmlns="urn:oasis:names:tc:SAML:2.0:metadata" entityID="https://app.onelogin.com/saml/metadata/494800">
+  <IDPSSODescriptor xmlns:ds="http://www.w3.org/2000/09/xmldsig#" protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
+    <KeyDescriptor use="signing">
+      <ds:KeyInfo xmlns:ds="http://www.w3.org/2000/09/xmldsig#">
+        <ds:X509Data>
+          <ds:X509Certificate>MIIEIDCCAwigAwIBAgIUWh/LmQAcezsyRjzMTmzi9k2cIOowDQYJKoZIhvcNAQEF
+BQAwWzELMAkGA1UEBhMCVVMxFDASBgNVBAoMC0Fyc2hjb21wYW55MRUwEwYDVQQL
+DAxPbmVMb2dpbiBJZFAxHzAdBgNVBAMMFk9uZUxvZ2luIEFjY291bnQgNzI3NTgw
+HhcNMTUxMTIzMDcxMzE0WhcNMjAxMTI0MDcxMzE0WjBbMQswCQYDVQQGEwJVUzEU
+MBIGA1UECgwLQXJzaGNvbXBhbnkxFTATBgNVBAsMDE9uZUxvZ2luIElkUDEfMB0G
+A1UEAwwWT25lTG9naW4gQWNjb3VudCA3Mjc1ODCCASIwDQYJKoZIhvcNAQEBBQAD
+ggEPADCCAQoCggEBAL2I3oyBYv0qm3Fjlw3ajhzAxGv7MUtJYoNsyPWvIRjEcaPW
+H7JHykxmeYMzhDPDUAYT39iwfjT8aFScuqBYobKjPMut/EmOcohErJgczpdJ8Vzf
+Oi/ghB7sp91+OOVFdP2IoV1hrcmj4n+mtuMLIolJZwrPMgy57cp4QOAt//Z1uUyK
+7uO48oO67NS+KyDYl3gmJMwAWATzqjqAL1PKPoJ/zFvd9UwQwroEjRjI/iUBmKO0
+NMWDH1OV4Zk7TR94xhHI8/ifKh1G60gxCrLTHVcGdx87v5y9NB2lzHyGdYnT+gvW
+6hWFOae6bKbFHvx6cQBjTQs2jbAsB/ecViTtgvUCAwEAAaOB2zCB2DAMBgNVHRMB
+Af8EAjAAMB0GA1UdDgQWBBRqVtFOUfj944agrL8gRhAAFLub9jCBmAYDVR0jBIGQ
+MIGNgBRqVtFOUfj944agrL8gRhAAFLub9qFfpF0wWzELMAkGA1UEBhMCVVMxFDAS
+BgNVBAoMC0Fyc2hjb21wYW55MRUwEwYDVQQLDAxPbmVMb2dpbiBJZFAxHzAdBgNV
+BAMMFk9uZUxvZ2luIEFjY291bnQgNzI3NTiCFFofy5kAHHs7MkY8zE5s4vZNnCDq
+MA4GA1UdDwEB/wQEAwIHgDANBgkqhkiG9w0BAQUFAAOCAQEAoE+TLtyYIreaSRf9
+H9as/Z2hh++RMkBVv5KzsnyAhf6Xu9CBiuQ6L/yCfbVjzxtyU577YoBxVRnLFOim
+cRd7jwD2FN5Ng0Cm9GVZNQy2UVc3/2Dr7/OVaQFxHzHw5Y7eHdItVYWMR2M5oTSB
+pHy+PEIpgVcof1JLgNxxSeJgAfbxnp6b13eaWQBgqg6XxHuojT+X+VQpJ6bdfJbz
+PrZZ3BHLa8UNRXviNip+wb61mgRe7iI+Qe3Ycpikc/BiFMYyWV3klLjhbw+O+X0T
+h8az9nZxs7Im2wWUBz5mMEvm7P6DyYdRuuhm3ZB0+1c8tmo7j85OiA4Dn4lUpkLu
+E4Yf1g==</ds:X509Certificate>
+        </ds:X509Data>
+      </ds:KeyInfo>
+    </KeyDescriptor>
+    <NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress</NameIDFormat>
+    <SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect" Location="https://gagan.onelogin.com/trust/saml2/http-post/sso/494800"/>
+    <SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST" Location="https://gagan.onelogin.com/trust/saml2/http-post/sso/494800"/>
+    <SingleSignOnService Binding="urn:oasis:names:tc:SAML:2.0:bindings:SOAP" Location="https://gagan.onelogin.com/trust/saml2/soap/sso/494800"/>
+  </IDPSSODescriptor>
+  <ContactPerson contactType="technical">
+    <SurName>Support</SurName>
+    <EmailAddress>support@onelogin.com</EmailAddress>
+  </ContactPerson>
+</EntityDescriptor>

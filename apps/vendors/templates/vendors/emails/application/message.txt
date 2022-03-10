@@ -1,0 +1,9 @@
+{% load i18n %}
+{% blocktrans %}
+Hi,
+
+{ vendor.name }} has submitted an application to be a supplier on Proven: {{ direct_url }}
+
+Best,
+{{ current_tenant.name }}
+{% endblocktrans %}

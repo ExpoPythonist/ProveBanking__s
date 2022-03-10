@@ -1,0 +1,65 @@
+{% extends "vendors/profile_edit_sidebar.html" %}
+  {% block main_content %}
+<section class="profile-edit-form roles-list">
+  <h6 class="section-title text-uppercase">Roles</h6>
+  <div class="panel panel-default panel-card">
+    <div class="panel-body">
+      <div class="page-top-band">
+        <div class="col-xs-12">
+          <h6 class="block-meta-title text-uppercase">Role breakdown by percentage allocation</h6>
+        </div>
+        <div class="col-xs-6 text-right">
+        </div>
+      </div>
+
+      <form id="role-allocations" action="{% url 'vendors:roles:list' %}" method="POST">
+        {% csrf_token %}
+        <ul id="role-list" class="list-group panel-metrics container-md">
+          <li class="list-group-item header">
+            <h6 class="text-uppercase">
+              roles <span class="pull-right"> % of allocation</span>
+            </h6>
+          </li>
+          {% for role in roles %}
+          <li class="list-group-item">
+            <b>{{ role.role }}</b>
+            <span class="pull-right">
+              <span class="edit-mode-on">
+                <a class="btn" href="{% url 'vendors:roles:delete' role.id %}" data-toggle="modal" data-target="#genericModal"><span><i class="fa fa-minus-circle fa-2x"></i></span></a>
+
+                <input id="id_{{ role.id }}" name="{{ role.id }}" class="allocation-input" value="{{ role.allocation }}" tabindex="1" data-toggle="tooltip" data-placement="right" title="edit allocation here"/>
+              </span>
+              <span class="weight-value edit-mode-off">{{ role.allocation }}%</span>
+            </span>
+          </li>
+          {% endfor %}
+          <li class="list-group-item">
+            <a href="{% url 'vendors:roles:create' %}" class="btn-link" data-toggle="modal" data-target="#genericModal" >Add Role</a>
+
+            <span class="pull-right">
+              {% if roles %}
+                <a id="edit-allocation-btn" class="btn-link edit-mode-off " href="#">Edit allocation</a>
+                <div class="btn-group">
+                  <a id="cancel-edit-btn" class="btn btn-default btn-sm edit-mode-on" href="#"><i class="fa fa-times"></i></a>
+                  <a id="save-allocation-btn" class="btn btn-default btn-sm edit-mode-on  btn-primary" href="#"><i class="fa fa-check"></i></a>
+                </div>
+              {% endif %}
+            </span>
+          </li>
+
+          <li class="list-group-item footer text-right">
+            <div class="total-allocation-container {{ total_allocation_incorrect|yesno:"has-error,"}}" data-toggle="tooltip" data-placement="right" title="Must be 100%">
+              <strong class="text-uppercase meta small">total:
+                <span id="total-allocation text-muted">{{ total_role_allocation }}</span>%
+              </strong>
+            </div>
+          </li>
+
+        </ul>
+      </form>
+      <br><br>
+    </div>
+  </div>
+</section>
+{% endblock %}
+{% block pjaxr_namespace %}Site.settings.score{% endblock pjaxr_namespace %}

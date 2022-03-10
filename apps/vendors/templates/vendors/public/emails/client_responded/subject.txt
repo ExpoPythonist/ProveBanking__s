@@ -1,0 +1,1 @@
+{{ object.client.name }} has verified your relationship with them

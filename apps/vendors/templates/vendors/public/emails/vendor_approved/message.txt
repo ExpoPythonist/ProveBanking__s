@@ -1,0 +1,15 @@
+{% load i18n %}
+{% blocktrans %}
+Congratulations! Your company profile has been approved and is now active on Proven at {{ vendor_url }}. We approve a small percentage of the applications that we receive. This approval is a testament to the quality of your client relationships, which we fully recognize takes years of hard work. 
+
+Our ranking robot loves firms with deep relationships at high quality clients. So we encourage you to reach out to other clients through Proven for further recognition and high-fives.
+
+We are in the process of building a rich source of high quality client leads for you. Sometimes, it can take a few weeks or months for the initial leads to come through. So keep up the great work and stay tuned. 
+
+And finally, we deeply appreciate that you have trusted us with your most precious asset, your client relationships, and we are committed to honoring that trust.
+
+{{ clients_add_url }}
+
+Thanks for being part of the Proven Community,
+Suzanne Jordan, COO
+{% endblocktrans %}

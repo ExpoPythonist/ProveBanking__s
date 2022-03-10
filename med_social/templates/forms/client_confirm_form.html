@@ -1,0 +1,215 @@
+{% load crispy_forms_tags %}
+
+{% if form.non_field_errors %}
+<section>
+  <div class="alert alert-danger">
+    <h5>Error:</h5>
+    <ul class="form-errors">
+      {% for error in form.non_field_errors %}
+        <li>{{ error }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+{% endif %}
+
+<section class="client-details">
+  <h6 class="section-title text-uppercase">{{ object.client }} details</h6>
+  <div class="panel panel-default panel-card">
+    <div class="panel-body">
+      <h6 class="sub-section-title text-uppercase">Name to be displayed (or not)</h6>
+      <div class="sub-section">
+        <div class="row">        
+          <div class="form-group name-choice col-xs-12">
+            {{ form.use_alt_name }}
+            <span class="controls name-input">
+              {{ form.alt_name }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <h6 class="sub-section-title text-uppercase text-muted">{{ object.client }} details</h6>
+      <div class="sub-section">
+        <div class="row">
+          {{ form.client_size|as_crispy_field:"bootstrap3-inline" }}
+          {{ form.client_industries|as_crispy_field:"bootstrap3-inline" }}
+          {{ form.client_website|as_crispy_field:"bootstrap3" }}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section>
+  <h6 class="section-title text-uppercase">Relationship duration</h6>
+  <div class="panel panel-default panel-card">
+    <div class="panel-body">
+      <h6 class="sub-section-title text-uppercase">Is this relationship ongoing?</h6>
+      <div class="sub-section">
+        <div class="row">
+          {{ form.has_ended|as_crispy_field:"bootstrap3-inline" }}
+          {{ form.duration|as_crispy_field:"bootstrap3-inline" }}
+          <div class="col-xs-12">
+            {{ form.duration_private|as_crispy_field:"bootstrap3" }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h6 class="section-title text-uppercase">Billing</h6>
+  <div class="panel panel-default panel-card">
+    <div class="panel-body">
+      <div class="row">
+        {{ form.billing_new|as_crispy_field:"bootstrap3" }}
+        <div class="col-xs-12">
+          {{ form.billing_private|as_crispy_field:"bootstrap3" }}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h6 class="section-title text-uppercase">Private information</h6>
+  <div class="panel panel-default panel-card">
+    <div class="panel-body">
+
+      <div class="alert alert-info alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        This will NOT be shared publicly or with anyone at {{ object.vendor }}. This will only be used  by our rating robot.
+      </div>
+      <br><br>
+      <div class="row">
+      <div class="col-xs-12">
+        <label>How likely is it that you would recommend them to a friend or colleague?</label>   
+      </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-sm-6 col-sm-offset-3">
+          {{ form.rating }}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section>
+  <h6 class="section-title text-uppercase">Provide a short testimonial</h6>
+  <div class="panel panel-default panel-card">
+    <div class="panel-body">
+      <div class="alert alert-info alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        This is completely optional, but will help {{ object.vendor }} out a lot. Thanks!
+      </div>
+      <br><br>
+
+      <div class="row">
+        {{ form.full_name|as_crispy_field:"bootstrap3-inline" }}
+        {{ form.role|as_crispy_field:"bootstrap3-inline" }}
+        {{ form.review|as_crispy_field:"bootstrap3" }}
+        <div class="col-xs-12">
+          {{ form.review_anonymous|as_crispy_field:"bootstrap3" }}
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</section>
+
+<!-- 
+{% if form_title %}<span class="block-meta-title">{{ form_title }}</span>{% endif %}
+{% if not form.fieldsets %}
+  <div class="panel panel-default panel-form {{ panel_class }}">
+    {% if form_heading %}
+    <div class="panel-heading">
+      <h4>{{ form_heading }}</h4>
+    </div>
+    {% endif %}
+    <div class="panel-body">
+      {% for field in form %}
+        {% if field_template_name %}
+          {{ field|as_crispy_field:field_template_name }}
+        {% else %}
+          {{ field|as_crispy_field:"bootstrap3-inline" }}
+        {% endif  %}
+      {% endfor %}
+      {% if show_buttons == True %}
+        <div class="text-center form-actions">
+          <button type="submit" class="btn btn-sm btn-primary">Comment</button>
+        </div>
+      {% endif %}
+      {% if form.non_field_errors %}
+        <div class="form-group">
+          <label></label>
+          <div class="controls">
+            <ul class="form-errors">
+              {% for error in form.non_field_errors %}
+                <li>{{ error }}</li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      {% endif %}
+    </div>
+    {% if submit_btn or form.delete and form.instance.id %}
+      <div class="panel-footer col-xs-12">
+        <div class="col-xs-6">
+          {% if form.delete and form.instance.id %}
+          <button type="delete" class="btn btn-link btn-delete"><i class="fa fa-trash-o"></i> Delete</button>
+          {% endif %}
+        </div>
+        <div class="col-xs-6 text-right">
+          {% if submit_btn %}
+          <button type="submit" class="btn btn-link">{{ submit_btn_label|default:'Save' }} <i class="fa {{ submit_btn_icon|default:'fa-chevron-right'}}"></i></button>
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
+  </div>
+{% else %}
+  {% if form.non_field_errors %}
+    <span class="block-meta-title">Errors</span>
+    <div class="form-group">
+      <div class="controls text-left">
+        <ul class="form-errors text-left">
+          {% for error in form.non_field_errors %}
+            <li>{{ error }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  {% endif %}
+  {% for fieldset in form.fieldsets %}
+    {% if fieldset.0  %}
+      <span class="block-meta-title">{{ fieldset.0 }}</span>
+    {% endif %}
+    <div class="panel panel-default panel-form {{ panel_class }}">
+      <div class="panel-body">
+        {% for field in fieldset.1.fields %}
+          {{ field|as_crispy_field:"bootstrap3" }}
+        {% endfor %}
+        {% for row in fieldset.1.rows %}
+          <div class="clearfix form-row">
+            {% if row|length == 1 %}
+              {{ row.0|as_crispy_field:"bootstrap3" }}
+            {% else %}
+              {% for field in row %}
+                {{ field|as_crispy_field:"bootstrap3-inline" }}
+              {% endfor %}
+            {% endif %}
+          </div>
+        {% endfor %}
+      
+      </div>
+    </div>
+  {% endfor %}
+{% endif %}
+ -->

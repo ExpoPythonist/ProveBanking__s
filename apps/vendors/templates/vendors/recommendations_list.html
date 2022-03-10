@@ -1,0 +1,27 @@
+{% load review_tags %}
+<div id="vendor-{{ view.view_id }}" class="col-xs-12">
+  {% for vendor in vendors %}
+    <div class="col-xs-12 nopadding list-group-item vendor-item" data-vendor-id="{{ vendor.id }}" data-result-type="{{ view.result_type }}">
+      <div href="{% url 'vendors:modal' vendor.id %}" data-toggle="modal" data-target="#genericModal" class="col-xs-10">
+        <strong>{{ vendor.name }}</strong>
+        {% with vendor.get_meta_counts as meta_counts %}
+          {% if user.is_client %}
+            {% if vendor.reviews.exists %}
+              {% include 'reviews/partials/as_label.html' with score=vendor.avg_score count=meta_counts.reviews %}
+              &nbsp;
+              {% with vendor.get_meta_counts as meta_counts %}
+              <span class="btn btn-secondary btn-o btn-xs btn-date disabled">{{ meta_counts.projects }} project{{ meta_counts|pluralize }}</span>
+              {% endwith %}
+            {% endif %}
+          {% endif %}
+        {% endwith %}
+      </div>
+      <div class="col-xs-2 text-right">
+        <input type="checkbox" class="btn btn-vendor-select btn-default btn-xs" data-name="{{ vendor.name }}" data-pk="{{ vendor.pk }}" target-template="#vendor-tmpl-{{ vendor.id }}" >
+      </div>
+      <div id="vendor-tmpl-{{ vendor.id }}" class="select-template">
+      {% include 'requests/partials/selected_vendor.html' with resource=vendor as_template=True %}
+    </div>
+    </div>
+  {% endfor %}
+</div>

@@ -1,0 +1,1 @@
+<a href="{% url 'follow_user' target.username %}" class="btn btn-default ajax-trigger {{ class }} {{ is_following|yesno:"following," }}" data-class="{{ class }}" data-replace data-method="POST">{{ is_following|yesno:"following, follow"}} {% if is_following %}<i class="fa fa-check"></i>{% else %} {{ consultant.get_short_name }} {% endif %}</a>
